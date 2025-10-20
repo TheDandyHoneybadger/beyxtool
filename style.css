@@ -137,13 +137,18 @@ main {
 .part-card img {
     width: 100%;
     max-width: 80px;
-    height: auto;
+    height: 80px;
+    object-fit: contain;
     margin-bottom: 0.5rem;
 }
 
 .part-card p {
     font-size: 0.9rem;
     font-weight: bold;
+    min-height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .part-score {
@@ -156,6 +161,7 @@ main {
     font-weight: bold;
     padding: 2px 5px;
     border-radius: 5px;
+    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000; /* Stroke preto */
 }
 
 #collection-tab.filter-on .part-card:not(.owned) {
@@ -295,7 +301,28 @@ main {
     font-size: 0.7rem;
     padding: 1px 4px;
     border-radius: 3px;
+    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000; /* Stroke preto */
 }
+
+/* Oculta os slots condicionais por padrão */
+.deck-slot .standard-parts,
+.deck-slot .chip-parts {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Exibe os slots corretos com base no tipo de bay */
+.deck-slot[data-bay-type="standard"] .standard-parts {
+    display: flex;
+}
+
+.deck-slot[data-bay-type="chip"] .chip-parts {
+    display: flex;
+}
+
 
 .deck-info, .data-buttons {
     text-align: center;
@@ -326,10 +353,11 @@ button:hover {
     border-color: var(--text-color);
 }
 
+/* Modal */
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.7); }
 .modal-content { background-color: var(--secondary-bg); margin: 5% auto; padding: 20px; border: 1px solid var(--border-color); border-radius: 8px; width: 90%; max-width: 800px; position: relative; max-height: 90vh; overflow-y: auto; }
-.close-button { color: #aaa; float: right; font-size: 28px; font-weight: bold; }
-.close-button:hover, .close-button:focus { color: var(--text-color); text-decoration: none; cursor: pointer; }
+.close-button { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+.close-button:hover, .close-button:focus { color: var(--text-color); text-decoration: none; }
 #modal-suggestions-container, #modal-parts-list-container { margin-bottom: 1.5rem; }
 #modal-suggestions-container h4, #modal-parts-list-container h4 { color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem; }
 .suggestion-card { display: flex; align-items: center; gap: 1rem; background-color: var(--primary-bg); padding: 0.75rem; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; margin-bottom: 0.75rem; }
@@ -338,6 +366,13 @@ button:hover {
 .suggestion-part img { width: 40px; height: 40px; object-fit: contain; }
 .suggestion-part span { font-size: 0.85rem; }
 
+/* Modal de Variantes */
+#variant-modal-checkboxes { display: flex; flex-direction: column; gap: 10px; margin-top: 1rem; }
+#variant-modal-checkboxes label { font-size: 1.1rem; cursor: pointer; }
+#variant-modal-checkboxes input { margin-right: 10px; }
+.modal-buttons { margin-top: 1.5rem; text-align: right; }
+
+/* Meta */
 #meta-combos-container { display: flex; flex-direction: column; gap: 1rem; }
 .meta-combo-card { display: flex; align-items: center; background-color: var(--card-bg); padding: 1rem; border-radius: 8px; border-left: 5px solid var(--border-color); gap: 1.5rem; flex-wrap: wrap; }
 .meta-combo-card .rank { font-size: 2rem; font-weight: bold; color: var(--text-color); min-width: 40px; text-align: center; }
