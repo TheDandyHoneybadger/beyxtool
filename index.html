@@ -178,12 +178,8 @@
                 <div class="language-settings">
                     <h3 data-translate="language_settings_title">Idioma / Language</h3>
                     <div class="language-selector">
-                        <button id="lang-pt-br" class="lang-button active" title="Português (Brasil)">
-                            🇧🇷
-                        </button>
-                        <button id="lang-en" class="lang-button" title="English (US)">
-                           🇺🇸
-                        </button>
+                        <button id="lang-pt-br" class="lang-button active" title="Português (Brasil)">🇧🇷</button>
+                        <button id="lang-en" class="lang-button" title="English (US)">🇺🇸</button>
                     </div>
                 </div>
 
@@ -213,12 +209,38 @@
             <h3 id="variant-modal-title">Selecionar Variantes</h3>
             <div id="variant-modal-checkboxes">
             </div>
-            <div class="modal-buttons">
-                <button id="variant-modal-save">Salvar</button>
+        </div>
+    </div>
+
+    <div id="input-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="input-modal-close">&times;</span>
+            <h3 id="input-modal-title">Digite um valor</h3>
+            <div class="input-modal-body">
+                <input type="text" id="input-modal-field" placeholder="Valor...">
+                <div class="modal-buttons">
+                    <button id="input-modal-cancel" data-translate="modal_button_cancel">Cancelar</button>
+                    <button id="input-modal-ok" data-translate="modal_button_ok">OK</button>
+                </div>
             </div>
         </div>
     </div>
 
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="confirm-modal-close">&times;</span>
+            <h3 id="confirm-modal-title">Confirmar</h3>
+            <div class="input-modal-body">
+                <p id="confirm-modal-text">Você tem certeza?</p>
+                <div class="modal-buttons">
+                    <button id="confirm-modal-cancel" data-translate="modal_button_cancel">Cancelar</button>
+                    <button id="confirm-modal-ok" class="danger-button" data-translate="modal_button_delete">Deletar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="database.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

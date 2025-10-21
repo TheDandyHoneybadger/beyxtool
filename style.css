@@ -123,9 +123,9 @@ main {
     transition: transform 0.2s, box-shadow 0.2s;
     border: 2px solid transparent;
     position: relative;
-    display: flex; /* Adicionado para melhor alinhamento interno */
-    flex-direction: column; /* Organiza imagem e texto verticalmente */
-    justify-content: space-between; /* Espaça imagem e texto */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 
@@ -144,19 +144,19 @@ main {
     height: 80px;
     object-fit: contain;
     margin-bottom: 0.5rem;
-    align-self: center; /* Centraliza a imagem horizontalmente */
+    align-self: center;
 }
 
 
 .part-card p {
     font-size: 0.9rem;
     font-weight: bold;
-    min-height: 2.2rem; /* Mantém espaço para 2 linhas de texto */
+    min-height: 2.2rem;
     display: flex;
-    align-items: center; /* Centraliza verticalmente */
-    justify-content: center; /* Centraliza horizontalmente */
-    word-break: break-word; /* Quebra palavras longas */
-    padding: 0 2px; /* Pequeno padding lateral para evitar colar nas bordas */
+    align-items: center;
+    justify-content: center;
+    word-break: break-word;
+    padding: 0 2px;
 }
 
 
@@ -170,15 +170,13 @@ main {
     font-weight: bold;
     padding: 2px 5px;
     border-radius: 5px;
-    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000; /* Stroke preto */
+    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
 }
 
-/* Esconde cards não possuídos quando o filtro está ativo */
 #collection-tab.filter-on .part-card:not(.owned) {
     display: none;
 }
 
-/* --- Deck Builder --- */
 .deck-management {
     background-color: var(--primary-bg);
     padding: 1rem;
@@ -205,8 +203,8 @@ main {
     width: 40px;
     height: 40px;
     font-size: 1.5rem;
-    line-height: 1; /* Centraliza o texto do botão */
-    padding: 0; /* Remove padding extra */
+    line-height: 1;
+    padding: 0;
 }
 
 
@@ -253,7 +251,7 @@ main {
     flex-direction: column;
     align-items: center;
     gap: 0.25rem;
-    width: 100%; /* Garante que o container ocupe a largura do slot */
+    width: 100%;
 }
 
 
@@ -261,10 +259,10 @@ main {
     font-size: 0.9rem;
     color: var(--muted-text);
     font-weight: bold;
-    min-height: 1.2rem; /* Espaço mínimo para o nome */
-    word-break: break-all; /* Quebra nomes muito longos */
-    text-align: center; /* Centraliza o nome */
-    width: 100%; /* Ocupa a largura para centralizar corretamente */
+    min-height: 1.2rem;
+    word-break: break-all;
+    text-align: center;
+    width: 100%;
 }
 
 
@@ -291,7 +289,7 @@ main {
     cursor: pointer;
     transition: background-color 0.3s;
     position: relative;
-    overflow: hidden; /* Garante que a imagem não saia do círculo */
+    overflow: hidden;
 }
 
 
@@ -302,12 +300,12 @@ main {
 .part-placeholder img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Ajusta a imagem dentro do placeholder */
-    border-radius: 50%; /* Garante que a imagem pareça circular */
+    object-fit: contain;
+    border-radius: 50%;
 }
 
 
-.part-placeholder span { /* Texto dentro do placeholder (ex: "Ratchet") */
+.part-placeholder span {
     font-weight: bold;
     color: var(--muted-text);
     font-size: 0.9rem;
@@ -323,24 +321,22 @@ main {
     font-size: 0.7rem;
     padding: 1px 4px;
     border-radius: 3px;
-    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000; /* Stroke preto */
+    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
     left: 50%;
     transform: translateX(-50%);
-    white-space: nowrap; /* Impede quebra de linha no score */
+    white-space: nowrap;
 }
 
 
-/* Oculta os slots condicionais por padrão */
 .deck-slot .standard-parts,
 .deck-slot .chip-parts {
     display: none;
     width: 100%;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem; /* Mantém o espaçamento interno */
+    gap: 0.75rem;
 }
 
-/* Exibe os slots corretos com base no tipo de bay */
 .deck-slot[data-bay-type="standard"] .standard-parts {
     display: flex;
 }
@@ -360,7 +356,7 @@ main {
 
 .deck-info p {
     font-size: 1.2rem;
-    align-self: center; /* Alinha verticalmente com os botões */
+    align-self: center;
 }
 
 
@@ -372,48 +368,47 @@ button {
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Adiciona transição para border-color */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 
 button:hover {
     background-color: var(--card-bg);
-    border-color: var(--text-color); /* Muda a cor da borda no hover */
+    border-color: var(--text-color);
 }
 
 
-/* --- Modal --- */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
+    display: none;
+    position: fixed;
+    z-index: 1000;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
-    padding-top: 60px; /* Location of the box */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding-top: 60px;
 }
 
 .modal-content {
     background-color: var(--secondary-bg);
-    margin: 5% auto; /* 5% from the top and centered */
+    margin: 5% auto;
     padding: 20px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    width: 90%; /* Could be more or less, depending on screen size */
-    max-width: 800px; /* Maximum width */
+    width: 90%;
+    max-width: 800px;
     position: relative;
-    max-height: 85vh; /* Limit height to prevent going off-screen */
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column; /* Stack elements vertically */
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
 }
 
 
 .close-button {
     color: #aaa;
-    position: absolute; /* Position relative to modal-content */
+    position: absolute;
     top: 10px;
     right: 20px;
     font-size: 28px;
@@ -429,15 +424,14 @@ button:hover {
 }
 
 #modal-title {
-     margin-bottom: 15px; /* Add some space below the title */
-     padding-right: 30px; /* Space for the close button */
+     margin-bottom: 15px;
+     padding-right: 30px;
 }
 
-/* Container para a lista de peças e sugestões, com scroll */
 .modal-scrollable-content {
-     overflow-y: auto; /* Add scroll to this container */
-     flex-grow: 1; /* Allow this area to take available space */
-     padding-right: 10px; /* Space for scrollbar */
+     overflow-y: auto;
+     flex-grow: 1;
+     padding-right: 10px;
 }
 
 
@@ -459,8 +453,8 @@ button:hover {
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.2s;
-    margin-bottom: 0.75rem; /* Space between suggestion cards */
-    flex-wrap: wrap; /* Allow parts to wrap on small screens */
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
 }
 
 .suggestion-card:hover {
@@ -470,7 +464,7 @@ button:hover {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    min-width: 100px; /* Minimum width for each part */
+    min-width: 100px;
 }
 .suggestion-part img {
     width: 40px;
@@ -481,24 +475,20 @@ button:hover {
     font-size: 0.85rem;
 }
 
-/* --- Modal de Variantes --- */
-
-/* Remove margem padrão que pode atrapalhar o grid */
 #variant-modal-checkboxes {
     margin-top: 0;
 }
 
-/* Estilos para o Modal de Variantes (Novo Grid) */
 #variant-modal-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
     gap: 1rem;
     margin-top: 1rem;
-    max-height: 50vh; /* Limita a altura para evitar modais muito longos */
-    overflow-y: auto; /* Adiciona scroll se necessário */
-    padding: 5px; /* Espaço para a borda de seleção não cortar */
-    background-color: var(--primary-bg); /* Fundo para o grid */
-    border-radius: 5px; /* Bordas arredondadas para o grid */
+    max-height: 50vh;
+    overflow-y: auto;
+    padding: 5px;
+    background-color: var(--primary-bg);
+    border-radius: 5px;
 }
 
 .variant-card {
@@ -507,13 +497,13 @@ button:hover {
     padding: 0.5rem;
     text-align: center;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; /* Adiciona transição border-color */
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
     border: 2px solid transparent;
     position: relative;
-    display: flex; /* Para alinhar imagem e texto */
+    display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Centraliza conteúdo verticalmente */
+    justify-content: center;
 }
 
 .variant-card:hover {
@@ -521,39 +511,38 @@ button:hover {
 }
 
 .variant-card.selected {
-    border-color: #00ffc3; /* Mesma cor da borda 'owned' */
-    box-shadow: var(--owned-glow); /* Mesmo brilho 'owned' */
+    border-color: #00ffc3;
+    box-shadow: var(--owned-glow);
 }
 
 .variant-card img {
     width: 100%;
-    max-width: 60px; /* Tamanho um pouco menor para o modal */
+    max-width: 60px;
     height: 60px;
     object-fit: contain;
     margin-bottom: 0.5rem;
 }
 
 .variant-card p {
-    font-size: 0.85rem; /* Fonte um pouco menor */
+    font-size: 0.85rem;
     font-weight: bold;
-    min-height: 1.5rem; /* Ajuste a altura mínima se necessário */
+    min-height: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-color); /* Garante a cor do texto */
-    word-break: break-word; /* Quebra nomes longos */
+    color: var(--text-color);
+    word-break: break-word;
 }
 
 
 .modal-buttons {
     margin-top: 1.5rem;
-    text-align: right; /* Alinha botões à direita */
-    padding-top: 1rem; /* Espaço acima dos botões */
-    border-top: 1px solid var(--border-color); /* Linha separadora */
+    text-align: right;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
 }
 
 
-/* --- Meta --- */
 #meta-combos-container {
     display: flex;
     flex-direction: column;
@@ -565,99 +554,100 @@ button:hover {
     background-color: var(--card-bg);
     padding: 1rem;
     border-radius: 8px;
-    border-left: 5px solid var(--border-color); /* Barra lateral */
-    gap: 1rem; /* Espaçamento entre rank, parts, points */
-    flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+    border-left: 5px solid var(--border-color);
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 .meta-combo-card .rank {
     font-size: 2rem;
     font-weight: bold;
     color: var(--text-color);
-    min-width: 40px; /* Largura mínima para o rank */
+    min-width: 40px;
     text-align: center;
-    flex-shrink: 0; /* Impede que o rank encolha */
+    flex-shrink: 0;
 }
 .meta-combo-card .parts {
     display: flex;
     align-items: center;
     gap: 1rem;
-    flex-grow: 1; /* Ocupa o espaço disponível */
-    flex-wrap: wrap; /* Permite que as peças quebrem linha */
-    justify-content: center; /* Centraliza as peças se quebrar linha */
+    flex-grow: 1;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .meta-combo-card .part-display {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 0.5rem; /* Espaço entre imagem e nome da peça */
-    min-width: 80px; /* Largura mínima para cada peça */
+    gap: 0.5rem;
+    min-width: 80px;
 }
 .meta-combo-card .part-display img {
     width: 60px;
     height: 60px;
     object-fit: contain;
-    background-color: var(--primary-bg); /* Fundo para destacar a imagem */
+    background-color: var(--primary-bg);
     border-radius: 50%;
-    padding: 5px; /* Pequeno espaçamento interno */
+    padding: 5px;
 }
 .meta-combo-card .part-display span {
     font-size: 0.9rem;
-    word-break: break-word; /* Quebra nomes longos */
+    word-break: break-word;
 }
 .meta-combo-card .points {
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--text-color);
-    margin-left: auto; /* Empurra para a direita */
-    padding-left: 1rem; /* Espaço antes dos pontos */
-    white-space: nowrap; /* Impede quebra de linha nos pontos */
-    flex-shrink: 0; /* Impede que os pontos encolham */
+    margin-left: auto;
+    padding-left: 1rem;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
-/* --- Estilos para Configurações de Idioma (NOVO) --- */
 .language-settings {
-    margin-top: 2rem; /* Espaçamento acima da seção de idioma */
-    padding-top: 1.5rem; /* Espaçamento interno superior */
-    border-top: 1px solid var(--border-color); /* Linha divisória */
-    width: 100%; /* Ocupa a largura */
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza o conteúdo */
-    gap: 1rem; /* Espaço entre título e botões */
+    align-items: center;
+    gap: 1rem;
 }
 
 .language-settings h3 {
-    margin-bottom: 0; /* Remove margem inferior padrão do h3 */
+    margin-bottom: 0;
     color: var(--text-color);
 }
 
 .language-selector {
     display: flex;
-    gap: 1rem; /* Espaço entre as bandeiras */
+    gap: 1rem;
 }
 
 .lang-button {
     background-color: transparent;
-    border: 2px solid var(--border-color); /* Borda padrão */
+    border: 2px solid var(--border-color);
     padding: 5px;
     cursor: pointer;
-    border-radius: 50%; /* Faz o botão ficar redondo */
-    width: 50px; /* Tamanho fixo */
-    height: 50px; /* Tamanho fixo */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: border-color 0.3s, box-shadow 0.3s;
-    overflow: hidden; /* Garante que a imagem redonda não vaze */
+    overflow: hidden;
+    font-size: 24px; /* Tamanho do emoji */
+    line-height: 1;
 }
 
 .lang-button img {
-    width: 100%; /* Faz a imagem ocupar todo o espaço interno */
+    width: 100%;
     height: 100%;
-    object-fit: cover; /* Garante que a imagem cubra o espaço, mantendo proporção */
-    border-radius: 50%; /* Mantém a imagem redonda */
-    display: block; /* Remove espaço extra abaixo da imagem */
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
 }
 
 .lang-button:hover {
@@ -665,127 +655,85 @@ button:hover {
 }
 
 .lang-button.active {
-    border-color: #00ffc3; /* Mesma cor da borda 'owned' */
-    box-shadow: var(--owned-glow); /* Mesmo brilho 'owned' */
+    border-color: #00ffc3;
+    box-shadow: var(--owned-glow);
+}
+
+/* --- Estilos para Popup de Informações da Peça (NOVO) --- */
+.part-info-popup {
+    position: absolute;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 10px 15px;
+    z-index: 1001;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    max-width: 250px;
+    pointer-events: auto; /* Deixa interativo para poder sair com o mouse */
+    opacity: 0;
+    animation: fadeInPopup 0.3s forwards;
+}
+
+@keyframes fadeInPopup {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.part-info-popup h5 {
+    margin: 0 0 8px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 1rem;
+    color: var(--active-tab);
+}
+
+.part-info-popup ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.part-info-popup li {
+    margin-bottom: 4px;
+    color: var(--muted-text);
 }
 
 
 /* Media Query para telas menores */
 @media (max-width: 768px) {
-    main {
-         padding: 1rem; /* Reduz padding principal */
-    }
-    header {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-    }
-     nav {
-         width: 100%; /* Ocupa toda a largura */
-         justify-content: space-around; /* Distribui melhor os links */
-     }
-     .tab-link {
-         padding: 8px 10px; /* Reduz padding dos links */
-         font-size: 0.9rem;
-     }
-     .deck-management {
-         flex-direction: column; /* Empilha os controles */
-         align-items: stretch; /* Estica os grupos */
-     }
-     .deck-selector-group, .deck-name-group, .deck-buttons-group {
-         justify-content: center; /* Centraliza itens nos grupos */
-         width: 100%; /* Ocupa largura total */
-     }
-     #deck-name-input {
-         min-width: 0; /* Remove largura mínima */
-         flex-grow: 1; /* Permite que o input cresça */
-     }
-     .deck-area {
-         gap: 1rem; /* Reduz espaço entre slots */
-     }
-     .deck-slot {
-         width: 140px; /* Reduz largura dos slots */
-         padding: 0.8rem;
-     }
-     .part-placeholder {
-         width: 65px;
-         height: 65px;
-     }
-      .part-placeholder img {
-          max-width: 100%;
-          max-height: 100%;
-      }
-     .modal-content {
-         width: 95%; /* Aumenta largura em telas pequenas */
-         margin: 5% auto;
-         max-height: 90vh;
-     }
-      #variant-modal-grid, .parts-grid { /* Ajusta grid em telas menores */
-           grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-           gap: 0.8rem;
-      }
-      .variant-card img, .part-card img { /* Reduz imagem nos grids */
-           max-width: 50px;
-           height: 50px;
-      }
-       .variant-card p, .part-card p { /* Reduz fonte nos grids */
-            font-size: 0.8rem;
-            min-height: 1.8rem;
-       }
-     .meta-combo-card {
-         flex-direction: column; /* Empilha rank, parts, points */
-         align-items: flex-start; /* Alinha à esquerda */
-         gap: 0.5rem;
-     }
-     .meta-combo-card .rank {
-         align-self: flex-start; /* Mantém rank à esquerda */
-         font-size: 1.5rem;
-         margin-bottom: 0.5rem;
-     }
-     .meta-combo-card .parts {
-         justify-content: flex-start; /* Alinha peças à esquerda */
-         gap: 0.8rem;
-     }
-     .meta-combo-card .part-display img {
-         width: 50px;
-         height: 50px;
-     }
-     .meta-combo-card .part-display span {
-         font-size: 0.8rem;
-     }
-     .meta-combo-card .points {
-         margin-left: 0; /* Remove margem */
-         align-self: flex-end; /* Alinha pontos à direita */
-         font-size: 1.2rem;
-         padding-left: 0;
-     }
+    main { padding: 1rem; }
+    header { flex-direction: column; gap: 1rem; padding: 1rem; }
+    nav { width: 100%; justify-content: space-around; }
+    .tab-link { padding: 8px 10px; font-size: 0.9rem; }
+    .deck-management { flex-direction: column; align-items: stretch; }
+    .deck-selector-group, .deck-name-group, .deck-buttons-group { justify-content: center; width: 100%; }
+    #deck-name-input { min-width: 0; flex-grow: 1; }
+    .deck-area { gap: 1rem; }
+    .deck-slot { width: 140px; padding: 0.8rem; }
+    .part-placeholder { width: 65px; height: 65px; }
+    .part-placeholder img { max-width: 100%; max-height: 100%; }
+    .modal-content { width: 95%; margin: 5% auto; max-height: 90vh; }
+    #variant-modal-grid, .parts-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.8rem; }
+    .variant-card img, .part-card img { max-width: 50px; height: 50px; }
+    .variant-card p, .part-card p { font-size: 0.8rem; min-height: 1.8rem; }
+    .meta-combo-card { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .meta-combo-card .rank { align-self: flex-start; font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .meta-combo-card .parts { justify-content: flex-start; gap: 0.8rem; }
+    .meta-combo-card .part-display img { width: 50px; height: 50px; }
+    .meta-combo-card .part-display span { font-size: 0.8rem; }
+    .meta-combo-card .points { margin-left: 0; align-self: flex-end; font-size: 1.2rem; padding-left: 0; }
 }
 
 @media (max-width: 480px) {
-     main {
-          padding: 0.5rem;
-     }
-      .tab-link {
-          padding: 6px 8px;
-          font-size: 0.8rem;
-      }
-      .deck-slot {
-          width: 120px; /* Ainda menor */
-      }
-      .part-placeholder {
-          width: 55px;
-          height: 55px;
-      }
-       #variant-modal-grid, .parts-grid {
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 0.5rem;
-       }
-       .variant-card img, .part-card img {
-            max-width: 40px;
-            height: 40px;
-       }
-       .variant-card p, .part-card p {
-            font-size: 0.75rem;
-            min-height: 1.5rem;
-       }
+     main { padding: 0.5rem; }
+      .tab-link { padding: 6px 8px; font-size: 0.8rem; }
+      .deck-slot { width: 120px; }
+      .part-placeholder { width: 55px; height: 55px; }
+       #variant-modal-grid, .parts-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 0.5rem; }
+       .variant-card img, .part-card img { max-width: 40px; height: 40px; }
+       .variant-card p, .part-card p { font-size: 0.75rem; min-height: 1.5rem; }
 }
