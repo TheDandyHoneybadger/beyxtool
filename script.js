@@ -1,142 +1,494 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- BASE DE DADOS DAS VARIANTES (AJUSTADA) ---
+    const ALL_VARIANTS = {
+        'aerpegasus': [
+            { name: 'Stock', image: 'images/blades/AeroPegasus.png' }
+            // ver. 2 removida
+        ],
+        'cobaltdragoon': [
+            { name: 'Stock', image: 'images/blades/CobaltDragoon.png' }
+            // ver. 2 removida
+        ],
+        'dranbuster': [
+            { name: 'Stock', image: 'images/blades/DranBuster.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/DranBuster_3-70N.png' } // Anterior ver. 3
+        ],
+        'drandagger': [
+            { name: 'Stock', image: 'images/blades/DranDagger.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/DranDagger_4-60R.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/DranDagger_4-70P.png' }, // Anterior ver. 4
+            { name: 'ver. 4', image: 'images/variantes/DranDagger_9-60LF.png' }  // Anterior ver. 5
+        ],
+        'dransword': [
+            { name: 'Stock', image: 'images/blades/DranSword.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/DranSword_3-80B.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/DranSword_4-80DB.png' }  // Anterior ver. 4
+        ],
+        'hellschain': [
+            { name: 'Stock', image: 'images/blades/HellsChain.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/HellsChain_9-80O.png' } // Anterior ver. 3
+        ],
+        'hellsscythe': [
+            { name: 'Stock', image: 'images/blades/HellsScythe.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/HellsScythe_3-80F.png' },    // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/HellsScythe_4-60T.png' },   // Anterior ver. 4
+            { name: 'ver. 4', image: 'images/variantes/HellsScythe_4-80LF.png' } // Anterior ver. 5
+        ],
+        'hoverwyvern': [
+            { name: 'Stock', image: 'images/blades/HoverWyvern.png' }
+             // ver. 2 removida
+        ],
+        'knightmail': [
+            { name: 'Stock', image: 'images/blades/KnightMail.png' }
+            // ver. 2 removida
+        ],
+        'knightshield': [
+            { name: 'Stock', image: 'images/blades/KnightShield.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/KnightShield_4-60LF.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/KnightShield_4-80T.png' }, // Anterior ver. 4
+            { name: 'ver. 4', image: 'images/variantes/KnightShield_5-80T.png' }  // Anterior ver. 5
+        ],
+        'leonclaw': [
+            { name: 'Stock', image: 'images/blades/LeonClaw.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/LeonClaw_3-80HN.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/LeonClaw_5-60P.png' }  // Anterior ver. 4
+        ],
+        'phoenixwing': [
+            { name: 'Stock', image: 'images/blades/PhoenixWing.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/PhoenixWing_9-60GF.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/PhoenixWing_9-80DB.png' }   // Anterior ver. 4
+        ],
+        'sharkscale': [
+            { name: 'Stock', image: 'images/blades/SharkScale.png' }
+            // ver. 2 removida
+        ],
+        'silverwolf': [
+            { name: 'Stock', image: 'images/blades/SilverWolf.png' }
+            // ver. 2 removida
+        ],
+        'tyrannobeat': [
+            { name: 'Stock', image: 'images/blades/TyrannoBeat.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/TyrannoBeat_4-70Q.png' } // Anterior ver. 3
+        ],
+        'unicornsting': [
+            { name: 'Stock', image: 'images/blades/UnicornSting.png' },
+             // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/UnicornSting_5-60GP.png' } // Anterior ver. 3
+        ],
+        'wizardarrow': [
+            { name: 'Stock', image: 'images/blades/WizardArrow.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/WizardArrow_4-60N.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/WizardArrow_4-80B.png' }, // Anterior ver. 4
+            { name: 'ver. 4', image: 'images/variantes/WizardArrow_4-80GB.png' },// Anterior ver. 5
+            { name: 'ver. 5', image: 'images/variantes/WizardArrow_4-80N.png' }  // Anterior ver. 6
+        ],
+        'wizardrod': [
+            { name: 'Stock', image: 'images/blades/WizardRod.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/WizardRod_5-70DB.png' } // Anterior ver. 3
+        ],
+        'bearscratch': [
+            { name: 'Stock', image: 'images/blades/BearScratch.png' }
+             // ver. 2 removida
+        ],
+        'blackshell': [
+            { name: 'Stock', image: 'images/blades/BlackShell.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/BlackShell_9-80B.png' } // Anterior ver. 3
+        ],
+        'cobaltdrake': [
+            { name: 'Stock', image: 'images/blades/CobaltDrake.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/CobaltDrake_9-60R.png' } // Anterior ver. 3
+        ],
+        'crimsongaruda': [
+            { name: 'Stock', image: 'images/blades/CrimsonGaruda.png' }
+            // ver. 2 removida
+        ],
+        'croccrunch': [
+            { name: 'Stock', image: 'images/blades/CrocCrunch.png' }
+            // ver. 2 removida
+        ],
+        'darthvader': [
+            { name: 'Stock', image: 'images/blades/DarthVader.png' }
+            // ver. 2 removida
+        ],
+        'dracielshield': [
+            { name: 'Stock', image: 'images/blades/DracielShield.png' }
+            // ver. 2 removida
+        ],
+        'dragoonsform': [
+            { name: 'Stock', image: 'images/blades/DragoonStorm.png' }
+            // ver. 2 removida
+        ],
+        'dranzerspiral': [
+            { name: 'Stock', image: 'images/blades/DranzerSpiral.png' }
+            // ver. 2 removida
+        ],
+        'drigerslash': [
+            { name: 'Stock', image: 'images/blades/DrigerSlash.png' }
+            // ver. 2 removida
+        ],
+        'generalgrievous': [
+            { name: 'Stock', image: 'images/blades/GeneralGrievous.png' }
+            // ver. 2 removida
+        ],
+        'ghostcircle': [
+            { name: 'Stock', image: 'images/blades/GhostCircle.png' },
+             // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/GhostCircle_4-60H.png' } // Anterior ver. 3
+        ],
+        'gillshark': [
+            { name: 'Stock', image: 'images/blades/GillShark.png' }
+            // ver. 2 removida
+        ],
+        'hellshammer': [
+            { name: 'Stock', image: 'images/blades/HellsHammer.png' }
+            // ver. 2 removida
+        ],
+        'impactdrake': [
+            { name: 'Stock', image: 'images/blades/ImpactDrake.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/ImpactDrake_9-60LR.png' } // Anterior ver. 3
+        ],
+        'knightlance': [
+            { name: 'Stock', image: 'images/blades/KnightLance.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/KnightLance_4-60GB.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/KnightLance_4-80HN.png' }  // Anterior ver. 4
+        ],
+        'leoncrest': [
+            { name: 'Stock', image: 'images/blades/LeonCrest.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/LeonCrest_9-80K.png' } // Anterior ver. 3
+        ],
+        'lightningl-drago': [
+            { name: 'Stock', image: 'images/blades/LightningL-Drago.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/Lightning_L-Drago_1-60F.png' } // Anterior ver. 3 (usando a imagem repetida)
+        ],
+        'mammothtusk': [
+            { name: 'Stock', image: 'images/blades/MammothTusk.png' }
+            // ver. 2 removida
+        ],
+        'moffgideon': [
+            { name: 'Stock', image: 'images/blades/MoffGideon.png' }
+            // ver. 2 removida
+        ],
+        'mosasaurus': [
+            { name: 'Stock', image: 'images/blades/Mosasaurus.png' }
+            // ver. 2 removida
+        ],
+        'optimusprimal': [
+            { name: 'Stock', image: 'images/blades/OptimusPrimal.png' }
+            // ver. 2 removida
+        ],
+        'optimusprime': [
+            { name: 'Stock', image: 'images/blades/OptimusPrime.png' }
+            // ver. 2 removida
+        ],
+        'phoenixfeather': [
+            { name: 'Stock', image: 'images/blades/PhoenixFeather.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/PhoenixFeather_3-60F.png' },    // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/PhoenixFeather_4-60LF.png' } // Anterior ver. 4
+        ],
+        'phoenixrudder': [
+            { name: 'Stock', image: 'images/blades/PhoenixRudder.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/PhoenixRudder_9-70G.png' } // Anterior ver. 3
+        ],
+        'quetzalcoatlus': [
+            { name: 'Stock', image: 'images/blades/Quetzalcoatlus.png' }
+            // ver. 2 removida
+        ],
+        'rhinohorn': [
+            { name: 'Stock', image: 'images/blades/RhinoHorn.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/RhinoHorn_5-80Q.png' } // Anterior ver. 3
+        ],
+        'rockleone': [
+            { name: 'Stock', image: 'images/blades/RockLeone.png' }
+            // ver. 2 removida
+        ],
+        'samuraicalibur': [
+            { name: 'Stock', image: 'images/blades/SamuraiCalibur.png' }
+            // ver. 2 removida
+        ],
+        'samuraisaber': [
+            { name: 'Stock', image: 'images/blades/SamuraiSaber.png' }
+            // ver. 2 removida
+        ],
+        'scorpiospear': [
+            { name: 'Stock', image: 'images/blades/ScorpioSpear.png' }
+            // ver. 2 removida
+        ],
+        'sharkedge': [
+            { name: 'Stock', image: 'images/blades/SharkEdge.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/SharkEdge_3-60LF.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/SharkEdge_3-80F.png' }, // Anterior ver. 4
+            { name: 'ver. 4', image: 'images/variantes/SharkEdge_4-80N.png' },  // Anterior ver. 5
+            { name: 'ver. 5', image: 'images/variantes/SharkEdge_5-60GF.png' }   // Anterior ver. 6
+        ],
+        'shelterdrake': [
+            { name: 'Stock', image: 'images/blades/ShelterDrake.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/ShelterDrake_5-70O.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/ShelterDrake_7-80GP.png' } // Anterior ver. 4
+        ],
+        'shinobiknife': [
+            { name: 'Stock', image: 'images/blades/ShinobiKnife.png' }
+            // ver. 2 removida
+        ],
+        'shinobishadow': [
+            { name: 'Stock', image: 'images/blades/ShinobiShadow.png' },
+             // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/ShinobiShadow_3-70GP.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/ShinobiShadow_3-80F.png' },  // Anterior ver. 4
+            { name: 'ver. 4', image: 'images/variantes/ShinobiShadow_9-60LF.png' } // Anterior ver. 5
+        ],
+        'spider-man': [
+            { name: 'Stock', image: 'images/blades/Spider-Man.png' }
+             // ver. 2 removida
+        ],
+        'sphinx-cowl': [
+            { name: 'Stock', image: 'images/blades/SphinxCowl.png' },
+             // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/SphinxCowl_4-80HT.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/SphinxCowl_5-60O.png' },  // Anterior ver. 4
+            { name: 'ver. 4', image: 'images/variantes/SphinxCowl_9-80GN.png' } // Anterior ver. 5
+        ],
+        'spinosaurus': [
+            { name: 'Stock', image: 'images/blades/Spinosaurus.png' }
+             // ver. 2 removida
+        ],
+        'stormpegasis': [
+            { name: 'Stock', image: 'images/blades/StormPegasis.png' }
+            // ver. 2 removida
+        ],
+        't.rex': [
+            { name: 'Stock', image: 'images/blades/T.Rex.png' }
+            // ver. 2 removida
+        ],
+        'tacklegoat': [
+            { name: 'Stock', image: 'images/blades/TackleGoat.png' }
+            // ver. 2 removida
+        ],
+        'thanos': [
+            { name: 'Stock', image: 'images/blades/Thanos.png' }
+            // ver. 2 removida
+        ],
+        'tricerapress': [
+            { name: 'Stock', image: 'images/blades/TriceraPress.png' }
+            // ver. 2 removida
+        ],
+        'tyrannoroar': [
+            { name: 'Stock', image: 'images/blades/TyrannoRoar.png' }
+            // ver. 2 removida
+        ],
+        'venom': [
+            { name: 'Stock', image: 'images/blades/Venom.png' }
+            // ver. 2 removida
+        ],
+        'victoryvalkyrie': [
+            { name: 'Stock', image: 'images/blades/VictoryValkyrie.png' }
+            // ver. 2 removida
+        ],
+        'vipertail': [
+            { name: 'Stock', image: 'images/blades/ViperTail.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/ViperTail_4-60F.png' },    // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/ViperTail_5-60F.png' }, // Anterior ver. 4
+            { name: 'ver. 4', image: 'images/variantes/ViperTail_5-70D.png' }, // Anterior ver. 5
+            { name: 'ver. 5', image: 'images/variantes/ViperTail_5-80O.png' }  // Anterior ver. 6
+        ],
+        'weisstiger': [
+            { name: 'Stock', image: 'images/blades/WeissTiger.png' }
+            // ver. 2 removida
+        ],
+        'whalewave': [
+            { name: 'Stock', image: 'images/blades/WhaleWave.png' },
+             // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/WhaleWave_4-70HN.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/WhaleWave_5-80E.png' },  // Anterior ver. 4
+            { name: 'ver. 4', image: 'images/variantes/WhaleWave_7-60K.png' }   // Anterior ver. 5
+        ],
+        'wyverngale': [
+            { name: 'Stock', image: 'images/blades/WyvernGale.png' },
+            // ver. 2 removida
+            { name: 'ver. 2', image: 'images/variantes/WyvernGale_2-60S.png' }, // Anterior ver. 3
+            { name: 'ver. 3', image: 'images/variantes/WyvernGale_3-60T.png' }, // Anterior ver. 4
+            { name: 'ver. 4', image: 'images/variantes/WyvernGale_5-80GB.png' }// Anterior ver. 5
+        ],
+        'xenoxcalibur': [
+            { name: 'Stock', image: 'images/blades/XenoXcalibur.png' }
+            // ver. 2 removida
+        ],
+        'yellkong': [
+            { name: 'Stock', image: 'images/blades/YellKong.png' }
+            // ver. 2 removida
+        ]
+    };
+
     // --- BASE DE DADOS DAS PEÇAS E COMBOS ---
+    // (O array ALL_PARTS continua o mesmo da resposta anterior, com as propriedades 'variantsId')
     const ALL_PARTS = [
         // Blades (Variações)
-        { id: 'aerpegasus', name: 'AeroPegasus', type: 'blade', image: 'images/blades/AeroPegasus.png', score: 26.2 },
-        { id: 'cobaltdragoon', name: 'CobaltDragoon', type: 'blade', image: 'images/blades/CobaltDragoon.png', score: 279 },
-        { id: 'dranbuster', name: 'DranBuster', type: 'blade', image: 'images/blades/DranBuster.png', score: 16.5 },
-        { id: 'drandagger', name: 'DranDagger', type: 'blade', image: 'images/blades/DranDagger.png', score: 4.5 },
-        { id: 'dransword', name: 'DranSword', type: 'blade', image: 'images/blades/DranSword.png', score: 6, variants: ['Stock', 'Red', 'Blue', 'Gold'] },
-        { id: 'hellschain', name: 'HellsChain', type: 'blade', image: 'images/blades/HellsChain.png', score: 6.5 },
-        { id: 'hellsscythe', name: 'HellsScythe', type: 'blade', image: 'images/blades/HellsScythe.png', score: 6.5, variants: ['Stock', 'Black', 'Green', 'Purple'] },
-        { id: 'hoverwyvern', name: 'HoverWyvern', type: 'blade', image: 'images/blades/HoverWyvern.png', score: 13.5 },
-        { id: 'knightmail', name: 'KnightMail', type: 'blade', image: 'images/blades/KnightMail.png', score: 11.5 },
-        { id: 'knightshield', name: 'KnightShield', type: 'blade', image: 'images/blades/KnightShield.png', score: 5 },
-        { id: 'leonclaw', name: 'LeonClaw', type: 'blade', image: 'images/blades/LeonClaw.png', score: 4 },
-        { id: 'phoenixwing', name: 'PhoenixWing', type: 'blade', image: 'images/blades/PhoenixWing.png', score: 71 },
-        { id: 'sharkscale', name: 'SharkScale', type: 'blade', image: 'images/blades/SharkScale.png', score: 26.5 },
-        { id: 'silverwolf', name: 'SilverWolf', type: 'blade', image: 'images/blades/SilverWolf.png', score: 28 },
-        { id: 'tyrannobeat', name: 'TyrannoBeat', type: 'blade', image: 'images/blades/TyrannoBeat.png', score: 21 },
-        { id: 'unicornsting', name: 'UnicornSting', type: 'blade', image: 'images/blades/UnicornSting.png', score: 8.5 },
-        { id: 'wizardarrow', name: 'WizardArrow', type: 'blade', image: 'images/blades/WizardArrow.png', score: 3.5 },
-        { id: 'wizardrod', name: 'WizardRod', type: 'blade', image: 'images/blades/WizardRod.png', score: 262.5 },
+        { id: 'aerpegasus', name: 'AeroPegasus', type: 'blade', image: 'images/blades/AeroPegasus.png', score: 26.2, variantsId: 'aerpegasus' },
+        { id: 'cobaltdragoon', name: 'CobaltDragoon', type: 'blade', image: 'images/blades/CobaltDragoon.png', score: 279, variantsId: 'cobaltdragoon' },
+        { id: 'dranbuster', name: 'DranBuster', type: 'blade', image: 'images/blades/DranBuster.png', score: 16.5, variantsId: 'dranbuster' },
+        { id: 'drandagger', name: 'DranDagger', type: 'blade', image: 'images/blades/DranDagger.png', score: 4.5, variantsId: 'drandagger' },
+        { id: 'dransword', name: 'DranSword', type: 'blade', image: 'images/blades/DranSword.png', score: 6, variantsId: 'dransword' },
+        { id: 'hellschain', name: 'HellsChain', type: 'blade', image: 'images/blades/HellsChain.png', score: 6.5, variantsId: 'hellschain' },
+        { id: 'hellsscythe', name: 'HellsScythe', type: 'blade', image: 'images/blades/HellsScythe.png', score: 6.5, variantsId: 'hellsscythe' },
+        { id: 'hoverwyvern', name: 'HoverWyvern', type: 'blade', image: 'images/blades/HoverWyvern.png', score: 13.5, variantsId: 'hoverwyvern' },
+        { id: 'knightmail', name: 'KnightMail', type: 'blade', image: 'images/blades/KnightMail.png', score: 11.5, variantsId: 'knightmail' },
+        { id: 'knightshield', name: 'KnightShield', type: 'blade', image: 'images/blades/KnightShield.png', score: 5, variantsId: 'knightshield' },
+        { id: 'leonclaw', name: 'LeonClaw', type: 'blade', image: 'images/blades/LeonClaw.png', score: 4, variantsId: 'leonclaw' },
+        { id: 'phoenixwing', name: 'PhoenixWing', type: 'blade', image: 'images/blades/PhoenixWing.png', score: 71, variantsId: 'phoenixwing' },
+        { id: 'sharkscale', name: 'SharkScale', type: 'blade', image: 'images/blades/SharkScale.png', score: 26.5, variantsId: 'sharkscale' },
+        { id: 'silverwolf', name: 'SilverWolf', type: 'blade', image: 'images/blades/SilverWolf.png', score: 28, variantsId: 'silverwolf' },
+        { id: 'tyrannobeat', name: 'TyrannoBeat', type: 'blade', image: 'images/blades/TyrannoBeat.png', score: 21, variantsId: 'tyrannobeat' },
+        { id: 'unicornsting', name: 'UnicornSting', type: 'blade', image: 'images/blades/UnicornSting.png', score: 8.5, variantsId: 'unicornsting' },
+        { id: 'wizardarrow', name: 'WizardArrow', type: 'blade', image: 'images/blades/WizardArrow.png', score: 3.5, variantsId: 'wizardarrow' },
+        { id: 'wizardrod', name: 'WizardRod', type: 'blade', image: 'images/blades/WizardRod.png', score: 262.5, variantsId: 'wizardrod' },
         { id: 'arc', name: 'Arc', type: 'blade', image: 'images/blades/Arc.png', score: 3.5 },
-        { id: 'bearscratch', name: 'BearScratch', type: 'blade', image: 'images/blades/BearScratch.png', score: 2 },
-        { id: 'blackshell', name: 'BlackShell', type: 'blade', image: 'images/blades/BlackShell.png', score: 4 },
+        { id: 'bearscratch', name: 'BearScratch', type: 'blade', image: 'images/blades/BearScratch.png', score: 2, variantsId: 'bearscratch' },
+        { id: 'blackshell', name: 'BlackShell', type: 'blade', image: 'images/blades/BlackShell.png', score: 4, variantsId: 'blackshell' },
         { id: 'blast', name: 'Blast', type: 'blade', image: 'images/blades/Blast.png', score: 10 },
         { id: 'bolt', name: 'Bolt', type: 'blade', image: 'images/blades/Bolt.png', score: 4.5 },
         { id: 'brave', name: 'Brave', type: 'blade', image: 'images/blades/Brave.png', score: 4.5 },
         { id: 'brush', name: 'Brush', type: 'blade', image: 'images/blades/Brush.png', score: 2 },
-        { id: 'cobaltdrake', name: 'CobaltDrake', type: 'blade', image: 'images/blades/CobaltDrake.png', score: 3.5 },
-        { id: 'crimsongaruda', name: 'CrimsonGaruda', type: 'blade', image: 'images/blades/CrimsonGaruda.png', score: 4.5 },
-        { id: 'croccrunch', name: 'CrocCrunch', type: 'blade', image: 'images/blades/CrocCrunch.png', score: 2 },
+        { id: 'cobaltdrake', name: 'CobaltDrake', type: 'blade', image: 'images/blades/CobaltDrake.png', score: 3.5, variantsId: 'cobaltdrake' },
+        { id: 'crimsongaruda', name: 'CrimsonGaruda', type: 'blade', image: 'images/blades/CrimsonGaruda.png', score: 4.5, variantsId: 'crimsongaruda' },
+        { id: 'croccrunch', name: 'CrocCrunch', type: 'blade', image: 'images/blades/CrocCrunch.png', score: 2, variantsId: 'croccrunch' },
         { id: 'dark', name: 'Dark', type: 'blade', image: 'images/blades/Dark.png', score: 2.5 },
-        { id: 'darthvader', name: 'DarthVader', type: 'blade', image: 'images/blades/DarthVader.png', score: 2.5 },
-        { id: 'dracielshield', name: 'DracielShield', type: 'blade', image: 'images/blades/DracielShield.png', score: 1.5 },
-        { id: 'dragoonsform', name: 'DragoonStorm', type: 'blade', image: 'images/blades/DragoonStorm.png', score: 1 },
-        { id: 'dranzerspiral', name: 'DranzerSpiral', type: 'blade', image: 'images/blades/DranzerSpiral.png', score: 2.5 },
-        { id: 'drigerslash', name: 'DrigerSlash', type: 'blade', image: 'images/blades/DrigerSlash.png', score: 1.5 },
+        { id: 'darthvader', name: 'DarthVader', type: 'blade', image: 'images/blades/DarthVader.png', score: 2.5, variantsId: 'darthvader' },
+        { id: 'dracielshield', name: 'DracielShield', type: 'blade', image: 'images/blades/DracielShield.png', score: 1.5, variantsId: 'dracielshield' },
+        { id: 'dragoonsform', name: 'DragoonStorm', type: 'blade', image: 'images/blades/DragoonStorm.png', score: 1, variantsId: 'dragoonsform' },
+        { id: 'dranzerspiral', name: 'DranzerSpiral', type: 'blade', image: 'images/blades/DranzerSpiral.png', score: 2.5, variantsId: 'dranzerspiral' },
+        { id: 'drigerslash', name: 'DrigerSlash', type: 'blade', image: 'images/blades/DrigerSlash.png', score: 1.5, variantsId: 'drigerslash' },
         { id: 'eclipse', name: 'Eclipse', type: 'blade', image: 'images/blades/Eclipse.png', score: 2 },
         { id: 'flame', name: 'Flame', type: 'blade', image: 'images/blades/Flame.png', score: 1.5 },
-        { id: 'generalgrievous', name: 'GeneralGrievous', type: 'blade', image: 'images/blades/GeneralGrievous.png', score: 1 },
-        { id: 'ghostcircle', name: 'GhostCircle', type: 'blade', image: 'images/blades/GhostCircle.png', score: 2 },
-        { id: 'gillshark', name: 'GillShark', type: 'blade', image: 'images/blades/GillShark.png', score: 2 },
-        { id: 'hellshammer', name: 'HellsHammer', type: 'blade', image: 'images/blades/HellsHammer.png', score: 4.5 },
+        { id: 'generalgrievous', name: 'GeneralGrievous', type: 'blade', image: 'images/blades/GeneralGrievous.png', score: 1, variantsId: 'generalgrievous' },
+        { id: 'ghostcircle', name: 'GhostCircle', type: 'blade', image: 'images/blades/GhostCircle.png', score: 2, variantsId: 'ghostcircle' },
+        { id: 'gillshark', name: 'GillShark', type: 'blade', image: 'images/blades/GillShark.png', score: 2, variantsId: 'gillshark' },
+        { id: 'golemrock', name: 'GolemRock', type: 'blade', image: 'images/blades/GolemRock.png', score: 1 }, // Peça adicionada
+        { id: 'hellshammer', name: 'HellsHammer', type: 'blade', image: 'images/blades/HellsHammer.png', score: 4.5, variantsId: 'hellshammer' },
         { id: 'hornet', name: 'Hornet', type: 'blade', image: 'images/blades/Hornet.png', score: 1 },
-        { id: 'impactdrake', name: 'ImpactDrake', type: 'blade', image: 'images/blades/ImpactDrake.png', score: 5.5 },
-        { id: 'knightlance', name: 'KnightLance', type: 'blade', image: 'images/blades/KnightLance.png', score: 3.5 },
+        { id: 'impactdrake', name: 'ImpactDrake', type: 'blade', image: 'images/blades/ImpactDrake.png', score: 5.5, variantsId: 'impactdrake' },
+        { id: 'knightlance', name: 'KnightLance', type: 'blade', image: 'images/blades/KnightLance.png', score: 3.5, variantsId: 'knightlance' },
         { id: 'kraken', name: 'Kraken', type: 'blade', image: 'images/blades/Kraken.png', score: 1 },
-        { id: 'leoncrest', name: 'LeonCrest', type: 'blade', image: 'images/blades/LeonCrest.png', score: 2.5 },
-        { id: 'lightningl-drago', name: 'LightningL-Drago', type: 'blade', image: 'images/blades/LightningL-Drago.png', score: 3.5 },
-        { id: 'mammothtusk', name: 'MammothTusk', type: 'blade', image: 'images/blades/MammothTusk.png', score: 1.5 },
-        { id: 'moffgideon', name: 'MoffGideon', type: 'blade', image: 'images/blades/MoffGideon.png', score: 1 },
-        { id: 'mosasaurus', name: 'Mosasaurus', type: 'blade', image: 'images/blades/Mosasaurus.png', score: 1 },
-        { id: 'optimusprimal', name: 'OptimusPrimal', type: 'blade', image: 'images/blades/OptimusPrimal.png', score: 2 },
-        { id: 'optimusprime', name: 'OptimusPrime', type: 'blade', image: 'images/blades/OptimusPrime.png', score: 1 },
-        { id: 'phoenixfeather', name: 'PhoenixFeather', type: 'blade', image: 'images/blades/PhoenixFeather.png', score: 1.5 },
-        { id: 'phoenixrudder', name: 'PhoenixRudder', type: 'blade', image: 'images/blades/PhoenixRudder.png', score: 2 },
+        { id: 'leoncrest', name: 'LeonCrest', type: 'blade', image: 'images/blades/LeonCrest.png', score: 2.5, variantsId: 'leoncrest' },
+        { id: 'lightningl-drago', name: 'LightningL-Drago', type: 'blade', image: 'images/blades/LightningL-Drago.png', score: 3.5, variantsId: 'lightningl-drago' },
+        { id: 'mammothtusk', name: 'MammothTusk', type: 'blade', image: 'images/blades/MammothTusk.png', score: 1.5, variantsId: 'mammothtusk' },
+        { id: 'moffgideon', name: 'MoffGideon', type: 'blade', image: 'images/blades/MoffGideon.png', score: 1, variantsId: 'moffgideon' },
+        { id: 'mosasaurus', name: 'Mosasaurus', type: 'blade', image: 'images/blades/Mosasaurus.png', score: 1, variantsId: 'mosasaurus' },
+        { id: 'optimusprimal', name: 'OptimusPrimal', type: 'blade', image: 'images/blades/OptimusPrimal.png', score: 2, variantsId: 'optimusprimal' },
+        { id: 'optimusprime', name: 'OptimusPrime', type: 'blade', image: 'images/blades/OptimusPrime.png', score: 1, variantsId: 'optimusprime' },
+        { id: 'phoenixfeather', name: 'PhoenixFeather', type: 'blade', image: 'images/blades/PhoenixFeather.png', score: 1.5, variantsId: 'phoenixfeather' },
+        { id: 'phoenixrudder', name: 'PhoenixRudder', type: 'blade', image: 'images/blades/PhoenixRudder.png', score: 2, variantsId: 'phoenixrudder' },
         { id: 'pteraswing', name: 'PteraSwing', type: 'blade', image: 'images/blades/PteraSwing.png', score: 1.5 },
-        { id: 'quetzalcoatlus', name: 'Quetzalcoatlus', type: 'blade', image: 'images/blades/Quetzalcoatlus.png', score: 1 },
+        { id: 'quetzalcoatlus', name: 'Quetzalcoatlus', type: 'blade', image: 'images/blades/Quetzalcoatlus.png', score: 1, variantsId: 'quetzalcoatlus' },
         { id: 'reaper', name: 'Reaper', type: 'blade', image: 'images/blades/Reaper.png', score: 2.5 },
-        { id: 'rhinohorn', name: 'RhinoHorn', type: 'blade', image: 'images/blades/RhinoHorn.png', score: 1.5 },
-        { id: 'rockleone', name: 'RockLeone', type: 'blade', image: 'images/blades/RockLeone.png', score: 1.5 },
-        { id: 'samuraicalibur', name: 'SamuraiCalibur', type: 'blade', image: 'images/blades/SamuraiCalibur.png', score: 3 },
-        { id: 'samuraisaber', name: 'SamuraiSaber', type: 'blade', image: 'images/blades/SamuraiSaber.png', score: 5 },
+        { id: 'rhinohorn', name: 'RhinoHorn', type: 'blade', image: 'images/blades/RhinoHorn.png', score: 1.5, variantsId: 'rhinohorn' },
+        { id: 'rockleone', name: 'RockLeone', type: 'blade', image: 'images/blades/RockLeone.png', score: 1.5, variantsId: 'rockleone' },
+        { id: 'samuraicalibur', name: 'SamuraiCalibur', type: 'blade', image: 'images/blades/SamuraiCalibur.png', score: 3, variantsId: 'samuraicalibur' },
+        { id: 'samuraisaber', name: 'SamuraiSaber', type: 'blade', image: 'images/blades/SamuraiSaber.png', score: 5, variantsId: 'samuraisaber' },
         { id: 'samuraisteel', name: 'SamuraiSteel', type: 'blade', image: 'images/blades/SamuraiSteel.png', score: 1 },
-        { id: 'scorpiospear', name: 'ScorpioSpear', type: 'blade', image: 'images/blades/ScorpioSpear.png', score: 8 },
-        { id: 'sharkedge', name: 'SharkEdge', type: 'blade', image: 'images/blades/SharkEdge.png', score: 9.5 },
-        { id: 'shelterdrake', name: 'ShelterDrake', type: 'blade', image: 'images/blades/ShelterDrake.png', score: 2 },
-        { id: 'shinobiknife', name: 'ShinobiKnife', type: 'blade', image: 'images/blades/ShinobiKnife.png', score: 1 },
-        { id: 'shinobishadow', name: 'ShinobiShadow', type: 'blade', image: 'images/blades/ShinobiShadow.png', score: 1.5 },
-        { id: 'spider-man', name: 'Spider-Man', type: 'blade', image: 'images/blades/Spider-Man.png', score: 1 },
-        { id: 'sphinx-cowl', name: 'SphinxCowl', type: 'blade', image: 'images/blades/SphinxCowl.png', score: 1.5 },
-        { id: 'spinosaurus', name: 'Spinosaurus', type: 'blade', image: 'images/blades/Spinosaurus.png', score: 1 },
-        { id: 'stormpegasis', name: 'StormPegasis', type: 'blade', image: 'images/blades/StormPegasis.png', score: 1 },
-        { id: 't.rex', name: 'T.Rex', type: 'blade', image: 'images/blades/T.Rex.png', score: 1 },
-        { id: 'tacklegoat', name: 'TackleGoat', type: 'blade', image: 'images/blades/TackleGoat.png', score: 1 },
-        { id: 'thanos', name: 'Thanos', type: 'blade', image: 'images/blades/Thanos.png', score: 1 },
-        { id: 'tricerapress', name: 'TriceraPress', type: 'blade', image: 'images/blades/TriceraPress.png', score: 2.5 },
-        { id: 'tyrannoroar', name: 'TyrannoRoar', type: 'blade', image: 'images/blades/TyrannoRoar.png', score: 5 },
-        { id: 'venom', name: 'Venom', type: 'blade', image: 'images/blades/Venom.png', score: 2 },
-        { id: 'victoryvalkyrie', name: 'VictoryValkyrie', type: 'blade', image: 'images/blades/VictoryValkyrie.png', score: 1 },
-        { id: 'vipertail', name: 'ViperTail', type: 'blade', image: 'images/blades/ViperTail.png', score: 2.5 },
-        { id: 'weisstiger', name: 'WeissTiger', type: 'blade', image: 'images/blades/WeissTiger.png', score: 2 },
-        { id: 'whalewave', name: 'WhaleWave', type: 'blade', image: 'images/blades/WhaleWave.png', score: 6 },
-        { id: 'wyverngale', name: 'WyvernGale', type: 'blade', image: 'images/blades/WyvernGale.png', score: 1.5 },
+        { id: 'scorpiospear', name: 'ScorpioSpear', type: 'blade', image: 'images/blades/ScorpioSpear.png', score: 8, variantsId: 'scorpiospear' },
+        { id: 'sharkedge', name: 'SharkEdge', type: 'blade', image: 'images/blades/SharkEdge.png', score: 9.5, variantsId: 'sharkedge' },
+        { id: 'shelterdrake', name: 'ShelterDrake', type: 'blade', image: 'images/blades/ShelterDrake.png', score: 2, variantsId: 'shelterdrake' },
+        { id: 'shinobiknife', name: 'ShinobiKnife', type: 'blade', image: 'images/blades/ShinobiKnife.png', score: 1, variantsId: 'shinobiknife' },
+        { id: 'shinobishadow', name: 'ShinobiShadow', type: 'blade', image: 'images/blades/ShinobiShadow.png', score: 1.5, variantsId: 'shinobishadow' },
+        { id: 'spider-man', name: 'Spider-Man', type: 'blade', image: 'images/blades/Spider-Man.png', score: 1, variantsId: 'spider-man' },
+        { id: 'sphinx-cowl', name: 'SphinxCowl', type: 'blade', image: 'images/blades/SphinxCowl.png', score: 1.5, variantsId: 'sphinx-cowl' },
+        { id: 'spinosaurus', name: 'Spinosaurus', type: 'blade', image: 'images/blades/Spinosaurus.png', score: 1, variantsId: 'spinosaurus' },
+        { id: 'stormpegasis', name: 'StormPegasis', type: 'blade', image: 'images/blades/StormPegasis.png', score: 1, variantsId: 'stormpegasis' },
+        { id: 't.rex', name: 'T.Rex', type: 'blade', image: 'images/blades/T.Rex.png', score: 1, variantsId: 't.rex' },
+        { id: 'tacklegoat', name: 'TackleGoat', type: 'blade', image: 'images/blades/TackleGoat.png', score: 1, variantsId: 'tacklegoat' },
+        { id: 'thanos', name: 'Thanos', type: 'blade', image: 'images/blades/Thanos.png', score: 1, variantsId: 'thanos' },
+        { id: 'tricerapress', name: 'TriceraPress', type: 'blade', image: 'images/blades/TriceraPress.png', score: 2.5, variantsId: 'tricerapress' },
+        { id: 'tyrannoroar', name: 'TyrannoRoar', type: 'blade', image: 'images/blades/TyrannoRoar.png', score: 5, variantsId: 'tyrannoroar' },
+        { id: 'venom', name: 'Venom', type: 'blade', image: 'images/blades/Venom.png', score: 2, variantsId: 'venom' },
+        { id: 'victoryvalkyrie', name: 'VictoryValkyrie', type: 'blade', image: 'images/blades/VictoryValkyrie.png', score: 1, variantsId: 'victoryvalkyrie' },
+        { id: 'vipertail', name: 'ViperTail', type: 'blade', image: 'images/blades/ViperTail.png', score: 2.5, variantsId: 'vipertail' },
+        { id: 'weisstiger', name: 'WeissTiger', type: 'blade', image: 'images/blades/WeissTiger.png', score: 2, variantsId: 'weisstiger' },
+        { id: 'whalewave', name: 'WhaleWave', type: 'blade', image: 'images/blades/WhaleWave.png', score: 6, variantsId: 'whalewave' },
+        { id: 'wyverngale', name: 'WyvernGale', type: 'blade', image: 'images/blades/WyvernGale.png', score: 1.5, variantsId: 'wyverngale' },
         { id: 'xenoxcaliburius', name: 'XenoXcaliburius', type: 'blade', image: 'images/blades/XenoXcaliburius.png', score: 1 },
-        { id: 'xenoxcalibur', name: 'XenoXcalibur', type: 'blade', image: 'images/blades/XenoXcalibur.png', score: 1 },
-        { id: 'yellkong', name: 'YellKong', type: 'blade', image: 'images/blades/YellKong.png', score: 1.5 },
+        { id: 'xenoxcalibur', name: 'XenoXcalibur', type: 'blade', image: 'images/blades/XenoXcalibur.png', score: 1, variantsId: 'xenoxcalibur' },
+        { id: 'yellkong', name: 'YellKong', type: 'blade', image: 'images/blades/YellKong.png', score: 1.5, variantsId: 'yellkong' },
 
         // Ratchets
         { id: '0-70', name: '0-70', type: 'ratchet', image: 'images/ratchets/0-70.png', score: 39 }, { id: '0-80', name: '0-80', type: 'ratchet', image: 'images/ratchets/0-80.png', score: 48.5 }, { id: '1-60', name: '1-60', type: 'ratchet', image: 'images/ratchets/1-60.png', score: 3389.15 }, { id: '1-70', name: '1-70', type: 'ratchet', image: 'images/ratchets/1-70.png', score: 409.15 }, { id: '1-80', name: '1-80', type: 'ratchet', image: 'images/ratchets/1-80.png', score: 114 }, { id: '2-60', name: '2-60', type: 'ratchet', image: 'images/ratchets/2-60.png', score: 49.25 }, { id: '2-70', name: '2-70', type: 'ratchet', image: 'images/ratchets/2-70.png', score: 13 }, { id: '2-80', name: '2-80', type: 'ratchet', image: 'images/ratchets/2-80.png', score: 5 }, { id: '3-60', name: '3-60', type: 'ratchet', image: 'images/ratchets/3-60.png', score: 2580.5 }, { id: '3-70', name: '3-70', type: 'ratchet', image: 'images/ratchets/3-70.png', score: 114.15 }, { id: '3-80', name: '3-80', type: 'ratchet', image: 'images/ratchets/3-80.png', score: 88.25 }, { id: '3-85', name: '3-85', type: 'ratchet', image: 'images/ratchets/3-85.png', score: 16 }, { id: '4-50', name: '4-50', type: 'ratchet', image: 'images/ratchets/4-50.png', score: 356 }, { id: '4-55', name: '4-55', type: 'ratchet', image: 'images/ratchets/4-55.png', score: 82.15 }, { id: '4-60', name: '4-60', type: 'ratchet', image: 'images/ratchets/4-60.png', score: 178.5 }, { id: '4-70', name: '4-70', type: 'ratchet', image: 'images/ratchets/4-70.png', score: 22.5 }, { id: '4-80', name: '4-80', type: 'ratchet', image: 'images/ratchets/4-80.png', score: 28.25 }, { id: '5-60', name: '5-60', type: 'ratchet', image: 'images/ratchets/5-60.png', score: 1760.15 }, { id: '5-70', name: '5-70', type: 'ratchet', image: 'images/ratchets/5-70.png', score: 150 }, { id: '5-80', name: '5-80', type: 'ratchet', image: 'images/ratchets/5-80.png', score: 70 }, { id: '6-60', name: '6-60', type: 'ratchet', image: 'images/ratchets/6-60.png', score: 345.25 }, { id: '6-70', name: '6-70', type: 'ratchet', image: 'images/ratchets/6-70.png', score: 5 }, { id: '6-80', name: '6-80', type: 'ratchet', image: 'images/ratchets/6-80.png', score: 22.5 }, { id: '7-60', name: '7-60', type: 'ratchet', image: 'images/ratchets/7-60.png', score: 1174 }, { id: '7-70', name: '7-70', type: 'ratchet', image: 'images/ratchets/7-70.png', score: 228.25 }, { id: '7-80', name: '7-80', type: 'ratchet', image: 'images/ratchets/7-80.png', score: 17.25 }, { id: '9-60', name: '9-60', type: 'ratchet', image: 'images/ratchets/9-60.png', score: 3327.5 }, { id: '9-70', name: '9-70', type: 'ratchet', image: 'images/ratchets/9-70.png', score: 296.5 }, { id: '9-80', name: '9-80', type: 'ratchet', image: 'images/ratchets/9-80.png', score: 94 }, { id: 'm-85', name: 'M-85', type: 'ratchet', image: 'images/ratchets/M-85.png', score: 11 },
-        
+
         // Bits
         { id: 'accel', name: 'Accel', type: 'bit', image: 'images/bits/Accel.png', score: 39 }, { id: 'ball', name: 'Ball', type: 'bit', image: 'images/bits/Ball.png', score: 1298.25 }, { id: 'boundspike', name: 'BoundSpike', type: 'bit', image: 'images/bits/BoundSpike.png', score: 39.5 }, { id: 'cyclone', name: 'Cyclone', type: 'bit', image: 'images/bits/Cyclone.png', score: 79 }, { id: 'diskball', name: 'DiskBall', type: 'bit', image: 'images/bits/DiskBall.png', score: 17 }, { id: 'dot', name: 'Dot', type: 'bit', image: 'images/bits/Dot.png', score: 39.5 }, { id: 'elevate', name: 'Elevate', type: 'bit', image: 'images/bits/Elevate.png', score: 1299 }, { id: 'flat', name: 'Flat', type: 'bit', image: 'images/bits/Flat.png', score: 223 }, { id: 'freeball', name: 'FreeBall', type: 'bit', image: 'images/bits/FreeBall.png', score: 716 }, { id: 'gearball', name: 'GearBall', type: 'bit', image: 'images/bits/GearBall.png', score: 35 }, { id: 'gearflat', name: 'GearFlat', type: 'bit', image: 'images/bits/GearFlat.png', score: 48.15 }, { id: 'gearneedle', name: 'GearNeedle', type: 'bit', image: 'images/bits/GearNeedle.png', score: 11.5 }, { id: 'gearpoint', name: 'GearPoint', type: 'bit', image: 'images/bits/GearPoint.png', score: 54 }, { id: 'gearrush', name: 'GearRush', type: 'bit', image: 'images/bits/GearRush.png', score: 25 }, { id: 'glide', name: 'Glide', type: 'bit', image: 'images/bits/Glide.png', score: 19.5 }, { id: 'hexa', name: 'Hexa', type: 'bit', image: 'images/bits/Hexa.png', score: 1908.15 }, { id: 'highneedle', name: 'HighNeedle', type: 'bit', image: 'images/bits/HighNeedle.png', score: 39.25 }, { id: 'hightaper', name: 'HighTaper', type: 'bit', image: 'images/bits/HighTaper.png', score: 29.25 }, { id: 'kick', name: 'Kick', type: 'bit', image: 'images/bits/Kick.png', score: 1050 }, { id: 'level', name: 'Level', type: 'bit', image: 'images/bits/Level.png', score: 1007.5 }, { id: 'lowflat', name: 'LowFlat', type: 'bit', image: 'images/bits/LowFlat.png', score: 350.15 }, { id: 'loworb', name: 'LowOrb', type: 'bit', image: 'images/bits/LowOrb.png', score: 351 }, { id: 'lowrush', name: 'LowRush', type: 'bit', image: 'images/bits/LowRush.png', score: 2011.5 }, { id: 'merge', name: 'Merge', type: 'bit', image: 'images/bits/Merge.png', score: 3 }, { id: 'metalneedle', name: 'MetalNeedle', type: 'bit', image: 'images/bits/MetalNeedle.png', score: 4.15 }, { id: 'needle', name: 'Needle', type: 'bit', image: 'images/bits/Needle.png', score: 31.5 }, { id: 'orb', name: 'Orb', type: 'bit', image: 'images/bits/Orb.png', score: 126 }, { id: 'point', name: 'Point', type: 'bit', image: 'images/bits/Point.png', score: 752.15 }, { id: 'quake', name: 'Quake', type: 'bit', image: 'images/bits/Quake.png', score: 21.5 }, { id: 'rubberaccel', name: 'RubberAccel', type: 'bit', image: 'images/bits/RubberAccel.png', score: 110.15 }, { id: 'rush', name: 'Rush', type: 'bit', image: 'images/bits/Rush.png', score: 2214 }, { id: 'spike', name: 'Spike', type: 'bit', image: 'images/bits/Spike.png', score: 19 }, { id: 'taper', name: 'Taper', type: 'bit', image: 'images/bits/Taper.png', score: 336 }, { id: 'transpoint', name: 'TransPoint', type: 'bit', image: 'images/bits/TransPoint.png', score: 24.25 }, { id: 'underneedle', name: 'UnderNeedle', type: 'bit', image: 'images/bits/UnderNeedle.png', score: 162.5 }, { id: 'unite', name: 'Unite', type: 'bit', image: 'images/bits/Unite.png', score: 169.25 }, { id: 'vortex', name: 'Vortex', type: 'bit', image: 'images/bits/Vortex.png', score: 24.15 }, { id: 'wedge', name: 'Wedge', type: 'bit', image: 'images/bits/Wedge.png', score: 301.15 }, { id: 'zap', name: 'Zap', type: 'bit', image: 'images/bits/Zap.png', score: 47 },
 
-        // --- Novas Peças (Score 0 - Apenas Coleção) ---
-        { id: 'lockchip-dran', name: 'Dran', type: 'lockchip', image: 'images/lockchips/Dran.png', score: 0 },
-        { id: 'lockchip-fox', name: 'Fox', type: 'lockchip', image: 'images/lockchips/Fox.png', score: 0 },
-        { id: 'lockchip-hells', name: 'Hells', type: 'lockchip', image: 'images/lockchips/Hells.png', score: 0 },
-        { id: 'lockchip-hornet', name: 'Hornet', type: 'lockchip', image: 'images/lockchips/Hornet.png', score: 0 },
-        { id: 'lockchip-kraken', name: 'Kraken', type: 'lockchip', image: 'images/lockchips/Kraken.png', score: 0 },
-        { id: 'lockchip-leon', name: 'Leon', type: 'lockchip', image: 'images/lockchips/Leon.png', score: 0 },
-        { id: 'lockchip-perseus', name: 'Perseus', type: 'lockchip', image: 'images/lockchips/Perseus.png', score: 0 },
-        { id: 'lockchip-rhino', name: 'Rhino', type: 'lockchip', image: 'images/lockchips/Rhino.png', score: 0 },
-        { id: 'lockchip-sol', name: 'Sol', type: 'lockchip', image: 'images/lockchips/Sol.png', score: 0 },
-        { id: 'lockchip-stag', name: 'Stag', type: 'lockchip', image: 'images/lockchips/Stag.png', score: 0 },
-        { id: 'lockchip-valkyrie', name: 'Valkyrie', type: 'lockchip', image: 'images/lockchips/Valkyrie.png', score: 0 },
-        { id: 'lockchip-wizard', name: 'Wizard', type: 'lockchip', image: 'images/lockchips/Wizard.png', score: 0 },
+        // --- Peças de Chip (Scores atualizados com valores de EXEMPLO) ---
+        { id: 'lockchip-dran', name: 'Dran', type: 'lockchip', image: 'images/lockchips/Dran.png', score: 5 },
+        { id: 'lockchip-fox', name: 'Fox', type: 'lockchip', image: 'images/lockchips/Fox.png', score: 5 },
+        { id: 'lockchip-hells', name: 'Hells', type: 'lockchip', image: 'images/lockchips/Hells.png', score: 5 },
+        { id: 'lockchip-hornet', name: 'Hornet', type: 'lockchip', image: 'images/lockchips/Hornet.png', score: 5 },
+        { id: 'lockchip-kraken', name: 'Kraken', type: 'lockchip', image: 'images/lockchips/Kraken.png', score: 5 },
+        { id: 'lockchip-leon', name: 'Leon', type: 'lockchip', image: 'images/lockchips/Leon.png', score: 5 },
+        { id: 'lockchip-perseus', name: 'Perseus', type: 'lockchip', image: 'images/lockchips/Perseus.png', score: 5 },
+        { id: 'lockchip-rhino', name: 'Rhino', type: 'lockchip', image: 'images/lockchips/Rhino.png', score: 5 },
+        { id: 'lockchip-sol', name: 'Sol', type: 'lockchip', image: 'images/lockchips/Sol.png', score: 5 },
+        { id: 'lockchip-stag', name: 'Stag', type: 'lockchip', image: 'images/lockchips/Stag.png', score: 5 },
+        { id: 'lockchip-valkyrie', name: 'Valkyrie', type: 'lockchip', image: 'images/lockchips/Valkyrie.png', score: 5 },
+        { id: 'lockchip-wizard', name: 'Wizard', type: 'lockchip', image: 'images/lockchips/Wizard.png', score: 5 },
 
-        { id: 'mainblade-arc', name: 'Arc', type: 'mainblade', image: 'images/mainblades/Arc.png', score: 0 },
-        { id: 'mainblade-brave', name: 'Brave', type: 'mainblade', image: 'images/mainblades/Brave.png', score: 0 },
-        { id: 'mainblade-brush', name: 'Brush', type: 'mainblade', image: 'images/mainblades/Brush.png', score: 0 },
-        { id: 'mainblade-dark', name: 'Dark', type: 'mainblade', image: 'images/mainblades/Dark.png', score: 0 },
-        { id: 'mainblade-fang', name: 'Fang', type: 'mainblade', image: 'images/mainblades/Fang.png', score: 0 },
-        { id: 'mainblade-fort', name: 'Fort', type: 'mainblade', image: 'images/mainblades/Fort.png', score: 0 },
-        { id: 'mainblade-reaper', name: 'Reaper', type: 'mainblade', image: 'images/mainblades/Reaper.png', score: 0 },
-        { id: 'mainblade-volt', name: 'Volt', type: 'mainblade', image: 'images/mainblades/Volt.png', score: 0 },
-        { id: 'mainblade-wriggle', name: 'Wriggle', type: 'mainblade', image: 'images/mainblades/Wriggle.png', score: 0 },
+        { id: 'mainblade-arc', name: 'Arc', type: 'mainblade', image: 'images/mainblades/Arc.png', score: 10 },
+        { id: 'mainblade-brave', name: 'Brave', type: 'mainblade', image: 'images/mainblades/Brave.png', score: 10 },
+        { id: 'mainblade-brush', name: 'Brush', type: 'mainblade', image: 'images/mainblades/Brush.png', score: 10 },
+        { id: 'mainblade-dark', name: 'Dark', type: 'mainblade', image: 'images/mainblades/Dark.png', score: 10 },
+        { id: 'mainblade-fang', name: 'Fang', type: 'mainblade', image: 'images/mainblades/Fang.png', score: 10 },
+        { id: 'mainblade-fort', name: 'Fort', type: 'mainblade', image: 'images/mainblades/Fort.png', score: 10 },
+        { id: 'mainblade-reaper', name: 'Reaper', type: 'mainblade', image: 'images/mainblades/Reaper.png', score: 10 },
+        { id: 'mainblade-volt', name: 'Volt', type: 'mainblade', image: 'images/mainblades/Volt.png', score: 10 },
+        { id: 'mainblade-wriggle', name: 'Wriggle', type: 'mainblade', image: 'images/mainblades/Wriggle.png', score: 10 },
+        { id: 'antler', name: 'Antler', type: 'mainblade', image: 'images/mainblades/antler.png', score: 10 }, // Peça adicionada
 
-        { id: 'assistblade-bumper', name: 'Bumper', type: 'assistblade', image: 'images/assistblades/Bumper.png', score: 0 },
-        { id: 'assistblade-charge', name: 'Charge', type: 'assistblade', image: 'images/assistblades/Charge.png', score: 0 },
-        { id: 'assistblade-jaggy', name: 'Jaggy', type: 'assistblade', image: 'images/assistblades/Jaggy.png', score: 0 },
-        { id: 'assistblade-round', name: 'Round', type: 'assistblade', image: 'images/assistblades/Round.png', score: 0 },
-        { id: 'assistblade-slash', name: 'Slash', type: 'assistblade', image: 'images/assistblades/Slash.png', score: 0 },
-        { id: 'assistblade-turn', name: 'Turn', type: 'assistblade', image: 'images/assistblades/Turn.png', score: 0 },
+        { id: 'assistblade-bumper', name: 'Bumper', type: 'assistblade', image: 'images/assistblades/Bumper.png', score: 8 },
+        { id: 'assistblade-charge', name: 'Charge', type: 'assistblade', image: 'images/assistblades/Charge.png', score: 8 },
+        { id: 'assistblade-jaggy', name: 'Jaggy', type: 'assistblade', image: 'images/assistblades/Jaggy.png', score: 8 },
+        { id: 'assistblade-round', name: 'Round', type: 'assistblade', image: 'images/assistblades/Round.png', score: 8 },
+        { id: 'assistblade-slash', name: 'Slash', type: 'assistblade', image: 'images/assistblades/Slash.png', score: 8 },
+        { id: 'assistblade-turn', name: 'Turn', type: 'assistblade', image: 'images/assistblades/Turn.png', score: 8 },
     ];
-    
+
     // Lista completa de combos do meta
     const ALL_COMBOS = [
         { blade: 'CobaltDragoon', ratchet: '5-60', bit: 'Elevate', points: 721.75 }, { blade: 'WizardRod', ratchet: '1-60', bit: 'Hexa', points: 668.75 }, { blade: 'WizardRod', ratchet: '9-60', bit: 'Ball', points: 622.25 }, { blade: 'PhoenixWing', ratchet: '3-60', bit: 'Rush', points: 305.25 }, { blade: 'PhoenixWing', ratchet: '1-60', bit: 'Rush', points: 275.25 }, { blade: 'CobaltDragoon', ratchet: '9-60', bit: 'Elevate', points: 202.5 }, { blade: 'HoverWyvern', ratchet: '9-60', bit: 'Kick', points: 187 }, { blade: 'WizardRod', ratchet: '3-60', bit: 'Ball', points: 167 }, { blade: 'AeroPegasus', ratchet: '1-60', bit: 'Rush', points: 149.25 }, { blade: 'PhoenixWing', ratchet: '1-60', bit: 'LowRush', points: 132.5 }, { blade: 'PhoenixWing', ratchet: '3-60', bit: 'LowRush', points: 119.5 }, { blade: 'SharkScale', ratchet: '4-50', bit: 'LowRush', points: 119 }, { blade: 'SharkScale', ratchet: '3-60', bit: 'LowRush', points: 111 }, { blade: 'WizardRod', ratchet: '9-60', bit: 'Hexa', points: 107.25 }, { blade: 'SilverWolf', ratchet: '9-60', bit: 'FreeBall', points: 100.75 }, { blade: 'TyrannoBeat', ratchet: '1-60', bit: 'Rush', points: 99.75 }, { blade: 'WizardRod', ratchet: '9-60', bit: 'LowOrb', points: 97.5 }, { blade: 'AeroPegasus', ratchet: '1-60', bit: 'Kick', points: 95 }, { blade: 'SharkScale', ratchet: '1-70', bit: 'LowRush', points: 94 }, { blade: 'PhoenixWing', ratchet: '3-60', bit: 'Point', points: 86.75 }, { blade: 'SilverWolf', ratchet: '9-60', bit: 'Hexa', points: 86.75 }, { blade: 'WizardRod', ratchet: '9-60', bit: 'FreeBall', points: 86.25 }, { blade: 'SharkScale', ratchet: '1-60', bit: 'LowRush', points: 80 }, { blade: 'KnightMail', ratchet: '1-60', bit: 'Rush', points: 69.25 }, { blade: 'CobaltDragoon', ratchet: '1-60', bit: 'Elevate', points: 69.25 }, { blade: 'HoverWyvern', ratchet: '1-60', bit: 'Kick', points: 69 }, { blade: 'PhoenixWing', ratchet: '9-60', bit: 'Rush', points: 68.5 }, { blade: 'WizardRod', ratchet: '1-60', bit: 'Rush', points: 67.5 }, { blade: 'WizardRod', ratchet: '1-70', bit: 'Hexa', points: 64 }, { blade: 'WizardRod', ratchet: '3-60', bit: 'Hexa', points: 63.75 }, { blade: 'PhoenixWing', ratchet: '5-60', bit: 'Point', points: 63.25 }, { blade: 'AeroPegasus', ratchet: '3-60', bit: 'LowRush', points: 60.25 }, { blade: 'AeroPegasus', ratchet: '1-60', bit: 'LowRush', points: 59 }, { blade: 'CobaltDragoon', ratchet: '7-60', bit: 'Level', points: 58.5 }, { blade: 'PhoenixWing', ratchet: '7-60', bit: 'Rush', points: 58.25 }, { blade: 'HoverWyvern', ratchet: '1-60', bit: 'LowRush', points: 58 }, { blade: 'WizardRod', ratchet: '7-60', bit: 'Hexa', points: 56.5 }, { blade: 'AeroPegasus', ratchet: '7-60', bit: 'Rush', points: 55 }, { blade: 'AeroPegasus', ratchet: '1-60', bit: 'Level', points: 53.25 }, { blade: 'WizardRod', ratchet: '5-60', bit: 'Hexa', points: 51.5 }, { blade: 'DranBuster', ratchet: '1-60', bit: 'Rush', points: 51.5 }, { blade: 'SilverWolf', ratchet: '9-60', bit: 'Ball', points: 51 }, { blade: 'WizardRod', ratchet: '3-60', bit: 'FreeBall', points: 49.5 }, { blade: 'TyrannoBeat', ratchet: '3-60', bit: 'Rush', points: 49 }, { blade: 'AeroPegasus', ratchet: '3-60', bit: 'Rush', points: 49 }, { blade: 'PhoenixWing', ratchet: '1-60', bit: 'Point', points: 48 }, { blade: 'ScorpioSpear', ratchet: '9-60', bit: 'FreeBall', points: 48 }, { blade: 'AeroPegasus', ratchet: '7-60', bit: 'LowRush', points: 46.5 }, { blade: 'DranBuster', ratchet: '1-60', bit: 'LowFlat', points: 45.75 }, { blade: 'SilverWolf', ratchet: '3-60', bit: 'FreeBall', points: 45.5 },
     ];
     const TOP_10_COMBOS = ALL_COMBOS.slice(0, 10);
 
+    // Lista de combos de Chip (Exemplo)
+    const ALL_CHIP_COMBOS = [
+        { lockchip: 'Dran', mainblade: 'Brave', assistblade: 'Slash', points: 30 },
+        { lockchip: 'Hells', mainblade: 'Reaper', assistblade: 'Charge', points: 28 },
+        { lockchip: 'Fox', mainblade: 'Brush', assistblade: 'Round', points: 25 }
+    ];
+
     // --- ESTRUTURA DE DADOS PRINCIPAL ---
     let app_data = {
-        collection: { 
-            blades: new Map(), // { 'dransword': Set(['Red', 'Stock']) }
-            ratchets: new Set(), 
+        collection: {
+            blades: new Map(), // { 'dransword': Set(['Stock', 'ver. 2']) }
+            ratchets: new Set(),
             bits: new Set(),
             mainblades: new Set(),
             assistblades: new Set(),
@@ -146,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
         active_deck_index: 0
     };
     let active_deck_slot = { slotId: null, type: null };
-    let variant_modal_part = null; 
+    let variant_modal_part = null;
 
     // --- ELEMENTOS DO DOM ---
     const tabLinks = document.querySelectorAll('.tab-link');
@@ -171,7 +523,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const deck_name_input = document.getElementById('deck-name-input');
     const add_deck_button = document.getElementById('add-deck-button');
     const delete_deck_button = document.getElementById('delete-deck-button');
-    
+
     const part_modal = document.getElementById('part-selector-modal');
     const modal_title = document.getElementById('modal-title');
     const modal_suggestions_container = document.getElementById('modal-suggestions-container');
@@ -180,7 +532,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const variant_modal = document.getElementById('variant-selector-modal');
     const variant_modal_title = document.getElementById('variant-modal-title');
-    const variant_modal_checkboxes = document.getElementById('variant-modal-checkboxes');
+    const variant_modal_checkboxes = document.getElementById('variant-modal-checkboxes'); // Mantém o ID, mas conterá o grid
     const variant_modal_save = document.getElementById('variant-modal-save');
     const variant_modal_close = document.getElementById('variant-selector-close');
 
@@ -200,13 +552,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+        // Define a aba inicial como META
         const initialTab = document.querySelector('.tab-link[data-tab="meta"]');
         const initialContent = document.getElementById('meta-tab');
         if (initialTab && initialContent) {
-            tabLinks.forEach(l => l.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
-            initialTab.classList.add('active');
-            initialContent.classList.add('active');
+            tabLinks.forEach(l => l.classList.remove('active')); // Limpa todas
+            tabContents.forEach(c => c.classList.remove('active')); // Limpa todas
+            initialTab.classList.add('active'); // Ativa a META
+            initialContent.classList.add('active'); // Mostra o conteúdo META
+        } else { // Fallback se a aba META não existir
+             const firstTab = document.querySelector('.tab-link');
+             const firstContent = document.querySelector('.tab-content');
+             if(firstTab && firstContent) {
+                 firstTab.classList.add('active');
+                 firstContent.classList.add('active');
+             }
         }
     };
 
@@ -232,15 +592,44 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const loadCollectionFromParsed = (parsedCollection) => {
-        return {
-            blades: new Map(Object.entries(parsedCollection.blades || {}).map(([id, variants]) => [id, new Set(variants)])),
-            ratchets: new Set(parsedCollection.ratchets || []),
-            bits: new Set(parsedCollection.bits || []),
-            mainblades: new Set(parsedCollection.mainblades || []),
-            assistblades: new Set(parsedCollection.assistblades || []),
-            lockchips: new Set(parsedCollection.lockchips || [])
+        // Garante que a estrutura base exista mesmo se o save estiver vazio/corrompido
+        const collection = {
+             blades: new Map(),
+             ratchets: new Set(),
+             bits: new Set(),
+             mainblades: new Set(),
+             assistblades: new Set(),
+             lockchips: new Set()
         };
+        try {
+            if (parsedCollection) {
+                if (parsedCollection.blades) {
+                     collection.blades = new Map(Object.entries(parsedCollection.blades).map(([id, variants]) => [id, new Set(variants)]));
+                }
+                if (parsedCollection.ratchets) {
+                    collection.ratchets = new Set(parsedCollection.ratchets);
+                }
+                if (parsedCollection.bits) {
+                    collection.bits = new Set(parsedCollection.bits);
+                }
+                 if (parsedCollection.mainblades) { // Adicionado
+                     collection.mainblades = new Set(parsedCollection.mainblades);
+                 }
+                 if (parsedCollection.assistblades) { // Adicionado
+                     collection.assistblades = new Set(parsedCollection.assistblades);
+                 }
+                 if (parsedCollection.lockchips) { // Adicionado
+                     collection.lockchips = new Set(parsedCollection.lockchips);
+                 }
+            }
+        } catch(e) {
+             console.error("Erro ao processar coleção salva:", e);
+             // Retorna a coleção vazia padrão em caso de erro grave
+             return { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() };
+        }
+        return collection;
     };
+
 
     const saveAppData = () => {
         const serializable_data = {
@@ -248,7 +637,12 @@ document.addEventListener('DOMContentLoaded', () => {
             decks: app_data.decks,
             active_deck_index: app_data.active_deck_index
         };
-        localStorage.setItem('beyblade_x_data', JSON.stringify(serializable_data));
+        try {
+            localStorage.setItem('beyblade_x_data', JSON.stringify(serializable_data));
+        } catch (e) {
+            console.error("Erro ao salvar dados no localStorage:", e);
+            alert("Não foi possível salvar os dados. O armazenamento pode estar cheio ou indisponível.");
+        }
     };
 
     const loadAppData = () => {
@@ -256,23 +650,36 @@ document.addEventListener('DOMContentLoaded', () => {
         if (saved_data_str) {
             try {
                 const parsed = JSON.parse(saved_data_str);
-                app_data.collection = loadCollectionFromParsed(parsed.collection || {});
-                app_data.decks = parsed.decks || [];
-                app_data.active_deck_index = parsed.active_deck_index || 0;
+                app_data.collection = loadCollectionFromParsed(parsed.collection || {}); // Passa o objeto collection ou um vazio
+                app_data.decks = Array.isArray(parsed.decks) ? parsed.decks : []; // Garante que decks seja um array
+                app_data.active_deck_index = (typeof parsed.active_deck_index === 'number') ? parsed.active_deck_index : 0; // Garante que seja um número
+
             } catch (e) {
                 console.error("Erro ao carregar dados salvos:", e);
+                // Reseta para o estado inicial seguro se houver erro
                 app_data.collection = { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() };
                 app_data.decks = [];
+                app_data.active_deck_index = 0;
             }
+        } else {
+             // Estado inicial se não houver dados salvos
+             app_data.collection = { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() };
+             app_data.decks = [];
+             app_data.active_deck_index = 0;
         }
+
+        // Garante que sempre exista pelo menos um deck
         if (app_data.decks.length === 0) {
             app_data.decks.push(createNewDeck("Meu Primeiro Deck"));
             app_data.active_deck_index = 0;
         }
-        if (app_data.active_deck_index >= app_data.decks.length) {
+
+        // Corrige índice inválido (se decks foram deletados e o índice ficou fora)
+        if (app_data.active_deck_index >= app_data.decks.length || app_data.active_deck_index < 0) {
             app_data.active_deck_index = 0;
         }
     };
+
 
     // --- FUNÇÕES DE RENDERIZAÇÃO (UI) ---
 
@@ -283,14 +690,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const blade_part = ALL_PARTS.find(p => p.name === combo.blade);
             const ratchet_part = ALL_PARTS.find(p => p.name === combo.ratchet);
             const bit_part = ALL_PARTS.find(p => p.name === combo.bit);
+
+            // Adiciona verificação para garantir que as peças foram encontradas
+            if (!blade_part || !ratchet_part || !bit_part) {
+                 console.warn(`Peça não encontrada para o combo META #${index + 1}:`, combo);
+                 return; // Pula este combo se alguma peça não for encontrada
+            }
+
             const combo_card = document.createElement('div');
             combo_card.className = 'meta-combo-card';
             combo_card.innerHTML = `
                 <div class="rank">#${index + 1}</div>
                 <div class="parts">
-                    <div class="part-display"><img src="${blade_part?.image || ''}" alt="${combo.blade}"><span>${combo.blade}</span></div>
-                    <div class="part-display"><img src="${ratchet_part?.image || ''}" alt="${combo.ratchet}"><span>${combo.ratchet}</span></div>
-                    <div class="part-display"><img src="${bit_part?.image || ''}" alt="${combo.bit}"><span>${combo.bit}</span></div>
+                    <div class="part-display"><img src="${blade_part.image}" alt="${combo.blade}"><span>${combo.blade}</span></div>
+                    <div class="part-display"><img src="${ratchet_part.image}" alt="${combo.ratchet}"><span>${combo.ratchet}</span></div>
+                    <div class="part-display"><img src="${bit_part.image}" alt="${combo.bit}"><span>${combo.bit}</span></div>
                 </div>
                 <div class="points">${combo.points.toFixed(2)} pts</div>`;
             meta_combos_container.appendChild(combo_card);
@@ -298,6 +712,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderParts = () => {
+        // Garante que os containers existam antes de tentar acessá-los
+        if (!blades_container || !ratchets_container || !bits_container || !mainblades_container || !assistblades_container || !lockchips_container) {
+             console.error("Um ou mais containers de peças não foram encontrados no DOM.");
+             return;
+        }
+
         blades_container.innerHTML = '';
         ratchets_container.innerHTML = '';
         bits_container.innerHTML = '';
@@ -305,10 +725,14 @@ document.addEventListener('DOMContentLoaded', () => {
         assistblades_container.innerHTML = '';
         lockchips_container.innerHTML = '';
 
-        ALL_PARTS.forEach(part => {
+        // Ordena ALL_PARTS por nome antes de renderizar
+        const sortedParts = [...ALL_PARTS].sort((a, b) => a.name.localeCompare(b.name));
+
+
+        sortedParts.forEach(part => {
             let container;
             let collectionSet;
-            
+
             switch (part.type) {
                 case 'blade': container = blades_container; collectionSet = app_data.collection.blades; break;
                 case 'ratchet': container = ratchets_container; collectionSet = app_data.collection.ratchets; break;
@@ -316,447 +740,832 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'mainblade': container = mainblades_container; collectionSet = app_data.collection.mainblades; break;
                 case 'assistblade': container = assistblades_container; collectionSet = app_data.collection.assistblades; break;
                 case 'lockchip': container = lockchips_container; collectionSet = app_data.collection.lockchips; break;
-                default: return;
+                default: return; // Ignora tipos desconhecidos
             }
-            
+
+             // Segurança extra: verifica se o container existe
+             if (!container) return;
+
             const part_card = document.createElement('div');
             part_card.className = 'part-card';
             part_card.dataset.partId = part.id;
-            
+
             let isOwned = false;
-            if (part.type === 'blade') {
+            if (part.type === 'blade' && collectionSet) {
+                 // Para blades, verifica se existe a entrada no Map E se o Set de variantes não está vazio
                 isOwned = collectionSet.has(part.id) && collectionSet.get(part.id).size > 0;
             } else if (collectionSet) {
+                 // Para outras peças, apenas verifica se o ID está no Set
                 isOwned = collectionSet.has(part.id);
             }
-            
+
             if (isOwned) {
                 part_card.classList.add('owned');
             }
 
-            const imagePath = part.image || 'images/placeholder.png';
+            const imagePath = part.image || 'images/placeholder.png'; // Fallback para imagem
             part_card.innerHTML = `<img src="${imagePath}" alt="${part.name}"><p>${part.name}</p><div class="part-score">${part.score.toFixed(2)}</div>`;
+
+            // Adiciona o event listener para o clique
             part_card.addEventListener('click', () => togglePartOwnership(part));
+
             container.appendChild(part_card);
         });
     };
-    
+
+
     const renderDeckManager = () => {
-        if (!app_data.decks[app_data.active_deck_index]) {
-            app_data.active_deck_index = 0; 
+         // Garante que os elementos existam
+         if (!deck_selector || !deck_name_input) {
+             console.error("Elementos do gerenciador de deck (select/input) não encontrados.");
+             return;
+         }
+
+        // Garante que o índice ativo seja válido
+        if (app_data.active_deck_index < 0 || app_data.active_deck_index >= app_data.decks.length) {
+            app_data.active_deck_index = 0;
+             // Se não houver decks, o loadAppData já terá criado um
+             if (app_data.decks.length === 0) {
+                  console.error("Nenhum deck encontrado após loadAppData.");
+                  return; // Sai se algo deu muito errado
+             }
         }
+
+        const currentDeck = app_data.decks[app_data.active_deck_index];
+         if (!currentDeck) {
+             console.error(`Deck no índice ${app_data.active_deck_index} não encontrado.`);
+             // Tenta resetar para o primeiro deck como segurança
+             app_data.active_deck_index = 0;
+             if (!app_data.decks[0]) return; // Sai se nem o primeiro existir
+             currentDeck = app_data.decks[0];
+         }
+
+
         deck_selector.innerHTML = '';
         app_data.decks.forEach((deck, index) => {
             const option = document.createElement('option');
             option.value = index;
-            option.textContent = deck.name;
+            option.textContent = deck.name || `Deck ${index + 1}`; // Nome padrão se estiver vazio
             deck_selector.appendChild(option);
         });
         deck_selector.value = app_data.active_deck_index;
-        deck_name_input.value = app_data.decks[app_data.active_deck_index].name;
+        deck_name_input.value = currentDeck.name;
     };
-    
+
+
+    // Função ATUALIZADA para lidar com imagens de variantes no deck
     const updateDeckUI = () => {
         const currentDeck = app_data.decks[app_data.active_deck_index];
-        if (!currentDeck) return;
-        
+        if (!currentDeck) {
+             console.error("Deck ativo não encontrado para atualizar UI.");
+             return; // Sai se o deck ativo não for válido
+        }
+
         let totalDeckScore = 0;
-        
+
         deck_slots.forEach((slot, bayIndex) => {
             const bay = currentDeck.bays[bayIndex];
+             // Garante que 'bay' seja um objeto válido
+             if (!bay) {
+                  console.warn(`Bay inválido no índice ${bayIndex} do deck ${currentDeck.name}`);
+                  // Cria um bay vazio padrão para evitar erros
+                  currentDeck.bays[bayIndex] = { type: null, part1: null, part2: null, part3: null };
+                  bay = currentDeck.bays[bayIndex];
+             }
+
             let bayScore = 0;
 
-            const primeiraPh = slot.querySelector('[data-type="primeira"]');
-            const primeiraName = slot.querySelector('[data-name-type="primeira"]');
-            const ratchetPh = slot.querySelector('[data-type="ratchet"]');
-            const ratchetName = slot.querySelector('[data-name-type="ratchet"]');
-            const bitPh = slot.querySelector('[data-type="bit"]');
-            const bitName = slot.querySelector('[data-name-type="bit"]');
-            const mainBladePh = slot.querySelector('[data-type="mainblade"]');
-            const mainBladeName = slot.querySelector('[data-name-type="mainblade"]');
-            const assistBladePh = slot.querySelector('[data-type="assistblade"]');
-            const assistBladeName = slot.querySelector('[data-name-type="assistblade"]');
-            
-            slot.dataset.bayType = bay.type || 'empty';
+            // Seletores mais robustos
+            const primeiraPh = slot.querySelector('.part-placeholder[data-type="primeira"]');
+            const primeiraName = slot.querySelector('.part-name-display[data-name-type="primeira"]');
+            const ratchetPh = slot.querySelector('.part-placeholder[data-type="ratchet"]');
+            const ratchetName = slot.querySelector('.part-name-display[data-name-type="ratchet"]');
+            const bitPh = slot.querySelector('.part-placeholder[data-type="bit"]');
+            const bitName = slot.querySelector('.part-name-display[data-name-type="bit"]');
+            const mainBladePh = slot.querySelector('.part-placeholder[data-type="mainblade"]');
+            const mainBladeName = slot.querySelector('.part-name-display[data-name-type="mainblade"]');
+            const assistBladePh = slot.querySelector('.part-placeholder[data-type="assistblade"]');
+            const assistBladeName = slot.querySelector('.part-name-display[data-name-type="assistblade"]');
+            const beyScoreSpan = slot.querySelector('.bey-score span');
+
+             // Verifica se todos os elementos foram encontrados
+             if (!primeiraPh || !primeiraName || !ratchetPh || !ratchetName || !bitPh || !bitName || !mainBladePh || !mainBladeName || !assistBladePh || !assistBladeName || !beyScoreSpan) {
+                  console.error(`Elementos faltando no deck slot ${bayIndex}. Verifique o HTML.`);
+                  return; // Pula este slot se algo estiver faltando
+             }
+
+            slot.dataset.bayType = bay.type || 'empty'; // Define 'empty' se o tipo for null
 
             const resetPlaceholder = (ph, nameEl, defaultText) => {
                 ph.innerHTML = `<span>${defaultText}</span>`;
                 nameEl.textContent = 'Selecione';
             };
-            
+
             const setPlaceholder = (ph, nameEl, part) => {
+                 // Garante que 'part' é um objeto válido
+                 if (!part || typeof part !== 'object') {
+                     console.warn("Tentativa de definir placeholder com peça inválida:", part);
+                     resetPlaceholder(ph, nameEl, 'Erro'); // Mostra um erro no placeholder
+                     return;
+                 }
+
                 const partName = part.variant ? `${part.baseName} (${part.variant})` : part.name;
-                const imagePath = part.image || 'images/placeholder.png';
-                ph.innerHTML = `<img src="${imagePath}" alt="${partName}"><span class="part-score-deck">${part.score.toFixed(2)}</span>`;
+                let imagePath = part.image || 'images/placeholder.png'; // Fallback inicial
+
+                // --- LÓGICA ATUALIZADA PARA IMAGEM DA VARIANTE ---
+                if (part.type === 'blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) {
+                    const variantData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant);
+                    if (variantData && variantData.image) {
+                        imagePath = variantData.image; // Usa a imagem específica da variante
+                    } else {
+                         // Fallback para a imagem 'Stock' se a variante específica não tiver imagem
+                         const stockVariant = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock');
+                         if (stockVariant && stockVariant.image) {
+                             imagePath = stockVariant.image;
+                         }
+                         // Se nem a Stock tiver, mantém a imagem base da ALL_PARTS (já em imagePath)
+                    }
+                }
+                // --- FIM DA LÓGICA ATUALIZADA ---
+
+                // Garante que score seja um número
+                const score = (typeof part.score === 'number') ? part.score : 0;
+
+                ph.innerHTML = `<img src="${imagePath}" alt="${partName}"><span class="part-score-deck">${score.toFixed(2)}</span>`;
                 nameEl.textContent = partName;
             };
 
+            // Reseta todos os placeholders condicionais primeiro
+             resetPlaceholder(ratchetPh, ratchetName, 'Ratchet');
+             resetPlaceholder(bitPh, bitName, 'Bit');
+             resetPlaceholder(mainBladePh, mainBladeName, 'Main Blade');
+             resetPlaceholder(assistBladePh, assistBladeName, 'Assist Blade');
+
+
             if (bay.type === 'standard') {
-                if (bay.part1) { setPlaceholder(primeiraPh, primeiraName, bay.part1); bayScore += bay.part1.score; } 
-                else { resetPlaceholder(primeiraPh, primeiraName, 'Primeira Peça'); }
-                if (bay.part2) { setPlaceholder(ratchetPh, ratchetName, bay.part2); bayScore += bay.part2.score; }
-                else { resetPlaceholder(ratchetPh, ratchetName, 'Ratchet'); }
-                if (bay.part3) { setPlaceholder(bitPh, bitName, bay.part3); bayScore += bay.part3.score; }
-                else { resetPlaceholder(bitPh, bitName, 'Bit'); }
+                if (bay.part1) { setPlaceholder(primeiraPh, primeiraName, bay.part1); bayScore += (typeof bay.part1.score === 'number' ? bay.part1.score : 0); }
+                else { resetPlaceholder(primeiraPh, primeiraName, 'Blade'); }
+                if (bay.part2) { setPlaceholder(ratchetPh, ratchetName, bay.part2); bayScore += (typeof bay.part2.score === 'number' ? bay.part2.score : 0); }
+                // else { resetPlaceholder(ratchetPh, ratchetName, 'Ratchet'); } // Já resetado acima
+                if (bay.part3) { setPlaceholder(bitPh, bitName, bay.part3); bayScore += (typeof bay.part3.score === 'number' ? bay.part3.score : 0); }
+                // else { resetPlaceholder(bitPh, bitName, 'Bit'); } // Já resetado acima
             } else if (bay.type === 'chip') {
-                if (bay.part1) { setPlaceholder(primeiraPh, primeiraName, bay.part1); bayScore += bay.part1.score; } 
-                else { resetPlaceholder(primeiraPh, primeiraName, 'Primeira Peça'); }
-                if (bay.part2) { setPlaceholder(mainBladePh, mainBladeName, bay.part2); bayScore += bay.part2.score; }
-                else { resetPlaceholder(mainBladePh, mainBladeName, 'Main Blade'); }
-                if (bay.part3) { setPlaceholder(assistBladePh, assistBladeName, bay.part3); bayScore += bay.part3.score; }
-                else { resetPlaceholder(assistBladePh, assistBladeName, 'Assist Blade'); }
+                if (bay.part1) { setPlaceholder(primeiraPh, primeiraName, bay.part1); bayScore += (typeof bay.part1.score === 'number' ? bay.part1.score : 0); }
+                else { resetPlaceholder(primeiraPh, primeiraName, 'Lock Chip'); }
+                if (bay.part2) { setPlaceholder(mainBladePh, mainBladeName, bay.part2); bayScore += (typeof bay.part2.score === 'number' ? bay.part2.score : 0); }
+                // else { resetPlaceholder(mainBladePh, mainBladeName, 'Main Blade'); } // Já resetado acima
+                if (bay.part3) { setPlaceholder(assistBladePh, assistBladeName, bay.part3); bayScore += (typeof bay.part3.score === 'number' ? bay.part3.score : 0); }
+                // else { resetPlaceholder(assistBladePh, assistBladeName, 'Assist Blade'); } // Já resetado acima
             } else {
+                 // Slot vazio ou tipo indefinido
                 resetPlaceholder(primeiraPh, primeiraName, 'Primeira Peça');
+                 // Placeholders condicionais já foram resetados no início
             }
 
-            slot.querySelector('.bey-score span').textContent = bayScore.toFixed(2);
+            beyScoreSpan.textContent = bayScore.toFixed(2);
             totalDeckScore += bayScore;
         });
-        
-        deck_score_span.textContent = totalDeckScore.toFixed(2);
-        renderDeckManager();
+
+         // Garante que deck_score_span exista
+         if (deck_score_span) {
+             deck_score_span.textContent = totalDeckScore.toFixed(2);
+         } else {
+              console.error("Elemento 'deck-score' não encontrado para atualizar pontuação total.");
+         }
+        renderDeckManager(); // Atualiza o select e input de nome
     };
+
 
     // --- FUNÇÕES DE COLEÇÃO E MODAIS ---
 
+    // Função ATUALIZADA
+// Função ATUALIZADA para pular o modal se só houver a variante 'Stock'
     const togglePartOwnership = (part) => {
-        const part_card = document.querySelector(`#collection-tab [data-part-id="${part.id}"]`);
+        const part_card_collection = document.querySelector(`#collection-tab [data-part-id="${part.id}"]`);
+        const collectionSet = app_data.collection.blades; // Definido aqui para ambos os casos de blade
 
         if (part.type === 'blade') {
-            if (part.variants) {
+            const variantList = part.variantsId ? ALL_VARIANTS[part.variantsId] : null;
+
+            // Condição MODIFICADA: Abre o modal APENAS se houver variantsId E a lista de variantes tiver MAIS DE UM item.
+            if (part.variantsId && variantList && variantList.length > 1) {
                 openVariantSelector(part);
             } else {
-                // Lógica para Blade SEM variante (CORRIGIDO)
-                const collectionSet = app_data.collection.blades;
+                // Lógica para Blade SEM variantes OU com APENAS a variante 'Stock'
+                if (!collectionSet) return; // Segurança
+
                 if (collectionSet.has(part.id)) {
+                    // Se já tem, remove
                     collectionSet.delete(part.id);
-                    if(part_card) part_card.classList.remove('owned');
+                    if(part_card_collection) part_card_collection.classList.remove('owned');
+                     // Remove a peça dos decks se foi desmarcada
+                     app_data.decks.forEach(deck => {
+                          deck.bays.forEach(bay => {
+                               if (bay.part1 && (bay.part1.baseId || bay.part1.id) === part.id) {
+                                   clearBay(bay); // Limpa o bay inteiro
+                               }
+                          });
+                     });
+
                 } else {
-                    collectionSet.set(part.id, new Set(['owned'])); // 'owned' é um marcador
-                    if(part_card) part_card.classList.add('owned');
+                    // Se não tem, adiciona com a variante 'Stock' (ou 'owned' se não tiver variantsId)
+                    const variantToAdd = (part.variantsId && variantList && variantList.length === 1) ? variantList[0].name : 'owned';
+                    collectionSet.set(part.id, new Set([variantToAdd]));
+                    if(part_card_collection) part_card_collection.classList.add('owned');
                 }
                 saveAppData();
+                 updateDeckUI(); // Atualiza deck caso a peça tenha sido removida
             }
         } else {
-            // Lógica para todas as outras peças
+            // Lógica para todas as outras peças (inalterada)
             const collectionSetKey = part.type + 's';
             const collection_set = app_data.collection[collectionSetKey];
             if (!collection_set) return;
 
             if (collection_set.has(part.id)) {
                 collection_set.delete(part.id);
-                if(part_card) part_card.classList.remove('owned');
+                if(part_card_collection) part_card_collection.classList.remove('owned');
+                 // Remove a peça dos decks se foi desmarcada
+                 app_data.decks.forEach(deck => {
+                      deck.bays.forEach(bay => {
+                           if (bay.part2?.id === part.id) bay.part2 = null;
+                           if (bay.part3?.id === part.id) bay.part3 = null;
+                      });
+                 });
             } else {
                 collection_set.add(part.id);
-                if(part_card) part_card.classList.add('owned');
+                if(part_card_collection) part_card_collection.classList.add('owned');
             }
             saveAppData();
+             updateDeckUI(); // Atualiza deck caso a peça tenha sido removida
         }
     };
-    
+
+
+    // Função ATUALIZADA para usar cards no modal de variantes
     const openVariantSelector = (part) => {
         variant_modal_part = part;
         variant_modal_title.textContent = `Selecionar Variantes de ${part.name}`;
-        variant_modal_checkboxes.innerHTML = '';
-        
+        // MODIFICADO: Limpa e adiciona um container de grid
+        variant_modal_checkboxes.innerHTML = '<div id="variant-modal-grid"></div>';
+        const gridContainer = document.getElementById('variant-modal-grid');
+         if(!gridContainer) return; // Segurança
+
         const ownedVariants = app_data.collection.blades.get(part.id) || new Set();
-        
-        part.variants.forEach(variant => {
-            const isOwned = ownedVariants.has(variant);
-            const checkboxWrapper = document.createElement('div');
-            const checkboxId = `variant-${part.id}-${variant}`;
-            checkboxWrapper.innerHTML = `
-                <input type="checkbox" id="${checkboxId}" value="${variant}" ${isOwned ? 'checked' : ''}>
-                <label for="${checkboxId}">${variant}</label>
+
+        const variantList = ALL_VARIANTS[part.variantsId];
+        if (!variantList) {
+            console.error(`Nenhuma lista de variantes encontrada para ${part.variantsId}`);
+            closeVariantModal();
+            return;
+        }
+
+        variantList.forEach(variantData => {
+            const variantName = variantData.name;
+             // Segurança: Garante que variantData e nome existam
+             if (!variantData || typeof variantName !== 'string') return;
+
+            const isOwned = ownedVariants.has(variantName);
+
+            // Cria o card da variante
+            const card = document.createElement('div');
+            card.className = 'variant-card';
+            card.dataset.variantName = variantName; // Armazena o nome da variante
+            card.innerHTML = `
+                <img src="${variantData.image || 'images/placeholder.png'}" alt="${variantName}">
+                <p>${variantName}</p>
             `;
-            variant_modal_checkboxes.appendChild(checkboxWrapper);
+
+            // Marca como selecionado se já pertencer à coleção
+            if (isOwned) {
+                card.classList.add('selected');
+            }
+
+            // Adiciona evento de clique para alternar seleção
+            card.addEventListener('click', () => {
+                card.classList.toggle('selected');
+            });
+
+            gridContainer.appendChild(card); // Adiciona ao grid
         });
-        
+
         variant_modal.style.display = 'block';
     };
-    
+
+    // Função ATUALIZADA para ler seleção dos cards
     const saveVariantSelection = () => {
         if (!variant_modal_part) return;
-        
+
         const ownedVariants = new Set();
-        const checkboxes = variant_modal_checkboxes.querySelectorAll('input[type="checkbox"]:checked');
-        checkboxes.forEach(cb => ownedVariants.add(cb.value));
-        
-        const part_card = document.querySelector(`#collection-tab [data-part-id="${variant_modal_part.id}"]`);
+        // MODIFICADO: Seleciona os cards com a classe 'selected'
+        const selectedCards = variant_modal_checkboxes.querySelectorAll('.variant-card.selected');
+        selectedCards.forEach(card => {
+             // Garante que o dataset exista antes de adicionar
+             if(card.dataset.variantName) {
+                ownedVariants.add(card.dataset.variantName); // Pega o nome do data attribute
+             }
+        });
+
+        const part_card_collection = document.querySelector(`#collection-tab [data-part-id="${variant_modal_part.id}"]`);
 
         if (ownedVariants.size > 0) {
             app_data.collection.blades.set(variant_modal_part.id, ownedVariants);
-            if(part_card) part_card.classList.add('owned');
+            if(part_card_collection) part_card_collection.classList.add('owned');
         } else {
             app_data.collection.blades.delete(variant_modal_part.id);
-            if(part_card) part_card.classList.remove('owned');
+            if(part_card_collection) part_card_collection.classList.remove('owned');
+             // Se a peça foi removida da coleção, remove também dos decks
+             app_data.decks.forEach(deck => {
+                  deck.bays.forEach(bay => {
+                       if (bay.part1 && (bay.part1.baseId || bay.part1.id) === variant_modal_part.id) {
+                           // bay.part1 = null; // Remove apenas a peça
+                           // Se remover a primeira peça, invalida o bay inteiro
+                           if(bay.type === 'standard' || bay.type === 'chip') {
+                                clearBay(bay); // Limpa o bay inteiro
+                           }
+                       }
+                  });
+             });
         }
-        
+
         saveAppData();
+        updateDeckUI(); // Adicionado para refletir a variante correta se estiver no deck ou se foi removida
         closeVariantModal();
     };
 
+
     const closeVariantModal = () => {
-        variant_modal.style.display = 'none';
+         if (variant_modal) {
+             variant_modal.style.display = 'none';
+         }
         variant_modal_part = null;
     };
-    
-    const applyFilter = () => collection_tab.classList.toggle('filter-on', collection_filter.checked);
+
+    const applyFilter = () => {
+         if(collection_tab && collection_filter) {
+             collection_tab.classList.toggle('filter-on', collection_filter.checked);
+         }
+    };
 
     const exportData = () => {
-        saveAppData();
-        const data_str = localStorage.getItem('beyblade_x_data') || '{}';
-        const data_blob = new Blob([data_str], {type: 'application/json'});
+        saveAppData(); // Garante que os dados mais recentes sejam salvos
+        const data_str = localStorage.getItem('beyblade_x_data');
+        if (!data_str) {
+             alert("Não há dados para exportar.");
+             return;
+        }
+        const data_blob = new Blob([data_str], {type: 'application/json;charset=utf-8'}); // Define charset
         const url = URL.createObjectURL(data_blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'meus_dados_beyblade.bx';
+        const timestamp = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+        a.download = `beyxtool_dados_${timestamp}.bx`; // Nome de arquivo mais descritivo
         document.body.appendChild(a);
         a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        // Limpeza após o download
+        setTimeout(() => {
+             document.body.removeChild(a);
+             URL.revokeObjectURL(url);
+        }, 100); // Pequeno delay para garantir o início do download
     };
+
 
     const importData = (event) => {
         const file = event.target.files[0];
         if (!file) return;
+
+         // Verifica o tipo do arquivo (opcional, mas bom para UX)
+         if (!file.name.endsWith('.bx') && file.type !== 'application/json') {
+             alert("Por favor, selecione um arquivo .bx válido.");
+              if (import_file_input) import_file_input.value = ''; // Limpa o input
+             return;
+         }
+
         const reader = new FileReader();
         reader.onload = (e) => {
             try {
-                const parsed = JSON.parse(e.target.result);
-                if (parsed.collection && parsed.decks) {
-                    localStorage.setItem('beyblade_x_data', JSON.stringify(parsed));
-                    loadAppData();
-                    renderParts();
-                    updateDeckUI();
-                    alert('Dados importados com sucesso!');
-                } else { throw new Error('Formato de arquivo inválido.'); }
-            } catch (error) { alert(`Erro ao importar o arquivo: ${error.message}`); }
+                const imported_data_str = e.target.result;
+                 if (!imported_data_str) throw new Error("Arquivo vazio ou ilegível."); // Verifica se leu algo
+
+                const parsed = JSON.parse(imported_data_str);
+
+                // Validação básica da estrutura
+                if (typeof parsed === 'object' && parsed !== null && 'collection' in parsed && 'decks' in parsed && 'active_deck_index' in parsed) {
+                     // Confirmação do usuário antes de sobrescrever
+                     if (confirm("Importar este arquivo substituirá sua coleção e decks atuais. Deseja continuar?")) {
+                          localStorage.setItem('beyblade_x_data', imported_data_str); // Salva os novos dados
+                          loadAppData(); // Recarrega os dados na aplicação
+                          renderParts(); // Atualiza a UI da coleção
+                          updateDeckUI(); // Atualiza a UI do deck builder
+                          alert('Dados importados com sucesso!');
+                     }
+                } else {
+                     throw new Error('Formato de arquivo inválido ou dados corrompidos.');
+                }
+            } catch (error) {
+                 console.error("Erro ao importar dados:", error);
+                 alert(`Erro ao importar o arquivo: ${error.message}`);
+            } finally {
+                 // Limpa o input de arquivo para permitir importar o mesmo arquivo novamente se necessário
+                 if (import_file_input) {
+                      import_file_input.value = '';
+                 }
+            }
+        };
+        reader.onerror = (error) => {
+             console.error("Erro ao ler arquivo:", error);
+             alert("Erro ao ler o arquivo selecionado.");
+             if (import_file_input) {
+                  import_file_input.value = '';
+             }
         };
         reader.readAsText(file);
     };
-    
+
+
+    // Função ATUALIZADA
     const applySuggestion = (slotId, combo) => {
         const currentDeck = app_data.decks[app_data.active_deck_index];
         const usedPartIds = new Set();
         currentDeck.bays.forEach((bay, index) => {
-            if (index.toString() === slotId) return;
+            if (index.toString() === slotId) return; // Ignora o slot atual
             if (bay.part1) usedPartIds.add(bay.part1.baseId || bay.part1.id);
-            if (bay.part2) usedPartIds.add(bay.part2.id);
-            if (bay.part3) usedPartIds.add(bay.part3.id);
+            if (bay.part2) usedPartIds.add(bay.part2.id); // Ratchet ou MainBlade
+            if (bay.part3) usedPartIds.add(bay.part3.id); // Bit ou AssistBlade
         });
 
         const bladePart = ALL_PARTS.find(p => p.name === combo.blade);
         const ratchetPart = ALL_PARTS.find(p => p.name === combo.ratchet);
         const bitPart = ALL_PARTS.find(p => p.name === combo.bit);
 
+         // Adiciona verificação se as peças foram encontradas
+         if (!bladePart || !ratchetPart || !bitPart) {
+             alert("Erro ao encontrar as peças para a sugestão.");
+             return;
+         }
+
+        // Verifica se as peças da sugestão já estão em uso em OUTROS slots
         if (usedPartIds.has(bladePart.id) || usedPartIds.has(ratchetPart.id) || usedPartIds.has(bitPart.id)) {
             alert("Não é possível aplicar esta sugestão. Uma ou mais peças já estão em uso neste deck.");
             return;
         }
 
         const bay = app_data.decks[app_data.active_deck_index].bays[slotId];
+         if (!bay) return; // Segurança
+
         clearBay(bay);
-        bay.type = 'standard';
-        
+        bay.type = 'standard'; // Sugestões são sempre do tipo standard por enquanto
+
         const ownedVariants = app_data.collection.blades.get(bladePart.id);
-        const variant = ownedVariants.values().next().value || 'Stock';
-        
-        bay.part1 = { ...bladePart, baseId: bladePart.id, baseName: bladePart.name, variant: variant, name: `${bladePart.name} (${variant})` };
+        if (!ownedVariants || ownedVariants.size === 0) {
+             // Isso não deveria acontecer por causa da filtragem no openPartSelector, mas é uma segurança
+             alert("Erro: Blade sugerida não encontrada na coleção ao aplicar.");
+             return;
+        }
+
+        // MODIFICADO: Prioriza 'Stock' se o usuário a possuir, senão pega a primeira que ele tiver.
+        const variant = ownedVariants.has('Stock') ? 'Stock' : ownedVariants.values().next().value;
+
+        // Cria o objeto da peça com dados da variante correta
+        bay.part1 = {
+             ...bladePart, // Copia todas as propriedades base (id, name, type, score, variantsId)
+             baseId: bladePart.id, // ID original da Blade
+             baseName: bladePart.name, // Nome original da Blade
+             variant: variant, // Nome da variante selecionada/padrão
+             name: `${bladePart.name} (${variant})` // Nome exibido (Blade + Variante)
+             // A imagem será tratada por updateDeckUI
+        };
         bay.part2 = ratchetPart;
         bay.part3 = bitPart;
-        
+
         updateDeckUI();
         saveAppData();
         closePartModal();
     };
-    
-    // (CORRIGIDO) Busca peças que o usuário possui
+
+
+    // Função ATUALIZADA para buscar imagem da variante
     const getOwnedParts = (partType) => {
         const ownedParts = [];
         const collectionSetKey = partType + 's';
         const collectionSet = app_data.collection[collectionSetKey];
 
+         if (!collectionSet) return ownedParts; // Retorna array vazio se a coleção não existir
+
         if (partType === 'blade') {
-            collectionSet.forEach((variants, partId) => {
+            collectionSet.forEach((variantsSet, partId) => {
                 const basePart = ALL_PARTS.find(p => p.id === partId);
                 if (basePart) {
-                    if (basePart.variants) {
+                    if (basePart.variantsId && ALL_VARIANTS[basePart.variantsId]) { // Usa variantsId e verifica se existe em ALL_VARIANTS
                         // Blade COM variantes
-                        variants.forEach(variant => {
-                            ownedParts.push({
-                                ...basePart,
-                                id: `${basePart.id}-${variant}`, // ID único para a UI
-                                baseId: basePart.id, // ID base para verificação de duplicados
-                                baseName: basePart.name,
-                                name: `${basePart.name} (${variant})`,
-                                variant: variant
-                            });
+                        variantsSet.forEach(variantName => {
+                             // Encontra os dados da variante (incluindo a imagem)
+                             const variantData = ALL_VARIANTS[basePart.variantsId].find(v => v.name === variantName);
+                             ownedParts.push({
+                                 ...basePart,
+                                 id: `${basePart.id}-${variantName.replace(/\s+/g, '-')}`, // ID único para a UI mais seguro
+                                 baseId: basePart.id, // ID base para verificação de duplicados
+                                 baseName: basePart.name,
+                                 name: `${basePart.name} (${variantName})`,
+                                 variant: variantName,
+                                 image: variantData?.image || basePart.image // Usa imagem da variante ou fallback para imagem base
+                             });
                         });
-                    } else if (variants.has('owned')) {
+                    } else if (variantsSet.has('owned')) { // Verifica se tem o marcador 'owned'
                         // Blade SEM variantes (marcada com 'owned')
                         ownedParts.push({ ...basePart, baseId: basePart.id, baseName: basePart.name });
                     }
+                } else {
+                     console.warn(`Peça Blade com ID ${partId} encontrada na coleção mas não em ALL_PARTS.`);
                 }
             });
-        } else if (collectionSet) {
+        } else {
             // Outros tipos de peças
             collectionSet.forEach(partId => {
                 const part = ALL_PARTS.find(p => p.id === partId);
-                if (part) ownedParts.push(part); // ID base já é o part.id
+                if (part) {
+                     ownedParts.push(part); // ID base já é o part.id
+                } else {
+                    console.warn(`Peça ${partType} com ID ${partId} encontrada na coleção mas não em ALL_PARTS.`);
+                }
             });
         }
+        // Ordena as peças pelo nome para consistência
+        ownedParts.sort((a, b) => a.name.localeCompare(b.name));
         return ownedParts;
     };
 
 
-    // (CORRIGIDO) Abre o seletor de peças, filtrando peças já usadas
+    // Função ATUALIZADA com lógica de sugestões Chip e Standard separada
     const openPartSelector = (slotId, type) => {
         active_deck_slot = { slotId, type };
         modal_title.textContent = `Selecione: ${type.charAt(0).toUpperCase() + type.slice(1)}`;
-        
-        const currentBay = app_data.decks[app_data.active_deck_index].bays[slotId];
-        const ownedParts = app_data.collection;
 
-        // --- NOVA REGRA: Encontra peças já usadas ---
+        const currentBay = app_data.decks[app_data.active_deck_index].bays[slotId];
+        const ownedPartsCollection = app_data.collection; // Renomeado para clareza
+
+        // Encontra peças já usadas nos OUTROS slots do deck atual
         const usedPartIds = new Set();
         const currentDeck = app_data.decks[app_data.active_deck_index];
         currentDeck.bays.forEach((bay, index) => {
             if (index.toString() === slotId) return; // Ignora o slot atual
+             // Adiciona o ID base da Blade (part1.baseId) ou o ID normal das outras peças
             if (bay.part1) usedPartIds.add(bay.part1.baseId || bay.part1.id);
-            if (bay.part2) usedPartIds.add(bay.part2.baseId || bay.part2.id);
-            if (bay.part3) usedPartIds.add(bay.part3.baseId || bay.part3.id);
+            if (bay.part2) usedPartIds.add(bay.part2.id); // Ratchet ou MainBlade
+            if (bay.part3) usedPartIds.add(bay.part3.id); // Bit ou AssistBlade
         });
-        // --- FIM DA NOVA REGRA ---
-        
-        let availableParts = [];
-        let showSuggestions = false;
 
+        let availableParts = [];
+        let showStandardSuggestions = false;
+        let showChipSuggestions = false;
+
+        // Determina quais tipos de peças buscar com base no tipo de slot clicado
         if (type === 'primeira') {
             availableParts = [ ...getOwnedParts('blade'), ...getOwnedParts('lockchip') ];
-            showSuggestions = true;
+             // Mostra ambos os tipos de sugestão se o slot estiver vazio ou já for do tipo correspondente
+             showStandardSuggestions = (!currentBay.type || currentBay.type === 'standard');
+             showChipSuggestions = (!currentBay.type || currentBay.type === 'chip');
         } else if (type === 'ratchet' || type === 'bit') {
             availableParts = getOwnedParts(type);
-            showSuggestions = true;
-        } else { // mainblade or assistblade
+             // Só mostra sugestões standard se for um slot standard ou vazio
+             showStandardSuggestions = (!currentBay.type || currentBay.type === 'standard');
+        } else if (type === 'mainblade' || type === 'assistblade') {
             availableParts = getOwnedParts(type);
-            showSuggestions = false;
-        }
-
-        // --- NOVA REGRA: Filtra as peças a mostrar ---
-        const partsToShow = availableParts.filter(part => !usedPartIds.has(part.baseId || part.id));
-        
-        // Render Suggestions
-        if (showSuggestions) {
-            modal_suggestions_container.innerHTML = '<h4>Sugestões do META (que você possui)</h4>';
-            modal_suggestions_container.style.display = 'block';
-            
-            const matchingCombos = ALL_COMBOS.filter(combo => {
-                const bladePart = ALL_PARTS.find(p => p.name === combo.blade);
-                const ratchetPart = ALL_PARTS.find(p => p.name === combo.ratchet);
-                const bitPart = ALL_PARTS.find(p => p.name === combo.bit);
-
-                if (!bladePart || !ratchetPart || !bitPart) return false;
-                
-                // Check ownership
-                const bladeOwned = ownedParts.blades.has(bladePart.id) && ownedParts.blades.get(bladePart.id).size > 0;
-                const ratchetOwned = ownedParts.ratchets.has(ratchetPart.id);
-                const bitOwned = ownedParts.bits.has(bitPart.id);
-                
-                if (!bladeOwned || !ratchetOwned || !bitOwned) return false;
-
-                // --- NOVA REGRA: Check if already used in OTHER slots ---
-                if (usedPartIds.has(bladePart.id) || usedPartIds.has(ratchetPart.id) || usedPartIds.has(bitPart.id)) {
-                    return false;
-                }
-
-                if (currentBay.type === 'standard') {
-                    if (currentBay.part1 && (currentBay.part1.baseId || currentBay.part1.id) !== bladePart.id) return false;
-                    if (currentBay.part2 && currentBay.part2.id !== ratchetPart.id) return false;
-                    if (currentBay.part3 && currentBay.part3.id !== bitPart.id) return false;
-                } else if (currentBay.type === 'chip') {
-                    return false;
-                }
-                
-                return true;
-            });
-
-            if (matchingCombos.length > 0) {
-                matchingCombos.forEach(combo => {
-                    const bladePart = ALL_PARTS.find(p => p.name === combo.blade);
-                    const ratchetPart = ALL_PARTS.find(p => p.name === combo.ratchet);
-                    const bitPart = ALL_PARTS.find(p => p.name === combo.bit);
-                    const card = document.createElement('div');
-                    card.className = 'suggestion-card';
-                    card.innerHTML = `
-                        <div class="suggestion-part"><img src="${bladePart.image}"><span>${bladePart.name}</span></div>
-                        <div class="suggestion-part"><img src="${ratchetPart.image}"><span>${ratchetPart.name}</span></div>
-                        <div class="suggestion-part"><img src="${bitPart.image}"><span>${bitPart.name}</span></div>`;
-                    card.addEventListener('click', () => applySuggestion(slotId, combo));
-                    modal_suggestions_container.appendChild(card);
-                });
-            } else {
-                modal_suggestions_container.innerHTML += '<p>Nenhuma sugestão encontrada com as peças que você possui (ou peças já estão em uso).</p>';
-            }
+             // Sugestões Chip não são mostradas ao selecionar Main/Assist individualmente (poderia adicionar se quisesse)
+             showChipSuggestions = false;
         } else {
-            modal_suggestions_container.innerHTML = '';
-            modal_suggestions_container.style.display = 'none';
+             console.error("Tipo de peça desconhecido:", type);
+             return;
         }
 
-        // Render Individual Parts List
+
+        // Filtra as peças disponíveis, removendo as que já estão usadas em outros slots
+        const partsToShow = availableParts.filter(part => !usedPartIds.has(part.baseId || part.id));
+
+        // --- Renderiza Sugestões ---
+        modal_suggestions_container.innerHTML = ''; // Limpa sugestões anteriores
+        let suggestionsFound = false;
+
+         if (showStandardSuggestions || showChipSuggestions) {
+              modal_suggestions_container.style.display = 'block';
+
+              // Sugestões STANDARD (Blade, Ratchet, Bit)
+              if (showStandardSuggestions) {
+                  modal_suggestions_container.innerHTML += '<h4>Sugestões do META (Standard)</h4>';
+                  const matchingCombos = ALL_COMBOS.filter(combo => {
+                      const bladePart = ALL_PARTS.find(p => p.name === combo.blade);
+                      const ratchetPart = ALL_PARTS.find(p => p.name === combo.ratchet);
+                      const bitPart = ALL_PARTS.find(p => p.name === combo.bit);
+
+                      if (!bladePart || !ratchetPart || !bitPart) return false;
+
+                      // Verifica posse das peças base
+                      const bladeOwned = ownedPartsCollection.blades.has(bladePart.id) && ownedPartsCollection.blades.get(bladePart.id).size > 0;
+                      const ratchetOwned = ownedPartsCollection.ratchets.has(ratchetPart.id);
+                      const bitOwned = ownedPartsCollection.bits.has(bitPart.id);
+                      if (!bladeOwned || !ratchetOwned || !bitOwned) return false;
+
+                      // Verifica se alguma peça JÁ ESTÁ EM USO em OUTRO slot
+                      if (usedPartIds.has(bladePart.id) || usedPartIds.has(ratchetPart.id) || usedPartIds.has(bitPart.id)) {
+                          return false;
+                      }
+
+                      // Verifica compatibilidade com peças JÁ NO SLOT ATUAL (se houver)
+                       if (currentBay.type === 'standard') {
+                           if (currentBay.part1 && (currentBay.part1.baseId || currentBay.part1.id) !== bladePart.id) return false;
+                           if (currentBay.part2 && currentBay.part2.id !== ratchetPart.id) return false;
+                           if (currentBay.part3 && currentBay.part3.id !== bitPart.id) return false;
+                       } // Se currentBay.type for 'chip' ou null, não há restrição aqui
+
+                      return true;
+                  });
+
+                  if (matchingCombos.length > 0) {
+                      suggestionsFound = true;
+                      matchingCombos.forEach(combo => {
+                          const bladePart = ALL_PARTS.find(p => p.name === combo.blade);
+                          const ratchetPart = ALL_PARTS.find(p => p.name === combo.ratchet);
+                          const bitPart = ALL_PARTS.find(p => p.name === combo.bit);
+                           // Verificação extra
+                           if (!bladePart || !ratchetPart || !bitPart) return;
+
+                          const card = document.createElement('div');
+                          card.className = 'suggestion-card';
+                          card.innerHTML = `
+                              <div class="suggestion-part"><img src="${bladePart.image}"><span>${bladePart.name}</span></div>
+                              <div class="suggestion-part"><img src="${ratchetPart.image}"><span>${ratchetPart.name}</span></div>
+                              <div class="suggestion-part"><img src="${bitPart.image}"><span>${bitPart.name}</span></div>`;
+                          card.addEventListener('click', () => applySuggestion(slotId, combo)); // Usa a função existente
+                          modal_suggestions_container.appendChild(card);
+                      });
+                  }
+              }
+
+              // Sugestões CHIP (Lockchip, MainBlade, AssistBlade)
+              if (showChipSuggestions && ALL_CHIP_COMBOS && ALL_CHIP_COMBOS.length > 0) {
+                   modal_suggestions_container.innerHTML += '<h4>Sugestões de Combos (Chip)</h4>';
+                   const matchingChipCombos = ALL_CHIP_COMBOS.filter(combo => {
+                       const chipPart = ALL_PARTS.find(p => p.name === combo.lockchip && p.type === 'lockchip');
+                       const mainPart = ALL_PARTS.find(p => p.name === combo.mainblade && p.type === 'mainblade');
+                       const assistPart = ALL_PARTS.find(p => p.name === combo.assistblade && p.type === 'assistblade');
+
+                       if (!chipPart || !mainPart || !assistPart) return false;
+
+                       // Verifica posse
+                       const chipOwned = ownedPartsCollection.lockchips.has(chipPart.id);
+                       const mainOwned = ownedPartsCollection.mainblades.has(mainPart.id);
+                       const assistOwned = ownedPartsCollection.assistblades.has(assistPart.id);
+                       if (!chipOwned || !mainOwned || !assistOwned) return false;
+
+                       // Verifica se já está em uso em OUTRO slot
+                       if (usedPartIds.has(chipPart.id) || usedPartIds.has(mainPart.id) || usedPartIds.has(assistPart.id)) {
+                           return false;
+                       }
+                        // Verifica compatibilidade com peças JÁ NO SLOT ATUAL (se houver)
+                        if (currentBay.type === 'chip') {
+                            if (currentBay.part1 && currentBay.part1.id !== chipPart.id) return false;
+                             // Não precisamos checar part2 e part3 aqui, pois estamos no modal da part1 (tipo 'primeira')
+                        } // Se currentBay.type for 'standard' ou null, não há restrição aqui
+
+                       return true;
+                   });
+
+                   if (matchingChipCombos.length > 0) {
+                       suggestionsFound = true;
+                       matchingChipCombos.forEach(combo => {
+                           const chipPart = ALL_PARTS.find(p => p.name === combo.lockchip && p.type === 'lockchip');
+                           const mainPart = ALL_PARTS.find(p => p.name === combo.mainblade && p.type === 'mainblade');
+                           const assistPart = ALL_PARTS.find(p => p.name === combo.assistblade && p.type === 'assistblade');
+                            // Verificação extra
+                            if (!chipPart || !mainPart || !assistPart) return;
+
+                           const card = document.createElement('div');
+                           card.className = 'suggestion-card';
+                           card.innerHTML = `
+                               <div class="suggestion-part"><img src="${chipPart.image}"><span>${chipPart.name}</span></div>
+                               <div class="suggestion-part"><img src="${mainPart.image}"><span>${mainPart.name}</span></div>
+                               <div class="suggestion-part"><img src="${assistPart.image}"><span>${assistPart.name}</span></div>`;
+                           // card.addEventListener('click', () => applyChipSuggestion(slotId, combo)); // Necessitaria de uma função applyChipSuggestion
+                           modal_suggestions_container.appendChild(card);
+                       });
+                   }
+              }
+
+              // Mensagem se nenhuma sugestão for encontrada
+              if (!suggestionsFound && modal_suggestions_container) { // Verifica se o container ainda existe
+                   modal_suggestions_container.innerHTML = '<p>Nenhuma sugestão encontrada com as peças que você possui (ou peças já estão em uso).</p>';
+              }
+
+          } else {
+               modal_suggestions_container.style.display = 'none'; // Esconde a área de sugestões
+          }
+
+
+        // --- Renderiza Lista de Peças Individuais ---
         modal_parts_list_container.innerHTML = '<h4>Peças Individuais (que você possui)</h4><div class="parts-grid"></div>';
         const partsGrid = modal_parts_list_container.querySelector('.parts-grid');
+         if (!partsGrid) return; // Segurança
 
         if (partsToShow.length === 0) {
-             partsGrid.innerHTML = `<p>Nenhuma peça disponível (verifique sua coleção ou peças já em uso no deck).</p>`;
+            partsGrid.innerHTML = `<p>Nenhuma peça ${type} disponível (verifique sua coleção ou peças já em uso no deck).</p>`;
         } else {
             partsToShow.forEach(part => {
+                 // Segurança: Garante que 'part' é válido
+                 if (!part || !part.name || !part.image) return;
+
                 const part_card = document.createElement('div');
-                part_card.className = 'part-card owned';
-                part_card.innerHTML = `<img src="${part.image || ''}" alt="${part.name}"><p>${part.name}</p><div class="part-score">${part.score.toFixed(2)}</div>`;
+                part_card.className = 'part-card owned'; // Mostra como 'owned' pois já filtramos
+                part_card.innerHTML = `<img src="${part.image}" alt="${part.name}"><p>${part.name}</p><div class="part-score">${(typeof part.score === 'number' ? part.score : 0).toFixed(2)}</div>`;
                 part_card.addEventListener('click', () => selectPartForDeck(part));
                 partsGrid.appendChild(part_card);
             });
         }
-        part_modal.style.display = 'block';
+         // Só mostra o modal se houver conteúdo para mostrar (peças ou sugestões)
+         if(partsToShow.length > 0 || suggestionsFound) {
+            part_modal.style.display = 'block';
+         } else {
+              // Se não há peças nem sugestões, talvez mostrar um alerta?
+              alert(`Nenhuma peça do tipo '${type}' disponível ou compatível no momento.`);
+         }
     };
 
-    const closePartModal = () => part_modal.style.display = 'none';
-    
+
+    const closePartModal = () => {
+         if (part_modal) {
+              part_modal.style.display = 'none';
+         }
+    };
+
     const clearBay = (bay) => {
-        bay.type = null;
-        bay.part1 = null;
-        bay.part2 = null;
-        bay.part3 = null;
+         if (bay && typeof bay === 'object') {
+             bay.type = null;
+             bay.part1 = null;
+             bay.part2 = null;
+             bay.part3 = null;
+         }
     };
 
-    // (CORRIGIDO) Adiciona a peça ao slot do deck
+    // Função ATUALIZADA - Lógica de compatibilidade e definição de tipo
     const selectPartForDeck = (part) => {
         const { slotId, type } = active_deck_slot;
         const bay = app_data.decks[app_data.active_deck_index].bays[slotId];
-        
-        // Adiciona baseId se não existir (para Blades não-variantes)
+         if (!bay) return; // Segurança
+
+        // Adiciona baseId e baseName se não existirem (importante para Blades com ou sem variantes)
         if (part.type === 'blade' && !part.baseId) {
             part.baseId = part.id;
             part.baseName = part.name;
+            // Define uma variante padrão se for uma blade SEM variantsId mas selecionada individualmente
+            if (!part.variant) part.variant = 'Stock'; // Ou pode deixar null/undefined se preferir
         }
 
         if (type === 'primeira') {
-            clearBay(bay);
+            // Limpa o bay APENAS se a peça atual for de tipo diferente da nova peça
+            // Ou se já houver uma peça lá (para permitir trocar uma blade por outra blade, por ex)
+            if (bay.part1 ||
+                (bay.type === 'standard' && part.type !== 'blade') ||
+                (bay.type === 'chip' && part.type !== 'lockchip'))
+             {
+                 clearBay(bay);
+            }
+
             bay.part1 = part;
+            // Define o tipo do Bay com base na primeira peça adicionada
             if (part.type === 'blade') {
                 bay.type = 'standard';
             } else if (part.type === 'lockchip') {
                 bay.type = 'chip';
             }
         } else {
+            // Mapeamento dos tipos de placeholder para as propriedades do bay
             const partMap = {
                 'ratchet': 'part2',
                 'bit': 'part3',
-                'mainblade': 'part2',
-                'assistblade': 'part3'
+                'mainblade': 'part2', // No tipo 'chip', MainBlade vai para part2
+                'assistblade': 'part3' // No tipo 'chip', AssistBlade vai para part3
             };
-            bay[partMap[type]] = part;
+
+            // Verifica se o TIPO DE PEÇA é compatível com o TIPO DE BAY atual
+             // E se o slot correspondente (part2 ou part3) está vazio
+             const targetSlot = partMap[type];
+             if (!targetSlot) {
+                 console.error("Mapeamento inválido para o tipo:", type);
+                 closePartModal();
+                 return;
+             }
+
+             if ((bay.type === 'standard' && (type === 'ratchet' || type === 'bit')) ||
+                 (bay.type === 'chip' && (type === 'mainblade' || type === 'assistblade')))
+             {
+                  // Adiciona a peça ao slot correto (part2 ou part3)
+                  bay[targetSlot] = part;
+             } else {
+                  // Se o bay ainda não tem tipo (está vazio), ou se o tipo é incompatível
+                  alert(`Não é possível adicionar uma peça do tipo '${type}' a um Beyblade do tipo '${bay.type || 'Vazio'}'. Selecione a primeira peça primeiro ou limpe o slot.`);
+                  console.warn(`Tentativa de adicionar peça ${type} incompatível com o tipo de bay ${bay.type}`);
+                  closePartModal(); // Fecha o modal sem fazer a alteração
+                  return;
+             }
         }
 
         updateDeckUI();
@@ -764,29 +1573,39 @@ document.addEventListener('DOMContentLoaded', () => {
         closePartModal();
     };
 
+
     const clearDeck = () => {
-        app_data.decks[app_data.active_deck_index].bays.forEach(clearBay);
-        updateDeckUI();
-        saveAppData();
+         if (app_data.decks[app_data.active_deck_index]) {
+             app_data.decks[app_data.active_deck_index].bays.forEach(clearBay);
+             updateDeckUI();
+             saveAppData();
+         }
     };
-    
+
     const addDeck = () => {
         const newDeckName = prompt("Digite o nome do novo deck:", `Deck ${app_data.decks.length + 1}`);
-        if (newDeckName) {
-            app_data.decks.push(createNewDeck(newDeckName));
-            app_data.active_deck_index = app_data.decks.length - 1;
-            updateDeckUI();
-            saveAppData();
+        if (newDeckName && newDeckName.trim() !== "") { // Verifica se não é nulo ou vazio
+            app_data.decks.push(createNewDeck(newDeckName.trim()));
+            app_data.active_deck_index = app_data.decks.length - 1; // Define o novo deck como ativo
+            updateDeckUI(); // Atualiza a UI para mostrar o novo deck vazio
+            saveAppData(); // Salva o novo estado
+        } else if (newDeckName !== null) { // Se clicou OK mas deixou vazio
+            alert("O nome do deck não pode ser vazio.");
         }
+        // Se clicou Cancelar (newDeckName === null), não faz nada
     };
-    
+
     const deleteDeck = () => {
         if (app_data.decks.length <= 1) {
             alert("Você não pode deletar o último deck.");
             return;
         }
-        if (confirm(`Tem certeza que deseja deletar o deck "${app_data.decks[app_data.active_deck_index].name}"?`)) {
+         const deckToDelete = app_data.decks[app_data.active_deck_index];
+         if (!deckToDelete) return; // Segurança
+
+        if (confirm(`Tem certeza que deseja deletar o deck "${deckToDelete.name}"? Esta ação não pode ser desfeita.`)) {
             app_data.decks.splice(app_data.active_deck_index, 1);
+            // Ajusta o índice ativo para não ficar fora dos limites
             app_data.active_deck_index = Math.max(0, app_data.active_deck_index - 1);
             updateDeckUI();
             saveAppData();
@@ -794,101 +1613,132 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renameDeck = () => {
+         const currentDeck = app_data.decks[app_data.active_deck_index];
+         if (!currentDeck || !deck_name_input) return; // Segurança
+
         const newName = deck_name_input.value.trim();
-        if (newName) {
-            app_data.decks[app_data.active_deck_index].name = newName;
-            renderDeckManager();
+        if (newName && newName !== currentDeck.name) { // Renomeia apenas se for diferente e não vazio
+            currentDeck.name = newName;
+            renderDeckManager(); // Atualiza o <select> com o novo nome
             saveAppData();
-            deck_name_input.blur();
-        } else {
-            deck_name_input.value = app_data.decks[app_data.active_deck_index].name;
+        } else if (!newName) { // Se ficou vazio, restaura o nome antigo
+            deck_name_input.value = currentDeck.name;
+             alert("O nome do deck não pode ser vazio.");
         }
+         deck_name_input.blur(); // Tira o foco do input em qualquer caso
     };
-    
+
+
     const switchDeck = () => {
-        app_data.active_deck_index = parseInt(deck_selector.value, 10);
-        updateDeckUI();
-        saveAppData();
+         if (!deck_selector) return; // Segurança
+         const newIndex = parseInt(deck_selector.value, 10);
+         // Valida o novo índice
+         if (!isNaN(newIndex) && newIndex >= 0 && newIndex < app_data.decks.length) {
+              app_data.active_deck_index = newIndex;
+              updateDeckUI();
+              saveAppData(); // Salva o índice ativo
+         } else {
+              console.error("Índice de deck inválido selecionado:", deck_selector.value);
+              // Opcional: reverter a seleção para o índice válido anterior
+              deck_selector.value = app_data.active_deck_index;
+         }
     };
+
 
     const exportDeckList = () => {
         const personName = prompt("Digite seu nome:", "");
-        if (personName === null) return; 
+        if (personName === null) return; // Cancelou
 
         const tournamentName = prompt("Digite o nome do evento/torneio:", "");
-        if (tournamentName === null) return;
+        if (tournamentName === null) return; // Cancelou
 
         const currentDeck = app_data.decks[app_data.active_deck_index];
-        const bayStrings = currentDeck.bays.map(bay => {
+         if (!currentDeck) {
+              alert("Erro: Deck ativo não encontrado.");
+              return;
+         }
+
+        const bayStrings = currentDeck.bays.map((bay, index) => {
+             // Validação básica do bay
+             if (!bay || typeof bay !== 'object') return null;
+
             if (bay.type === 'standard' && bay.part1 && bay.part2 && bay.part3) {
-                const bladeName = bay.part1.baseName || bay.part1.name;
+                 // Usa baseName para Blades para não incluir a variante na exportação padrão
+                const bladeName = bay.part1.baseName || bay.part1.name; // Fallback para name se baseName não existir
                 return `${bladeName}/${bay.part2.name}-${bay.part3.name}`;
             } else if (bay.type === 'chip' && bay.part1 && bay.part2 && bay.part3) {
+                 // Para combos chip, usa os nomes completos como estão
                 return `${bay.part1.name} (${bay.part2.name}/${bay.part3.name})`;
             }
-            return null;
-        }).filter(Boolean);
+            return null; // Retorna null para bays incompletos ou vazios
+        }).filter(Boolean); // Remove os nulos do array final
 
         if (bayStrings.length === 0) {
-            alert("Seu deck está vazio. Adicione pelo menos um Beyblade completo para exportar.");
+            alert("Seu deck está vazio ou não possui Beyblades completos para exportar. Adicione 3 Beyblades completos.");
             return;
         }
+         // Validação se tem 3 bays completos (opcional, mas comum em regras)
+         // if (bayStrings.length < 3) {
+         //     alert("O deck precisa ter 3 Beyblades completos para ser exportado.");
+         //     return;
+         // }
 
-        const deckListString = `=== DECK LIST ===\n\n===== NOME =====\n${personName}\n\n==== EVENTO ====\n${tournamentName}\n\n===== DECK =====\n${bayStrings.join('\n')}\n\n===============`;
+        const deckListString = `=== DECK LIST ===\n\n===== NOME =====\n${personName.trim()}\n\n==== EVENTO ====\n${tournamentName.trim()}\n\n===== DECK =====\n${bayStrings.join('\n')}\n\n===============`;
 
+        // Tenta copiar para o clipboard
         navigator.clipboard.writeText(deckListString).then(() => {
             alert("Deck List copiada para o clipboard!");
         }).catch(err => {
             console.error('Erro ao copiar para o clipboard: ', err);
-            alert("Falha ao copiar. Verifique as permissões do navegador.");
+             // Fallback: Mostra o texto em um alert ou textarea para cópia manual
+            alert("Falha ao copiar automaticamente. Copie o texto abaixo manualmente:\n\n" + deckListString);
         });
     };
+
 
     // --- INICIALIZAÇÃO E EVENTOS ---
     setupTabs();
     loadAppData();
     renderParts();
     renderMetaCombos();
-    updateDeckUI();
-    
-    collection_filter.addEventListener('change', applyFilter);
-    export_button.addEventListener('click', exportData);
-    import_button.addEventListener('click', () => import_file_input.click());
-    import_file_input.addEventListener('change', importData);
-    clear_deck_button.addEventListener('click', clearDeck);
-    export_deck_button.addEventListener('click', exportDeckList);
-    
+    updateDeckUI(); // Renderiza o deck ativo inicial
+
+    // Adiciona listeners apenas se os elementos existirem
+    if (collection_filter) collection_filter.addEventListener('change', applyFilter);
+    if (export_button) export_button.addEventListener('click', exportData);
+    if (import_button) import_button.addEventListener('click', () => import_file_input?.click()); // Optional chaining
+    if (import_file_input) import_file_input.addEventListener('change', importData);
+    if (clear_deck_button) clear_deck_button.addEventListener('click', clearDeck);
+    if (export_deck_button) export_deck_button.addEventListener('click', exportDeckList);
+
     deck_slots.forEach(slot => {
         slot.querySelectorAll('.part-placeholder').forEach(ph => {
             ph.addEventListener('click', () => {
                 const slotId = slot.dataset.slotId;
-                const type = ph.dataset.type;
-                const bay = app_data.decks[app_data.active_deck_index].bays[slotId];
-                
-                if (type === 'primeira') {
-                    openPartSelector(slotId, 'primeira');
-                }
-                else if (bay.type === 'standard' && (type === 'ratchet' || type === 'bit')) {
-                    openPartSelector(slotId, type);
-                }
-                else if (bay.type === 'chip' && (type === 'mainblade' || type === 'assistblade')) {
-                    openPartSelector(slotId, type);
+                const type = ph.dataset.type; // 'primeira', 'ratchet', 'bit', 'mainblade', 'assistblade'
+                if(slotId !== undefined && type) { // Verifica se os data attributes existem
+                     openPartSelector(slotId, type);
+                } else {
+                     console.error("Placeholder sem data-slot-id ou data-type:", ph);
                 }
             });
         });
     });
 
-    add_deck_button.addEventListener('click', addDeck);
-    delete_deck_button.addEventListener('click', deleteDeck);
-    deck_selector.addEventListener('change', switchDeck);
-    deck_name_input.addEventListener('change', renameDeck);
-    
-    part_modal_close.addEventListener('click', closePartModal);
-    variant_modal_close.addEventListener('click', closeVariantModal);
-    variant_modal_save.addEventListener('click', saveVariantSelection);
-    
+    if (add_deck_button) add_deck_button.addEventListener('click', addDeck);
+    if (delete_deck_button) delete_deck_button.addEventListener('click', deleteDeck);
+    if (deck_selector) deck_selector.addEventListener('change', switchDeck);
+    // 'blur' é geralmente melhor para renomear, pois 'change' só dispara ao perder o foco após alteração
+    if (deck_name_input) deck_name_input.addEventListener('blur', renameDeck);
+
+    if (part_modal_close) part_modal_close.addEventListener('click', closePartModal);
+    if (variant_modal_close) variant_modal_close.addEventListener('click', closeVariantModal);
+    if (variant_modal_save) variant_modal_save.addEventListener('click', saveVariantSelection);
+
+    // Fechar modais ao clicar fora
     window.addEventListener('click', (event) => {
         if (event.target === part_modal) closePartModal();
         if (event.target === variant_modal) closeVariantModal();
     });
+
 });

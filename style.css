@@ -123,7 +123,11 @@ main {
     transition: transform 0.2s, box-shadow 0.2s;
     border: 2px solid transparent;
     position: relative;
+    display: flex; /* Adicionado para melhor alinhamento interno */
+    flex-direction: column; /* Organiza imagem e texto verticalmente */
+    justify-content: space-between; /* Espaça imagem e texto */
 }
+
 
 .part-card:hover {
     transform: scale(1.05);
@@ -140,16 +144,21 @@ main {
     height: 80px;
     object-fit: contain;
     margin-bottom: 0.5rem;
+    align-self: center; /* Centraliza a imagem horizontalmente */
 }
+
 
 .part-card p {
     font-size: 0.9rem;
     font-weight: bold;
-    min-height: 2.2rem;
+    min-height: 2.2rem; /* Mantém espaço para 2 linhas de texto */
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    word-break: break-word; /* Quebra palavras longas */
+    padding: 0 2px; /* Pequeno padding lateral para evitar colar nas bordas */
 }
+
 
 .part-score {
     position: absolute;
@@ -164,10 +173,12 @@ main {
     text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000; /* Stroke preto */
 }
 
+/* Esconde cards não possuídos quando o filtro está ativo */
 #collection-tab.filter-on .part-card:not(.owned) {
     display: none;
 }
 
+/* --- Deck Builder --- */
 .deck-management {
     background-color: var(--primary-bg);
     padding: 1rem;
@@ -194,8 +205,10 @@ main {
     width: 40px;
     height: 40px;
     font-size: 1.5rem;
-    line-height: 1;
+    line-height: 1; /* Centraliza o texto do botão */
+    padding: 0; /* Remove padding extra */
 }
+
 
 #deck-selector, #deck-name-input {
     background-color: var(--card-bg);
@@ -240,16 +253,20 @@ main {
     flex-direction: column;
     align-items: center;
     gap: 0.25rem;
-    width: 100%;
+    width: 100%; /* Garante que o container ocupe a largura do slot */
 }
+
 
 .part-name-display {
     font-size: 0.9rem;
     color: var(--muted-text);
     font-weight: bold;
-    min-height: 1.2rem;
-    word-break: break-all;
+    min-height: 1.2rem; /* Espaço mínimo para o nome */
+    word-break: break-all; /* Quebra nomes muito longos */
+    text-align: center; /* Centraliza o nome */
+    width: 100%; /* Ocupa a largura para centralizar corretamente */
 }
+
 
 .bey-score {
     font-weight: bold;
@@ -274,8 +291,9 @@ main {
     cursor: pointer;
     transition: background-color 0.3s;
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* Garante que a imagem não saia do círculo */
 }
+
 
 .part-placeholder:hover {
     background-color: #333;
@@ -284,25 +302,36 @@ main {
 .part-placeholder img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: contain; /* Ajusta a imagem dentro do placeholder */
+    border-radius: 50%; /* Garante que a imagem pareça circular */
 }
 
-.part-placeholder span {
+
+.part-placeholder span { /* Texto dentro do placeholder (ex: "Ratchet") */
     font-weight: bold;
     color: var(--muted-text);
     font-size: 0.9rem;
+    text-align: center;
 }
+
 
 .part-placeholder .part-score-deck {
     position: absolute;
     bottom: 2px;
+    /* right: 50%; */ /* Centraliza o score horizontalmente */
+    /* transform: translateX(50%); */ /* Ajuste fino para centralização */
     background-color: var(--score-bg);
     color: white;
     font-size: 0.7rem;
     padding: 1px 4px;
     border-radius: 3px;
     text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000; /* Stroke preto */
+    /* Garante que o score não saia do placeholder */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap; /* Impede quebra de linha no score */
 }
+
 
 /* Oculta os slots condicionais por padrão */
 .deck-slot .standard-parts,
@@ -311,7 +340,7 @@ main {
     width: 100%;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.75rem; /* Mantém o espaçamento interno */
 }
 
 /* Exibe os slots corretos com base no tipo de bay */
@@ -334,8 +363,9 @@ main {
 
 .deck-info p {
     font-size: 1.2rem;
-    align-self: center;
+    align-self: center; /* Alinha verticalmente com os botões */
 }
+
 
 button {
     background-color: transparent;
@@ -345,47 +375,366 @@ button {
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Adiciona transição para border-color */
 }
+
 
 button:hover {
     background-color: var(--card-bg);
-    border-color: var(--text-color);
+    border-color: var(--text-color); /* Muda a cor da borda no hover */
 }
 
-/* Modal */
-.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.7); }
-.modal-content { background-color: var(--secondary-bg); margin: 5% auto; padding: 20px; border: 1px solid var(--border-color); border-radius: 8px; width: 90%; max-width: 800px; position: relative; max-height: 90vh; overflow-y: auto; }
-.close-button { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
-.close-button:hover, .close-button:focus { color: var(--text-color); text-decoration: none; }
-#modal-suggestions-container, #modal-parts-list-container { margin-bottom: 1.5rem; }
-#modal-suggestions-container h4, #modal-parts-list-container h4 { color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem; }
-.suggestion-card { display: flex; align-items: center; gap: 1rem; background-color: var(--primary-bg); padding: 0.75rem; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; margin-bottom: 0.75rem; }
-.suggestion-card:hover { background-color: var(--card-bg); }
-.suggestion-part { display: flex; align-items: center; gap: 0.5rem; }
-.suggestion-part img { width: 40px; height: 40px; object-fit: contain; }
-.suggestion-part span { font-size: 0.85rem; }
 
-/* Modal de Variantes */
-#variant-modal-checkboxes { display: flex; flex-direction: column; gap: 10px; margin-top: 1rem; }
-#variant-modal-checkboxes label { font-size: 1.1rem; cursor: pointer; }
-#variant-modal-checkboxes input { margin-right: 10px; }
-.modal-buttons { margin-top: 1.5rem; text-align: right; }
+/* --- Modal --- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
+    padding-top: 60px; /* Location of the box */
+}
 
-/* Meta */
-#meta-combos-container { display: flex; flex-direction: column; gap: 1rem; }
-.meta-combo-card { display: flex; align-items: center; background-color: var(--card-bg); padding: 1rem; border-radius: 8px; border-left: 5px solid var(--border-color); gap: 1.5rem; flex-wrap: wrap; }
-.meta-combo-card .rank { font-size: 2rem; font-weight: bold; color: var(--text-color); min-width: 40px; text-align: center; }
-.meta-combo-card .parts { display: flex; align-items: center; gap: 1rem; flex-grow: 1; }
-.meta-combo-card .part-display { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; }
-.meta-combo-card .part-display img { width: 60px; height: 60px; object-fit: contain; background-color: var(--primary-bg); border-radius: 50%; padding: 5px; }
-.meta-combo-card .part-display span { font-size: 0.9rem; }
-.meta-combo-card .points { font-size: 1.5rem; font-weight: bold; color: var(--text-color); margin-left: auto; padding-left: 1rem; }
+.modal-content {
+    background-color: var(--secondary-bg);
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    width: 90%; /* Could be more or less, depending on screen size */
+    max-width: 800px; /* Maximum width */
+    position: relative;
+    max-height: 85vh; /* Limit height to prevent going off-screen */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack elements vertically */
+}
 
-@media (max-width: 600px) {
+
+.close-button {
+    color: #aaa;
+    /* float: right; */ /* Replaced by absolute positioning */
+    position: absolute; /* Position relative to modal-content */
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.close-button:hover,
+.close-button:focus {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+#modal-title {
+     margin-bottom: 15px; /* Add some space below the title */
+     padding-right: 30px; /* Space for the close button */
+}
+
+/* Container para a lista de peças e sugestões, com scroll */
+.modal-scrollable-content {
+     overflow-y: auto; /* Add scroll to this container */
+     flex-grow: 1; /* Allow this area to take available space */
+     padding-right: 10px; /* Space for scrollbar */
+}
+
+
+#modal-suggestions-container, #modal-parts-list-container {
+    margin-bottom: 1.5rem;
+}
+#modal-suggestions-container h4, #modal-parts-list-container h4 {
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+.suggestion-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--primary-bg);
+    padding: 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 0.75rem; /* Space between suggestion cards */
+    flex-wrap: wrap; /* Allow parts to wrap on small screens */
+}
+
+.suggestion-card:hover {
+    background-color: var(--card-bg);
+}
+.suggestion-part {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 100px; /* Minimum width for each part */
+}
+.suggestion-part img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+.suggestion-part span {
+    font-size: 0.85rem;
+}
+
+/* --- Modal de Variantes --- */
+
+/* Remove margem padrão que pode atrapalhar o grid */
+#variant-modal-checkboxes {
+    margin-top: 0;
+}
+
+/* Estilos para o Modal de Variantes (Novo Grid) */
+#variant-modal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+    max-height: 50vh; /* Limita a altura para evitar modais muito longos */
+    overflow-y: auto; /* Adiciona scroll se necessário */
+    padding: 5px; /* Espaço para a borda de seleção não cortar */
+    background-color: var(--primary-bg); /* Fundo para o grid */
+    border-radius: 5px; /* Bordas arredondadas para o grid */
+}
+
+.variant-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; /* Adiciona transição border-color */
+    border: 2px solid transparent;
+    position: relative;
+    display: flex; /* Para alinhar imagem e texto */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centraliza conteúdo verticalmente */
+}
+
+.variant-card:hover {
+    transform: scale(1.05);
+}
+
+.variant-card.selected {
+    border-color: #00ffc3; /* Mesma cor da borda 'owned' */
+    box-shadow: var(--owned-glow); /* Mesmo brilho 'owned' */
+}
+
+.variant-card img {
+    width: 100%;
+    max-width: 60px; /* Tamanho um pouco menor para o modal */
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.variant-card p {
+    font-size: 0.85rem; /* Fonte um pouco menor */
+    font-weight: bold;
+    min-height: 1.5rem; /* Ajuste a altura mínima se necessário */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color); /* Garante a cor do texto */
+    word-break: break-word; /* Quebra nomes longos */
+}
+
+
+.modal-buttons {
+    margin-top: 1.5rem;
+    text-align: right; /* Alinha botões à direita */
+    padding-top: 1rem; /* Espaço acima dos botões */
+    border-top: 1px solid var(--border-color); /* Linha separadora */
+}
+
+
+/* --- Meta --- */
+#meta-combos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.meta-combo-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 5px solid var(--border-color); /* Barra lateral */
+    gap: 1rem; /* Espaçamento entre rank, parts, points */
+    flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+}
+.meta-combo-card .rank {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-color);
+    min-width: 40px; /* Largura mínima para o rank */
+    text-align: center;
+    flex-shrink: 0; /* Impede que o rank encolha */
+}
+.meta-combo-card .parts {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-grow: 1; /* Ocupa o espaço disponível */
+    flex-wrap: wrap; /* Permite que as peças quebrem linha */
+    justify-content: center; /* Centraliza as peças se quebrar linha */
+}
+.meta-combo-card .part-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem; /* Espaço entre imagem e nome da peça */
+    min-width: 80px; /* Largura mínima para cada peça */
+}
+.meta-combo-card .part-display img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    background-color: var(--primary-bg); /* Fundo para destacar a imagem */
+    border-radius: 50%;
+    padding: 5px; /* Pequeno espaçamento interno */
+}
+.meta-combo-card .part-display span {
+    font-size: 0.9rem;
+    word-break: break-word; /* Quebra nomes longos */
+}
+.meta-combo-card .points {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-left: auto; /* Empurra para a direita */
+    padding-left: 1rem; /* Espaço antes dos pontos */
+    white-space: nowrap; /* Impede quebra de linha nos pontos */
+    flex-shrink: 0; /* Impede que os pontos encolham */
+}
+
+/* Media Query para telas menores */
+@media (max-width: 768px) {
+    main {
+         padding: 1rem; /* Reduz padding principal */
+    }
     header {
         flex-direction: column;
         gap: 1rem;
         padding: 1rem;
     }
+     nav {
+         width: 100%; /* Ocupa toda a largura */
+         justify-content: space-around; /* Distribui melhor os links */
+     }
+     .tab-link {
+         padding: 8px 10px; /* Reduz padding dos links */
+         font-size: 0.9rem;
+     }
+     .deck-management {
+         flex-direction: column; /* Empilha os controles */
+         align-items: stretch; /* Estica os grupos */
+     }
+     .deck-selector-group, .deck-name-group, .deck-buttons-group {
+         justify-content: center; /* Centraliza itens nos grupos */
+         width: 100%; /* Ocupa largura total */
+     }
+     #deck-name-input {
+         min-width: 0; /* Remove largura mínima */
+         flex-grow: 1; /* Permite que o input cresça */
+     }
+     .deck-area {
+         gap: 1rem; /* Reduz espaço entre slots */
+     }
+     .deck-slot {
+         width: 140px; /* Reduz largura dos slots */
+         padding: 0.8rem;
+     }
+     .part-placeholder {
+         width: 65px;
+         height: 65px;
+     }
+      .part-placeholder img {
+          max-width: 100%;
+          max-height: 100%;
+      }
+     .modal-content {
+         width: 95%; /* Aumenta largura em telas pequenas */
+         margin: 5% auto;
+         max-height: 90vh;
+     }
+      #variant-modal-grid, .parts-grid { /* Ajusta grid em telas menores */
+           grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+           gap: 0.8rem;
+      }
+      .variant-card img, .part-card img { /* Reduz imagem nos grids */
+           max-width: 50px;
+           height: 50px;
+      }
+       .variant-card p, .part-card p { /* Reduz fonte nos grids */
+            font-size: 0.8rem;
+            min-height: 1.8rem;
+       }
+     .meta-combo-card {
+         flex-direction: column; /* Empilha rank, parts, points */
+         align-items: flex-start; /* Alinha à esquerda */
+         gap: 0.5rem;
+     }
+     .meta-combo-card .rank {
+         align-self: flex-start; /* Mantém rank à esquerda */
+         font-size: 1.5rem;
+         margin-bottom: 0.5rem;
+     }
+     .meta-combo-card .parts {
+         justify-content: flex-start; /* Alinha peças à esquerda */
+         gap: 0.8rem;
+     }
+     .meta-combo-card .part-display img {
+         width: 50px;
+         height: 50px;
+     }
+     .meta-combo-card .part-display span {
+         font-size: 0.8rem;
+     }
+     .meta-combo-card .points {
+         margin-left: 0; /* Remove margem */
+         align-self: flex-end; /* Alinha pontos à direita */
+         font-size: 1.2rem;
+         padding-left: 0;
+     }
+}
+
+@media (max-width: 480px) {
+     main {
+          padding: 0.5rem;
+     }
+      .tab-link {
+          padding: 6px 8px;
+          font-size: 0.8rem;
+      }
+      .deck-slot {
+          width: 120px; /* Ainda menor */
+      }
+      .part-placeholder {
+          width: 55px;
+          height: 55px;
+      }
+       #variant-modal-grid, .parts-grid {
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.5rem;
+       }
+       .variant-card img, .part-card img {
+            max-width: 40px;
+            height: 40px;
+       }
+       .variant-card p, .part-card p {
+            font-size: 0.75rem;
+            min-height: 1.5rem;
+       }
 }

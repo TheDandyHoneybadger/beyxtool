@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeyXTool</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.png" type="image/png">
 </head>
 <body>
 
@@ -24,6 +25,7 @@
                 <h2>Top 10 Combos do META</h2>
             </div>
             <div id="meta-combos-container">
+                {/* Combos serão carregados aqui pelo JavaScript */}
             </div>
         </div>
 
@@ -49,11 +51,11 @@
 
             <div class="deck-builder-container">
                  <div class="deck-area">
-                    <div class="deck-slot" data-slot-id="0">
+                    <div class="deck-slot" data-slot-id="0" data-bay-type="empty">
                         <div class="part-container">
                             <div class="part-placeholder" data-type="primeira"><span>Primeira Peça</span></div>
                             <p class="part-name-display" data-name-type="primeira">Selecione</p>
-                        </div>
+                        </div>/}
                         <div class="standard-parts">
                             <div class="part-container">
                                 <div class="part-placeholder" data-type="ratchet"><span>Ratchet</span></div>
@@ -76,7 +78,7 @@
                         </div>
                         <div class="bey-score">Soma: <span>0.00</span></div>
                     </div>
-                    <div class="deck-slot" data-slot-id="1">
+                    <div class="deck-slot" data-slot-id="1" data-bay-type="empty">
                          <div class="part-container">
                             <div class="part-placeholder" data-type="primeira"><span>Primeira Peça</span></div>
                             <p class="part-name-display" data-name-type="primeira">Selecione</p>
@@ -103,7 +105,7 @@
                         </div>
                         <div class="bey-score">Soma: <span>0.00</span></div>
                     </div>
-                    <div class="deck-slot" data-slot-id="2">
+                    <div class="deck-slot" data-slot-id="2" data-bay-type="empty">
                          <div class="part-container">
                             <div class="part-placeholder" data-type="primeira"><span>Primeira Peça</span></div>
                             <p class="part-name-display" data-name-type="primeira">Selecione</p>
@@ -147,13 +149,13 @@
                     <input type="checkbox" id="collection-filter">
                 </div>
             </div>
-            
-            <h3>Blades (Variações)</h3>
+
+            <h3>Blades</h3>
             <div class="parts-grid" id="blades-container"></div>
-            
+
             <h3>Ratchets</h3>
             <div class="parts-grid" id="ratchets-container"></div>
-            
+
             <h3>Bits</h3>
             <div class="parts-grid" id="bits-container"></div>
 
@@ -162,7 +164,7 @@
 
             <h3>Main Blades</h3>
             <div class="parts-grid" id="mainblades-container"></div>
-            
+
             <h3>Assist Blades</h3>
             <div class="parts-grid" id="assistblades-container"></div>
         </div>
@@ -172,11 +174,11 @@
                 <h2>Importar & Exportar Dados</h2>
             </div>
             <div class="settings-container">
-                <p>Salve sua coleção e decks em um arquivo para backup ou para transferir para outro dispositivo.</p>
+                <p>Salve sua coleção e decks em um arquivo (.bx) para backup ou para transferir para outro dispositivo.</p>
                 <div class="data-buttons">
                     <button id="export-button">Exportar Dados (.bx)</button>
                     <button id="import-button">Importar Dados (.bx)</button>
-                    <input type="file" id="import-file" accept=".bx" style="display: none;">
+                    <input type="file" id="import-file" accept=".bx,application/json" style="display: none;"> {/* Aceita .bx e json */}
                 </div>
             </div>
         </div>
@@ -186,18 +188,19 @@
         <div class="modal-content">
             <span class="close-button" id="part-selector-close">&times;</span>
             <h3 id="modal-title">Selecione uma Peça</h3>
-            
-            <div id="modal-suggestions-container"></div>
-            <div id="modal-parts-list-container"></div>
+            <div class="modal-scrollable-content">
+                <div id="modal-suggestions-container"></div>
+                <div id="modal-parts-list-container"></div>
+            </div>
         </div>
     </div>
-    
+
     <div id="variant-selector-modal" class="modal">
         <div class="modal-content">
             <span class="close-button" id="variant-selector-close">&times;</span>
             <h3 id="variant-modal-title">Selecionar Variantes</h3>
-            <div id="variant-modal-checkboxes">
-                </div>
+            <div id="variant-modal-checkboxes">/}
+            </div>
             <div class="modal-buttons">
                 <button id="variant-modal-save">Salvar</button>
             </div>
