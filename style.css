@@ -14,6 +14,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    cursor: default; /* Mantém o cursor padrão em tudo */
 }
 
 body {
@@ -21,6 +22,14 @@ body {
     background-color: var(--primary-bg);
     color: var(--text-color);
     line-height: 1.6;
+    
+    /* --- [CORREÇÃO DEFINITIVA] --- */
+    /* Impede a seleção de texto e o cursor 'I-beam' no app todo */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE10+/Edge */
+    user-select: none;        /* Padrão */
+    /* --- [FIM DA CORREÇÃO] --- */
 }
 
 header {
@@ -220,6 +229,36 @@ main {
 #deck-name-input {
     min-width: 200px;
 }
+
+/* --- [BLOCO DE CURSORES ATUALIZADO] --- */
+/* Força o cursor de "clique" (mão) em elementos interativos */
+button,
+.tab-link,
+.part-card,
+.part-placeholder,
+.suggestion-card,
+.variant-card,
+.close-button,
+.lang-button,
+#collection-filter,
+#deck-selector,
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+/* Força o cursor de "texto" (I-beam) apenas em campos de digitação */
+/* E RE-ABILITA a seleção de texto para eles */
+#deck-name-input,
+#input-modal-field,
+input[type="text"] {
+    cursor: text;
+    -webkit-user-select: text; /* Re-habilita a seleção */
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+/* --- FIM DO BLOCO ATUALIZADO --- */
+
 
 .deck-builder-container, .settings-container {
     display: flex;
