@@ -3,342 +3,275 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- BASE DE DADOS DAS VARIANTES (AJUSTADA) ---
     const ALL_VARIANTS = {
         'aerpegasus': [
-            { name: 'Stock', image: 'images/blades/AeroPegasus.png' }
-            // ver. 2 removida
-        ],
-        'cobaltdragoon': [
-            { name: 'Stock', image: 'images/blades/CobaltDragoon.png' }
-            // ver. 2 removida
-        ],
-        'dranbuster': [
-            { name: 'Stock', image: 'images/blades/DranBuster.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/DranBuster_3-70N.png' } // Anterior ver. 3
-        ],
-        'drandagger': [
-            { name: 'Stock', image: 'images/blades/DranDagger.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/DranDagger_4-60R.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/DranDagger_4-70P.png' }, // Anterior ver. 4
-            { name: 'ver. 4', image: 'images/variantes/DranDagger_9-60LF.png' }  // Anterior ver. 5
-        ],
-        'dransword': [
-            { name: 'Stock', image: 'images/blades/DranSword.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/DranSword_3-80B.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/DranSword_4-80DB.png' }  // Anterior ver. 4
-        ],
-        'hellschain': [
-            { name: 'Stock', image: 'images/blades/HellsChain.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/HellsChain_9-80O.png' } // Anterior ver. 3
-        ],
-        'hellsscythe': [
-            { name: 'Stock', image: 'images/blades/HellsScythe.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/HellsScythe_3-80F.png' },    // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/HellsScythe_4-60T.png' },   // Anterior ver. 4
-            { name: 'ver. 4', image: 'images/variantes/HellsScythe_4-80LF.png' } // Anterior ver. 5
-        ],
-        'hoverwyvern': [
-            { name: 'Stock', image: 'images/blades/HoverWyvern.png' }
-             // ver. 2 removida
-        ],
-        'knightmail': [
-            { name: 'Stock', image: 'images/blades/KnightMail.png' }
-            // ver. 2 removida
-        ],
-        'knightshield': [
-            { name: 'Stock', image: 'images/blades/KnightShield.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/KnightShield_4-60LF.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/KnightShield_4-80T.png' }, // Anterior ver. 4
-            { name: 'ver. 4', image: 'images/variantes/KnightShield_5-80T.png' }  // Anterior ver. 5
-        ],
-        'leonclaw': [
-            { name: 'Stock', image: 'images/blades/LeonClaw.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/LeonClaw_3-80HN.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/LeonClaw_5-60P.png' }  // Anterior ver. 4
-        ],
-        'phoenixwing': [
-            { name: 'Stock', image: 'images/blades/PhoenixWing.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/PhoenixWing_9-60GF.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/PhoenixWing_9-80DB.png' }   // Anterior ver. 4
-        ],
-        'sharkscale': [
-            { name: 'Stock', image: 'images/blades/SharkScale.png' }
-            // ver. 2 removida
-        ],
-        'silverwolf': [
-            { name: 'Stock', image: 'images/blades/SilverWolf.png' }
-            // ver. 2 removida
-        ],
-        'tyrannobeat': [
-            { name: 'Stock', image: 'images/blades/TyrannoBeat.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/TyrannoBeat_4-70Q.png' } // Anterior ver. 3
-        ],
-        'unicornsting': [
-            { name: 'Stock', image: 'images/blades/UnicornSting.png' },
-             // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/UnicornSting_5-60GP.png' } // Anterior ver. 3
-        ],
-        'wizardarrow': [
-            { name: 'Stock', image: 'images/blades/WizardArrow.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/WizardArrow_4-60N.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/WizardArrow_4-80B.png' }, // Anterior ver. 4
-            { name: 'ver. 4', image: 'images/variantes/WizardArrow_4-80GB.png' },// Anterior ver. 5
-            { name: 'ver. 5', image: 'images/variantes/WizardArrow_4-80N.png' }  // Anterior ver. 6
-        ],
-        'wizardrod': [
-            { name: 'Stock', image: 'images/blades/WizardRod.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/WizardRod_5-70DB.png' } // Anterior ver. 3
+            { name: "Stock", image: "images/blades/AeroPegasus.png" }
         ],
         'bearscratch': [
-            { name: 'Stock', image: 'images/blades/BearScratch.png' }
-             // ver. 2 removida
+            { name: "Stock", image: "images/blades/BearScratch.png" }
         ],
         'blackshell': [
-            { name: 'Stock', image: 'images/blades/BlackShell.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/BlackShell_9-80B.png' } // Anterior ver. 3
+            { name: "Stock", image: "images/blades/BlackShell.png" },
+            { name: "ver. 2", image: "images/variantes/BlackShell_9-80B.png" }
+        ],
+        'cobaltdragoon': [
+            { name: "Stock", image: "images/blades/CobaltDragoon.png" }
         ],
         'cobaltdrake': [
-            { name: 'Stock', image: 'images/blades/CobaltDrake.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/CobaltDrake_9-60R.png' } // Anterior ver. 3
+            { name: "Stock", image: "images/blades/CobaltDrake.png" },
+            { name: "ver. 2", image: "images/variantes/CobaltDrake_9-60R.png" }
         ],
         'crimsongaruda': [
-            { name: 'Stock', image: 'images/blades/CrimsonGaruda.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/CrimsonGaruda.png" }
         ],
         'croccrunch': [
-            { name: 'Stock', image: 'images/blades/CrocCrunch.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/CrocCrunch.png" }
         ],
         'darthvader': [
-            { name: 'Stock', image: 'images/blades/DarthVader.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/DarthVader.png" }
         ],
         'dracielshield': [
-            { name: 'Stock', image: 'images/blades/DracielShield.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/DracielShield.png" }
         ],
         'dragoonsform': [
-            { name: 'Stock', image: 'images/blades/DragoonStorm.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/DragoonStorm.png" }
+        ],
+        'dranbuster': [
+            { name: "Stock", image: "images/blades/DranBuster.png" },
+            { name: "ver. 2", image: "images/variantes/DranBuster_3-70N.png" }
+        ],
+        'drandagger': [
+            { name: "Stock", image: "images/blades/DranDagger.png" },
+            { name: "ver. 2", image: "images/variantes/DranDagger_4-60R.png" },
+            { name: "ver. 3", image: "images/variantes/DranDagger_4-70P.png" },
+            { name: "ver. 4", image: "images/variantes/DranDagger_9-60LF.png" }
+        ],
+        'dransword': [
+            { name: "Stock", image: "images/blades/DranSword.png" },
+            { name: "ver. 2", image: "images/variantes/DranSword_3-80B.png" },
+            { name: "ver. 3", image: "images/variantes/DranSword_4-80DB.png" },
+            { name: "ver. 4", image: "images/variantes/2.png" },
+            { name: "ver. 5", image: "images/variantes/3.png" },
+            { name: "ver. 6", image: "images/variantes/latest.png" }
         ],
         'dranzerspiral': [
-            { name: 'Stock', image: 'images/blades/DranzerSpiral.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/DranzerSpiral.png" }
         ],
         'drigerslash': [
-            { name: 'Stock', image: 'images/blades/DrigerSlash.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/DrigerSlash.png" }
         ],
         'generalgrievous': [
-            { name: 'Stock', image: 'images/blades/GeneralGrievous.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/GeneralGrievous.png" }
         ],
         'ghostcircle': [
-            { name: 'Stock', image: 'images/blades/GhostCircle.png' },
-             // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/GhostCircle_4-60H.png' } // Anterior ver. 3
+            { name: "Stock", image: "images/blades/GhostCircle.png" },
+            { name: "ver. 2", image: "images/variantes/GhostCircle_4-60H.png" }
         ],
         'gillshark': [
-            { name: 'Stock', image: 'images/blades/GillShark.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/GillShark.png" }
+        ],
+        'hellschain': [
+            { name: "Stock", image: "images/blades/HellsChain.png" },
+            { name: "ver. 2", image: "images/variantes/HellsChain_9-80O.png" }
         ],
         'hellshammer': [
-            { name: 'Stock', image: 'images/blades/HellsHammer.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/HellsHammer.png" }
+        ],
+        'hellsscythe': [
+            { name: "Stock", image: "images/blades/HellsScythe.png" },
+            { name: "ver. 2", image: "images/variantes/HellsScythe_3-80F.png" },
+            { name: "ver. 3", image: "images/variantes/HellsScythe_4-60T.png" },
+            { name: "ver. 4", image: "images/variantes/HellsScythe_4-80LF.png" }
+        ],
+        'hoverwyvern': [
+            { name: "Stock", image: "images/blades/HoverWyvern.png" }
         ],
         'impactdrake': [
-            { name: 'Stock', image: 'images/blades/ImpactDrake.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/ImpactDrake_9-60LR.png' } // Anterior ver. 3
+            { name: "Stock", image: "images/blades/ImpactDrake.png" },
+            { name: "ver. 2", image: "images/variantes/ImpactDrake_9-60LR.png" }
         ],
         'knightlance': [
-            { name: 'Stock', image: 'images/blades/KnightLance.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/KnightLance_4-60GB.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/KnightLance_4-80HN.png' }  // Anterior ver. 4
+            { name: "Stock", image: "images/blades/KnightLance.png" },
+            { name: "ver. 2", image: "images/variantes/KnightLance_4-60GB.png" },
+            { name: "ver. 3", image: "images/variantes/KnightLance_4-80HN.png" }
+        ],
+        'knightmail': [
+            { name: "Stock", image: "images/blades/KnightMail.png" }
+        ],
+        'knightshield': [
+            { name: "Stock", image: "images/blades/KnightShield.png" },
+            { name: "ver. 2", image: "images/variantes/KnightShield_4-60LF.png" },
+            { name: "ver. 3", image: "images/variantes/KnightShield_4-80T.png" },
+            { name: "ver. 4", image: "images/variantes/KnightShield_5-80T.png" }
+        ],
+        'leonclaw': [
+            { name: "Stock", image: "images/blades/LeonClaw.png" },
+            { name: "ver. 2", image: "images/variantes/LeonClaw_3-80HN.png" },
+            { name: "ver. 3", image: "images/variantes/LeonClaw_5-60P.png" }
         ],
         'leoncrest': [
-            { name: 'Stock', image: 'images/blades/LeonCrest.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/LeonCrest_9-80K.png' } // Anterior ver. 3
+            { name: "Stock", image: "images/blades/LeonCrest.png" },
+            { name: "ver. 2", image: "images/variantes/LeonCrest_9-80K.png" }
         ],
         'lightningl-drago': [
-            { name: 'Stock', image: 'images/blades/LightningL-Drago.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/Lightning_L-Drago_1-60F.png' } // Anterior ver. 3 (usando a imagem repetida)
+            { name: "Stock", image: "images/blades/LightningL-Drago.png" },
+            { name: "ver. 2", image: "images/variantes/Lightning_L-Drago_1-60F.png" }
         ],
         'mammothtusk': [
-            { name: 'Stock', image: 'images/blades/MammothTusk.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/MammothTusk.png" }
         ],
         'moffgideon': [
-            { name: 'Stock', image: 'images/blades/MoffGideon.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/MoffGideon.png" }
         ],
         'mosasaurus': [
-            { name: 'Stock', image: 'images/blades/Mosasaurus.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/Mosasaurus.png" }
         ],
         'optimusprimal': [
-            { name: 'Stock', image: 'images/blades/OptimusPrimal.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/OptimusPrimal.png" }
         ],
         'optimusprime': [
-            { name: 'Stock', image: 'images/blades/OptimusPrime.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/OptimusPrime.png" }
         ],
         'phoenixfeather': [
-            { name: 'Stock', image: 'images/blades/PhoenixFeather.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/PhoenixFeather_3-60F.png' },    // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/PhoenixFeather_4-60LF.png' } // Anterior ver. 4
+            { name: "Stock", image: "images/blades/PhoenixFeather.png" },
+            { name: "ver. 2", image: "images/variantes/PhoenixFeather_3-60F.png" },
+            { name: "ver. 3", image: "images/variantes/PhoenixFeather_4-60LF.png" }
         ],
         'phoenixrudder': [
-            { name: 'Stock', image: 'images/blades/PhoenixRudder.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/PhoenixRudder_9-70G.png' } // Anterior ver. 3
+            { name: "Stock", image: "images/blades/PhoenixRudder.png" },
+            { name: "ver. 2", image: "images/variantes/PhoenixRudder_9-70G.png" }
+        ],
+        'phoenixwing': [
+            { name: "Stock", image: "images/blades/PhoenixWing.png" },
+            { name: "ver. 2", image: "images/variantes/PhoenixWing_9-60GF.png" },
+            { name: "ver. 3", image: "images/variantes/PhoenixWing_9-80DB.png" }
         ],
         'quetzalcoatlus': [
-            { name: 'Stock', image: 'images/blades/Quetzalcoatlus.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/Quetzalcoatlus.png" }
         ],
         'rhinohorn': [
-            { name: 'Stock', image: 'images/blades/RhinoHorn.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/RhinoHorn_5-80Q.png' } // Anterior ver. 3
+            { name: "Stock", image: "images/blades/RhinoHorn.png" },
+            { name: "ver. 2", image: "images/variantes/RhinoHorn_5-80Q.png" }
         ],
         'rockleone': [
-            { name: 'Stock', image: 'images/blades/RockLeone.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/RockLeone.png" }
         ],
         'samuraicalibur': [
-            { name: 'Stock', image: 'images/blades/SamuraiCalibur.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/SamuraiCalibur.png" }
         ],
         'samuraisaber': [
-            { name: 'Stock', image: 'images/blades/SamuraiSaber.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/SamuraiSaber.png" }
         ],
         'scorpiospear': [
-            { name: 'Stock', image: 'images/blades/ScorpioSpear.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/ScorpioSpear.png" }
         ],
         'sharkedge': [
-            { name: 'Stock', image: 'images/blades/SharkEdge.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/SharkEdge_3-60LF.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/SharkEdge_3-80F.png' }, // Anterior ver. 4
-            { name: 'ver. 4', image: 'images/variantes/SharkEdge_4-80N.png' },  // Anterior ver. 5
-            { name: 'ver. 5', image: 'images/variantes/SharkEdge_5-60GF.png' }   // Anterior ver. 6
+            { name: "Stock", image: "images/blades/SharkEdge.png" },
+            { name: "ver. 2", image: "images/variantes/SharkEdge_3-60LF.png" },
+            { name: "ver. 3", image: "images/variantes/SharkEdge_3-80F.png" },
+            { name: "ver. 4", image: "images/variantes/SharkEdge_4-80N.png" },
+            { name: "ver. 5", image: "images/variantes/SharkEdge_5-60GF.png" }
+        ],
+        'sharkscale': [
+            { name: "Stock", image: "images/blades/SharkScale.png" }
         ],
         'shelterdrake': [
-            { name: 'Stock', image: 'images/blades/ShelterDrake.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/ShelterDrake_5-70O.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/ShelterDrake_7-80GP.png' } // Anterior ver. 4
+            { name: "Stock", image: "images/blades/ShelterDrake.png" },
+            { name: "ver. 2", image: "images/variantes/ShelterDrake_5-70O.png" },
+            { name: "ver. 3", image: "images/variantes/ShelterDrake_7-80GP.png" }
         ],
         'shinobiknife': [
-            { name: 'Stock', image: 'images/blades/ShinobiKnife.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/ShinobiKnife.png" }
         ],
         'shinobishadow': [
-            { name: 'Stock', image: 'images/blades/ShinobiShadow.png' },
-             // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/ShinobiShadow_3-70GP.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/ShinobiShadow_3-80F.png' },  // Anterior ver. 4
-            { name: 'ver. 4', image: 'images/variantes/ShinobiShadow_9-60LF.png' } // Anterior ver. 5
+            { name: "Stock", image: "images/blades/ShinobiShadow.png" },
+            { name: "ver. 2", image: "images/variantes/ShinobiShadow_3-70GP.png" },
+            { name: "ver. 3", image: "images/variantes/ShinobiShadow_3-80F.png" },
+            { name: "ver. 4", image: "images/variantes/ShinobiShadow_9-60LF.png" }
         ],
-        'spider-man': [
-            { name: 'Stock', image: 'images/blades/Spider-Man.png' }
-             // ver. 2 removida
+        'silverwolf': [
+            { name: "Stock", image: "images/blades/SilverWolf.png" }
         ],
         'sphinx-cowl': [
-            { name: 'Stock', image: 'images/blades/SphinxCowl.png' },
-             // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/SphinxCowl_4-80HT.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/SphinxCowl_5-60O.png' },  // Anterior ver. 4
-            { name: 'ver. 4', image: 'images/variantes/SphinxCowl_9-80GN.png' } // Anterior ver. 5
+            { name: "Stock", image: "images/blades/SphinxCowl.png" },
+            { name: "ver. 2", image: "images/variantes/SphinxCowl_4-80HT.png" },
+            { name: "ver. 3", image: "images/variantes/SphinxCowl_5-60O.png" },
+            { name: "ver. 4", image: "images/variantes/SphinxCowl_9-80GN.png" }
+        ],
+        'spider-man': [
+            { name: "Stock", image: "images/blades/Spider-Man.png" }
         ],
         'spinosaurus': [
-            { name: 'Stock', image: 'images/blades/Spinosaurus.png' }
-             // ver. 2 removida
+            { name: "Stock", image: "images/blades/Spinosaurus.png" }
         ],
         'stormpegasis': [
-            { name: 'Stock', image: 'images/blades/StormPegasis.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/StormPegasis.png" }
         ],
         't.rex': [
-            { name: 'Stock', image: 'images/blades/T.Rex.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/T.Rex.png" }
         ],
         'tacklegoat': [
-            { name: 'Stock', image: 'images/blades/TackleGoat.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/TackleGoat.png" }
         ],
         'thanos': [
-            { name: 'Stock', image: 'images/blades/Thanos.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/Thanos.png" }
         ],
         'tricerapress': [
-            { name: 'Stock', image: 'images/blades/TriceraPress.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/TriceraPress.png" }
+        ],
+        'tyrannobeat': [
+            { name: "Stock", image: "images/blades/TyrannoBeat.png" },
+            { name: "ver. 2", image: "images/variantes/TyrannoBeat_4-70Q.png" }
         ],
         'tyrannoroar': [
-            { name: 'Stock', image: 'images/blades/TyrannoRoar.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/TyrannoRoar.png" }
+        ],
+        'unicornsting': [
+            { name: "Stock", image: "images/blades/UnicornSting.png" },
+            { name: "ver. 2", image: "images/variantes/UnicornSting_5-60GP.png" }
         ],
         'venom': [
-            { name: 'Stock', image: 'images/blades/Venom.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/Venom.png" }
         ],
         'victoryvalkyrie': [
-            { name: 'Stock', image: 'images/blades/VictoryValkyrie.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/VictoryValkyrie.png" }
         ],
         'vipertail': [
-            { name: 'Stock', image: 'images/blades/ViperTail.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/ViperTail_4-60F.png' },    // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/ViperTail_5-60F.png' }, // Anterior ver. 4
-            { name: 'ver. 4', image: 'images/variantes/ViperTail_5-70D.png' }, // Anterior ver. 5
-            { name: 'ver. 5', image: 'images/variantes/ViperTail_5-80O.png' }  // Anterior ver. 6
+            { name: "Stock", image: "images/blades/ViperTail.png" },
+            { name: "ver. 2", image: "images/variantes/ViperTail_4-60F.png" },
+            { name: "ver. 3", image: "images/variantes/ViperTail_5-60F.png" },
+            { name: "ver. 4", image: "images/variantes/ViperTail_5-70D.png" },
+            { name: "ver. 5", image: "images/variantes/ViperTail_5-80O.png" }
         ],
         'weisstiger': [
-            { name: 'Stock', image: 'images/blades/WeissTiger.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/WeissTiger.png" }
         ],
         'whalewave': [
-            { name: 'Stock', image: 'images/blades/WhaleWave.png' },
-             // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/WhaleWave_4-70HN.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/WhaleWave_5-80E.png' },  // Anterior ver. 4
-            { name: 'ver. 4', image: 'images/variantes/WhaleWave_7-60K.png' }   // Anterior ver. 5
+            { name: "Stock", image: "images/blades/WhaleWave.png" },
+            { name: "ver. 2", image: "images/variantes/WhaleWave_4-70HN.png" },
+            { name: "ver. 3", image: "images/variantes/WhaleWave_5-80E.png" },
+            { name: "ver. 4", image: "images/variantes/WhaleWave_7-60K.png" }
+        ],
+        'wizardarrow': [
+            { name: "Stock", image: "images/blades/WizardArrow.png" },
+            { name: "ver. 2", image: "images/variantes/WizardArrow_4-60N.png" },
+            { name: "ver. 4", image: "images/variantes/WizardArrow_4-80GB.png" },
+            { name: "ver. 3", image: "images/variantes/WizardArrow_4-80N.png" },
+            { name: "ver. 5", image: "images/variantes/4.png" }
+        ],
+        'wizardrod': [
+            { name: "Stock", image: "images/blades/WizardRod.png" },
+            { name: "ver. 2", image: "images/variantes/WizardRod_5-70DB.png" }
         ],
         'wyverngale': [
-            { name: 'Stock', image: 'images/blades/WyvernGale.png' },
-            // ver. 2 removida
-            { name: 'ver. 2', image: 'images/variantes/WyvernGale_2-60S.png' }, // Anterior ver. 3
-            { name: 'ver. 3', image: 'images/variantes/WyvernGale_3-60T.png' }, // Anterior ver. 4
-            { name: 'ver. 4', image: 'images/variantes/WyvernGale_5-80GB.png' }// Anterior ver. 5
+            { name: "Stock", image: "images/blades/WyvernGale.png" },
+            { name: "ver. 2", image: "images/variantes/WyvernGale_2-60S.png" },
+            { name: "ver. 3", image: "images/variantes/WyvernGale_3-60T.png" },
+            { name: "ver. 4", image: "images/variantes/WyvernGale_5-80GB.png" }
         ],
         'xenoxcalibur': [
-            { name: 'Stock', image: 'images/blades/XenoXcalibur.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/XenoXcalibur.png" }
         ],
         'yellkong': [
-            { name: 'Stock', image: 'images/blades/YellKong.png' }
-            // ver. 2 removida
+            { name: "Stock", image: "images/blades/YellKong.png" }
         ]
     };
 
