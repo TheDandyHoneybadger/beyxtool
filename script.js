@@ -276,7 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- BASE DE DADOS DAS PEÇAS E COMBOS ---
-    // (O array ALL_PARTS continua o mesmo da resposta anterior, com as propriedades 'variantsId')
     const ALL_PARTS = [
         // Blades (Variações)
         { id: 'aerpegasus', name: 'AeroPegasus', type: 'blade', image: 'images/blades/AeroPegasus.png', score: 26.2, variantsId: 'aerpegasus' },
@@ -417,6 +416,158 @@ document.addEventListener('DOMContentLoaded', () => {
         { lockchip: 'Fox', mainblade: 'Brush', assistblade: 'Round', points: 25 }
     ];
 
+     // --- Traduções ---
+     const translations = {
+        'pt-br': {
+            // Abas
+            tab_meta: "META",
+            tab_deck_builder: "Deck Builder",
+            tab_collection: "Coleção",
+            tab_settings: "Configurações",
+            // Cabeçalhos das Abas
+            meta_header: "Top 10 Combos do META",
+            deck_builder_header: "Montador de Decks",
+            collection_header: "Minha Coleção",
+            settings_header: "Importar & Exportar Dados",
+            // Aba Coleção
+            collection_filter_label: "Mostrar Apenas os que Possuo",
+            blades_section_title: "Blades", // (Ajustado)
+            ratchets_section_title: "Ratchets",
+            bits_section_title: "Bits",
+            lockchips_section_title: "Lock Chips",
+            mainblades_section_title: "Main Blades",
+            assistblades_section_title: "Assist Blades",
+            // Aba Deck Builder
+            active_deck_label: "Deck Ativo:",
+            deck_name_label: "Nome do Deck:",
+            deck_name_placeholder: "Digite o nome do deck",
+            add_deck_button_title: "Adicionar Novo Deck",
+            delete_deck_button_title: "Deletar Deck Ativo",
+            deck_placeholder_primeira: "Primeira Peça",
+            deck_placeholder_selecione: "Selecione",
+            deck_placeholder_ratchet: "Ratchet",
+            deck_placeholder_bit: "Bit",
+            deck_placeholder_mainblade: "Main Blade",
+            deck_placeholder_assistblade: "Assist Blade",
+            deck_score_label: "Soma:",
+            deck_total_score_label: "Pontuação Total do Deck:",
+            clear_deck_button: "Limpar Beyblades",
+            export_deck_list_button: "Exportar Deck List",
+             // Aba Configurações
+             settings_description: "Salve sua coleção e decks em um arquivo (.bx) para backup ou para transferir para outro dispositivo.",
+             language_settings_title: "Idioma / Language",
+             export_button: "Exportar Dados (.bx)",
+             import_button: "Importar Dados (.bx)",
+             // Modal Seletor de Peças
+             part_selector_modal_title_prefix: "Selecione:",
+             part_suggestions_header: "Sugestões do META (que você possui)",
+             part_chip_suggestions_header: "Sugestões de Combos (Chip)",
+             part_suggestions_none: "Nenhuma sugestão encontrada com as peças que você possui (ou peças já estão em uso).",
+             part_individual_header: "Peças Individuais (que você possui)",
+             part_individual_none_prefix: "Nenhuma peça",
+             part_individual_none_suffix: "disponível (verifique sua coleção ou peças já em uso no deck).",
+             // Modal Variantes
+             variant_modal_title_prefix: "Selecionar Variantes de",
+             variant_modal_save_button: "Salvar",
+              // Alertas e Prompts (Exemplo)
+             prompt_new_deck_name: "Digite o nome do novo deck:",
+             alert_cannot_delete_last_deck: "Você não pode deletar o último deck.",
+             confirm_delete_deck_prefix: "Tem certeza que deseja deletar o deck \"",
+             confirm_delete_deck_suffix: "\"? Esta ação não pode ser desfeita.",
+             alert_deck_name_empty: "O nome do deck não pode ser vazio.",
+             prompt_export_person_name: "Digite seu nome:",
+             prompt_export_tournament_name: "Digite o nome do evento/torneio:",
+             alert_export_deck_empty: "Seu deck está vazio ou não possui Beyblades completos para exportar. Adicione 3 Beyblades completos.",
+             alert_export_copied: "Deck List copiada para o clipboard!",
+             alert_export_copy_failed: "Falha ao copiar automaticamente. Copie o texto abaixo manualmente:\n\n",
+             confirm_import_overwrite: "Importar este arquivo substituirá sua coleção e decks atuais. Deseja continuar?",
+             alert_import_success: "Dados importados com sucesso!",
+             alert_import_error: "Erro ao importar o arquivo:", // Sufixo adicionado pela função
+             alert_invalid_file_format: "Formato de arquivo inválido ou dados corrompidos.",
+             alert_file_read_error: "Erro ao ler o arquivo selecionado.",
+             alert_save_error: "Não foi possível salvar os dados. O armazenamento pode estar cheio ou indisponível.",
+             alert_suggestion_apply_error: "Não é possível aplicar esta sugestão. Uma ou mais peças já estão em uso neste deck.",
+             alert_incompatible_part: "Não é possível adicionar uma peça do tipo '{partType}' a um Beyblade do tipo '{bayType}'. Selecione a primeira peça primeiro ou limpe o slot." // Novo
+             // Adicione mais chaves conforme necessário...
+        },
+        'en': {
+            // Tabs
+            tab_meta: "META",
+            tab_deck_builder: "Deck Builder",
+            tab_collection: "Collection",
+            tab_settings: "Settings",
+             // Tab Headers
+             meta_header: "Top 10 META Combos",
+             deck_builder_header: "Deck Builder",
+             collection_header: "My Collection",
+             settings_header: "Import & Export Data",
+             // Collection Tab
+             collection_filter_label: "Show Only Owned",
+             blades_section_title: "Blades",
+             ratchets_section_title: "Ratchets",
+             bits_section_title: "Bits",
+             lockchips_section_title: "Lock Chips",
+             mainblades_section_title: "Main Blades",
+             assistblades_section_title: "Assist Blades",
+             // Deck Builder Tab
+             active_deck_label: "Active Deck:",
+             deck_name_label: "Deck Name:",
+             deck_name_placeholder: "Enter deck name",
+             add_deck_button_title: "Add New Deck",
+             delete_deck_button_title: "Delete Active Deck",
+             deck_placeholder_primeira: "First Part",
+             deck_placeholder_selecione: "Select",
+             deck_placeholder_ratchet: "Ratchet",
+             deck_placeholder_bit: "Bit",
+             deck_placeholder_mainblade: "Main Blade",
+             deck_placeholder_assistblade: "Assist Blade",
+             deck_score_label: "Sum:",
+             deck_total_score_label: "Total Deck Score:",
+             clear_deck_button: "Clear Beyblades",
+             export_deck_list_button: "Export Deck List",
+             // Settings Tab
+             settings_description: "Save your collection and decks to a (.bx) file for backup or transfer to another device.",
+             language_settings_title: "Idioma / Language",
+             export_button: "Export Data (.bx)",
+             import_button: "Import Data (.bx)",
+              // Part Selector Modal
+             part_selector_modal_title_prefix: "Select:",
+             part_suggestions_header: "META Suggestions (Owned)",
+             part_chip_suggestions_header: "Combo Suggestions (Chip)",
+             part_suggestions_none: "No suggestions found with the parts you own (or parts are already in use).",
+             part_individual_header: "Individual Parts (Owned)",
+             part_individual_none_prefix: "No",
+             part_individual_none_suffix: "parts available (check collection or parts already in use in the deck).",
+             // Variant Modal
+             variant_modal_title_prefix: "Select Variants for",
+             variant_modal_save_button: "Save",
+             // Alerts and Prompts (Example)
+             prompt_new_deck_name: "Enter the name for the new deck:",
+             alert_cannot_delete_last_deck: "You cannot delete the last deck.",
+             confirm_delete_deck_prefix: "Are you sure you want to delete the deck \"",
+             confirm_delete_deck_suffix: "\"? This action cannot be undone.",
+             alert_deck_name_empty: "Deck name cannot be empty.",
+             prompt_export_person_name: "Enter your name:",
+             prompt_export_tournament_name: "Enter the event/tournament name:",
+             alert_export_deck_empty: "Your deck is empty or does not have complete Beyblades to export. Add 3 complete Beyblades.",
+             alert_export_copied: "Deck List copied to clipboard!",
+             alert_export_copy_failed: "Failed to copy automatically. Please copy the text below manually:\n\n",
+             confirm_import_overwrite: "Importing this file will overwrite your current collection and decks. Continue?",
+             alert_import_success: "Data imported successfully!",
+             alert_import_error: "Error importing file:", // Suffix added by function
+             alert_invalid_file_format: "Invalid file format or corrupted data.",
+             alert_file_read_error: "Error reading the selected file.",
+             alert_save_error: "Could not save data. Storage might be full or unavailable.",
+             alert_suggestion_apply_error: "Cannot apply this suggestion. One or more parts are already in use in this deck.",
+             alert_incompatible_part: "Cannot add part of type '{partType}' to a Beyblade of type '{bayType}'. Select the first part first or clear the slot." // Novo
+             // Add more keys as needed...
+        }
+    };
+
+
+    // --- Variável de estado do idioma ---
+    let currentLanguage = 'pt-br'; // Padrão
+
     // --- ESTRUTURA DE DADOS PRINCIPAL ---
     let app_data = {
         collection: {
@@ -468,7 +619,90 @@ document.addEventListener('DOMContentLoaded', () => {
     const variant_modal_checkboxes = document.getElementById('variant-modal-checkboxes'); // Mantém o ID, mas conterá o grid
     const variant_modal_save = document.getElementById('variant-modal-save');
     const variant_modal_close = document.getElementById('variant-selector-close');
+    const langPtBrButton = document.getElementById('lang-pt-br'); // NOVO
+    const langEnButton = document.getElementById('lang-en');     // NOVO
 
+
+     // --- Função para traduzir a UI ---
+     const translateUI = () => {
+        const langPack = translations[currentLanguage];
+        if (!langPack) return; // Sai se o pacote de idioma não for encontrado
+
+        document.querySelectorAll('[data-translate]').forEach(element => {
+            const key = element.dataset.translate;
+            if (langPack[key]) {
+                 // Verifica se é um placeholder ou title
+                 if (element.placeholder !== undefined && key.includes('placeholder')) {
+                      element.placeholder = langPack[key];
+                 } else if (element.title !== undefined && key.includes('title')) {
+                     element.title = langPack[key];
+                 }
+                 // Para outros elementos, usa textContent (mais seguro que innerHTML)
+                 // Verifica se é um botão para não sobrescrever imagens, etc.
+                 else if (element.tagName !== 'BUTTON' || !element.querySelector('img')) {
+                      element.textContent = langPack[key];
+                 } else if (element.tagName === 'BUTTON' && !element.id.startsWith('lang-')) {
+                      // Para botões de ação (Exportar, Importar, Limpar), define o texto
+                      element.textContent = langPack[key];
+                 }
+                 // Nota: Para botões com imagens (bandeiras), não mudamos textContent
+            } else {
+                 console.warn(`Translation key not found for language '${currentLanguage}': ${key}`);
+            }
+        });
+
+         // --- Traduções Específicas que não usam data-translate ---
+
+         // Placeholders do Deck Builder (usando querySelectorAll para pegar todos)
+         document.querySelectorAll('.part-placeholder[data-type="primeira"] span').forEach(el => el.textContent = langPack.deck_placeholder_primeira || 'Primeira Peça');
+         document.querySelectorAll('.part-placeholder[data-type="ratchet"] span').forEach(el => el.textContent = langPack.deck_placeholder_ratchet || 'Ratchet');
+         document.querySelectorAll('.part-placeholder[data-type="bit"] span').forEach(el => el.textContent = langPack.deck_placeholder_bit || 'Bit');
+         document.querySelectorAll('.part-placeholder[data-type="mainblade"] span').forEach(el => el.textContent = langPack.deck_placeholder_mainblade || 'Main Blade');
+         document.querySelectorAll('.part-placeholder[data-type="assistblade"] span').forEach(el => el.textContent = langPack.deck_placeholder_assistblade || 'Assist Blade');
+         document.querySelectorAll('.part-name-display').forEach(el => {
+             // Se o texto atual for "Selecione" (em qualquer idioma), traduz. Senão, mantém o nome da peça.
+             if(el.textContent === translations['pt-br'].deck_placeholder_selecione || el.textContent === translations['en'].deck_placeholder_selecione) {
+                 el.textContent = langPack.deck_placeholder_selecione || 'Select';
+             }
+         });
+          document.querySelectorAll('.bey-score').forEach(el => {
+              // Recria o texto mantendo o span para a pontuação
+              const scoreSpan = el.querySelector('span');
+              const scoreValue = scoreSpan ? scoreSpan.textContent : '0.00';
+              el.innerHTML = `${langPack.deck_score_label || 'Sum:'} <span>${scoreValue}</span>`;
+          });
+
+
+         // Título do modal de seleção de peças (atualizado dinamicamente)
+         // O título é definido em openPartSelector, mas podemos definir o prefixo aqui se necessário,
+         // ou garantir que openPartSelector use a tradução correta.
+
+         // Título do modal de variantes (atualizado dinamicamente)
+         // Idem - garantir que openVariantSelector use a tradução.
+
+         // Textos de Alertas e Prompts são usados diretamente nas funções JS.
+    };
+
+    // --- Função para definir o idioma ---
+    const setLanguage = (lang) => {
+        if (translations[lang]) {
+            currentLanguage = lang;
+            localStorage.setItem('beyXToolLanguage', lang); // Salva a preferência
+
+            // Atualiza o estilo dos botões de idioma
+            if (lang === 'pt-br') {
+                langPtBrButton?.classList.add('active');
+                langEnButton?.classList.remove('active');
+            } else {
+                langPtBrButton?.classList.remove('active');
+                langEnButton?.classList.add('active');
+            }
+
+            translateUI(); // Aplica as traduções
+        } else {
+            console.error(`Idioma não suportado: ${lang}`);
+        }
+    };
 
     // --- LÓGICA DAS ABAS ---
     const setupTabs = () => {
@@ -574,7 +808,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('beyblade_x_data', JSON.stringify(serializable_data));
         } catch (e) {
             console.error("Erro ao salvar dados no localStorage:", e);
-            alert("Não foi possível salvar os dados. O armazenamento pode estar cheio ou indisponível.");
+            alert(translations[currentLanguage].alert_save_error || "Não foi possível salvar os dados. O armazenamento pode estar cheio ou indisponível.");
         }
     };
 
@@ -746,7 +980,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // Função ATUALIZADA para lidar com imagens de variantes no deck
+    // Função ATUALIZADA para lidar com imagens de variantes no deck e tradução
     const updateDeckUI = () => {
         const currentDeck = app_data.decks[app_data.active_deck_index];
         if (!currentDeck) {
@@ -789,9 +1023,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             slot.dataset.bayType = bay.type || 'empty'; // Define 'empty' se o tipo for null
 
-            const resetPlaceholder = (ph, nameEl, defaultText) => {
+            // Usa a tradução atual para os textos padrão
+            const langPack = translations[currentLanguage];
+            const selectText = langPack.deck_placeholder_selecione || 'Select';
+
+            const resetPlaceholder = (ph, nameEl, defaultTextKey) => {
+                 const defaultText = langPack[defaultTextKey] || defaultTextKey; // Usa chave como fallback
                 ph.innerHTML = `<span>${defaultText}</span>`;
-                nameEl.textContent = 'Selecione';
+                nameEl.textContent = selectText;
             };
 
             const setPlaceholder = (ph, nameEl, part) => {
@@ -828,40 +1067,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 nameEl.textContent = partName;
             };
 
-            // Reseta todos os placeholders condicionais primeiro
-             resetPlaceholder(ratchetPh, ratchetName, 'Ratchet');
-             resetPlaceholder(bitPh, bitName, 'Bit');
-             resetPlaceholder(mainBladePh, mainBladeName, 'Main Blade');
-             resetPlaceholder(assistBladePh, assistBladeName, 'Assist Blade');
+            // Reseta todos os placeholders condicionais primeiro, usando chaves de tradução
+             resetPlaceholder(ratchetPh, ratchetName, 'deck_placeholder_ratchet');
+             resetPlaceholder(bitPh, bitName, 'deck_placeholder_bit');
+             resetPlaceholder(mainBladePh, mainBladeName, 'deck_placeholder_mainblade');
+             resetPlaceholder(assistBladePh, assistBladeName, 'deck_placeholder_assistblade');
 
 
             if (bay.type === 'standard') {
                 if (bay.part1) { setPlaceholder(primeiraPh, primeiraName, bay.part1); bayScore += (typeof bay.part1.score === 'number' ? bay.part1.score : 0); }
-                else { resetPlaceholder(primeiraPh, primeiraName, 'Blade'); }
+                else { resetPlaceholder(primeiraPh, primeiraName, 'blades_section_title'); } // Usa a chave 'Blades'
                 if (bay.part2) { setPlaceholder(ratchetPh, ratchetName, bay.part2); bayScore += (typeof bay.part2.score === 'number' ? bay.part2.score : 0); }
-                // else { resetPlaceholder(ratchetPh, ratchetName, 'Ratchet'); } // Já resetado acima
                 if (bay.part3) { setPlaceholder(bitPh, bitName, bay.part3); bayScore += (typeof bay.part3.score === 'number' ? bay.part3.score : 0); }
-                // else { resetPlaceholder(bitPh, bitName, 'Bit'); } // Já resetado acima
             } else if (bay.type === 'chip') {
                 if (bay.part1) { setPlaceholder(primeiraPh, primeiraName, bay.part1); bayScore += (typeof bay.part1.score === 'number' ? bay.part1.score : 0); }
-                else { resetPlaceholder(primeiraPh, primeiraName, 'Lock Chip'); }
+                else { resetPlaceholder(primeiraPh, primeiraName, 'lockchips_section_title'); } // Usa a chave 'Lock Chips'
                 if (bay.part2) { setPlaceholder(mainBladePh, mainBladeName, bay.part2); bayScore += (typeof bay.part2.score === 'number' ? bay.part2.score : 0); }
-                // else { resetPlaceholder(mainBladePh, mainBladeName, 'Main Blade'); } // Já resetado acima
                 if (bay.part3) { setPlaceholder(assistBladePh, assistBladeName, bay.part3); bayScore += (typeof bay.part3.score === 'number' ? bay.part3.score : 0); }
-                // else { resetPlaceholder(assistBladePh, assistBladeName, 'Assist Blade'); } // Já resetado acima
             } else {
                  // Slot vazio ou tipo indefinido
-                resetPlaceholder(primeiraPh, primeiraName, 'Primeira Peça');
-                 // Placeholders condicionais já foram resetados no início
+                resetPlaceholder(primeiraPh, primeiraName, 'deck_placeholder_primeira');
             }
 
-            beyScoreSpan.textContent = bayScore.toFixed(2);
+            // Atualiza o texto "Soma:" ou "Sum:"
+            const scoreLabel = langPack.deck_score_label || 'Sum:';
+            beyScoreSpan.parentElement.innerHTML = `${scoreLabel} <span>${bayScore.toFixed(2)}</span>`; // Recria o HTML interno
             totalDeckScore += bayScore;
         });
 
-         // Garante que deck_score_span exista
+         // Garante que deck_score_span exista e atualiza o texto total
          if (deck_score_span) {
-             deck_score_span.textContent = totalDeckScore.toFixed(2);
+              const totalScoreLabel = translations[currentLanguage].deck_total_score_label || 'Total Deck Score:';
+              // Atualiza o parágrafo inteiro para incluir o texto traduzido
+              deck_score_span.parentElement.innerHTML = `${totalScoreLabel} <span id="deck-score">${totalDeckScore.toFixed(2)}</span>`;
          } else {
               console.error("Elemento 'deck-score' não encontrado para atualizar pontuação total.");
          }
@@ -871,8 +1109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- FUNÇÕES DE COLEÇÃO E MODAIS ---
 
-    // Função ATUALIZADA
-// Função ATUALIZADA para pular o modal se só houver a variante 'Stock'
+    // Função ATUALIZADA para pular o modal se só houver a variante 'Stock'
     const togglePartOwnership = (part) => {
         const part_card_collection = document.querySelector(`#collection-tab [data-part-id="${part.id}"]`);
         const collectionSet = app_data.collection.blades; // Definido aqui para ambos os casos de blade
@@ -935,10 +1172,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // Função ATUALIZADA para usar cards no modal de variantes
+    // Função ATUALIZADA para usar cards no modal de variantes e tradução
     const openVariantSelector = (part) => {
-        variant_modal_part = part;
-        variant_modal_title.textContent = `Selecionar Variantes de ${part.name}`;
+         variant_modal_part = part;
+         // Traduz o título do modal
+         const titlePrefix = translations[currentLanguage].variant_modal_title_prefix || "Select Variants for";
+         variant_modal_title.textContent = `${titlePrefix} ${part.name}`;
+
         // MODIFICADO: Limpa e adiciona um container de grid
         variant_modal_checkboxes.innerHTML = '<div id="variant-modal-grid"></div>';
         const gridContainer = document.getElementById('variant-modal-grid');
@@ -981,6 +1221,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             gridContainer.appendChild(card); // Adiciona ao grid
         });
+
+         // Traduz o botão Salvar dentro do modal
+         if(variant_modal_save) {
+            variant_modal_save.textContent = translations[currentLanguage].variant_modal_save_button || 'Save';
+         }
 
         variant_modal.style.display = 'block';
     };
@@ -1044,7 +1289,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveAppData(); // Garante que os dados mais recentes sejam salvos
         const data_str = localStorage.getItem('beyblade_x_data');
         if (!data_str) {
-             alert("Não há dados para exportar.");
+             alert("Não há dados para exportar."); // Deveria ser traduzido se fosse uma mensagem principal
              return;
         }
         const data_blob = new Blob([data_str], {type: 'application/json;charset=utf-8'}); // Define charset
@@ -1069,7 +1314,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
          // Verifica o tipo do arquivo (opcional, mas bom para UX)
          if (!file.name.endsWith('.bx') && file.type !== 'application/json') {
-             alert("Por favor, selecione um arquivo .bx válido.");
+             alert("Por favor, selecione um arquivo .bx válido."); // Traduzir se necessário
               if (import_file_input) import_file_input.value = ''; // Limpa o input
              return;
          }
@@ -1078,26 +1323,27 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.onload = (e) => {
             try {
                 const imported_data_str = e.target.result;
-                 if (!imported_data_str) throw new Error("Arquivo vazio ou ilegível."); // Verifica se leu algo
+                 if (!imported_data_str) throw new Error(translations[currentLanguage].alert_file_read_error || "Erro ao ler o arquivo selecionado."); // Verifica se leu algo
 
                 const parsed = JSON.parse(imported_data_str);
 
                 // Validação básica da estrutura
                 if (typeof parsed === 'object' && parsed !== null && 'collection' in parsed && 'decks' in parsed && 'active_deck_index' in parsed) {
                      // Confirmação do usuário antes de sobrescrever
-                     if (confirm("Importar este arquivo substituirá sua coleção e decks atuais. Deseja continuar?")) {
+                     const confirmMsg = translations[currentLanguage].confirm_import_overwrite || "Importar este arquivo substituirá sua coleção e decks atuais. Deseja continuar?";
+                     if (confirm(confirmMsg)) {
                           localStorage.setItem('beyblade_x_data', imported_data_str); // Salva os novos dados
                           loadAppData(); // Recarrega os dados na aplicação
                           renderParts(); // Atualiza a UI da coleção
                           updateDeckUI(); // Atualiza a UI do deck builder
-                          alert('Dados importados com sucesso!');
+                          alert(translations[currentLanguage].alert_import_success || 'Dados importados com sucesso!');
                      }
                 } else {
-                     throw new Error('Formato de arquivo inválido ou dados corrompidos.');
+                     throw new Error(translations[currentLanguage].alert_invalid_file_format || 'Formato de arquivo inválido ou dados corrompidos.');
                 }
             } catch (error) {
                  console.error("Erro ao importar dados:", error);
-                 alert(`Erro ao importar o arquivo: ${error.message}`);
+                 alert(`${translations[currentLanguage].alert_import_error || 'Erro ao importar o arquivo:'} ${error.message}`);
             } finally {
                  // Limpa o input de arquivo para permitir importar o mesmo arquivo novamente se necessário
                  if (import_file_input) {
@@ -1107,7 +1353,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         reader.onerror = (error) => {
              console.error("Erro ao ler arquivo:", error);
-             alert("Erro ao ler o arquivo selecionado.");
+             alert(translations[currentLanguage].alert_file_read_error || "Erro ao ler o arquivo selecionado.");
              if (import_file_input) {
                   import_file_input.value = '';
              }
@@ -1116,7 +1362,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // Função ATUALIZADA
+    // Função ATUALIZADA com tradução
     const applySuggestion = (slotId, combo) => {
         const currentDeck = app_data.decks[app_data.active_deck_index];
         const usedPartIds = new Set();
@@ -1133,13 +1379,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
          // Adiciona verificação se as peças foram encontradas
          if (!bladePart || !ratchetPart || !bitPart) {
-             alert("Erro ao encontrar as peças para a sugestão.");
+             alert("Erro ao encontrar as peças para a sugestão."); // Pode ser traduzido se quiser
              return;
          }
 
         // Verifica se as peças da sugestão já estão em uso em OUTROS slots
         if (usedPartIds.has(bladePart.id) || usedPartIds.has(ratchetPart.id) || usedPartIds.has(bitPart.id)) {
-            alert("Não é possível aplicar esta sugestão. Uma ou mais peças já estão em uso neste deck.");
+            alert(translations[currentLanguage].alert_suggestion_apply_error || "Não é possível aplicar esta sugestão. Uma ou mais peças já estão em uso neste deck.");
             return;
         }
 
@@ -1151,22 +1397,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const ownedVariants = app_data.collection.blades.get(bladePart.id);
         if (!ownedVariants || ownedVariants.size === 0) {
-             // Isso não deveria acontecer por causa da filtragem no openPartSelector, mas é uma segurança
-             alert("Erro: Blade sugerida não encontrada na coleção ao aplicar.");
+             alert("Erro: Blade sugerida não encontrada na coleção ao aplicar."); // Pode traduzir
              return;
         }
 
-        // MODIFICADO: Prioriza 'Stock' se o usuário a possuir, senão pega a primeira que ele tiver.
+        // Prioriza 'Stock' se o usuário a possuir, senão pega a primeira que ele tiver.
         const variant = ownedVariants.has('Stock') ? 'Stock' : ownedVariants.values().next().value;
 
         // Cria o objeto da peça com dados da variante correta
         bay.part1 = {
-             ...bladePart, // Copia todas as propriedades base (id, name, type, score, variantsId)
-             baseId: bladePart.id, // ID original da Blade
-             baseName: bladePart.name, // Nome original da Blade
-             variant: variant, // Nome da variante selecionada/padrão
-             name: `${bladePart.name} (${variant})` // Nome exibido (Blade + Variante)
-             // A imagem será tratada por updateDeckUI
+             ...bladePart,
+             baseId: bladePart.id,
+             baseName: bladePart.name,
+             variant: variant,
+             name: `${bladePart.name} (${variant})`
         };
         bay.part2 = ratchetPart;
         bay.part3 = bitPart;
@@ -1229,10 +1473,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // Função ATUALIZADA com lógica de sugestões Chip e Standard separada
+    // Função ATUALIZADA com lógica de sugestões Chip e Standard separada e tradução
     const openPartSelector = (slotId, type) => {
         active_deck_slot = { slotId, type };
-        modal_title.textContent = `Selecione: ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+        // Traduz o título do modal
+        const titlePrefix = translations[currentLanguage].part_selector_modal_title_prefix || "Select:";
+        modal_title.textContent = `${titlePrefix} ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+
 
         const currentBay = app_data.decks[app_data.active_deck_index].bays[slotId];
         const ownedPartsCollection = app_data.collection; // Renomeado para clareza
@@ -1264,7 +1511,7 @@ document.addEventListener('DOMContentLoaded', () => {
              showStandardSuggestions = (!currentBay.type || currentBay.type === 'standard');
         } else if (type === 'mainblade' || type === 'assistblade') {
             availableParts = getOwnedParts(type);
-             // Sugestões Chip não são mostradas ao selecionar Main/Assist individualmente (poderia adicionar se quisesse)
+             // Sugestões Chip não são mostradas ao selecionar Main/Assist individualmente
              showChipSuggestions = false;
         } else {
              console.error("Tipo de peça desconhecido:", type);
@@ -1284,7 +1531,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
               // Sugestões STANDARD (Blade, Ratchet, Bit)
               if (showStandardSuggestions) {
-                  modal_suggestions_container.innerHTML += '<h4>Sugestões do META (Standard)</h4>';
+                   const headerText = translations[currentLanguage].part_suggestions_header || 'META Suggestions (Owned)';
+                   modal_suggestions_container.innerHTML += `<h4>${headerText}</h4>`;
                   const matchingCombos = ALL_COMBOS.filter(combo => {
                       const bladePart = ALL_PARTS.find(p => p.name === combo.blade);
                       const ratchetPart = ALL_PARTS.find(p => p.name === combo.ratchet);
@@ -1336,7 +1584,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
               // Sugestões CHIP (Lockchip, MainBlade, AssistBlade)
               if (showChipSuggestions && ALL_CHIP_COMBOS && ALL_CHIP_COMBOS.length > 0) {
-                   modal_suggestions_container.innerHTML += '<h4>Sugestões de Combos (Chip)</h4>';
+                   const headerText = translations[currentLanguage].part_chip_suggestions_header || 'Combo Suggestions (Chip)';
+                   modal_suggestions_container.innerHTML += `<h4>${headerText}</h4>`;
                    const matchingChipCombos = ALL_CHIP_COMBOS.filter(combo => {
                        const chipPart = ALL_PARTS.find(p => p.name === combo.lockchip && p.type === 'lockchip');
                        const mainPart = ALL_PARTS.find(p => p.name === combo.mainblade && p.type === 'mainblade');
@@ -1386,7 +1635,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
               // Mensagem se nenhuma sugestão for encontrada
               if (!suggestionsFound && modal_suggestions_container) { // Verifica se o container ainda existe
-                   modal_suggestions_container.innerHTML = '<p>Nenhuma sugestão encontrada com as peças que você possui (ou peças já estão em uso).</p>';
+                   modal_suggestions_container.innerHTML += `<p>${translations[currentLanguage].part_suggestions_none || 'No suggestions found...'}</p>`;
               }
 
           } else {
@@ -1395,12 +1644,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         // --- Renderiza Lista de Peças Individuais ---
-        modal_parts_list_container.innerHTML = '<h4>Peças Individuais (que você possui)</h4><div class="parts-grid"></div>';
+        const individualHeader = translations[currentLanguage].part_individual_header || 'Individual Parts (Owned)';
+        modal_parts_list_container.innerHTML = `<h4>${individualHeader}</h4><div class="parts-grid"></div>`;
         const partsGrid = modal_parts_list_container.querySelector('.parts-grid');
          if (!partsGrid) return; // Segurança
 
         if (partsToShow.length === 0) {
-            partsGrid.innerHTML = `<p>Nenhuma peça ${type} disponível (verifique sua coleção ou peças já em uso no deck).</p>`;
+            const nonePrefix = translations[currentLanguage].part_individual_none_prefix || 'No';
+            const noneSuffix = translations[currentLanguage].part_individual_none_suffix || 'parts available...';
+            partsGrid.innerHTML = `<p>${nonePrefix} ${type} ${noneSuffix}</p>`;
         } else {
             partsToShow.forEach(part => {
                  // Segurança: Garante que 'part' é válido
@@ -1417,8 +1669,10 @@ document.addEventListener('DOMContentLoaded', () => {
          if(partsToShow.length > 0 || suggestionsFound) {
             part_modal.style.display = 'block';
          } else {
-              // Se não há peças nem sugestões, talvez mostrar um alerta?
-              alert(`Nenhuma peça do tipo '${type}' disponível ou compatível no momento.`);
+              // Se não há peças nem sugestões, mostra um alerta
+               const nonePrefix = translations[currentLanguage].part_individual_none_prefix || 'No';
+               const noneSuffix = translations[currentLanguage].part_individual_none_suffix || 'parts available...';
+              alert(`${nonePrefix} ${type} ${noneSuffix}`);
          }
     };
 
@@ -1438,7 +1692,7 @@ document.addEventListener('DOMContentLoaded', () => {
          }
     };
 
-    // Função ATUALIZADA - Lógica de compatibilidade e definição de tipo
+    // Função ATUALIZADA - Lógica de compatibilidade e definição de tipo e tradução
     const selectPartForDeck = (part) => {
         const { slotId, type } = active_deck_slot;
         const bay = app_data.decks[app_data.active_deck_index].bays[slotId];
@@ -1479,7 +1733,6 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             // Verifica se o TIPO DE PEÇA é compatível com o TIPO DE BAY atual
-             // E se o slot correspondente (part2 ou part3) está vazio
              const targetSlot = partMap[type];
              if (!targetSlot) {
                  console.error("Mapeamento inválido para o tipo:", type);
@@ -1494,7 +1747,9 @@ document.addEventListener('DOMContentLoaded', () => {
                   bay[targetSlot] = part;
              } else {
                   // Se o bay ainda não tem tipo (está vazio), ou se o tipo é incompatível
-                  alert(`Não é possível adicionar uma peça do tipo '${type}' a um Beyblade do tipo '${bay.type || 'Vazio'}'. Selecione a primeira peça primeiro ou limpe o slot.`);
+                  let alertMsg = translations[currentLanguage].alert_incompatible_part || "Cannot add part of type '{partType}' to a Beyblade of type '{bayType}'. Select the first part first or clear the slot.";
+                  alertMsg = alertMsg.replace('{partType}', type).replace('{bayType}', bay.type || 'Empty'); // Usa Empty como fallback
+                  alert(alertMsg);
                   console.warn(`Tentativa de adicionar peça ${type} incompatível com o tipo de bay ${bay.type}`);
                   closePartModal(); // Fecha o modal sem fazer a alteração
                   return;
@@ -1515,35 +1770,38 @@ document.addEventListener('DOMContentLoaded', () => {
          }
     };
 
-    const addDeck = () => {
-        const newDeckName = prompt("Digite o nome do novo deck:", `Deck ${app_data.decks.length + 1}`);
-        if (newDeckName && newDeckName.trim() !== "") { // Verifica se não é nulo ou vazio
-            app_data.decks.push(createNewDeck(newDeckName.trim()));
-            app_data.active_deck_index = app_data.decks.length - 1; // Define o novo deck como ativo
-            updateDeckUI(); // Atualiza a UI para mostrar o novo deck vazio
-            saveAppData(); // Salva o novo estado
-        } else if (newDeckName !== null) { // Se clicou OK mas deixou vazio
-            alert("O nome do deck não pode ser vazio.");
-        }
-        // Se clicou Cancelar (newDeckName === null), não faz nada
-    };
+    // Funções Add/Delete/Rename/Switch Deck (Traduzir prompts/alerts nelas)
+     const addDeck = () => {
+         const promptText = translations[currentLanguage].prompt_new_deck_name || `Enter the name for the new deck:`;
+         const defaultName = `Deck ${app_data.decks.length + 1}`;
+         const newDeckName = prompt(promptText, defaultName);
+         if (newDeckName && newDeckName.trim() !== "") {
+             app_data.decks.push(createNewDeck(newDeckName.trim()));
+             app_data.active_deck_index = app_data.decks.length - 1;
+             updateDeckUI();
+             saveAppData();
+         } else if (newDeckName !== null) { // Clicou OK mas deixou vazio
+              alert(translations[currentLanguage].alert_deck_name_empty || "Deck name cannot be empty.");
+         }
+     };
 
-    const deleteDeck = () => {
-        if (app_data.decks.length <= 1) {
-            alert("Você não pode deletar o último deck.");
-            return;
-        }
+     const deleteDeck = () => {
+         if (app_data.decks.length <= 1) {
+             alert(translations[currentLanguage].alert_cannot_delete_last_deck || "You cannot delete the last deck.");
+             return;
+         }
          const deckToDelete = app_data.decks[app_data.active_deck_index];
-         if (!deckToDelete) return; // Segurança
+         if (!deckToDelete) return;
 
-        if (confirm(`Tem certeza que deseja deletar o deck "${deckToDelete.name}"? Esta ação não pode ser desfeita.`)) {
-            app_data.decks.splice(app_data.active_deck_index, 1);
-            // Ajusta o índice ativo para não ficar fora dos limites
-            app_data.active_deck_index = Math.max(0, app_data.active_deck_index - 1);
-            updateDeckUI();
-            saveAppData();
-        }
-    };
+         const confirmText = `${translations[currentLanguage].confirm_delete_deck_prefix || 'Are you sure you want to delete the deck "'}${deckToDelete.name}${translations[currentLanguage].confirm_delete_deck_suffix || '"? This action cannot be undone.'}`;
+
+         if (confirm(confirmText)) {
+             app_data.decks.splice(app_data.active_deck_index, 1);
+             app_data.active_deck_index = Math.max(0, app_data.active_deck_index - 1);
+             updateDeckUI();
+             saveAppData();
+         }
+     };
 
     const renameDeck = () => {
          const currentDeck = app_data.decks[app_data.active_deck_index];
@@ -1556,7 +1814,7 @@ document.addEventListener('DOMContentLoaded', () => {
             saveAppData();
         } else if (!newName) { // Se ficou vazio, restaura o nome antigo
             deck_name_input.value = currentDeck.name;
-             alert("O nome do deck não pode ser vazio.");
+             alert(translations[currentLanguage].alert_deck_name_empty || "Deck name cannot be empty.");
         }
          deck_name_input.blur(); // Tira o foco do input em qualquer caso
     };
@@ -1579,15 +1837,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const exportDeckList = () => {
-        const personName = prompt("Digite seu nome:", "");
+         const personNamePrompt = translations[currentLanguage].prompt_export_person_name || "Enter your name:";
+         const tournamentNamePrompt = translations[currentLanguage].prompt_export_tournament_name || "Enter the event/tournament name:";
+        const personName = prompt(personNamePrompt, "");
         if (personName === null) return; // Cancelou
 
-        const tournamentName = prompt("Digite o nome do evento/torneio:", "");
+        const tournamentName = prompt(tournamentNamePrompt, "");
         if (tournamentName === null) return; // Cancelou
 
         const currentDeck = app_data.decks[app_data.active_deck_index];
          if (!currentDeck) {
-              alert("Erro: Deck ativo não encontrado.");
+              alert("Erro: Deck ativo não encontrado."); // Pode traduzir
               return;
          }
 
@@ -1597,49 +1857,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (bay.type === 'standard' && bay.part1 && bay.part2 && bay.part3) {
                  // Usa baseName para Blades para não incluir a variante na exportação padrão
-                const bladeName = bay.part1.baseName || bay.part1.name; // Fallback para name se baseName não existir
+                const bladeName = bay.part1.baseName || bay.part1.name;
                 return `${bladeName}/${bay.part2.name}-${bay.part3.name}`;
             } else if (bay.type === 'chip' && bay.part1 && bay.part2 && bay.part3) {
-                 // Para combos chip, usa os nomes completos como estão
                 return `${bay.part1.name} (${bay.part2.name}/${bay.part3.name})`;
             }
-            return null; // Retorna null para bays incompletos ou vazios
-        }).filter(Boolean); // Remove os nulos do array final
+            return null;
+        }).filter(Boolean);
 
         if (bayStrings.length === 0) {
-            alert("Seu deck está vazio ou não possui Beyblades completos para exportar. Adicione 3 Beyblades completos.");
+            alert(translations[currentLanguage].alert_export_deck_empty || "Your deck is empty or does not have complete Beyblades to export. Add 3 complete Beyblades.");
             return;
         }
-         // Validação se tem 3 bays completos (opcional, mas comum em regras)
-         // if (bayStrings.length < 3) {
-         //     alert("O deck precisa ter 3 Beyblades completos para ser exportado.");
-         //     return;
-         // }
 
         const deckListString = `=== DECK LIST ===\n\n===== NOME =====\n${personName.trim()}\n\n==== EVENTO ====\n${tournamentName.trim()}\n\n===== DECK =====\n${bayStrings.join('\n')}\n\n===============`;
 
-        // Tenta copiar para o clipboard
         navigator.clipboard.writeText(deckListString).then(() => {
-            alert("Deck List copiada para o clipboard!");
+            alert(translations[currentLanguage].alert_export_copied || "Deck List copied to clipboard!");
         }).catch(err => {
             console.error('Erro ao copiar para o clipboard: ', err);
-             // Fallback: Mostra o texto em um alert ou textarea para cópia manual
-            alert("Falha ao copiar automaticamente. Copie o texto abaixo manualmente:\n\n" + deckListString);
+            alert(`${translations[currentLanguage].alert_export_copy_failed || 'Failed to copy automatically. Please copy the text below manually:\n\n'} ${deckListString}`);
         });
     };
 
 
     // --- INICIALIZAÇÃO E EVENTOS ---
+
+    // Carrega o idioma salvo ou usa o padrão
+    const savedLanguage = localStorage.getItem('beyXToolLanguage');
+    if (savedLanguage && translations[savedLanguage]) {
+        currentLanguage = savedLanguage;
+    } // else mantém o padrão 'pt-br'
+
     setupTabs();
     loadAppData();
     renderParts();
     renderMetaCombos();
-    updateDeckUI(); // Renderiza o deck ativo inicial
+    updateDeckUI(); // Renderiza UI inicial antes de traduzir
+    setLanguage(currentLanguage); // Aplica o idioma inicial (DEPOIS de renderizar a UI inicial)
+
+    // Adiciona listeners aos botões de idioma (se existirem)
+    if(langPtBrButton) {
+        langPtBrButton.addEventListener('click', () => setLanguage('pt-br'));
+    }
+    if(langEnButton) {
+        langEnButton.addEventListener('click', () => setLanguage('en'));
+    }
 
     // Adiciona listeners apenas se os elementos existirem
     if (collection_filter) collection_filter.addEventListener('change', applyFilter);
     if (export_button) export_button.addEventListener('click', exportData);
-    if (import_button) import_button.addEventListener('click', () => import_file_input?.click()); // Optional chaining
+    if (import_button) import_button.addEventListener('click', () => import_file_input?.click());
     if (import_file_input) import_file_input.addEventListener('change', importData);
     if (clear_deck_button) clear_deck_button.addEventListener('click', clearDeck);
     if (export_deck_button) export_deck_button.addEventListener('click', exportDeckList);

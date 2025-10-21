@@ -12,40 +12,39 @@
     <header>
         <img src="images/logo.png" alt="BeyXTool Logo" class="header-logo">
         <nav>
-            <a href="#" class="tab-link" data-tab="meta">META</a>
-            <a href="#" class="tab-link" data-tab="deck-builder">Deck Builder</a>
-            <a href="#" class="tab-link" data-tab="collection">Coleção</a>
-            <a href="#" class="tab-link" data-tab="settings">Configurações</a>
+            <a href="#" class="tab-link" data-tab="meta" data-translate="tab_meta">META</a>
+            <a href="#" class="tab-link" data-tab="deck-builder" data-translate="tab_deck_builder">Deck Builder</a>
+            <a href="#" class="tab-link" data-tab="collection" data-translate="tab_collection">Coleção</a>
+            <a href="#" class="tab-link" data-tab="settings" data-translate="tab_settings">Configurações</a>
         </nav>
     </header>
 
     <main>
         <div id="meta-tab" class="tab-content">
             <div class="tab-header">
-                <h2>Top 10 Combos do META</h2>
+                <h2 data-translate="meta_header">Top 10 Combos do META</h2>
             </div>
             <div id="meta-combos-container">
-                {/* Combos serão carregados aqui pelo JavaScript */}
             </div>
         </div>
 
         <div id="deck-builder-tab" class="tab-content">
             <div class="tab-header">
-                <h2>Montador de Decks</h2>
+                <h2 data-translate="deck_builder_header">Montador de Decks</h2>
             </div>
 
             <div class="deck-management">
                 <div class="deck-selector-group">
-                    <label for="deck-selector">Deck Ativo:</label>
+                    <label for="deck-selector" data-translate="active_deck_label">Deck Ativo:</label>
                     <select id="deck-selector"></select>
                 </div>
                 <div class="deck-name-group">
-                    <label for="deck-name-input">Nome do Deck:</label>
-                    <input type="text" id="deck-name-input" placeholder="Digite o nome do deck">
+                    <label for="deck-name-input" data-translate="deck_name_label">Nome do Deck:</label>
+                    <input type="text" id="deck-name-input" placeholder="Digite o nome do deck" data-translate="deck_name_placeholder">
                 </div>
                 <div class="deck-buttons-group">
-                    <button id="add-deck-button" title="Adicionar Novo Deck">+</button>
-                    <button id="delete-deck-button" title="Deletar Deck Ativo">-</button>
+                    <button id="add-deck-button" title="Adicionar Novo Deck" data-translate="add_deck_button_title">+</button>
+                    <button id="delete-deck-button" title="Deletar Deck Ativo" data-translate="delete_deck_button_title">-</button>
                 </div>
             </div>
 
@@ -55,7 +54,7 @@
                         <div class="part-container">
                             <div class="part-placeholder" data-type="primeira"><span>Primeira Peça</span></div>
                             <p class="part-name-display" data-name-type="primeira">Selecione</p>
-                        </div>/}
+                        </div>
                         <div class="standard-parts">
                             <div class="part-container">
                                 <div class="part-placeholder" data-type="ratchet"><span>Ratchet</span></div>
@@ -135,50 +134,63 @@
                 </div>
                 <div class="deck-info">
                     <p>Pontuação Total do Deck: <span id="deck-score">0.00</span></p>
-                    <button id="clear-deck-button">Limpar Beyblades</button>
-                    <button id="export-deck-button">Exportar Deck List</button>
+                    <button id="clear-deck-button" data-translate="clear_deck_button">Limpar Beyblades</button>
+                    <button id="export-deck-button" data-translate="export_deck_list_button">Exportar Deck List</button>
                 </div>
             </div>
         </div>
 
         <div id="collection-tab" class="tab-content">
             <div class="tab-header">
-                <h2>Minha Coleção</h2>
+                <h2 data-translate="collection_header">Minha Coleção</h2>
                 <div class="filter-switch">
-                    <label for="collection-filter">Mostrar Apenas os que Possuo</label>
+                    <label for="collection-filter" data-translate="collection_filter_label">Mostrar Apenas os que Possuo</label>
                     <input type="checkbox" id="collection-filter">
                 </div>
             </div>
 
-            <h3>Blades</h3>
+            <h3 data-translate="blades_section_title">Blades</h3>
             <div class="parts-grid" id="blades-container"></div>
 
-            <h3>Ratchets</h3>
+            <h3 data-translate="ratchets_section_title">Ratchets</h3>
             <div class="parts-grid" id="ratchets-container"></div>
 
-            <h3>Bits</h3>
+            <h3 data-translate="bits_section_title">Bits</h3>
             <div class="parts-grid" id="bits-container"></div>
 
-            <h3>Lock Chips</h3>
+            <h3 data-translate="lockchips_section_title">Lock Chips</h3>
             <div class="parts-grid" id="lockchips-container"></div>
 
-            <h3>Main Blades</h3>
+            <h3 data-translate="mainblades_section_title">Main Blades</h3>
             <div class="parts-grid" id="mainblades-container"></div>
 
-            <h3>Assist Blades</h3>
+            <h3 data-translate="assistblades_section_title">Assist Blades</h3>
             <div class="parts-grid" id="assistblades-container"></div>
         </div>
 
         <div id="settings-tab" class="tab-content">
             <div class="tab-header">
-                <h2>Importar & Exportar Dados</h2>
+                <h2 data-translate="settings_header">Importar & Exportar Dados</h2>
             </div>
             <div class="settings-container">
-                <p>Salve sua coleção e decks em um arquivo (.bx) para backup ou para transferir para outro dispositivo.</p>
+                <p data-translate="settings_description">Salve sua coleção e decks em um arquivo (.bx) para backup ou para transferir para outro dispositivo.</p>
+
+                <div class="language-settings">
+                    <h3 data-translate="language_settings_title">Idioma / Language</h3>
+                    <div class="language-selector">
+                        <button id="lang-pt-br" class="lang-button active" title="Português (Brasil)">
+                            🇧🇷
+                        </button>
+                        <button id="lang-en" class="lang-button" title="English (US)">
+                           🇺🇸
+                        </button>
+                    </div>
+                </div>
+
                 <div class="data-buttons">
-                    <button id="export-button">Exportar Dados (.bx)</button>
-                    <button id="import-button">Importar Dados (.bx)</button>
-                    <input type="file" id="import-file" accept=".bx,application/json" style="display: none;"> {/* Aceita .bx e json */}
+                    <button id="export-button" data-translate="export_button">Exportar Dados (.bx)</button>
+                    <button id="import-button" data-translate="import_button">Importar Dados (.bx)</button>
+                    <input type="file" id="import-file" accept=".bx,application/json" style="display: none;">
                 </div>
             </div>
         </div>
@@ -199,7 +211,7 @@
         <div class="modal-content">
             <span class="close-button" id="variant-selector-close">&times;</span>
             <h3 id="variant-modal-title">Selecionar Variantes</h3>
-            <div id="variant-modal-checkboxes">/}
+            <div id="variant-modal-checkboxes">
             </div>
             <div class="modal-buttons">
                 <button id="variant-modal-save">Salvar</button>
