@@ -3850,7 +3850,7 @@ const ALL_CHIP_COMBOS = [
          modal_button_cancel: "Cancel",
          modal_button_ok: "OK",
          modal_button_delete: "Delete",
-		 tab_score": "Score",
+		 tab_score: "Score",
     score_header: "Match Scoreboard",
     player_1_default: "Player 1",
     player_2_default: "Player 2",
