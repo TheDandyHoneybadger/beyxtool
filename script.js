@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let variant_modal_part = null;
     let onInputConfirm = null;
 
-    // [NOVO] Variáveis do Placar
+    // Variáveis do Placar
     let scoreP1 = 0;
     let scoreP2 = 0;
 
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputModalCancel = document.getElementById('input-modal-cancel');
     const inputModalClose = document.getElementById('input-modal-close');
 
-    // [NOVO] Elementos do Placar
+    // Elementos do Placar
     const scoreP1Display = document.getElementById('score-p1');
     const scoreP2Display = document.getElementById('score-p2');
     const scoreButtons = document.querySelectorAll('.score-btn');
@@ -217,12 +217,12 @@ document.addEventListener('DOMContentLoaded', () => {
              });
          }
 
-         // [NOVO] Carregar nomes dos players
+         // Carregar nomes dos players
          const p1Name = localStorage.getItem('beyXToolP1Name');
          const p2Name = localStorage.getItem('beyXToolP2Name');
-         const langPack = translations[currentLanguage] || translations['en']; // Garante que temos um langPack
-         if (p1NameInput) p1NameInput.value = p1Name || langPack.player_1_default || "Jogador 1"; // Usa padrão BR se pt-br não existir
-         if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Jogador 2"; // Usa padrão BR se pt-br não existir
+         const langPack = translations[currentLanguage] || translations['pt-br']; // Garante fallback para pt-br
+         if (p1NameInput) p1NameInput.value = p1Name || langPack.player_1_default || "Jogador 1";
+         if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Jogador 2";
     };
 
     const renderMetaCombos = () => {
@@ -318,63 +318,61 @@ document.addEventListener('DOMContentLoaded', () => {
             let pressTimerInfo = null;
             let didOwnerHold = false;
             let didInfoHold = false;
+            let interactionStartTime = 0; // Para medir tempo de clique
 
             const startHold = (e) => {
-                if (e.button === 2) return; // Ignora clique direito
-
-                // Reseta os estados
+                if (e.button === 2) return;
+                interactionStartTime = Date.now(); // Marca o tempo de início
                 didOwnerHold = false;
                 didInfoHold = false;
 
-                // Timer 1: Toggle de posse (0.5s)
                 pressTimerOwner = setTimeout(() => {
                     didOwnerHold = true;
-                }, 500); // 500ms
+                }, 500);
 
-                // Timer 2: Popup de Informação (2s)
                 pressTimerInfo = setTimeout(() => {
-                    didInfoHold = true;   // Marca que o info foi ativado
-                    didOwnerHold = false; // Impede que o toggle de posse ocorra ao soltar se o info foi ativado
+                    didInfoHold = true;
+                    didOwnerHold = false;
                     showProductInfoPopup(part, part_card);
-                }, 2000); // 2000ms
+                }, 2000);
             };
 
             const releaseHold = (e) => {
-                // Limpa os timers pendentes
                 clearTimeout(pressTimerOwner);
                 clearTimeout(pressTimerInfo);
 
-                const isMouseEvent = e.type === 'mouseup';
+                const interactionTime = Date.now() - interactionStartTime;
+                const isMouseEvent = e.type === 'mouseup'; // Verifica se foi evento de mouse
 
-                // Decide qual ação tomar
                 if (didInfoHold) {
-                    // Info foi mostrado (2s hold), não faz mais nada ao soltar.
+                    // >= 2s: Info foi mostrado, não faz nada ao soltar.
                 } else if (didOwnerHold) {
-                    // 0.5s se passaram, mas 2s não. Faz o toggle (normal hold action para touch/mouse).
-                    togglePartOwnership(part); // 'part' está acessível aqui
-                } else if (isMouseEvent && !didOwnerHold && !didInfoHold) {
-                    // Foi um clique rápido (menos de 0.5s) E é um evento de mouse (PC). Faz o toggle.
-                    togglePartOwnership(part); // 'part' está acessível aqui
+                    // 0.5s <= tempo < 2s: Faz o toggle (ação normal de hold para touch/mouse).
+                    togglePartOwnership(part);
+                } else if (isMouseEvent && interactionTime < 500) {
+                    // < 0.5s E é mouse: Faz o toggle (ação de clique rápido no PC).
+                    togglePartOwnership(part);
                 }
-                // Se for um evento de toque rápido (touchend && !didOwnerHold && !didInfoHold), não faz nada.
+                // Se for evento de toque (touchend) e interactionTime < 500, não faz nada (evita swipe click).
 
-                // Reseta os estados para a próxima interação
                 didOwnerHold = false;
                 didInfoHold = false;
+                interactionStartTime = 0;
             };
 
+
             const abortHold = (e) => {
-                 // Aborta todas as ações (se o mouse sair ou o toque for cancelado/swipe)
                  clearTimeout(pressTimerOwner);
                  clearTimeout(pressTimerInfo);
                  didOwnerHold = false;
                  didInfoHold = false;
+                 interactionStartTime = 0;
             };
 
             part_card.addEventListener('mousedown', startHold);
             part_card.addEventListener('touchstart', startHold, { passive: true });
-            part_card.addEventListener('mouseup', releaseHold); // Event object 'e' é passado automaticamente
-            part_card.addEventListener('touchend', releaseHold); // Event object 'e' é passado automaticamente
+            part_card.addEventListener('mouseup', releaseHold);
+            part_card.addEventListener('touchend', releaseHold);
             part_card.addEventListener('mouseleave', abortHold);
             part_card.addEventListener('touchcancel', abortHold);
             part_card.addEventListener('contextmenu', (e) => e.preventDefault());
@@ -480,7 +478,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showProductInfoPopup = (part, element) => {
         document.querySelectorAll('.part-info-popup').forEach(p => p.remove());
-        const sources = PART_SOURCES[part.id]; if (!sources || sources.length === 0) return;
+        // [MODIFICADO] Busca a fonte usando o ID base da Blade, se for uma variante
+        const sourceId = part.baseId || part.id;
+        const sources = PART_SOURCES[sourceId];
+        if (!sources || sources.length === 0) return;
         const popup = document.createElement('div'); popup.className = 'part-info-popup';
         const titleText = translations[currentLanguage].part_source_title || "Found in:";
         popup.innerHTML = `<h5>${titleText}</h5><ul>${sources.map(s => `<li>${s}</li>`).join('')}</ul>`;
@@ -489,68 +490,133 @@ document.addEventListener('DOMContentLoaded', () => {
         popup.style.left = `${window.scrollX + rect.left + (element.offsetWidth / 2) - (popup.offsetWidth / 2)}px`;
     };
 
+    // --- [FUNÇÃO MODIFICADA] togglePartOwnership ---
     const togglePartOwnership = (part) => {
         document.querySelectorAll('.part-info-popup').forEach(p => p.remove());
+        // Encontra o card *antes* de modificar os dados
+        const partCard = document.querySelector(`#collection-tab .part-card[data-part-id="${part.id}"]`);
 
         if (part.type === 'blade') {
             const variantList = part.variantsId ? ALL_VARIANTS[part.variantsId] : null;
-            if (part.variantsId && variantList && variantList.length > 1) { openVariantSelector(part); }
-            else {
-                const collectionSet = app_data.collection.blades; if (!collectionSet) return;
+            if (part.variantsId && variantList && variantList.length > 1) {
+                // Se tem variantes e mais de uma, abre o seletor (não muda posse aqui)
+                openVariantSelector(part);
+            } else {
+                // Se não tem variantes ou só tem uma, faz o toggle direto
+                const collectionSet = app_data.collection.blades;
+                if (!collectionSet) return;
+
                 if (collectionSet.has(part.id)) {
+                    // Remove da coleção
                     collectionSet.delete(part.id);
-                    app_data.decks.forEach(deck => deck.bays.forEach(bay => { if (bay.part1 && (bay.part1.baseId || bay.part1.id) === part.id) clearBay(bay); }));
+                    if (partCard) partCard.classList.remove('owned'); // Atualiza a classe
+                    // Remove de decks
+                    app_data.decks.forEach(deck => deck.bays.forEach(bay => {
+                        if (bay.part1 && (bay.part1.baseId || bay.part1.id) === part.id) clearBay(bay);
+                    }));
                 } else {
+                    // Adiciona à coleção
                     const variantToAdd = (part.variantsId && variantList?.length === 1) ? variantList[0].name : 'owned';
                     collectionSet.set(part.id, new Set([variantToAdd]));
+                    if (partCard) partCard.classList.add('owned'); // Atualiza a classe
                 }
-                saveAppData();
-                renderParts();
-                updateDeckUI();
+                saveAppData(); // Salva a alteração
+                updateDeckUI(); // Atualiza o deck builder se a peça foi removida
+                // Não chama renderParts()
             }
         } else {
-            const collectionSetKey = part.type + 's'; const collection_set = app_data.collection[collectionSetKey]; if (!collection_set) return;
+            // Lógica para Ratchets, Bits, etc. (sem variantes)
+            const collectionSetKey = part.type + 's';
+            const collection_set = app_data.collection[collectionSetKey];
+            if (!collection_set) return;
+
             if (collection_set.has(part.id)) {
+                // Remove
                 collection_set.delete(part.id);
-                 app_data.decks.forEach(deck => deck.bays.forEach(bay => {
-                     if (bay.part2?.id === part.id) bay.part2 = null;
-                     if (bay.part3?.id === part.id) bay.part3 = null;
-                     if (bay.part4?.id === part.id) bay.part4 = null;
-                     if (bay.part5?.id === part.id) bay.part5 = null;
-                 }));
+                if (partCard) partCard.classList.remove('owned'); // Atualiza classe
+                // Remove de decks (part2 a part5)
+                app_data.decks.forEach(deck => deck.bays.forEach(bay => {
+                    if (bay.part2?.id === part.id) bay.part2 = null;
+                    if (bay.part3?.id === part.id) bay.part3 = null;
+                    if (bay.part4?.id === part.id) bay.part4 = null;
+                    if (bay.part5?.id === part.id) bay.part5 = null;
+                }));
             } else {
+                // Adiciona
                 collection_set.add(part.id);
+                if (partCard) partCard.classList.add('owned'); // Atualiza classe
             }
-            saveAppData();
-            renderParts();
-            updateDeckUI();
+            saveAppData(); // Salva
+            updateDeckUI(); // Atualiza deck builder
+            // Não chama renderParts()
         }
     };
+    // --- [FIM DA FUNÇÃO MODIFICADA] ---
 
+
+    // --- [MANIPULADOR DE CLIQUE MODIFICADO] openVariantSelector ---
     const openVariantSelector = (part) => {
-        variant_modal_part = part; const titlePrefix = translations[currentLanguage].variant_modal_title_prefix; variant_modal_title.textContent = `${titlePrefix} ${part.name}`;
-        variant_modal_checkboxes.innerHTML = '<div id="variant-modal-grid"></div>'; const grid = document.getElementById('variant-modal-grid'); if(!grid) return;
-        const owned = app_data.collection.blades.get(part.id) || new Set(); const variantList = ALL_VARIANTS[part.variantsId]; if (!variantList) { closeVariantModal(); return; }
+        variant_modal_part = part;
+        const titlePrefix = translations[currentLanguage].variant_modal_title_prefix || "Select Variants for";
+        variant_modal_title.textContent = `${titlePrefix} ${part.name}`;
+        variant_modal_checkboxes.innerHTML = '<div id="variant-modal-grid"></div>';
+        const grid = document.getElementById('variant-modal-grid');
+        if (!grid) return;
+
+        const owned = app_data.collection.blades.get(part.id) || new Set();
+        const variantList = ALL_VARIANTS[part.variantsId];
+        if (!variantList) { closeVariantModal(); return; }
+
+        // Encontra o card principal na coleção ANTES de adicionar listeners
+        const mainCard = document.querySelector(`#collection-tab .part-card[data-part-id="${part.id}"]`);
+
         variantList.forEach(vData => {
-            if (!vData?.name) return; const card = document.createElement('div'); card.className = 'variant-card'; card.dataset.variantName = vData.name; card.innerHTML = `<img src="${vData.image || ''}" alt="${vData.name}"><p>${vData.name}</p>`; if (owned.has(vData.name)) card.classList.add('selected');
+            if (!vData?.name) return;
+            const card = document.createElement('div');
+            card.className = 'variant-card';
+            card.dataset.variantName = vData.name;
+            card.innerHTML = `<img src="${vData.image || ''}" alt="${vData.name}"><p>${vData.name}</p>`;
+            if (owned.has(vData.name)) card.classList.add('selected');
+
             card.addEventListener('click', () => {
-                const currentOwned = app_data.collection.blades.get(part.id) || new Set(); if (currentOwned.has(vData.name)) currentOwned.delete(vData.name); else currentOwned.add(vData.name);
-                if (currentOwned.size > 0) {
-                    app_data.collection.blades.set(part.id, currentOwned);
+                const currentOwned = app_data.collection.blades.get(part.id) || new Set();
+                let wasModified = false;
+
+                // Atualiza a posse da variante específica
+                if (currentOwned.has(vData.name)) {
+                    currentOwned.delete(vData.name);
+                    card.classList.remove('selected'); // Atualiza visual do card da variante
+                    wasModified = true;
+                } else {
+                    currentOwned.add(vData.name);
+                    card.classList.add('selected'); // Atualiza visual do card da variante
+                    wasModified = true;
                 }
-                else {
-                    app_data.collection.blades.delete(part.id);
-                    app_data.decks.forEach(d => d.bays.forEach(b => { if (b.part1?.baseId === part.id) clearBay(b); }));
+
+                if (wasModified) {
+                    // Atualiza a coleção principal
+                    if (currentOwned.size > 0) {
+                        app_data.collection.blades.set(part.id, currentOwned);
+                        if (mainCard) mainCard.classList.add('owned'); // Atualiza classe do card principal
+                    } else {
+                        app_data.collection.blades.delete(part.id);
+                        if (mainCard) mainCard.classList.remove('owned'); // Atualiza classe do card principal
+                        // Remove a blade de qualquer deck se nenhuma variante for possuída
+                        app_data.decks.forEach(d => d.bays.forEach(b => {
+                            if (b.part1?.baseId === part.id) clearBay(b);
+                        }));
+                    }
+                    saveAppData(); // Salva
+                    updateDeckUI(); // Atualiza deck builder
+                    // Não chama renderParts()
                 }
-                saveAppData();
-                renderParts();
-                updateDeckUI();
-                closeVariantModal();
+                 closeVariantModal(); // Fecha o modal após o clique
             });
             grid.appendChild(card);
         });
         variant_modal.style.display = 'block';
     };
+    // --- [FIM DO MANIPULADOR MODIFICADO] ---
 
     const closeVariantModal = () => { if (variant_modal) variant_modal.style.display = 'none'; variant_modal_part = null; };
 
@@ -897,7 +963,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return ownedParts;
     };
 
-    // --- [INÍCIO DAS FUNÇÕES DO PLACAR] ---
+    // --- Funções do Placar ---
     const updateScoreDisplay = () => {
         if (scoreP1Display) scoreP1Display.textContent = scoreP1;
         if (scoreP2Display) scoreP2Display.textContent = scoreP2;
@@ -925,24 +991,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Salva o nome do jogador quando o input perde o foco
     const savePlayerName = (playerNumber, inputElement) => {
         if (!inputElement) return;
         const newName = inputElement.value.trim();
         const key = `beyXToolP${playerNumber}Name`;
         const defaultKey = `player_${playerNumber}_default`;
         const langPack = translations[currentLanguage];
-        const defaultValue = langPack[defaultKey] || (playerNumber === 1 ? "Jogador 1" : "Jogador 2"); // Fallback para pt-br
+        const defaultValue = langPack[defaultKey] || (playerNumber === 1 ? "Jogador 1" : "Jogador 2");
 
         if (newName) {
             localStorage.setItem(key, newName);
         } else {
-            // Se o nome ficar vazio, reverte para o padrão e salva isso
             inputElement.value = defaultValue;
             localStorage.setItem(key, defaultValue);
         }
     };
-    // --- [FIM DAS FUNÇÕES DO PLACAR] ---
+    // --- Fim Funções do Placar ---
 
     const addDeck = () => {
         const newDeckName = `Deck ${app_data.decks.length + 1}`;
@@ -1136,7 +1200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     inputModalCancel?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); });
     inputModalClose?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); });
 
-    // [NOVO] Event listeners do Placar
+    // Event listeners do Placar
     scoreButtons.forEach(button => button.addEventListener('click', handleScoreButton));
     resetScoreButton?.addEventListener('click', resetScore);
     p1NameInput?.addEventListener('blur', () => savePlayerName(1, p1NameInput));
