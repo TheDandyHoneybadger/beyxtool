@@ -3763,7 +3763,16 @@ const ALL_CHIP_COMBOS = [
          part_source_title: "Encontrado em:",
          modal_button_cancel: "Cancelar",
          modal_button_ok: "OK",
-         modal_button_delete: "Deletar"
+         modal_button_delete: "Deletar",
+		 tab_score: "Placar",
+    score_header: "Placar da Partida",
+    player_1_default: "Jogador 1", // Ajustado para português
+    player_2_default: "Jogador 2", // Ajustado para português
+    score_1_point: "+1 Ponto",
+    score_2_points: "+2 Pontos",
+    score_3_points: "+3 Pontos",
+    score_reset_button: "Reiniciar Placar",
+    confirm_reset_score: "Tem certeza que deseja reiniciar o placar?",
     },
     'en': {
         // Tabs
@@ -3840,7 +3849,16 @@ const ALL_CHIP_COMBOS = [
          part_source_title: "Found in:",
          modal_button_cancel: "Cancel",
          modal_button_ok: "OK",
-         modal_button_delete: "Delete"
+         modal_button_delete: "Delete",
+		 tab_score": "Score",
+    score_header: "Match Scoreboard",
+    player_1_default: "Player 1",
+    player_2_default: "Player 2",
+    score_1_point: "+1 Point",
+    score_2_points: "+2 Points",
+    score_3_points: "+3 Points",
+    score_reset_button: "Reset Scoreboard",
+    confirm_reset_score: "Are you sure you want to reset the scoreboard?",
     }
 };
 

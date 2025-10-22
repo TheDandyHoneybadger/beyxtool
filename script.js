@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let variant_modal_part = null;
     let onInputConfirm = null;
 
+    // [NOVO] Variáveis do Placar
+    let scoreP1 = 0;
+    let scoreP2 = 0;
+
     const tabLinks = document.querySelectorAll('.tab-link');
     const tabContents = document.querySelectorAll('.tab-content');
     const blades_container = document.getElementById('blades-container');
@@ -28,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const assistblades_container = document.getElementById('assistblades-container');
     const lockchips_container = document.getElementById('lockchips-container');
     const collection_filter = document.getElementById('collection-filter');
+    const collection_sort = document.getElementById('collection-sort');
     const export_button = document.getElementById('export-button');
     const import_button = document.getElementById('import-button');
     const import_file_input = document.getElementById('import-file');
@@ -58,6 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputModalCancel = document.getElementById('input-modal-cancel');
     const inputModalClose = document.getElementById('input-modal-close');
 
+    // [NOVO] Elementos do Placar
+    const scoreP1Display = document.getElementById('score-p1');
+    const scoreP2Display = document.getElementById('score-p2');
+    const scoreButtons = document.querySelectorAll('.score-btn');
+    const resetScoreButton = document.getElementById('reset-score-button');
+    const p1NameInput = document.querySelector('#player1 .player-name');
+    const p2NameInput = document.querySelector('#player2 .player-name');
+
     const showInputModal = (titleKey, placeholderKey, defaultValue = "") => {
         return new Promise((resolve) => {
             const langPack = translations[currentLanguage];
@@ -67,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
             inputModal.style.display = 'block';
             inputModalField.focus();
             onInputConfirm = (value) => {
-                if (titleKey === 'deck_name_label' && value !== null && value.trim() === "") { // Validação só para nome do deck
+                if (titleKey === 'deck_name_label' && value !== null && value.trim() === "") {
                     alert(langPack.alert_deck_name_empty || "O nome do deck não pode ser vazio.");
                     return;
                 }
@@ -90,13 +103,28 @@ document.addEventListener('DOMContentLoaded', () => {
             if (langPack[key]) {
                  if (element.placeholder !== undefined && key.includes('placeholder')) { element.placeholder = langPack[key]; }
                  else if (element.title !== undefined && key.includes('title')) { element.title = langPack[key]; }
-                 else if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('part-placeholder')) { element.textContent = langPack[key]; } // Traduz spans dentro de placeholders
-                 else if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('bey-score')) { element.textContent = langPack[key]; } // Traduz span dentro do bey-score
+                 else if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('part-placeholder')) { element.textContent = langPack[key]; }
+                 else if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('bey-score')) { element.textContent = langPack[key]; }
+                 // [MODIFICADO] Adicionado 'INPUT' para traduzir o value default dos nomes dos players
+                 else if (element.tagName === 'INPUT' && (key === 'player_1_default' || key === 'player_2_default')) {
+                    // Só traduz o value se for o valor padrão atual ou o padrão do outro idioma
+                    const defaultP1_pt = translations['pt-br']?.player_1_default || "Jogador 1";
+                    const defaultP1_en = translations['en']?.player_1_default || "Player 1";
+                    const defaultP2_pt = translations['pt-br']?.player_2_default || "Jogador 2";
+                    const defaultP2_en = translations['en']?.player_2_default || "Player 2";
+
+                    if (key === 'player_1_default' && (element.value === defaultP1_pt || element.value === defaultP1_en)) {
+                         element.value = langPack[key];
+                    } else if (key === 'player_2_default' && (element.value === defaultP2_pt || element.value === defaultP2_en)) {
+                         element.value = langPack[key];
+                    }
+                 }
                  else if (element.tagName !== 'BUTTON' || !element.id.startsWith('lang-')) { element.textContent = langPack[key]; }
             } else { console.warn(`Translation key not found: ${key}`); }
         });
-        updateDeckUI(); // Re-renderiza o deck para atualizar textos dinâmicos (Select, Soma, Total)
+        updateDeckUI();
     };
+
 
     const setLanguage = (lang) => {
         if (translations[lang]) {
@@ -124,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (initialTab) initialTab.click();
     };
 
-    // --- [ATUALIZADO] createNewDeck com 5 parts ---
     const createNewDeck = (name) => ({
         name: name,
         bays: [
@@ -140,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const saveAppData = () => { try { localStorage.setItem('beyblade_x_data', JSON.stringify({ collection: getSerializableCollection(), decks: app_data.decks, active_deck_index: app_data.active_deck_index })); } catch (e) { console.error("Erro ao salvar dados:", e); alert(translations[currentLanguage].alert_save_error); } };
 
-    // --- [ATUALIZADO] loadAppData para garantir 5 parts ---
     const loadAppData = () => {
         const saved_data_str = localStorage.getItem('beyblade_x_data');
         if (saved_data_str) {
@@ -150,24 +176,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 app_data.decks = Array.isArray(parsed.decks) ? parsed.decks : [];
                 app_data.active_deck_index = (typeof parsed.active_deck_index === 'number') ? parsed.active_deck_index : 0;
 
-                // Garante que bays antigos tenham part4 e part5
                 app_data.decks.forEach(deck => {
                     deck.bays.forEach(bay => {
                         if (bay && typeof bay === 'object') {
                             if (!bay.hasOwnProperty('part4')) { bay.part4 = null; }
                             if (!bay.hasOwnProperty('part5')) { bay.part5 = null; }
-                        } else { // Corrige bays inválidas (null ou não-objeto)
+                        } else {
                             const index = deck.bays.indexOf(bay);
                             if (index !== -1) {
                                 deck.bays[index] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null };
                             }
                         }
                     });
-                     // Garante que o deck tenha sempre 3 bays
                      while (deck.bays.length < 3) {
                          deck.bays.push({ type: null, part1: null, part2: null, part3: null, part4: null, part5: null });
                      }
-                     deck.bays = deck.bays.slice(0, 3); // Garante que não tenha mais de 3
+                     deck.bays = deck.bays.slice(0, 3);
                 });
 
             } catch (e) {
@@ -178,7 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (app_data.decks.length === 0) app_data.decks.push(createNewDeck("Meu Primeiro Deck"));
         if (app_data.active_deck_index >= app_data.decks.length || app_data.active_deck_index < 0) app_data.active_deck_index = 0;
 
-         // Garante que o deck ativo tenha a estrutura correta (redundante mas seguro)
          const activeDeck = app_data.decks[app_data.active_deck_index];
          if (activeDeck) {
              while (activeDeck.bays.length < 3) {
@@ -195,6 +218,13 @@ document.addEventListener('DOMContentLoaded', () => {
                   }
              });
          }
+
+         // [NOVO] Carregar nomes dos players
+         const p1Name = localStorage.getItem('beyXToolP1Name');
+         const p2Name = localStorage.getItem('beyXToolP2Name');
+         const langPack = translations[currentLanguage] || translations['en']; // Garante que temos um langPack
+         if (p1NameInput) p1NameInput.value = p1Name || langPack.player_1_default || "Player 1";
+         if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Player 2";
     };
 
     const renderMetaCombos = () => {
@@ -210,13 +240,62 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderParts = () => {
         const containers = { blades: blades_container, ratchets: ratchets_container, bits: bits_container, mainblades: mainblades_container, assistblades: assistblades_container, lockchips: lockchips_container };
         Object.values(containers).forEach(c => { if(c) c.innerHTML = ''; });
-        const sortedParts = [...ALL_PARTS].sort((a, b) => a.name.localeCompare(b.name));
-        sortedParts.forEach(part => {
+
+        const sortValue = collection_sort ? collection_sort.value : 'name_asc';
+        const filterOn = collection_filter ? collection_filter.checked : false;
+
+        let partsToRender = [...ALL_PARTS];
+
+        if (filterOn) {
+            partsToRender = partsToRender.filter(part => {
+                const collectionSet = app_data.collection[part.type + 's'];
+                if (part.type === 'blade') {
+                    return (collectionSet?.has(part.id) && collectionSet.get(part.id).size > 0);
+                }
+                return collectionSet?.has(part.id);
+            });
+        }
+
+        switch (sortValue) {
+            case 'name_asc':
+                partsToRender.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'name_desc':
+                partsToRender.sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            case 'score_desc':
+                partsToRender.sort((a, b) => {
+                    if (b.score !== a.score) return b.score - a.score;
+                    return a.name.localeCompare(b.name);
+                });
+                break;
+            case 'score_asc':
+                partsToRender.sort((a, b) => {
+                    if (a.score !== b.score) return a.score - b.score;
+                    return a.name.localeCompare(b.name);
+                });
+                break;
+            case 'type':
+                const typeOrder = { 'attack': 1, 'defense': 2, 'stamina': 3, 'balance': 4 };
+                partsToRender.sort((a, b) => {
+                    const typeA = a.bey_type ? typeOrder[a.bey_type.toLowerCase()] : 5;
+                    const typeB = b.bey_type ? typeOrder[b.bey_type.toLowerCase()] : 5;
+                    if (typeA !== typeB) return typeA - typeB;
+                    return a.name.localeCompare(b.name);
+                });
+                break;
+            default:
+                partsToRender.sort((a, b) => a.name.localeCompare(b.name));
+        }
+
+        partsToRender.forEach(part => {
             const container = containers[part.type + 's']; if (!container) return;
             const collectionSet = app_data.collection[part.type + 's'];
+
             const part_card = document.createElement('div');
             part_card.className = 'part-card';
             part_card.dataset.partId = part.id;
+
             let isOwned = (part.type === 'blade') ? (collectionSet?.has(part.id) && collectionSet.get(part.id).size > 0) : collectionSet?.has(part.id);
             if (isOwned) part_card.classList.add('owned');
 
@@ -236,24 +315,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.onerror = () => { console.warn(`Imagem de tipo não encontrada: ${imgPath}`); }
             }
 
-            let pressTimer; let isHeld = false;
+            let pressTimerOwner = null;
+            let pressTimerInfo = null;
+            let didOwnerHold = false;
+            let didInfoHold = false;
+
             const startHold = (e) => {
                 if (e.button === 2) return;
-                isHeld = false;
-                pressTimer = setTimeout(() => {
-                    isHeld = true;
+                didOwnerHold = false;
+                didInfoHold = false;
+                pressTimerOwner = setTimeout(() => {
+                    didOwnerHold = true;
+                }, 500);
+                pressTimerInfo = setTimeout(() => {
+                    didInfoHold = true;
+                    didOwnerHold = false;
                     showProductInfoPopup(part, part_card);
-                }, 1000);
+                }, 2000);
             };
+
             const releaseHold = (e) => {
-                clearTimeout(pressTimer);
-                if (!isHeld) { togglePartOwnership(part); }
-                 isHeld = false; // Resetar isHeld ao soltar
+                clearTimeout(pressTimerOwner);
+                clearTimeout(pressTimerInfo);
+                if (didInfoHold) {
+                } else if (didOwnerHold) {
+                    togglePartOwnership(part);
+                }
+                didOwnerHold = false;
+                didInfoHold = false;
             };
+
             const abortHold = (e) => {
-                 clearTimeout(pressTimer);
-                 isHeld = false;
+                 clearTimeout(pressTimerOwner);
+                 clearTimeout(pressTimerInfo);
+                 didOwnerHold = false;
+                 didInfoHold = false;
             };
+
             part_card.addEventListener('mousedown', startHold);
             part_card.addEventListener('touchstart', startHold, { passive: true });
             part_card.addEventListener('mouseup', releaseHold);
@@ -266,6 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+
     const renderDeckManager = () => {
         if (!deck_selector || !deck_name_input) return;
         if (app_data.active_deck_index < 0 || app_data.active_deck_index >= app_data.decks.length) app_data.active_deck_index = 0;
@@ -274,7 +373,6 @@ document.addEventListener('DOMContentLoaded', () => {
         deck_selector.value = app_data.active_deck_index; deck_name_input.value = currentDeck.name;
     };
 
-    // --- [ATUALIZADO] updateDeckUI com 5 parts ---
     const updateDeckUI = () => {
         const currentDeck = app_data.decks[app_data.active_deck_index]; if (!currentDeck) return;
         let totalDeckScore = 0; const langPack = translations[currentLanguage]; const selectText = langPack.deck_placeholder_selecione || 'Select';
@@ -296,12 +394,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 abph: slot.querySelector('.part-placeholder[data-type="assistblade"]'), abn: slot.querySelector('.part-name-display[data-name-type="assistblade"]'),
                 rph: slot.querySelector('.part-placeholder[data-type="ratchet"]'), rn: slot.querySelector('.part-name-display[data-name-type="ratchet"]'),
                 bph: slot.querySelector('.part-placeholder[data-type="bit"]'), bn: slot.querySelector('.part-name-display[data-name-type="bit"]'),
-                scoreEl: slot.querySelector('.bey-score span:last-child') // Target inner span for score value
+                scoreEl: slot.querySelector('.bey-score span:last-child')
             };
 
-            const scoreLabelEl = slot.querySelector('.bey-score span:first-child'); // Target label span
+            const scoreLabelEl = slot.querySelector('.bey-score span:first-child');
              if (scoreLabelEl && langPack.deck_score_label) {
-                 scoreLabelEl.textContent = langPack.deck_score_label + ": "; // Atualiza o texto "Soma:"/"Sum:"
+                 scoreLabelEl.textContent = langPack.deck_score_label + ": ";
              }
 
             if (Object.values(selectors).some(el => !el)) { console.error(`Elementos faltando no slot ${bayIndex}. Verifique o HTML.`); return; }
@@ -309,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
             slot.dataset.bayType = bay.type || 'empty';
 
             const reset = (ph, n, key) => {
-                 ph.innerHTML = `<span data-translate="${key}">${langPack[key]||key.replace('deck_placeholder_', '').replace('_section_title', '')}</span>`; // Usa data-translate para spans
+                 ph.innerHTML = `<span data-translate="${key}">${langPack[key]||key.replace('deck_placeholder_', '').replace('_section_title', '')}</span>`;
                  n.textContent = selectText;
              };
             const set = (ph, n, part) => {
@@ -327,24 +425,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 return score;
             };
 
-            // Reseta todos os 5 placeholders
             reset(selectors.p1ph, selectors.p1n, 'deck_placeholder_primeira');
             reset(selectors.mbph, selectors.mbn, 'deck_placeholder_mainblade');
             reset(selectors.abph, selectors.abn, 'deck_placeholder_assistblade');
             reset(selectors.rph, selectors.rn, 'deck_placeholder_ratchet');
             reset(selectors.bph, selectors.bn, 'deck_placeholder_bit');
 
-            // Define os placeholders com base no tipo e nas peças
             if (bay.type === 'standard') {
-                bayScore += set(selectors.p1ph, selectors.p1n, bay.part1); // Blade
-                bayScore += set(selectors.rph, selectors.rn, bay.part4);  // Ratchet (de part4)
-                bayScore += set(selectors.bph, selectors.bn, bay.part5);  // Bit (de part5)
+                bayScore += set(selectors.p1ph, selectors.p1n, bay.part1);
+                bayScore += set(selectors.rph, selectors.rn, bay.part4);
+                bayScore += set(selectors.bph, selectors.bn, bay.part5);
             } else if (bay.type === 'chip') {
-                bayScore += set(selectors.p1ph, selectors.p1n, bay.part1); // Lock Chip
-                bayScore += set(selectors.mbph, selectors.mbn, bay.part2);  // Main Blade
-                bayScore += set(selectors.abph, selectors.abn, bay.part3);  // Assist Blade
-                bayScore += set(selectors.rph, selectors.rn, bay.part4);  // Ratchet
-                bayScore += set(selectors.bph, selectors.bn, bay.part5);  // Bit
+                bayScore += set(selectors.p1ph, selectors.p1n, bay.part1);
+                bayScore += set(selectors.mbph, selectors.mbn, bay.part2);
+                bayScore += set(selectors.abph, selectors.abn, bay.part3);
+                bayScore += set(selectors.rph, selectors.rn, bay.part4);
+                bayScore += set(selectors.bph, selectors.bn, bay.part5);
             }
 
             selectors.scoreEl.textContent = bayScore.toFixed(2);
@@ -354,7 +450,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const deckInfoScoreP = document.querySelector('.deck-info p');
         if (deckInfoScoreP) {
             const totalLabel = langPack.deck_total_score_label || 'Total Deck Score:';
-            // Atualiza apenas o span do score, mantendo o label traduzido
              deckInfoScoreP.querySelector('span:first-of-type').textContent = totalLabel + " ";
              deckInfoScoreP.querySelector('#deck-score').textContent = totalDeckScore.toFixed(2);
         }
@@ -376,31 +471,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const togglePartOwnership = (part) => {
         document.querySelectorAll('.part-info-popup').forEach(p => p.remove());
-        const partCard = document.querySelector(`#collection-tab [data-part-id="${part.id}"]`);
+
         if (part.type === 'blade') {
             const variantList = part.variantsId ? ALL_VARIANTS[part.variantsId] : null;
             if (part.variantsId && variantList && variantList.length > 1) { openVariantSelector(part); }
             else {
                 const collectionSet = app_data.collection.blades; if (!collectionSet) return;
                 if (collectionSet.has(part.id)) {
-                    collectionSet.delete(part.id); if (partCard) partCard.classList.remove('owned');
+                    collectionSet.delete(part.id);
                     app_data.decks.forEach(deck => deck.bays.forEach(bay => { if (bay.part1 && (bay.part1.baseId || bay.part1.id) === part.id) clearBay(bay); }));
-                } else { const variantToAdd = (part.variantsId && variantList?.length === 1) ? variantList[0].name : 'owned'; collectionSet.set(part.id, new Set([variantToAdd])); if (partCard) partCard.classList.add('owned'); }
-                saveAppData(); updateDeckUI();
+                } else {
+                    const variantToAdd = (part.variantsId && variantList?.length === 1) ? variantList[0].name : 'owned';
+                    collectionSet.set(part.id, new Set([variantToAdd]));
+                }
+                saveAppData();
+                renderParts();
+                updateDeckUI();
             }
         } else {
             const collectionSetKey = part.type + 's'; const collection_set = app_data.collection[collectionSetKey]; if (!collection_set) return;
             if (collection_set.has(part.id)) {
-                collection_set.delete(part.id); if (partCard) partCard.classList.remove('owned');
-                 // Remove de qualquer slot relevante (part2 a part5)
-                app_data.decks.forEach(deck => deck.bays.forEach(bay => {
+                collection_set.delete(part.id);
+                 app_data.decks.forEach(deck => deck.bays.forEach(bay => {
                      if (bay.part2?.id === part.id) bay.part2 = null;
                      if (bay.part3?.id === part.id) bay.part3 = null;
                      if (bay.part4?.id === part.id) bay.part4 = null;
                      if (bay.part5?.id === part.id) bay.part5 = null;
                  }));
-            } else { collection_set.add(part.id); if (partCard) partCard.classList.add('owned'); }
-            saveAppData(); updateDeckUI();
+            } else {
+                collection_set.add(part.id);
+            }
+            saveAppData();
+            renderParts();
+            updateDeckUI();
         }
     };
 
@@ -412,21 +515,25 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!vData?.name) return; const card = document.createElement('div'); card.className = 'variant-card'; card.dataset.variantName = vData.name; card.innerHTML = `<img src="${vData.image || ''}" alt="${vData.name}"><p>${vData.name}</p>`; if (owned.has(vData.name)) card.classList.add('selected');
             card.addEventListener('click', () => {
                 const currentOwned = app_data.collection.blades.get(part.id) || new Set(); if (currentOwned.has(vData.name)) currentOwned.delete(vData.name); else currentOwned.add(vData.name);
-                const mainCard = document.querySelector(`#collection-tab [data-part-id="${part.id}"]`);
-                if (currentOwned.size > 0) { app_data.collection.blades.set(part.id, currentOwned); mainCard?.classList.add('owned'); }
-                else { app_data.collection.blades.delete(part.id); mainCard?.classList.remove('owned'); app_data.decks.forEach(d => d.bays.forEach(b => { if (b.part1?.baseId === part.id) clearBay(b); })); }
-                saveAppData(); updateDeckUI(); closeVariantModal();
+                if (currentOwned.size > 0) {
+                    app_data.collection.blades.set(part.id, currentOwned);
+                }
+                else {
+                    app_data.collection.blades.delete(part.id);
+                    app_data.decks.forEach(d => d.bays.forEach(b => { if (b.part1?.baseId === part.id) clearBay(b); }));
+                }
+                saveAppData();
+                renderParts();
+                updateDeckUI();
+                closeVariantModal();
             });
             grid.appendChild(card);
         });
-        // if(variant_modal_save) variant_modal_save.style.display = 'none'; // Save button removed?
         variant_modal.style.display = 'block';
     };
 
-    const applyFilter = () => { if(collection_tab && collection_filter) collection_tab.classList.toggle('filter-on', collection_filter.checked); };
     const closeVariantModal = () => { if (variant_modal) variant_modal.style.display = 'none'; variant_modal_part = null; };
 
-    // --- [ATUALIZADO] clearBay com 5 parts ---
     const clearBay = (bay) => {
         if (bay) {
             bay.type = null;
@@ -439,13 +546,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const closePartModal = () => { if (part_modal) part_modal.style.display = 'none'; };
 
-    // --- [ATUALIZADO] selectPartForDeck com 5 parts ---
     const selectPartForDeck = (part) => {
-        const { slotId, type } = active_deck_slot; // type = tipo do placeholder clicado
+        const { slotId, type } = active_deck_slot;
         const bay = app_data.decks[app_data.active_deck_index].bays[slotId];
         if (!bay) return;
 
-        // Garante baseId/baseName para Blades
         if (part.type === 'blade' && !part.baseId) {
             part = { ...part, baseId: part.id, baseName: part.name, variant: part.variant || 'Stock' };
         }
@@ -458,31 +563,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!targetPartKey) { console.error("Tipo de placeholder inválido:", type); closePartModal(); return; }
 
-        // --- Lógica de Atualização da Baía ---
-        if (targetPartKey === 'part1') { // Primeira Peça
+        if (targetPartKey === 'part1') {
             const newType = (part.type === 'blade') ? 'standard' : (part.type === 'lockchip') ? 'chip' : null;
-            if (!newType) return; // Peça inválida
+            if (!newType) return;
 
             if (bay.type !== newType) {
-                 if (newType === 'standard') { // Mudando para Standard
-                     bay.part2 = null; // Limpa Main
-                     bay.part3 = null; // Limpa Assist
+                 if (newType === 'standard') {
+                     bay.part2 = null;
+                     bay.part3 = null;
                  }
-                  // Não precisa limpar Ratchet/Bit (part4/5) ao mudar, eles são comuns
                  bay.type = newType;
             }
             bay.part1 = part;
-            // Se mudou para Standard, força reset de Main/Assist (caso fossem Chip antes)
              if (bay.type === 'standard') { bay.part2 = null; bay.part3 = null; }
 
-        } else if (targetPartKey === 'part2' || targetPartKey === 'part3') { // Main ou Assist
+        } else if (targetPartKey === 'part2' || targetPartKey === 'part3') {
             if (bay.type === 'chip') {
                 if ((targetPartKey === 'part2' && part.type === 'mainblade') || (targetPartKey === 'part3' && part.type === 'assistblade')) {
                     bay[targetPartKey] = part;
                 } else { alert(translations[currentLanguage].alert_incompatible_part.replace('{partType}', part.type).replace('{bayType}', 'Chip Slot')); closePartModal(); return; }
             } else { alert(translations[currentLanguage].alert_incompatible_part.replace('{partType}', part.type).replace('{bayType}', bay.type || 'Empty')); closePartModal(); return; }
 
-        } else if (targetPartKey === 'part4' || targetPartKey === 'part5') { // Ratchet ou Bit
+        } else if (targetPartKey === 'part4' || targetPartKey === 'part5') {
             if (bay.type === 'standard' || bay.type === 'chip') {
                  if ((targetPartKey === 'part4' && part.type === 'ratchet') || (targetPartKey === 'part5' && part.type === 'bit')) {
                       bay[targetPartKey] = part;
@@ -495,8 +597,6 @@ document.addEventListener('DOMContentLoaded', () => {
         closePartModal();
     };
 
-
-    // --- [ATUALIZADO] openPartSelector com 5 parts ---
  const openPartSelector = (slotId, type) => {
         active_deck_slot = { slotId, type };
         const titlePrefix = translations[currentLanguage].part_selector_modal_title_prefix || "Select:";
@@ -510,10 +610,10 @@ document.addEventListener('DOMContentLoaded', () => {
         currentDeck.bays.forEach((bay, index) => {
             if (index.toString() === slotId) return;
             if (bay.part1) usedPartIds.add(bay.part1.baseId || bay.part1.id);
-            if (bay.part2) usedPartIds.add(bay.part2.id); // Main Blade
-            if (bay.part3) usedPartIds.add(bay.part3.id); // Assist Blade
-            if (bay.part4) usedPartIds.add(bay.part4.id); // Ratchet
-            if (bay.part5) usedPartIds.add(bay.part5.id); // Bit
+            if (bay.part2) usedPartIds.add(bay.part2.id);
+            if (bay.part3) usedPartIds.add(bay.part3.id);
+            if (bay.part4) usedPartIds.add(bay.part4.id);
+            if (bay.part5) usedPartIds.add(bay.part5.id);
         });
 
         let availableParts = [];
@@ -544,7 +644,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (showStandardSuggestions || showChipSuggestions) {
             modal_suggestions_container.style.display = 'block';
 
-            // --- Sugestões STANDARD (Blade, Ratchet, Bit) ---
             if (showStandardSuggestions && (type === 'primeira' || type === 'ratchet' || type === 'bit')) {
                 const headerText = translations[currentLanguage].part_suggestions_header || 'META Suggestions (Owned)';
                 modal_suggestions_container.innerHTML += `<h4>${headerText}</h4>`;
@@ -575,14 +674,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (!bladePart || !ratchetPart || !bitPart) return;
                         const card = document.createElement('div');
                         card.className = 'suggestion-card';
-                        
-                        // --- [LINHA MODIFICADA] ---
+
                         card.innerHTML = `
                             <div class="suggestion-part"><img src="${bladePart.image || 'images/placeholder.png'}"><span>${bladePart.name}</span></div>
                             <div class="suggestion-part"><img src="${ratchetPart.image || 'images/placeholder.png'}"><span>${ratchetPart.name}</span></div>
                             <div class="suggestion-part"><img src="${bitPart.image || 'images/placeholder.png'}"><span>${bitPart.name}</span></div>
-                            <div class="suggestion-points">${combo.points.toFixed(2)} META Points</div>`; // <-- Pontuação adicionada
-                        // --- [FIM DA MODIFICAÇÃO] ---
+                            <div class="suggestion-points">${combo.points.toFixed(2)} META Points</div>`;
 
                         card.addEventListener('click', () => applySuggestion(slotId, combo));
                         modal_suggestions_container.appendChild(card);
@@ -590,12 +687,11 @@ document.addEventListener('DOMContentLoaded', () => {
                  }
             }
 
-            // --- Sugestões CHIP (Lockchip, MainBlade, AssistBlade) ---
             if (showChipSuggestions && typeof ALL_CHIP_COMBOS !== 'undefined' && ALL_CHIP_COMBOS.length > 0 && (type === 'primeira' || type === 'mainblade' || type === 'assistblade' || type === 'ratchet' || type === 'bit')) {
                 const headerText = translations[currentLanguage].part_chip_suggestions_header || 'Combo Suggestions (Chip)';
                 if (!suggestionsFound || !showStandardSuggestions) { modal_suggestions_container.innerHTML += `<h4>${headerText}</h4>`; }
                 else { modal_suggestions_container.innerHTML += `<hr style="margin: 1rem 0; border-color: var(--border-color);"><h4>${headerText}</h4>`; }
-                
+
                 const matchingChipCombos = ALL_CHIP_COMBOS.filter(combo => {
                     const chipPart = ALL_PARTS.find(p => p.name === combo.lockchip && p.type === 'lockchip');
                     const mainPart = ALL_PARTS.find(p => p.name === combo.mainblade && p.type === 'mainblade');
@@ -622,7 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else { return false; }
                     return true;
                 });
-                
+
                 if (matchingChipCombos.length > 0) {
                     suggestionsFound = true;
                     matchingChipCombos.forEach(combo => {
@@ -630,16 +726,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         const mainPart = ALL_PARTS.find(p => p.name === combo.mainblade && p.type === 'mainblade');
                         const assistPart = ALL_PARTS.find(p => p.name === combo.assistblade && p.type === 'assistblade');
                         if (!chipPart || !mainPart || !assistPart) return;
-                        
+
                         const card = document.createElement('div');
                         card.className = 'suggestion-card';
-                        
-                        // --- [LINHA MODIFICADA] ---
+
                         let html = `
                             <div class="suggestion-part"><img src="${chipPart.image || 'images/placeholder.png'}"><span>${chipPart.name}</span></div>
                             <div class="suggestion-part"><img src="${mainPart.image || 'images/placeholder.png'}"><span>${mainPart.name}</span></div>
                             <div class="suggestion-part"><img src="${assistPart.image || 'images/placeholder.png'}"><span>${assistPart.name}</span></div>`;
-                        
+
                         if (combo.ratchet) {
                             const rPart = ALL_PARTS.find(p=>p.name === combo.ratchet && p.type === 'ratchet');
                             if(rPart) html += `<div class="suggestion-part"><img src="${rPart.image || 'images/placeholder.png'}"><span>${rPart.name}</span></div>`;
@@ -649,10 +744,9 @@ document.addEventListener('DOMContentLoaded', () => {
                              if(bPart) html += `<div class="suggestion-part"><img src="${bPart.image || 'images/placeholder.png'}"><span>${bPart.name}</span></div>`;
                          }
 
-                        html += `<div class="suggestion-points">${combo.points.toFixed(2)} pts</div>`; // <-- Pontuação adicionada
+                        html += `<div class="suggestion-points">${combo.points.toFixed(2)} pts</div>`;
                         card.innerHTML = html;
-                        // --- [FIM DA MODIFICAÇÃO] ---
-                        
+
                         card.addEventListener('click', () => applyChipSuggestion(slotId, combo));
                         modal_suggestions_container.appendChild(card);
                      });
@@ -696,7 +790,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // --- [ATUALIZADO] applySuggestion com 5 parts ---
     const applySuggestion = (slotId, combo) => {
         const bay = app_data.decks[app_data.active_deck_index].bays[slotId];
         if (!bay) return;
@@ -708,33 +801,29 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ownedBladeVersion) { alert("Erro: Blade sugerida não encontrada na coleção."); return; }
         clearBay(bay);
         bay.type = 'standard';
-        bay.part1 = ownedBladeVersion; // Blade
-        bay.part4 = ratchetPart;       // Ratchet (agora consistentemente em part4)
-        bay.part5 = bitPart;           // Bit (agora consistentemente em part5)
+        bay.part1 = ownedBladeVersion;
+        bay.part4 = ratchetPart;
+        bay.part5 = bitPart;
         updateDeckUI();
         saveAppData();
         closePartModal();
     };
 
-    // --- [ATUALIZADO] applyChipSuggestion com 5 parts ---
     const applyChipSuggestion = (slotId, combo) => {
         const bay = app_data.decks[app_data.active_deck_index].bays[slotId];
         if (!bay) return;
         const chipPart = ALL_PARTS.find(p => p.name === combo.lockchip && p.type === 'lockchip');
         const mainPart = ALL_PARTS.find(p => p.name === combo.mainblade && p.type === 'mainblade');
         const assistPart = ALL_PARTS.find(p => p.name === combo.assistblade && p.type === 'assistblade');
-        // Pega Ratchet e Bit da sugestão, se definidos
-        const ratchetPart = combo.ratchet ? ALL_PARTS.find(p => p.name === combo.ratchet && p.type === 'ratchet') : bay.part4; // Mantém o atual se não definido
-        const bitPart = combo.bit ? ALL_PARTS.find(p => p.name === combo.bit && p.type === 'bit') : bay.part5;             // Mantém o atual se não definido
+        const ratchetPart = combo.ratchet ? ALL_PARTS.find(p => p.name === combo.ratchet && p.type === 'ratchet') : bay.part4;
+        const bitPart = combo.bit ? ALL_PARTS.find(p => p.name === combo.bit && p.type === 'bit') : bay.part5;
 
         if (!chipPart || !mainPart || !assistPart) return;
 
-        // Limpa apenas part1, part2, part3
         bay.part1 = chipPart;
         bay.part2 = mainPart;
         bay.part3 = assistPart;
         bay.type = 'chip';
-        // Define/Atualiza Ratchet e Bit
         bay.part4 = ratchetPart;
         bay.part5 = bitPart;
 
@@ -788,6 +877,53 @@ document.addEventListener('DOMContentLoaded', () => {
         return ownedParts;
     };
 
+    // --- [INÍCIO DAS NOVAS FUNÇÕES DO PLACAR] ---
+    const updateScoreDisplay = () => {
+        if (scoreP1Display) scoreP1Display.textContent = scoreP1;
+        if (scoreP2Display) scoreP2Display.textContent = scoreP2;
+    };
+
+    const handleScoreButton = (e) => {
+        const player = e.target.dataset.player;
+        const points = parseInt(e.target.dataset.points, 10);
+
+        if (player === '1') {
+            scoreP1 += points;
+        } else if (player === '2') {
+            scoreP2 += points;
+        }
+        updateScoreDisplay();
+    };
+
+    const resetScore = () => {
+        const langPack = translations[currentLanguage];
+        const confirmMsg = langPack.confirm_reset_score || "Tem certeza que deseja reiniciar o placar?";
+        if (confirm(confirmMsg)) {
+            scoreP1 = 0;
+            scoreP2 = 0;
+            updateScoreDisplay();
+        }
+    };
+
+    // Salva o nome do jogador quando o input perde o foco
+    const savePlayerName = (playerNumber, inputElement) => {
+        if (!inputElement) return;
+        const newName = inputElement.value.trim();
+        const key = `beyXToolP${playerNumber}Name`;
+        const defaultKey = `player_${playerNumber}_default`;
+        const langPack = translations[currentLanguage];
+        const defaultValue = langPack[defaultKey] || (playerNumber === 1 ? "Player 1" : "Player 2");
+
+        if (newName) {
+            localStorage.setItem(key, newName);
+        } else {
+            // Se o nome ficar vazio, reverte para o padrão e salva isso
+            inputElement.value = defaultValue;
+            localStorage.setItem(key, defaultValue);
+        }
+    };
+    // --- [FIM DAS NOVAS FUNÇÕES DO PLACAR] ---
+
     const addDeck = () => {
         const newDeckName = `Deck ${app_data.decks.length + 1}`;
         app_data.decks.push(createNewDeck(newDeckName));
@@ -817,7 +953,7 @@ document.addEventListener('DOMContentLoaded', () => {
             saveAppData();
         } else if (!newName) {
             deck_name_input.value = deck.name;
-            alert(translations[currentLanguage].alert_deck_name_empty); // Usa a chave correta
+            alert(translations[currentLanguage].alert_deck_name_empty);
         }
         deck_name_input.blur();
     };
@@ -834,15 +970,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- [ATUALIZADO] exportDeckList com 5 parts ---
     const exportDeckList = async () => {
         const deck = app_data.decks[app_data.active_deck_index];
         if (!deck) return;
 
         const completeBays = deck.bays.filter(b => {
              if (!b || !b.type || !b.part1) return false;
-             if (b.type === 'standard' && b.part4 && b.part5) return true; // Standard: Blade(1), Ratchet(4), Bit(5)
-             if (b.type === 'chip' && b.part2 && b.part3 && b.part4 && b.part5) return true; // Chip: Chip(1), Main(2), Assist(3), Ratchet(4), Bit(5)
+             if (b.type === 'standard' && b.part4 && b.part5) return true;
+             if (b.type === 'chip' && b.part2 && b.part3 && b.part4 && b.part5) return true;
              return false;
          });
 
@@ -873,14 +1008,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (index > 0) deckString += "\n";
             if (bay.type === 'standard') {
                 deckString += `B: ${bay.part1.baseName || bay.part1.name}\n`;
-                deckString += `R: ${bay.part4.name}\n`; // Ratchet de part4
-                deckString += `BT: ${bay.part5.name}\n`; // Bit de part5
+                deckString += `R: ${bay.part4.name}\n`;
+                deckString += `BT: ${bay.part5.name}\n`;
             } else if (bay.type === 'chip') {
                 deckString += `C: ${bay.part1.name}\n`;
                 deckString += `MB: ${bay.part2.name}\n`;
                 deckString += `AB: ${bay.part3.name}\n`;
-                if (bay.part4) deckString += `R: ${bay.part4.name}\n`; // Ratchet de part4
-                if (bay.part5) deckString += `BT: ${bay.part5.name}\n`; // Bit de part5
+                if (bay.part4) deckString += `R: ${bay.part4.name}\n`;
+                if (bay.part5) deckString += `BT: ${bay.part5.name}\n`;
             }
         });
 
@@ -896,10 +1031,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     };
 
-    // --- [ATUALIZADO] clearDeck com 5 parts ---
     const clearDeck = () => {
         if (app_data.decks[app_data.active_deck_index]) {
-            app_data.decks[app_data.active_deck_index].bays.forEach(clearBay); // clearBay já limpa part4 e part5
+            app_data.decks[app_data.active_deck_index].bays.forEach(clearBay);
             updateDeckUI();
             saveAppData();
         }
@@ -925,9 +1059,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const confirmMsg = translations[currentLanguage].confirm_import_overwrite;
                     if (confirm(confirmMsg)) {
                         localStorage.setItem('beyblade_x_data', imported_data_str);
-                        loadAppData(); // loadAppData agora garante a estrutura de 5 parts
+                        loadAppData();
                         renderParts();
-                        applyFilter();
                         updateDeckUI();
                         alert(translations[currentLanguage].alert_import_success);
                     }
@@ -953,15 +1086,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedLanguage = localStorage.getItem('beyXToolLanguage');
     if (savedLanguage && translations[savedLanguage]) currentLanguage = savedLanguage;
     setupTabs();
-    loadAppData(); // Carrega os dados (já garante a estrutura de 5 parts)
+    loadAppData();
     renderParts();
     renderMetaCombos();
-    updateDeckUI(); // Renderiza o deck inicial
-    setLanguage(currentLanguage); // Aplica a tradução
+    updateDeckUI();
+    setLanguage(currentLanguage);
+    updateScoreDisplay(); // [NOVO] Inicializa o placar
 
     langPtBrButton?.addEventListener('click', () => setLanguage('pt-br'));
     langEnButton?.addEventListener('click', () => setLanguage('en'));
-    collection_filter?.addEventListener('change', applyFilter);
+
+    collection_filter?.addEventListener('change', renderParts);
+    collection_sort?.addEventListener('change', renderParts);
+
     export_button?.addEventListener('click', exportData);
     import_button?.addEventListener('click', () => import_file_input?.click());
     import_file_input?.addEventListener('change', importData);
@@ -979,6 +1116,12 @@ document.addEventListener('DOMContentLoaded', () => {
     inputModalCancel?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); });
     inputModalClose?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); });
 
+    // [NOVO] Event listeners do Placar
+    scoreButtons.forEach(button => button.addEventListener('click', handleScoreButton));
+    resetScoreButton?.addEventListener('click', resetScore);
+    p1NameInput?.addEventListener('blur', () => savePlayerName(1, p1NameInput));
+    p2NameInput?.addEventListener('blur', () => savePlayerName(2, p2NameInput));
+
     window.addEventListener('click', (event) => {
         if (event.target === part_modal) closePartModal();
         if (event.target === variant_modal) closeVariantModal();
@@ -993,5 +1136,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    applyFilter();
 });

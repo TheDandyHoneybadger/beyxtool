@@ -15,6 +15,7 @@
             <a href="#" class="tab-link" data-tab="meta" data-translate="tab_meta">META</a>
             <a href="#" class="tab-link" data-tab="deck-builder" data-translate="tab_deck_builder">Deck Builder</a>
             <a href="#" class="tab-link" data-tab="collection" data-translate="tab_collection">Coleção</a>
+            <a href="#" class="tab-link" data-tab="score" data-translate="tab_score">Placar</a>
             <a href="#" class="tab-link" data-tab="settings" data-translate="tab_settings">Configurações</a>
         </nav>
     </header>
@@ -135,6 +136,16 @@
                     <label for="collection-filter" data-translate="collection_filter_label">Mostrar Apenas os que Possuo</label>
                     <input type="checkbox" id="collection-filter">
                 </div>
+                <div class="sort-group">
+                    <label for="collection-sort" data-translate="collection_sort_label">Ordenar por:</label>
+                    <select id="collection-sort">
+                        <option value="name_asc" data-translate="sort_name_asc">Nome (A-Z)</option>
+                        <option value="name_desc" data-translate="sort_name_desc">Nome (Z-A)</option>
+                        <option value="score_desc" data-translate="sort_score_desc">Pontuação (Maior)</option>
+                        <option value="score_asc" data-translate="sort_score_asc">Pontuação (Menor)</option>
+                        <option value="type" data-translate="sort_type">Tipo (A-D-S-B)</option>
+                    </select>
+                </div>
             </div>
 
             <h3 data-translate="blades_section_title">Blades</h3>
@@ -156,6 +167,37 @@
             <div class="parts-grid" id="assistblades-container"></div>
         </div>
 
+        <div id="score-tab" class="tab-content">
+            <div class="tab-header">
+                <h2 data-translate="score_header">Placar da Partida</h2>
+            </div>
+            <div class="score-container">
+                <div class="player-section" id="player1">
+                    <input type="text" class="player-name" value="Jogador 1" data-translate="player_1_default">
+                    <div class="score-display" id="score-p1">0</div>
+                    <div class="score-buttons">
+                        <button class="score-btn" data-player="1" data-points="1" data-translate="score_1_point">+1 Ponto</button>
+                        <button class="score-btn" data-player="1" data-points="2" data-translate="score_2_points">+2 Pontos</button>
+                        <button class="score-btn" data-player="1" data-points="3" data-translate="score_3_points">+3 Pontos</button>
+                    </div>
+                </div>
+
+                <div class="versus-divider">VS</div>
+
+                <div class="player-section" id="player2">
+                    <input type="text" class="player-name" value="Jogador 2" data-translate="player_2_default">
+                    <div class="score-display" id="score-p2">0</div>
+                    <div class="score-buttons">
+                        <button class="score-btn" data-player="2" data-points="1" data-translate="score_1_point">+1 Ponto</button>
+                        <button class="score-btn" data-player="2" data-points="2" data-translate="score_2_points">+2 Pontos</button>
+                        <button class="score-btn" data-player="2" data-points="3" data-translate="score_3_points">+3 Pontos</button>
+                    </div>
+                </div>
+            </div>
+            <div class="score-controls">
+                <button id="reset-score-button" data-translate="score_reset_button">Reiniciar Placar</button>
+            </div>
+        </div>
         <div id="settings-tab" class="tab-content">
             <div class="tab-header">
                 <h2 data-translate="settings_header">Importar & Exportar Dados</h2>
