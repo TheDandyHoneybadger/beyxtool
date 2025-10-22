@@ -105,9 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  else if (element.title !== undefined && key.includes('title')) { element.title = langPack[key]; }
                  else if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('part-placeholder')) { element.textContent = langPack[key]; }
                  else if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('bey-score')) { element.textContent = langPack[key]; }
-                 // [MODIFICADO] Adicionado 'INPUT' para traduzir o value default dos nomes dos players
                  else if (element.tagName === 'INPUT' && (key === 'player_1_default' || key === 'player_2_default')) {
-                    // Só traduz o value se for o valor padrão atual ou o padrão do outro idioma
                     const defaultP1_pt = translations['pt-br']?.player_1_default || "Jogador 1";
                     const defaultP1_en = translations['en']?.player_1_default || "Player 1";
                     const defaultP2_pt = translations['pt-br']?.player_2_default || "Jogador 2";
@@ -223,8 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
          const p1Name = localStorage.getItem('beyXToolP1Name');
          const p2Name = localStorage.getItem('beyXToolP2Name');
          const langPack = translations[currentLanguage] || translations['en']; // Garante que temos um langPack
-         if (p1NameInput) p1NameInput.value = p1Name || langPack.player_1_default || "Player 1";
-         if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Player 2";
+         if (p1NameInput) p1NameInput.value = p1Name || langPack.player_1_default || "Jogador 1"; // Usa padrão BR se pt-br não existir
+         if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Jogador 2"; // Usa padrão BR se pt-br não existir
     };
 
     const renderMetaCombos = () => {
@@ -315,37 +313,58 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.onerror = () => { console.warn(`Imagem de tipo não encontrada: ${imgPath}`); }
             }
 
+            // --- [INÍCIO DA LÓGICA ATUALIZADA DE HOLD/CLIQUE] ---
             let pressTimerOwner = null;
             let pressTimerInfo = null;
             let didOwnerHold = false;
             let didInfoHold = false;
 
             const startHold = (e) => {
-                if (e.button === 2) return;
+                if (e.button === 2) return; // Ignora clique direito
+
+                // Reseta os estados
                 didOwnerHold = false;
                 didInfoHold = false;
+
+                // Timer 1: Toggle de posse (0.5s)
                 pressTimerOwner = setTimeout(() => {
                     didOwnerHold = true;
-                }, 500);
+                }, 500); // 500ms
+
+                // Timer 2: Popup de Informação (2s)
                 pressTimerInfo = setTimeout(() => {
-                    didInfoHold = true;
-                    didOwnerHold = false;
+                    didInfoHold = true;   // Marca que o info foi ativado
+                    didOwnerHold = false; // Impede que o toggle de posse ocorra ao soltar se o info foi ativado
                     showProductInfoPopup(part, part_card);
-                }, 2000);
+                }, 2000); // 2000ms
             };
 
             const releaseHold = (e) => {
+                // Limpa os timers pendentes
                 clearTimeout(pressTimerOwner);
                 clearTimeout(pressTimerInfo);
+
+                const isMouseEvent = e.type === 'mouseup';
+
+                // Decide qual ação tomar
                 if (didInfoHold) {
+                    // Info foi mostrado (2s hold), não faz mais nada ao soltar.
                 } else if (didOwnerHold) {
-                    togglePartOwnership(part);
+                    // 0.5s se passaram, mas 2s não. Faz o toggle (normal hold action para touch/mouse).
+                    togglePartOwnership(part); // 'part' está acessível aqui
+                } else if (isMouseEvent && !didOwnerHold && !didInfoHold) {
+                    // Foi um clique rápido (menos de 0.5s) E é um evento de mouse (PC). Faz o toggle.
+                    togglePartOwnership(part); // 'part' está acessível aqui
                 }
+                // Se for um evento de toque rápido (touchend && !didOwnerHold && !didInfoHold), não faz nada.
+
+                // Reseta os estados para a próxima interação
                 didOwnerHold = false;
                 didInfoHold = false;
             };
 
             const abortHold = (e) => {
+                 // Aborta todas as ações (se o mouse sair ou o toque for cancelado/swipe)
                  clearTimeout(pressTimerOwner);
                  clearTimeout(pressTimerInfo);
                  didOwnerHold = false;
@@ -354,11 +373,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             part_card.addEventListener('mousedown', startHold);
             part_card.addEventListener('touchstart', startHold, { passive: true });
-            part_card.addEventListener('mouseup', releaseHold);
-            part_card.addEventListener('touchend', releaseHold);
+            part_card.addEventListener('mouseup', releaseHold); // Event object 'e' é passado automaticamente
+            part_card.addEventListener('touchend', releaseHold); // Event object 'e' é passado automaticamente
             part_card.addEventListener('mouseleave', abortHold);
             part_card.addEventListener('touchcancel', abortHold);
             part_card.addEventListener('contextmenu', (e) => e.preventDefault());
+             // --- [FIM DA LÓGICA ATUALIZADA DE HOLD/CLIQUE] ---
 
             container.appendChild(part_card);
         });
@@ -877,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return ownedParts;
     };
 
-    // --- [INÍCIO DAS NOVAS FUNÇÕES DO PLACAR] ---
+    // --- [INÍCIO DAS FUNÇÕES DO PLACAR] ---
     const updateScoreDisplay = () => {
         if (scoreP1Display) scoreP1Display.textContent = scoreP1;
         if (scoreP2Display) scoreP2Display.textContent = scoreP2;
@@ -912,7 +932,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const key = `beyXToolP${playerNumber}Name`;
         const defaultKey = `player_${playerNumber}_default`;
         const langPack = translations[currentLanguage];
-        const defaultValue = langPack[defaultKey] || (playerNumber === 1 ? "Player 1" : "Player 2");
+        const defaultValue = langPack[defaultKey] || (playerNumber === 1 ? "Jogador 1" : "Jogador 2"); // Fallback para pt-br
 
         if (newName) {
             localStorage.setItem(key, newName);
@@ -922,7 +942,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem(key, defaultValue);
         }
     };
-    // --- [FIM DAS NOVAS FUNÇÕES DO PLACAR] ---
+    // --- [FIM DAS FUNÇÕES DO PLACAR] ---
 
     const addDeck = () => {
         const newDeckName = `Deck ${app_data.decks.length + 1}`;
@@ -1091,7 +1111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderMetaCombos();
     updateDeckUI();
     setLanguage(currentLanguage);
-    updateScoreDisplay(); // [NOVO] Inicializa o placar
+    updateScoreDisplay(); // Inicializa o placar
 
     langPtBrButton?.addEventListener('click', () => setLanguage('pt-br'));
     langEnButton?.addEventListener('click', () => setLanguage('en'));
