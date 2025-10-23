@@ -1,8 +1,49 @@
 // --- [MODIFICADO] DADOS DO GUIA DE INICIANTE (Hasbro + Custom Line/CX) ---
 // --- ADICIONE AS IMAGENS DE PRODUTO na pasta images/products/ ---
 const STARTER_GUIDE_PRODUCTS = [
+    // --- [NOVO] Produtos Custom Line (Hasbro) ---
+    {
+        productName: "Hasbro Custom Line: Courage Dran S 6-60V (G1677)",
+        image: "images/products/hasbro_G1677.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-dran', 'mainblade-brave', 'assistblade-slash', '6-60', 'vortex']
+    },
+    {
+        productName: "Hasbro Custom Line: Reaper Incendio T 4-70K (G1678)",
+        image: "images/products/hasbro_G1678.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-hells', 'mainblade-reaper', 'assistblade-turn', '4-70', 'kick']
+    },
+    {
+        productName: "Hasbro Custom Line: Arc Wizard R 4-55LO (G1679)",
+        image: "images/products/hasbro_G1679.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-wizard', 'mainblade-arc', 'assistblade-round', '4-55', 'loworb']
+    },
+    {
+        productName: "Hasbro Custom Line: Dark Perseus B 6-80W (G1680)",
+        image: "images/products/hasbro_G1680.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-perseus', 'mainblade-dark', 'assistblade-bumper', '6-80', 'wedge']
+    },
+    {
+        productName: "Hasbro Custom Line: Brush Fox J 9-70GR (G1681)",
+        image: "images/products/hasbro_G1681.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-fox', 'mainblade-brush', 'assistblade-jaggy', '9-70', 'gearrush']
+    },
+    {
+        productName: "Hasbro Custom Line: Fort Hornet R 7-60T (G1682)",
+        image: "images/products/hasbro_G1682.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-hornet', 'mainblade-fort', 'assistblade-turn', '7-60', 'taper']
+    },
+    {
+        productName: "Hasbro Custom Line: Wriggle Kraken S 3-85O (G1683)",
+        image: "images/products/hasbro_G1683.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-kraken', 'mainblade-wriggle', 'assistblade-turn', '3-85', 'orb']
+    },
+    {
+        productName: "Hasbro Custom Line: Antler Stag B 2-60HN (G1684)",
+        image: "images/products/hasbro_G1684.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-stag', 'antler', 'assistblade-bumper', '2-60', 'highneedle']
+    },
 
-    // --- 1. Starters ---
+    // --- Produtos Hasbro (Starters, Boosters, etc.) ---
     {
         productName: "Hasbro Starter Dran Sword 3-60F (F9580)",
         image: "images/products/hasbro_F9580.png",
@@ -83,8 +124,18 @@ const STARTER_GUIDE_PRODUCTS = [
         image: "images/products/hasbro_G1752.png",
         parts: ['hellshammer', '3-70', 'hexa']
     },
-
-    // --- 2. Boosters ---
+    // --- X-Over Starters ---
+    {
+        productName: "Hasbro X-Over Dranzer Spiral 3-80T (F9584)",
+        image: "images/products/hasbro_F9584.png",
+        parts: ['dranzerspiral', '3-80', 'taper']
+    },
+    {
+        productName: "Hasbro X-Over Driger Slash 4-80P (G1843)",
+        image: "images/products/hasbro_G1843.png",
+        parts: ['drigerslash', '4-80', 'point']
+    },
+    // --- Boosters ---
     {
         productName: "Hasbro Booster Steel Samurai 4-80T (G0188)",
         image: "images/products/hasbro_G0188.png",
@@ -175,50 +226,7 @@ const STARTER_GUIDE_PRODUCTS = [
         image: "images/products/hasbro_G1756.png",
         parts: ['phoenixwing', '5-80', 'hexa']
     },
-
-    // --- 3. Custom Line (CX) ---
-    {
-        productName: "Hasbro Custom Line: Courage Dran S 6-60V (G1677)",
-        image: "images/products/hasbro_G1677.png", // ADICIONE ESTA IMAGEM
-        parts: ['lockchip-dran', 'mainblade-brave', 'assistblade-slash', '6-60', 'vortex']
-    },
-    {
-        productName: "Hasbro Custom Line: Reaper Incendio T 4-70K (G1678)",
-        image: "images/products/hasbro_G1678.png", // ADICIONE ESTA IMAGEM
-        parts: ['lockchip-hells', 'mainblade-reaper', 'assistblade-turn', '4-70', 'kick']
-    },
-    {
-        productName: "Hasbro Custom Line: Arc Wizard R 4-55LO (G1679)",
-        image: "images/products/hasbro_G1679.png", // ADICIONE ESTA IMAGEM
-        parts: ['lockchip-wizard', 'mainblade-arc', 'assistblade-round', '4-55', 'loworb']
-    },
-    {
-        productName: "Hasbro Custom Line: Dark Perseus B 6-80W (G1680)",
-        image: "images/products/hasbro_G1680.png", // ADICIONE ESTA IMAGEM
-        parts: ['lockchip-perseus', 'mainblade-dark', 'assistblade-bumper', '6-80', 'wedge']
-    },
-    {
-        productName: "Hasbro Custom Line: Brush Fox J 9-70GR (G1681)",
-        image: "images/products/hasbro_G1681.png", // ADICIONE ESTA IMAGEM
-        parts: ['lockchip-fox', 'mainblade-brush', 'assistblade-jaggy', '9-70', 'gearrush']
-    },
-    {
-        productName: "Hasbro Custom Line: Fort Hornet R 7-60T (G1682)",
-        image: "images/products/hasbro_G1682.png", // ADICIONE ESTA IMAGEM
-        parts: ['lockchip-hornet', 'mainblade-fort', 'assistblade-turn', '7-60', 'taper']
-    },
-    {
-        productName: "Hasbro Custom Line: Wriggle Kraken S 3-85O (G1683)",
-        image: "images/products/hasbro_G1683.png", // ADICIONE ESTA IMAGEM
-        parts: ['lockchip-kraken', 'mainblade-wriggle', 'assistblade-turn', '3-85', 'orb']
-    },
-    {
-        productName: "Hasbro Custom Line: Antler Stag B 2-60HN (G1684)",
-        image: "images/products/hasbro_G1684.png", // ADICIONE ESTA IMAGEM
-        parts: ['lockchip-stag', 'antler', 'assistblade-bumper', '2-60', 'highneedle']
-    },
-
-    // --- 4. Dual Packs ---
+    // --- Dual Packs ---
     {
         productName: "Knife Shinobi & Keel Shark (G0190)",
         image: "images/products/hasbro_G0190.png",
@@ -279,8 +287,23 @@ const STARTER_GUIDE_PRODUCTS = [
         image: "images/products/hasbro_G1688.png",
         parts: ['tacklegoat', '2-70', 'needle', 'dransword', '1-60', 'flat']
     },
-
-    // --- 5. Collabs (Multipacks) ---
+    // --- Battle Sets ---
+    {
+        productName: "Xtreme Battle Set (F9588)",
+        image: "images/products/hasbro_F9588.png",
+        parts: ['mammothtusk', '3-60', 'taper']
+    },
+    {
+        productName: "Drop Attack Battle Set (G0842)",
+        image: "images/products/hasbro_G0842.png",
+        parts: ['drandagger', '4-70', 'quake', 'hellschain', '5-60', 'hightaper']
+    },
+    {
+        productName: "25th Anniversary Set (G1844)",
+        image: "images/products/hasbro_G1844.png",
+        parts: ['dranzerspiral', '3-80', 'taper', 'drigerslash', '4-80', 'point', 'dracielshield', '7-60', 'dot', 'dragoonsform', '4-60', 'rubberaccel']
+    },
+    // --- Multipacks (Collab) ---
     {
         productName: "Star Wars: Darth Vader (BXS-01)",
         image: "images/products/bxs_darth_vader.png",
@@ -340,33 +363,6 @@ const STARTER_GUIDE_PRODUCTS = [
         productName: "Jurassic Park: Quetzalcoatlus (G1899)",
         image: "images/products/hasbro_G1899_2.png",
         parts: ['quetzalcoatlus', '4-55', 'dot']
-    },
-
-    // --- 6. Outros (Sets & X-Over) ---
-    {
-        productName: "Hasbro X-Over Dranzer Spiral 3-80T (F9584)",
-        image: "images/products/hasbro_F9584.png",
-        parts: ['dranzerspiral', '3-80', 'taper']
-    },
-    {
-        productName: "Hasbro X-Over Driger Slash 4-80P (G1843)",
-        image: "images/products/hasbro_G1843.png",
-        parts: ['drigerslash', '4-80', 'point']
-    },
-    {
-        productName: "Xtreme Battle Set (F9588)",
-        image: "images/products/hasbro_F9588.png",
-        parts: ['mammothtusk', '3-60', 'taper']
-    },
-    {
-        productName: "Drop Attack Battle Set (G0842)",
-        image: "images/products/hasbro_G0842.png",
-        parts: ['drandagger', '4-70', 'quake', 'hellschain', '5-60', 'hightaper']
-    },
-    {
-        productName: "25th Anniversary Set (G1844)",
-        image: "images/products/hasbro_G1844.png",
-        parts: ['dranzerspiral', '3-80', 'taper', 'drigerslash', '4-80', 'point', 'dracielshield', '7-60', 'dot', 'dragoonsform', '4-60', 'rubberaccel']
     }
 ];
 
@@ -524,7 +520,6 @@ const ALL_PARTS = [
     { id: 'tacklegoat', name: 'TackleGoat', type: 'blade', bey_type: 'defense', image: 'images/blades/TackleGoat.png', tier: 'D', variantsId: 'tacklegoat'},
     { id: 'thanos', name: 'Thanos', type: 'blade', bey_type: 'balance', image: 'images/blades/Thanos.png', tier: 'D', variantsId: 'thanos'},
     { id: 'tricerapress', name: 'TriceraPress', type: 'blade', bey_type: 'defense', image: 'images/blades/TriceraPress.png', tier: 'C', variantsId: 'tricerapress'},
-    { id: 'tyrannobeat', name: 'TyrannoBeat', type: 'blade', bey_type: 'attack', image: 'images/blades/TyrannoBeat.png', tier: 'A', variantsId: 'tyrannobeat'},
     { id: 'tyrannoroar', name: 'TyrannoRoar', type: 'blade', bey_type: 'attack', image: 'images/blades/TyrannoRoar.png', tier: 'B', variantsId: 'tyrannoroar'},
     { id: 'venom', name: 'Venom', type: 'blade', bey_type: 'defense', image: 'images/blades/Venom.png', tier: 'C', variantsId: 'venom'},
     { id: 'victoryvalkyrie', name: 'Victory Valkyrie', type: 'blade', bey_type: 'attack', image: 'images/blades/VictoryValkyrie.png', tier: 'D', variantsId: 'victoryvalkyrie'},
@@ -910,7 +905,7 @@ const PART_SOURCES = {
     '2-80': ["UX-05 RB Vol. 1 (DranDagger 2-80GP)", "BX-?? MammothTusk 2-80E"],
     '3-60': ["BX-01 Starter DranSword 3-60F", "BX-06 Booster KnightShield 3-60LF", "BX-14 RB Vol. 1 (SharkEdge 3-60LF)", "BX-00 Xeno Xcalibur 3-60GF", "BXS-05 Optimus Primal 3-60F", "BXS-03 Spider-Man 3-60F", "F9580 Sword Dran 3-60F (Hasbro)", "G0194 Keel Shark 3-60LF (Hasbro)", "G1671 Lance Knight 3-60LF (Hasbro)", "G0199 Bite Croc (Hasbro)", "G0190 Keel Shark (Hasbro)", "G0282 Gale Wyvern (Hasbro)", "G0286 Savage Bear 3-60S (Hasbro)", "G1542 Beat Tyranno (Hasbro)", "G1754 Yell Kong 3-60GB (Hasbro)", "F9588 Xtreme Battle Set (Hasbro)", "G1898 T. Rex (Hasbro)"],
     '3-70': ["UX-03 Starter HellsHammer 3-70H", "UX-05 RB Vol. 1 (ShinobiShadow 3-70GP)", "BX-00 Storm Pegasis 3-70RA", "UX-00 AeroPegasus 3-70A", "BX-00 DranBuster 3-70N", "G1752 Hammer Incendio 3-70H (Hasbro)"],
-    '3-80': ["BX-04 Starter KnightShield 3-80N", "BX-19 Booster RhinoHorn 3-80S", "BX-08 3on3 Deck Set (HellsScythe 3-80B)", "BX-14 RB Vol. 1 (DranSword 3-80B)", "BX-16 RB Vol. 1 (ViperTail 3-80HN)", "BX-24 RB Vol. 2 (LeonClaw 3-80HN)", "UX-08 Starter SilverWolf 3-80FB", "BX-00 Dranzer Spiral 3-80T", "BXS-02 General Grievous 3-80HN", "BXS-03 Venom 3-80N", "BXS-05 Starscream 3-80N", "BXS-02 Moff Gideon 3-80N", "F9581 Helm Knight 3-80N (Hasbro)",G0192 Horn Rhino 3-80S (Hasbro)", "G0195 Talon Ptera 3-80B (Hasbro)", "G0285 Scythe Incendio 3-80B (Hasbro)", "G1674 Sterling Wolf 3-80FB (Hasbro)", "F9584 Dranzer Spiral 3-80T (Hasbro)", "G0197 Sword Dran (Hasbro)", "G1844 25th Anniversary Set (Dranzer)"],
+    '3-80': ["BX-04 Starter KnightShield 3-80N", "BX-19 Booster RhinoHorn 3-80S", "BX-08 3on3 Deck Set (HellsScythe 3-80B)", "BX-14 RB Vol. 1 (DranSword 3-80B)", "BX-16 RB Vol. 1 (ViperTail 3-80HN)", "BX-24 RB Vol. 2 (LeonClaw 3-80HN)", "UX-08 Starter SilverWolf 3-80FB", "BX-00 Dranzer Spiral 3-80T", "BXS-02 General Grievous 3-80HN", "BXS-03 Venom 3-80N", "BXS-05 Starscream 3-80N", "BXS-02 Moff Gideon 3-80N", "F9581 Helm Knight 3-80N (Hasbro)", "G0192 Horn Rhino 3-80S (Hasbro)", "G0195 Talon Ptera 3-80B (Hasbro)", "G0285 Scythe Incendio 3-80B (Hasbro)", "G1674 Sterling Wolf 3-80FB (Hasbro)", "F9584 Dranzer Spiral 3-80T (Hasbro)", "G0197 Sword Dran (Hasbro)", "G1844 25th Anniversary Set (Dranzer)"],
     '3-85': ["UX-04 Battle Entry Set U (KnightMail 3-85BS)", "CX-05 RB Vol. 5 (HellsArc T3-85O)", "G1683 Wriggle Kraken S 3-85O (Hasbro)"],
     '4-50': ["UX-15 SharkScale Deck Set (SharkScale 4-50UF)"],
     '4-55': ["CX-00 Starter Wizard Arc R4-55LO", "CX-02 Booster", "CX-05 RB Vol. 5 (RhinoReaper C4-55D)", "BX-?? Quetzalcoatlus 4-55D", "G1899 Quetzalcoatlus (Hasbro)", "G1679 Arc Wizard R 4-55LO (Hasbro)"],
