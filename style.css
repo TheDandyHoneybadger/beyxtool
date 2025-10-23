@@ -8,17 +8,18 @@
     --active-tab: #ffffff;
     --owned-glow: 0 0 10px rgba(0, 255, 195, 0.8), 0 0 15px rgba(0, 255, 195, 0.6);
 
-    /* [NOVO] Cores dos Tiers (Ajuste se desejar) */
-    --tier-s-bg: #FFD700; /* Dourado */
-    --tier-s-text: #000000;
-    --tier-a-bg: #C0C0C0; /* Prata */
+    /* [MODIFICADO] Cores dos Tiers baseadas na imagem */
+    --tier-s-bg: #f45b69; /* Vermelho-Rosa */
+    --tier-s-text: #ffffff;
+    --tier-a-bg: #fcfc81; /* Amarelo */
     --tier-a-text: #000000;
-    --tier-b-bg: #CD7F32; /* Bronze */
+    --tier-b-bg: #d4fc81; /* Amarelo-Verde */
     --tier-b-text: #000000;
-    --tier-c-bg: #6A7A8C; /* Azul-acinzentado */
-    --tier-c-text: #FFFFFF;
-    --tier-d-bg: #888888; /* Cinza */
-    --tier-d-text: #FFFFFF;
+    --tier-c-bg: #81fc81; /* Verde */
+    --tier-c-text: #000000;
+    --tier-d-bg: #81fcfc; /* Azul Claro */
+    --tier-d-text: #000000;
+    /* Adicione --tier-e e --tier-f se precisar deles */
 }
 
 * {
@@ -197,7 +198,6 @@ main {
     margin-top: auto;
 }
 
-/* [NOVO] Estilo base para o Tier */
 .part-tier {
     position: absolute;
     top: 5px;
@@ -210,14 +210,11 @@ main {
     text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
 }
 
-/* [NOVO] Cores específicas para cada Tier */
 .part-tier.tier-s { background-color: var(--tier-s-bg); color: var(--tier-s-text); }
 .part-tier.tier-a { background-color: var(--tier-a-bg); color: var(--tier-a-text); }
 .part-tier.tier-b { background-color: var(--tier-b-bg); color: var(--tier-b-text); }
 .part-tier.tier-c { background-color: var(--tier-c-bg); color: var(--tier-c-text); }
 .part-tier.tier-d { background-color: var(--tier-d-bg); color: var(--tier-d-text); }
-/* [FIM NOVO] */
-
 
 .deck-management {
     background-color: var(--primary-bg);
@@ -545,7 +542,7 @@ input[type="text"],
     gap: 1.5rem;
 }
 .meta-excel-icon {
-    width: 400px;
+    width: 1000px;
     max-width: 100%;
     height: auto;
     display: block;
@@ -839,7 +836,6 @@ input[type="text"],
         top: 3px;
         left: 3px;
     }
-    /* [NOVO] Ajuste no tamanho da fonte do Tier */
     .part-tier {
         font-size: 0.75rem;
         padding: 1px 4px;
@@ -879,7 +875,6 @@ input[type="text"],
            width: 16px;
            height: 16px;
        }
-       /* [NOVO] Ajuste menor para fonte do Tier */
        .part-tier {
            font-size: 0.7rem;
        }
