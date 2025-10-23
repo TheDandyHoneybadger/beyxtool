@@ -7,7 +7,6 @@
     --border-color: #555555;
     --active-tab: #ffffff;
     --owned-glow: 0 0 10px rgba(0, 255, 195, 0.8), 0 0 15px rgba(0, 255, 195, 0.6);
-    --score-bg: rgba(255, 255, 255, 0.2);
 }
 
 * {
@@ -100,6 +99,11 @@ main {
     margin-bottom: 1.5rem;
 }
 
+.tab-header.centered-header {
+    justify-content: center;
+    text-align: center;
+}
+
 .tab-content h3 {
     margin-top: 1.5rem;
     margin-bottom: 1rem;
@@ -148,6 +152,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    min-height: 140px;
 }
 
 .part-card:hover {
@@ -177,19 +182,7 @@ main {
     justify-content: center;
     word-break: break-word;
     padding: 0 2px;
-}
-
-.part-score {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background-color: var(--score-bg);
-    color: white;
-    font-size: 0.75rem;
-    font-weight: bold;
-    padding: 2px 5px;
-    border-radius: 5px;
-    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+    margin-top: auto;
 }
 
 .deck-management {
@@ -239,7 +232,6 @@ button,
 .tab-link,
 .part-card,
 .part-placeholder,
-.suggestion-card,
 .variant-card,
 .close-button,
 .lang-button,
@@ -247,15 +239,16 @@ button,
 #collection-sort,
 #deck-selector,
 input[type="checkbox"],
-.score-btn, /* [NOVO] */
-#reset-score-button /* [NOVO] */ {
+.score-btn,
+#reset-score-button,
+.meta-link-container a {
     cursor: pointer;
 }
 
 #deck-name-input,
 #input-modal-field,
 input[type="text"],
-.player-name /* [MODIFICADO] Adicionado .player-name */ {
+.player-name {
     cursor: text;
     -webkit-user-select: text;
     -moz-user-select: text;
@@ -281,11 +274,11 @@ input[type="text"],
     background-color: var(--card-bg);
     border-radius: 8px;
     padding: 1rem;
-    width: 160px; /* Ajuste a largura conforme necessário */
+    width: 160px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem; /* Espaçamento entre placeholders */
+    gap: 0.5rem;
 }
 
 .part-container {
@@ -306,19 +299,8 @@ input[type="text"],
     width: 100%;
 }
 
-.bey-score {
-    font-weight: bold;
-    color: var(--text-color);
-    background-color: var(--primary-bg);
-    padding: 4px 10px;
-    border-radius: 5px;
-    width: 100%;
-    text-align: center;
-    margin-top: 0.5rem; /* Espaço acima do score */
-}
-
 .part-placeholder {
-    width: 65px; /* Tamanho menor para caber 5 */
+    width: 65px;
     height: 65px;
     background-color: var(--primary-bg);
     border: 2px dashed var(--border-color);
@@ -346,23 +328,9 @@ input[type="text"],
 .part-placeholder span {
     font-weight: bold;
     color: var(--muted-text);
-    font-size: 0.8rem; /* Reduzido para caber */
+    font-size: 0.8rem;
     text-align: center;
-    padding: 0 5px; /* Evita que texto longo saia */
-}
-
-.part-placeholder .part-score-deck {
-    position: absolute;
-    bottom: 2px;
-    background-color: var(--score-bg);
-    color: white;
-    font-size: 0.7rem;
-    padding: 1px 4px;
-    border-radius: 3px;
-    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
+    padding: 0 5px;
 }
 
 .deck-slot .chip-specific-placeholder {
@@ -395,11 +363,6 @@ input[type="text"],
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
-}
-
-.deck-info p {
-    font-size: 1.2rem;
-    align-self: center;
 }
 
 .modal {
@@ -456,44 +419,14 @@ input[type="text"],
      padding-right: 10px;
 }
 
-#modal-suggestions-container, #modal-parts-list-container {
+#modal-parts-list-container {
     margin-bottom: 1.5rem;
 }
-#modal-suggestions-container h4, #modal-parts-list-container h4 {
+#modal-parts-list-container h4 {
     color: var(--text-color);
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
-}
-.suggestion-card {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background-color: var(--primary-bg);
-    padding: 0.75rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    margin-bottom: 0.75rem;
-    flex-wrap: wrap;
-}
-
-.suggestion-card:hover {
-    background-color: var(--card-bg);
-}
-.suggestion-part {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    min-width: 100px;
-}
-.suggestion-part img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-}
-.suggestion-part span {
-    font-size: 0.85rem;
 }
 
 #variant-modal-checkboxes {
@@ -562,65 +495,37 @@ input[type="text"],
     border-top: 1px solid var(--border-color);
 }
 
-#meta-combos-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-.meta-combo-card {
-    display: flex;
-    align-items: center;
-    background-color: var(--card-bg);
-    padding: 1rem;
-    border-radius: 8px;
-    border-left: 5px solid var(--border-color);
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-.meta-combo-card .rank {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--text-color);
-    min-width: 40px;
+/* Estilos para a aba META */
+.meta-cta {
     text-align: center;
-    flex-shrink: 0;
+    margin-bottom: 2rem;
+    color: var(--text-color); /* MODIFICADO de --muted-text para --text-color */
 }
-.meta-combo-card .parts {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-grow: 1;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.meta-combo-card .part-display {
+
+.meta-link-container {
+    text-align: center;
+    padding: 2rem 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    gap: 0.5rem;
-    min-width: 80px;
+    gap: 1.5rem;
 }
-.meta-combo-card .part-display img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    background-color: var(--primary-bg);
-    border-radius: 50%;
-    padding: 5px;
-}
-.meta-combo-card .part-display span {
-    font-size: 0.9rem;
-    word-break: break-word;
-}
-.meta-combo-card .points {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--text-color);
+.meta-excel-icon {
+    width: 1000px; /* [MODIFICADO] Aumentado */
+    max-width: 100%; /* Garante responsividade */
+    height: auto;
+    display: block;
     margin-left: auto;
-    padding-left: 1rem;
-    white-space: nowrap;
-    flex-shrink: 0;
+    margin-right: auto;
+}
+.meta-link-container a {
+    color: var(--active-tab);
+    text-decoration: underline;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.meta-link-container a:hover {
+    color: var(--text-color);
 }
 
 .language-settings {
@@ -768,18 +673,7 @@ input[type="text"],
     border-color: #ac2925;
 }
 
-.suggestion-points {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: var(--text-color);
-    margin-left: auto; /* Alinha à direita */
-    padding-left: 1rem; /* Espaçamento */
-    white-space: nowrap;
-    align-self: center; /* Alinha verticalmente com as peças */
-}
-
-
-/* --- [NOVO] Estilos do Placar --- */
+/* --- Estilos do Placar --- */
 .score-container {
     display: flex;
     justify-content: space-around;
@@ -865,7 +759,7 @@ input[type="text"],
 #reset-score-button {
     padding: 0.8rem 1.5rem;
     font-size: 1.1rem;
-    background-color: #a94442; /* Vermelho mais escuro */
+    background-color: #a94442;
     border: 1px solid #843534;
     color: var(--text-color);
     font-weight: bold;
@@ -876,7 +770,7 @@ input[type="text"],
 #reset-score-button:hover {
     background-color: #c9302c;
 }
-/* --- [FIM] Estilos do Placar --- */
+/* --- Fim Estilos do Placar --- */
 
 
 /* Media Query para telas menores */
@@ -890,6 +784,9 @@ input[type="text"],
         align-items: flex-start;
         gap: 0.8rem;
     }
+    #meta-tab .tab-header.centered-header {
+        align-items: center;
+    }
     .deck-management { flex-direction: column; align-items: stretch; }
     .deck-selector-group, .deck-name-group, .deck-buttons-group { justify-content: center; width: 100%; }
     #deck-name-input { min-width: 0; flex-grow: 1; }
@@ -902,30 +799,14 @@ input[type="text"],
     #variant-modal-grid, .parts-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.8rem; }
     .variant-card img, .part-card img { max-width: 50px; height: 50px; }
     .variant-card p, .part-card p { font-size: 0.8rem; min-height: 1.8rem; }
-    .meta-combo-card { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-    .meta-combo-card .rank { align-self: flex-start; font-size: 1.5rem; margin-bottom: 0.5rem; }
-    .meta-combo-card .parts { justify-content: flex-start; gap: 0.8rem; }
-    .meta-combo-card .part-display img { width: 50px; height: 50px; }
-    .meta-combo-card .part-display span { font-size: 0.8rem; }
-    .meta-combo-card .points { margin-left: 0; align-self: flex-end; font-size: 1.2rem; padding-left: 0; }
     .part-type-symbol {
         width: 18px;
         height: 18px;
         top: 3px;
         left: 3px;
     }
-    .suggestion-card {
-        justify-content: space-between;
-    }
-    .suggestion-points {
-        font-size: 1rem;
-        width: 100%;
-        text-align: right;
-        margin-left: 0;
-        padding-top: 5px;
-    }
 
-    /* [NOVO] Responsividade do Placar */
+    /* Responsividade do Placar */
     .score-container {
         flex-direction: column;
         align-items: center;
@@ -944,7 +825,6 @@ input[type="text"],
     .score-buttons {
         width: 90%;
     }
-    /* [FIM] Responsividade do Placar */
 }
 
 @media (max-width: 480px) {
@@ -961,9 +841,9 @@ input[type="text"],
            height: 16px;
        }
 
-    /* [NOVO] Responsividade do Placar (Pequeno) */
+    /* Responsividade do Placar (Pequeno) */
     .score-display {
         font-size: 4rem;
     }
-    /* [FIM] Responsividade do Placar (Pequeno) */
+    /* [REMOVIDO] .meta-excel-icon específico para 480px */
 }
