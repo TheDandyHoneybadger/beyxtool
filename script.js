@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Verifica se as variáveis do database.js foram carregadas (removido ALL_COMBOS da verificação)
+    // Verifica se as variáveis do database.js foram carregadas
     if (typeof ALL_VARIANTS === 'undefined' || typeof ALL_PARTS === 'undefined' /*|| typeof ALL_COMBOS === 'undefined'*/ || typeof translations === 'undefined') {
         alert("Erro: Arquivo database.js não carregado ou corrompido. Verifique o console para mais detalhes.");
-        console.error("Variáveis de database.js (ALL_VARIANTS, ALL_PARTS, translations) não encontradas."); // Removido ALL_COMBOS
+        console.error("Variáveis de database.js (ALL_VARIANTS, ALL_PARTS, translations) não encontradas.");
         return;
     }
 
@@ -104,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
                  if (element.placeholder !== undefined && key.includes('placeholder')) { element.placeholder = langPack[key]; }
                  else if (element.title !== undefined && key.includes('title')) { element.title = langPack[key]; }
                  else if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('part-placeholder')) { element.textContent = langPack[key]; }
-                 // [REMOVIDO] else if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('bey-score'))
                  else if (element.tagName === 'INPUT' && (key === 'player_1_default' || key === 'player_2_default')) {
                     const defaultP1_pt = translations['pt-br']?.player_1_default || "Jogador 1";
                     const defaultP1_en = translations['en']?.player_1_default || "Player 1";
@@ -146,7 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (correspondingContent) correspondingContent.classList.add('active');
             });
         });
-        // [MODIFICADO] Aba inicial agora é Deck Builder
         const initialTab = document.querySelector('.tab-link[data-tab="deck-builder"]');
         if (initialTab) initialTab.click();
     };
@@ -221,13 +219,12 @@ document.addEventListener('DOMContentLoaded', () => {
          // Carregar nomes dos players
          const p1Name = localStorage.getItem('beyXToolP1Name');
          const p2Name = localStorage.getItem('beyXToolP2Name');
-         const langPack = translations[currentLanguage] || translations['pt-br']; // Garante fallback para pt-br
+         const langPack = translations[currentLanguage] || translations['pt-br'];
          if (p1NameInput) p1NameInput.value = p1Name || langPack.player_1_default || "Jogador 1";
          if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Jogador 2";
     };
 
-    // [REMOVIDO] renderMetaCombos()
-
+    // --- [FUNÇÃO MODIFICADA] renderParts ---
     const renderParts = () => {
         const containers = { blades: blades_container, ratchets: ratchets_container, bits: bits_container, mainblades: mainblades_container, assistblades: assistblades_container, lockchips: lockchips_container };
         Object.values(containers).forEach(c => { if(c) c.innerHTML = ''; });
@@ -247,6 +244,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // [NOVO] Mapeamento de Tiers para ordenação numérica
+        const tierOrder = { 'S': 1, 'A': 2, 'B': 3, 'C': 4, 'D': 5 };
+
         switch (sortValue) {
             case 'name_asc':
                 partsToRender.sort((a, b) => a.name.localeCompare(b.name));
@@ -254,8 +254,24 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'name_desc':
                 partsToRender.sort((a, b) => b.name.localeCompare(a.name));
                 break;
-            // [REMOVIDO] case 'score_desc':
-            // [REMOVIDO] case 'score_asc':
+            // [NOVO] Ordenação por Tier (S > D)
+            case 'tier_desc':
+                partsToRender.sort((a, b) => {
+                    const tierA = tierOrder[a.tier] || 6; // Peças sem tier vão para o fim
+                    const tierB = tierOrder[b.tier] || 6;
+                    if (tierA !== tierB) return tierA - tierB;
+                    return a.name.localeCompare(b.name); // Desempate por nome
+                });
+                break;
+            // [NOVO] Ordenação por Tier (D > S)
+            case 'tier_asc':
+                 partsToRender.sort((a, b) => {
+                    const tierA = tierOrder[a.tier] || 0; // Peças sem tier vão para o início
+                    const tierB = tierOrder[b.tier] || 0;
+                    if (tierA !== tierB) return tierB - tierA; // Ordem inversa
+                    return a.name.localeCompare(b.name); // Desempate por nome
+                });
+                break;
             case 'type':
                 const typeOrder = { 'attack': 1, 'defense': 2, 'stamina': 3, 'balance': 4 };
                 partsToRender.sort((a, b) => {
@@ -280,8 +296,8 @@ document.addEventListener('DOMContentLoaded', () => {
             let isOwned = (part.type === 'blade') ? (collectionSet?.has(part.id) && collectionSet.get(part.id).size > 0) : collectionSet?.has(part.id);
             if (isOwned) part_card.classList.add('owned');
 
-            // [MODIFICADO] Removido o div .part-score
-            part_card.innerHTML = `<img src="${part.image || 'images/placeholder.png'}" alt="${part.name}"><p>${part.name}</p>`;
+            // [MODIFICADO] Adiciona o div .part-tier
+            part_card.innerHTML = `<img src="${part.image || 'images/placeholder.png'}" alt="${part.name}"><p>${part.name}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`;
 
             if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) {
                 const typeSymbolDiv = document.createElement('div');
@@ -344,6 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 interactionStartTime = 0;
             };
 
+
             const abortHold = (e) => {
                  clearTimeout(pressTimerOwner);
                  clearTimeout(pressTimerInfo);
@@ -364,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
             container.appendChild(part_card);
         });
     };
-
+    // --- [FIM DA FUNÇÃO MODIFICADA] ---
 
     const renderDeckManager = () => {
         if (!deck_selector || !deck_name_input) return;
@@ -374,10 +391,8 @@ document.addEventListener('DOMContentLoaded', () => {
         deck_selector.value = app_data.active_deck_index; deck_name_input.value = currentDeck.name;
     };
 
-    // --- [FUNÇÃO MODIFICADA] updateDeckUI ---
     const updateDeckUI = () => {
         const currentDeck = app_data.decks[app_data.active_deck_index]; if (!currentDeck) return;
-        // [REMOVIDO] let totalDeckScore = 0;
         const langPack = translations[currentLanguage]; const selectText = langPack.deck_placeholder_selecione || 'Select';
 
         deck_slots.forEach((slot, bayIndex) => {
@@ -389,7 +404,6 @@ document.addEventListener('DOMContentLoaded', () => {
                  if (!bay.hasOwnProperty('part4')) bay.part4 = null;
                  if (!bay.hasOwnProperty('part5')) bay.part5 = null;
             }
-            // [REMOVIDO] let bayScore = 0;
 
             const selectors = {
                 p1ph: slot.querySelector('.part-placeholder[data-type="primeira"]'), p1n: slot.querySelector('.part-name-display[data-name-type="primeira"]'),
@@ -397,10 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 abph: slot.querySelector('.part-placeholder[data-type="assistblade"]'), abn: slot.querySelector('.part-name-display[data-name-type="assistblade"]'),
                 rph: slot.querySelector('.part-placeholder[data-type="ratchet"]'), rn: slot.querySelector('.part-name-display[data-name-type="ratchet"]'),
                 bph: slot.querySelector('.part-placeholder[data-type="bit"]'), bn: slot.querySelector('.part-name-display[data-name-type="bit"]'),
-                // [REMOVIDO] scoreEl
             };
-
-            // [REMOVIDO] scoreLabelEl
 
             if (Object.values(selectors).some(el => !el)) { console.error(`Elementos faltando no slot ${bayIndex}. Verifique o HTML.`); return; }
 
@@ -410,8 +421,8 @@ document.addEventListener('DOMContentLoaded', () => {
                  ph.innerHTML = `<span data-translate="${key}">${langPack[key]||key.replace('deck_placeholder_', '').replace('_section_title', '')}</span>`;
                  n.textContent = selectText;
              };
-            const set = (ph, n, part) => { // Agora só define imagem e nome
-                if (!part) return; // Retorna void, não 0
+            const set = (ph, n, part) => {
+                if (!part) return;
                 const name = part.variant ? `${part.baseName} (${part.variant})` : part.name;
                 let img = part.image || 'images/placeholder.png';
                 if (part.type==='blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) {
@@ -419,10 +430,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (vData?.image) img=vData.image;
                     else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock'); if (sVar?.image) img=sVar.image; }
                 }
-                // [MODIFICADO] Removido span .part-score-deck
                 ph.innerHTML = `<img src="${img}" alt="${name}">`;
                 n.textContent = name;
-                // [REMOVIDO] return score;
             };
 
             reset(selectors.p1ph, selectors.p1n, 'deck_placeholder_primeira');
@@ -432,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
             reset(selectors.bph, selectors.bn, 'deck_placeholder_bit');
 
             if (bay.type === 'standard') {
-                set(selectors.p1ph, selectors.p1n, bay.part1); // Não adiciona mais score
+                set(selectors.p1ph, selectors.p1n, bay.part1);
                 set(selectors.rph, selectors.rn, bay.part4);
                 set(selectors.bph, selectors.bn, bay.part5);
             } else if (bay.type === 'chip') {
@@ -442,16 +451,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 set(selectors.rph, selectors.rn, bay.part4);
                 set(selectors.bph, selectors.bn, bay.part5);
             }
-
-            // [REMOVIDO] Atualização do score do bay (selectors.scoreEl)
-            // [REMOVIDO] Incremento do totalDeckScore
         });
-
-        // [REMOVIDO] Atualização do score total do deck (deckInfoScoreP)
 
         renderDeckManager();
     };
-    // --- [FIM DA FUNÇÃO MODIFICADA] ---
+
 
     const showProductInfoPopup = (part, element) => {
         document.querySelectorAll('.part-info-popup').forEach(p => p.remove());
@@ -491,8 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 saveAppData();
                 updateDeckUI();
-                // [MODIFICADO] Não chama renderParts() aqui
-                 if (collection_filter && collection_filter.checked) { renderParts(); } // Re-renderiza APENAS se o filtro 'Owned' estiver ativo
+                 if (collection_filter && collection_filter.checked) { renderParts(); }
             }
         } else {
             const collectionSetKey = part.type + 's';
@@ -514,8 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             saveAppData();
             updateDeckUI();
-            // [MODIFICADO] Não chama renderParts() aqui
-             if (collection_filter && collection_filter.checked) { renderParts(); } // Re-renderiza APENAS se o filtro 'Owned' estiver ativo
+             if (collection_filter && collection_filter.checked) { renderParts(); }
         }
     };
 
@@ -568,8 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     saveAppData();
                     updateDeckUI();
-                    // [MODIFICADO] Não chama renderParts() aqui
-                     if (collection_filter && collection_filter.checked) { renderParts(); } // Re-renderiza APENAS se o filtro 'Owned' estiver ativo
+                     if (collection_filter && collection_filter.checked) { renderParts(); }
                 }
                  closeVariantModal();
             });
@@ -676,10 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const partsToShow = availableParts.filter(part => !usedPartIds.has(part.baseId || part.id));
 
-        // [REMOVIDO] Limpeza e ocultação de modal_suggestions_container
-        // [REMOVIDO] Lógica de showStandardSuggestions e showChipSuggestions
-        // [REMOVIDO] Lógica de geração de sugestões (matchingCombos, matchingChipCombos)
-        // [REMOVIDO] Criação de suggestion cards
+        // [REMOVIDO] Lógica de sugestões
 
         const individualHeader = translations[currentLanguage].part_individual_header || 'Individual Parts (Owned)';
         modal_parts_list_container.innerHTML = `<h4>${individualHeader}</h4><div class="parts-grid"></div>`;
@@ -695,14 +693,13 @@ document.addEventListener('DOMContentLoaded', () => {
                  if (!part || !part.name) return;
                 const part_card = document.createElement('div');
                 part_card.className = 'part-card owned';
-                // [MODIFICADO] Removido div .part-score
-                part_card.innerHTML = `<img src="${part.image || 'images/placeholder.png'}" alt="${part.name}"><p>${part.name}</p>`;
+                 // [MODIFICADO] Adiciona o div .part-tier
+                part_card.innerHTML = `<img src="${part.image || 'images/placeholder.png'}" alt="${part.name}"><p>${part.name}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`;
                 part_card.addEventListener('click', () => selectPartForDeck(part));
                 partsGrid.appendChild(part_card);
             });
         }
 
-         // [MODIFICADO] Condição para abrir modal simplificada
          if(partsToShow.length > 0) {
             part_modal.style.display = 'block';
          } else {
@@ -712,7 +709,6 @@ document.addEventListener('DOMContentLoaded', () => {
          }
     };
  // --- [FIM DA FUNÇÃO MODIFICADA] ---
-
 
     // [REMOVIDO] applySuggestion()
     // [REMOVIDO] applyChipSuggestion()
@@ -732,19 +728,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         variantsSet.forEach(variantName => {
                              const variantData = ALL_VARIANTS[basePart.variantsId].find(v => v.name === variantName);
                              ownedParts.push({
-                                 ...basePart,
+                                 ...basePart, // Inclui tier do basePart
                                  id: `${basePart.id}-${variantName.replace(/\s+/g, '-')}`,
                                  baseId: basePart.id,
                                  baseName: basePart.name,
                                  name: `${basePart.name} (${variantName})`,
                                  variant: variantName,
-                                 image: variantData?.image || basePart.image,
-                                 score: basePart.score // Mantem o score nos dados, só não exibe
+                                 image: variantData?.image || basePart.image
+                                 // Não precisa adicionar tier aqui, já vem do basePart
                              });
                         });
                     } else if (variantsSet.has('owned')) {
-                        // Mantem o score nos dados, só não exibe
-                        ownedParts.push({ ...basePart, baseId: basePart.id, baseName: basePart.name });
+                        ownedParts.push({ ...basePart, baseId: basePart.id, baseName: basePart.name }); // Inclui tier do basePart
                     }
                 } else {
                      console.warn(`Peça Blade com ID ${partId} encontrada na coleção mas não em ALL_PARTS.`);
@@ -754,7 +749,7 @@ document.addEventListener('DOMContentLoaded', () => {
             collectionSet.forEach(partId => {
                 const part = ALL_PARTS.find(p => p.id === partId);
                 if (part) {
-                     ownedParts.push(part); // Mantem o score nos dados, só não exibe
+                     ownedParts.push(part); // Inclui tier
                 } else {
                     console.warn(`Peça ${partType} com ID ${partId} encontrada na coleção mas não em ALL_PARTS.`);
                 }

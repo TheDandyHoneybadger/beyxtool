@@ -1,4 +1,4 @@
-// --- BASE DE DADOS DAS VARIANTES (Mantida para gerenciamento de coleção) ---
+// --- BASE DE DADOS DAS VARIANTES (Mantida) ---
 const ALL_VARIANTS = {
     'aerpegasus': [ { name: "Stock", image: "images/blades/AeroPegasus.png" } ],
     'bearscratch': [ { name: "Stock", image: "images/blades/BearScratch.png" } ],
@@ -72,174 +72,200 @@ const ALL_VARIANTS = {
     'yellkong': [ { name: "Stock", image: "images/blades/YellKong.png" } ]
 };
 
-// --- BASE DE DADOS DAS PEÇAS (SEM score) ---
+// --- BASE DE DADOS DAS PEÇAS (COM tier no lugar de score) ---
+// ** IMPORTANTE: OS TIERS ABAIXO FORAM ATRIBUÍDOS COM BASE NOS SCORES ANTERIORES. AJUSTE SE NECESSÁRIO! **
 const ALL_PARTS = [
     // Blades
-    { id: 'aerpegasus', name: 'Aero Pegasus', type: 'blade', bey_type: 'stamina', image: 'images/blades/AeroPegasus.png', variantsId: 'aerpegasus'},
-    { id: 'cobaltdragoon', name: 'Cobalt Dragoon', type: 'blade', bey_type: 'attack', image: 'images/blades/CobaltDragoon.png', variantsId: 'cobaltdragoon'},
-    { id: 'dranbuster', name: 'DranBuster', type: 'blade', bey_type: 'attack', image: 'images/blades/DranBuster.png', variantsId: 'dranbuster'},
-    { id: 'drandagger', name: 'DranDagger', type: 'blade', bey_type: 'attack', image: 'images/blades/DranDagger.png', variantsId: 'drandagger'},
-    { id: 'dransword', name: 'DranSword', type: 'blade', bey_type: 'attack', image: 'images/blades/DranSword.png', variantsId: 'dransword'},
-    { id: 'hellschain', name: 'HellsChain', type: 'blade', bey_type: 'defense', image: 'images/blades/HellsChain.png', variantsId: 'hellschain'},
-    { id: 'hellsscythe', name: 'HellsScythe', type: 'blade', bey_type: 'balance', image: 'images/blades/HellsScythe.png', variantsId: 'hellsscythe'},
-    { id: 'hoverwyvern', name: 'Hover Wyvern', type: 'blade', bey_type: 'stamina', image: 'images/blades/HoverWyvern.png', variantsId: 'hoverwyvern'},
-    { id: 'knightmail', name: 'KnightMail', type: 'blade', bey_type: 'defense', image: 'images/blades/KnightMail.png', variantsId: 'knightmail'},
-    { id: 'knightshield', name: 'KnightShield', type: 'blade', bey_type: 'defense', image: 'images/blades/KnightShield.png', variantsId: 'knightshield'},
-    { id: 'leonclaw', name: 'LeonClaw', type: 'blade', bey_type: 'defense', image: 'images/blades/LeonClaw.png', variantsId: 'leonclaw'},
-    { id: 'phoenixwing', name: 'Phoenix Wing', type: 'blade', bey_type: 'stamina', image: 'images/blades/PhoenixWing.png', variantsId: 'phoenixwing'},
-    { id: 'sharkscale', name: 'SharkScale', type: 'blade', bey_type: 'attack', image: 'images/blades/SharkScale.png', variantsId: 'sharkscale'},
-    { id: 'silverwolf', name: 'SilverWolf', type: 'blade', bey_type: 'balance', image: 'images/blades/SilverWolf.png', variantsId: 'silverwolf'},
-    { id: 'tyrannobeat', name: 'TyrannoBeat', type: 'blade', bey_type: 'attack', image: 'images/blades/TyrannoBeat.png', variantsId: 'tyrannobeat'},
-    { id: 'unicornsting', name: 'Unicorn Sting', type: 'blade', bey_type: 'balance', image: 'images/blades/UnicornSting.png', variantsId: 'unicornsting'},
-    { id: 'wizardarrow', name: 'WizardArrow', type: 'blade', bey_type: 'stamina', image: 'images/blades/WizardArrow.png', variantsId: 'wizardarrow'},
-    { id: 'wizardrod', name: 'WizardRod', type: 'blade', bey_type: 'stamina', image: 'images/blades/WizardRod.png', variantsId: 'wizardrod'},
-    { id: 'arc', name: 'Arc', type: 'blade', bey_type: 'stamina', image: 'images/blades/Arc.png' },
-    { id: 'bearscratch', name: 'BearScratch', type: 'blade', bey_type: 'attack', image: 'images/blades/BearScratch.png', variantsId: 'bearscratch'},
-    { id: 'blackshell', name: 'BlackShell', type: 'blade', bey_type: 'defense', image: 'images/blades/BlackShell.png', variantsId: 'blackshell'},
-    { id: 'blast', name: 'Blast', type: 'blade', bey_type: 'attack', image: 'images/blades/Blast.png' },
-    { id: 'bolt', name: 'Bolt', type: 'blade', bey_type: 'balance', image: 'images/blades/Bolt.png' },
-    { id: 'brave', name: 'Brave', type: 'blade', bey_type: 'attack', image: 'images/blades/Brave.png' },
-    { id: 'brush', name: 'Brush', type: 'blade', bey_type: 'stamina', image: 'images/blades/Brush.png' },
-    { id: 'cobaltdrake', name: 'CobaltDrake', type: 'blade', bey_type: 'defense', image: 'images/blades/CobaltDrake.png', variantsId: 'cobaltdrake'},
-    { id: 'crimsongaruda', name: 'Crimson Garuda', type: 'blade', bey_type: 'stamina', image: 'images/blades/CrimsonGaruda.png', variantsId: 'crimsongaruda'},
-    { id: 'croccrunch', name: 'CrocCrunch', type: 'blade', bey_type: 'attack', image: 'images/blades/CrocCrunch.png', variantsId: 'croccrunch'},
-    { id: 'dark', name: 'Dark', type: 'blade', bey_type: 'defense', image: 'images/blades/Dark.png' },
-    { id: 'darthvader', name: 'DarthVader', type: 'blade', bey_type: 'balance', image: 'images/blades/DarthVader.png', variantsId: 'darthvader'},
-    { id: 'dracielshield', name: 'DracielShield', type: 'blade', bey_type: 'defense', image: 'images/blades/DracielShield.png', variantsId: 'dracielshield'},
-    { id: 'dragoonsform', name: 'Dragoon Storm', type: 'blade', bey_type: 'attack', image: 'images/blades/DragoonStorm.png', variantsId: 'dragoonsform'},
-    { id: 'dranzerspiral', name: 'Dranzer Spiral', type: 'blade', bey_type: 'balance', image: 'images/blades/DranzerSpiral.png', variantsId: 'dranzerspiral'},
-    { id: 'drigerslash', name: 'DrigerSlash', type: 'blade', bey_type: 'balance', image: 'images/blades/DrigerSlash.png', variantsId: 'drigerslash'},
-    { id: 'eclipse', name: 'Eclipse', type: 'blade', bey_type: 'defense', image: 'images/blades/Eclipse.png' },
-    { id: 'flame', name: 'Flame', type: 'blade', bey_type: 'balance', image: 'images/blades/Flame.png' },
-    { id: 'generalgrievous', name: 'General Grievous', type: 'blade', bey_type: 'defense', image: 'images/blades/GeneralGrievous.png', variantsId: 'generalgrievous'},
-    { id: 'ghostcircle', name: 'GhostCircle', type: 'blade', bey_type: 'stamina', image: 'images/blades/GhostCircle.png', variantsId: 'ghostcircle'},
-    { id: 'gillshark', name: 'GillShark', type: 'blade', bey_type: 'attack', image: 'images/blades/GillShark.png', variantsId: 'gillshark'},
-    { id: 'golemrock', name: 'GolemRock', type: 'blade', bey_type: 'defense', image: 'images/blades/GolemRock.png' },
-    { id: 'hellshammer', name: 'Hells Hammer', type: 'blade', bey_type: 'attack', image: 'images/blades/HellsHammer.png', variantsId: 'hellshammer'},
-    { id: 'hornet', name: 'Hornet', type: 'blade', bey_type: 'attack', image: 'images/blades/Hornet.png' },
-    { id: 'impactdrake', name: 'ImpactDrake', type: 'blade', bey_type: 'attack', image: 'images/blades/ImpactDrake.png', variantsId: 'impactdrake'},
-    { id: 'knightlance', name: 'KnightLance', type: 'blade', bey_type: 'stamina', image: 'images/blades/KnightLance.png', variantsId: 'knightlance'},
-    { id: 'kraken', name: 'Kraken', type: 'blade', bey_type: 'stamina', image: 'images/blades/Kraken.png' },
-    { id: 'leoncrest', name: 'LeonCrest', type: 'blade', bey_type: 'defense', image: 'images/blades/LeonCrest.png', variantsId: 'leoncrest'},
-    { id: 'lightningl-drago', name: 'Lightning L-Drago', type: 'blade', bey_type: 'attack', image: 'images/blades/LightningL-Drago.png', variantsId: 'lightningl-drago'},
-    { id: 'mammothtusk', name: 'Mammoth Tusk', type: 'blade', bey_type: 'balance', image: 'images/blades/MammothTusk.png', variantsId: 'mammothtusk'},
-    { id: 'moffgideon', name: 'MoffGideon', type: 'blade', bey_type: 'defense', image: 'images/blades/MoffGideon.png', variantsId: 'moffgideon'},
-    { id: 'mosasaurus', name: 'Mosasaurus', type: 'blade', bey_type: 'attack', image: 'images/blades/Mosasaurus.png', variantsId: 'mosasaurus'},
-    { id: 'optimusprimal', name: 'Optimus Primal', type: 'blade', bey_type: 'attack', image: 'images/blades/OptimusPrimal.png', variantsId: 'optimusprimal'},
-    { id: 'optimusprime', name: 'Optimus Prime', type: 'blade', bey_type: 'balance', image: 'images/blades/OptimusPrime.png', variantsId: 'optimusprime'},
-    { id: 'phoenixfeather', name: 'Phoenix Feather', type: 'blade', bey_type: 'stamina', image: 'images/blades/PhoenixFeather.png', variantsId: 'phoenixfeather'},
-    { id: 'phoenixrudder', name: 'Phoenix Rudder', type: 'blade', bey_type: 'defense', image: 'images/blades/PhoenixRudder.png', variantsId: 'phoenixrudder'},
-    { id: 'pteraswing', name: 'PteraSwing', type: 'blade', bey_type: 'defense', image: 'images/blades/PteraSwing.png' },
-    { id: 'quetzalcoatlus', name: 'Quetzal coatlus', type: 'blade', bey_type: 'defense', image: 'images/blades/Quetzalcoatlus.png', variantsId: 'quetzalcoatlus'},
-    { id: 'reaper', name: 'Reaper', type: 'blade', bey_type: 'attack', image: 'images/blades/Reaper.png' },
-    { id: 'rhinohorn', name: 'RhinoHorn', type: 'blade', bey_type: 'defense', image: 'images/blades/RhinoHorn.png', variantsId: 'rhinohorn'},
-    { id: 'rockleone', name: 'RockLeone', type: 'blade', bey_type: 'defense', image: 'images/blades/RockLeone.png', variantsId: 'rockleone'},
-    { id: 'samuraicalibur', name: 'Samurai Calibur', type: 'blade', bey_type: 'balance', image: 'images/blades/SamuraiCalibur.png', variantsId: 'samuraicalibur'},
-    { id: 'samuraisaber', name: 'Samurai Saber', type: 'blade', bey_type: 'attack', image: 'images/blades/SamuraiSaber.png', variantsId: 'samuraisaber'},
-    { id: 'samuraisteel', name: 'Samurai Steel', type: 'blade', bey_type: 'balance', image: 'images/blades/SamuraiSteel.png' },
-    { id: 'scorpiospear', name: 'Scorpio Spear', type: 'blade', bey_type: 'attack', image: 'images/blades/ScorpioSpear.png', variantsId: 'scorpiospear'},
-    { id: 'sharkedge', name: 'SharkEdge', type: 'blade', bey_type: 'attack', image: 'images/blades/SharkEdge.png', variantsId: 'sharkedge'},
-    { id: 'shelterdrake', name: 'ShelterDrake', type: 'blade', bey_type: 'defense', image: 'images/blades/ShelterDrake.png', variantsId: 'shelterdrake'},
-    { id: 'shinobiknife', name: 'ShinobiKnife', type: 'blade', bey_type: 'defense', image: 'images/blades/ShinobiKnife.png', variantsId: 'shinobiknife'},
-    { id: 'shinobishadow', name: 'Shinobi Shadow', type: 'blade', bey_type: 'stamina', image: 'images/blades/ShinobiShadow.png', variantsId: 'shinobishadow'},
-    { id: 'spider-man', name: 'Spider-Man', type: 'blade', bey_type: 'attack', image: 'images/blades/Spider-Man.png', variantsId: 'spider-man'},
-    { id: 'sphinx-cowl', name: 'SphinxCowl', type: 'blade', bey_type: 'defense', image: 'images/blades/SphinxCowl.png', variantsId: 'sphinx-cowl'},
-    { id: 'spinosaurus', name: 'Spinosaurus', type: 'blade', bey_type: 'attack', image: 'images/blades/Spinosaurus.png', variantsId: 'spinosaurus'},
-    { id: 'stormpegasis', name: 'Storm Pegasis', type: 'blade', bey_type: 'attack', image: 'images/blades/StormPegasis.png', variantsId: 'stormpegasis'},
-    { id: 't.rex', name: 'T.Rex', type: 'blade', bey_type: 'attack', image: 'images/blades/T.Rex.png', variantsId: 't.rex'},
-    { id: 'tacklegoat', name: 'TackleGoat', type: 'blade', bey_type: 'defense', image: 'images/blades/TackleGoat.png', variantsId: 'tacklegoat'},
-    { id: 'thanos', name: 'Thanos', type: 'blade', bey_type: 'balance', image: 'images/blades/Thanos.png', variantsId: 'thanos'},
-    { id: 'tricerapress', name: 'TriceraPress', type: 'blade', bey_type: 'defense', image: 'images/blades/TriceraPress.png', variantsId: 'tricerapress'},
-    { id: 'tyrannoroar', name: 'TyrannoRoar', type: 'blade', bey_type: 'attack', image: 'images/blades/TyrannoRoar.png', variantsId: 'tyrannoroar'},
-    { id: 'venom', name: 'Venom', type: 'blade', bey_type: 'defense', image: 'images/blades/Venom.png', variantsId: 'venom'},
-    { id: 'victoryvalkyrie', name: 'Victory Valkyrie', type: 'blade', bey_type: 'attack', image: 'images/blades/VictoryValkyrie.png', variantsId: 'victoryvalkyrie'},
-    { id: 'vipertail', name: 'ViperTail', type: 'blade', bey_type: 'attack', image: 'images/blades/ViperTail.png', variantsId: 'vipertail'},
-    { id: 'weisstiger', name: 'WeissTiger', type: 'blade', bey_type: 'stamina', image: 'images/blades/WeissTiger.png', variantsId: 'weisstiger'},
-    { id: 'whalewave', name: 'WhaleWave', type: 'blade', bey_type: 'defense', image: 'images/blades/WhaleWave.png', variantsId: 'whalewave'},
-    { id: 'wyverngale', name: 'WyvernGale', type: 'blade', bey_type: 'stamina', image: 'images/blades/WyvernGale.png', variantsId: 'wyverngale'},
-    { id: 'xenoxcalibur', name: 'Xeno Xcalibur', type: 'blade', bey_type: 'attack', image: 'images/blades/XenoXcalibur.png', variantsId: 'xenoxcalibur'},
-    { id: 'yellkong', name: 'YellKong', type: 'blade', bey_type: 'defense', image: 'images/blades/YellKong.png', variantsId: 'yellkong'},
+    { id: 'aerpegasus', name: 'Aero Pegasus', type: 'blade', bey_type: 'stamina', image: 'images/blades/AeroPegasus.png', tier: 'S', variantsId: 'aerpegasus'}, // score: 26.2 -> S
+    { id: 'cobaltdragoon', name: 'Cobalt Dragoon', type: 'blade', bey_type: 'attack', image: 'images/blades/CobaltDragoon.png', tier: 'S', variantsId: 'cobaltdragoon'}, // score: 279 -> S
+    { id: 'dranbuster', name: 'DranBuster', type: 'blade', bey_type: 'attack', image: 'images/blades/DranBuster.png', tier: 'A', variantsId: 'dranbuster'}, // score: 16.5 -> A
+    { id: 'drandagger', name: 'DranDagger', type: 'blade', bey_type: 'attack', image: 'images/blades/DranDagger.png', tier: 'C', variantsId: 'drandagger'}, // score: 4.5 -> C
+    { id: 'dransword', name: 'DranSword', type: 'blade', bey_type: 'attack', image: 'images/blades/DranSword.png', tier: 'B', variantsId: 'dransword'}, // score: 6 -> B
+    { id: 'hellschain', name: 'HellsChain', type: 'blade', bey_type: 'defense', image: 'images/blades/HellsChain.png', tier: 'B', variantsId: 'hellschain'}, // score: 6.5 -> B
+    { id: 'hellsscythe', name: 'HellsScythe', type: 'blade', bey_type: 'balance', image: 'images/blades/HellsScythe.png', tier: 'B', variantsId: 'hellsscythe'}, // score: 6.5 -> B
+    { id: 'hoverwyvern', name: 'Hover Wyvern', type: 'blade', bey_type: 'stamina', image: 'images/blades/HoverWyvern.png', tier: 'A', variantsId: 'hoverwyvern'}, // score: 13.5 -> A
+    { id: 'knightmail', name: 'KnightMail', type: 'blade', bey_type: 'defense', image: 'images/blades/KnightMail.png', tier: 'A', variantsId: 'knightmail'}, // score: 11.5 -> A
+    { id: 'knightshield', name: 'KnightShield', type: 'blade', bey_type: 'defense', image: 'images/blades/KnightShield.png', tier: 'B', variantsId: 'knightshield'}, // score: 5 -> B
+    { id: 'leonclaw', name: 'LeonClaw', type: 'blade', bey_type: 'defense', image: 'images/blades/LeonClaw.png', tier: 'C', variantsId: 'leonclaw'}, // score: 4 -> C
+    { id: 'phoenixwing', name: 'Phoenix Wing', type: 'blade', bey_type: 'stamina', image: 'images/blades/PhoenixWing.png', tier: 'S', variantsId: 'phoenixwing'}, // score: 71 -> S
+    { id: 'sharkscale', name: 'SharkScale', type: 'blade', bey_type: 'attack', image: 'images/blades/SharkScale.png', tier: 'S', variantsId: 'sharkscale'}, // score: 26.5 -> S
+    { id: 'silverwolf', name: 'SilverWolf', type: 'blade', bey_type: 'balance', image: 'images/blades/SilverWolf.png', tier: 'S', variantsId: 'silverwolf'}, // score: 28 -> S
+    { id: 'tyrannobeat', name: 'TyrannoBeat', type: 'blade', bey_type: 'attack', image: 'images/blades/TyrannoBeat.png', tier: 'A', variantsId: 'tyrannobeat'}, // score: 21 -> A
+    { id: 'unicornsting', name: 'Unicorn Sting', type: 'blade', bey_type: 'balance', image: 'images/blades/UnicornSting.png', tier: 'B', variantsId: 'unicornsting'}, // score: 8.5 -> B
+    { id: 'wizardarrow', name: 'WizardArrow', type: 'blade', bey_type: 'stamina', image: 'images/blades/WizardArrow.png', tier: 'C', variantsId: 'wizardarrow'}, // score: 3.5 -> C
+    { id: 'wizardrod', name: 'WizardRod', type: 'blade', bey_type: 'stamina', image: 'images/blades/WizardRod.png', tier: 'S', variantsId: 'wizardrod'}, // score: 262.5 -> S
+    { id: 'arc', name: 'Arc', type: 'blade', bey_type: 'stamina', image: 'images/blades/Arc.png', tier: 'C' }, // score: 3.5 -> C
+    { id: 'bearscratch', name: 'BearScratch', type: 'blade', bey_type: 'attack', image: 'images/blades/BearScratch.png', tier: 'C', variantsId: 'bearscratch'}, // score: 2 -> C
+    { id: 'blackshell', name: 'BlackShell', type: 'blade', bey_type: 'defense', image: 'images/blades/BlackShell.png', tier: 'C', variantsId: 'blackshell'}, // score: 4 -> C
+    { id: 'blast', name: 'Blast', type: 'blade', bey_type: 'attack', image: 'images/blades/Blast.png', tier: 'A' }, // score: 10 -> A
+    { id: 'bolt', name: 'Bolt', type: 'blade', bey_type: 'balance', image: 'images/blades/Bolt.png', tier: 'C' }, // score: 4.5 -> C
+    { id: 'brave', name: 'Brave', type: 'blade', bey_type: 'attack', image: 'images/blades/Brave.png', tier: 'C' }, // score: 4.5 -> C
+    { id: 'brush', name: 'Brush', type: 'blade', bey_type: 'stamina', image: 'images/blades/Brush.png', tier: 'C' }, // score: 2 -> C
+    { id: 'cobaltdrake', name: 'CobaltDrake', type: 'blade', bey_type: 'defense', image: 'images/blades/CobaltDrake.png', tier: 'C', variantsId: 'cobaltdrake'}, // score: 3.5 -> C
+    { id: 'crimsongaruda', name: 'Crimson Garuda', type: 'blade', bey_type: 'stamina', image: 'images/blades/CrimsonGaruda.png', tier: 'C', variantsId: 'crimsongaruda'}, // score: 4.5 -> C
+    { id: 'croccrunch', name: 'CrocCrunch', type: 'blade', bey_type: 'attack', image: 'images/blades/CrocCrunch.png', tier: 'C', variantsId: 'croccrunch'}, // score: 2 -> C
+    { id: 'dark', name: 'Dark', type: 'blade', bey_type: 'defense', image: 'images/blades/Dark.png', tier: 'C' }, // score: 2.5 -> C
+    { id: 'darthvader', name: 'DarthVader', type: 'blade', bey_type: 'balance', image: 'images/blades/DarthVader.png', tier: 'C', variantsId: 'darthvader'}, // score: 2.5 -> C
+    { id: 'dracielshield', name: 'DracielShield', type: 'blade', bey_type: 'defense', image: 'images/blades/DracielShield.png', tier: 'D', variantsId: 'dracielshield'}, // score: 1.5 -> D
+    { id: 'dragoonsform', name: 'Dragoon Storm', type: 'blade', bey_type: 'attack', image: 'images/blades/DragoonStorm.png', tier: 'D', variantsId: 'dragoonsform'}, // score: 1 -> D
+    { id: 'dranzerspiral', name: 'Dranzer Spiral', type: 'blade', bey_type: 'balance', image: 'images/blades/DranzerSpiral.png', tier: 'C', variantsId: 'dranzerspiral'}, // score: 2.5 -> C
+    { id: 'drigerslash', name: 'DrigerSlash', type: 'blade', bey_type: 'balance', image: 'images/blades/DrigerSlash.png', tier: 'D', variantsId: 'drigerslash'}, // score: 1.5 -> D
+    { id: 'eclipse', name: 'Eclipse', type: 'blade', bey_type: 'defense', image: 'images/blades/Eclipse.png', tier: 'C' }, // score: 2 -> C
+    { id: 'flame', name: 'Flame', type: 'blade', bey_type: 'balance', image: 'images/blades/Flame.png', tier: 'D' }, // score: 1.5 -> D
+    { id: 'generalgrievous', name: 'General Grievous', type: 'blade', bey_type: 'defense', image: 'images/blades/GeneralGrievous.png', tier: 'D', variantsId: 'generalgrievous'}, // score: 1 -> D
+    { id: 'ghostcircle', name: 'GhostCircle', type: 'blade', bey_type: 'stamina', image: 'images/blades/GhostCircle.png', tier: 'C', variantsId: 'ghostcircle'}, // score: 2 -> C
+    { id: 'gillshark', name: 'GillShark', type: 'blade', bey_type: 'attack', image: 'images/blades/GillShark.png', tier: 'C', variantsId: 'gillshark'}, // score: 2 -> C
+    { id: 'golemrock', name: 'GolemRock', type: 'blade', bey_type: 'defense', image: 'images/blades/GolemRock.png', tier: 'D' }, // score: 1 -> D
+    { id: 'hellshammer', name: 'Hells Hammer', type: 'blade', bey_type: 'attack', image: 'images/blades/HellsHammer.png', tier: 'C', variantsId: 'hellshammer'}, // score: 4.5 -> C
+    { id: 'hornet', name: 'Hornet', type: 'blade', bey_type: 'attack', image: 'images/blades/Hornet.png', tier: 'D' }, // score: 1 -> D
+    { id: 'impactdrake', name: 'ImpactDrake', type: 'blade', bey_type: 'attack', image: 'images/blades/ImpactDrake.png', tier: 'B', variantsId: 'impactdrake'}, // score: 5.5 -> B
+    { id: 'knightlance', name: 'KnightLance', type: 'blade', bey_type: 'stamina', image: 'images/blades/KnightLance.png', tier: 'C', variantsId: 'knightlance'}, // score: 3.5 -> C
+    { id: 'kraken', name: 'Kraken', type: 'blade', bey_type: 'stamina', image: 'images/blades/Kraken.png', tier: 'D' }, // score: 1 -> D
+    { id: 'leoncrest', name: 'LeonCrest', type: 'blade', bey_type: 'defense', image: 'images/blades/LeonCrest.png', tier: 'C', variantsId: 'leoncrest'}, // score: 2.5 -> C
+    { id: 'lightningl-drago', name: 'Lightning L-Drago', type: 'blade', bey_type: 'attack', image: 'images/blades/LightningL-Drago.png', tier: 'C', variantsId: 'lightningl-drago'}, // score: 3.5 -> C
+    { id: 'mammothtusk', name: 'Mammoth Tusk', type: 'blade', bey_type: 'balance', image: 'images/blades/MammothTusk.png', tier: 'D', variantsId: 'mammothtusk'}, // score: 1.5 -> D
+    { id: 'moffgideon', name: 'MoffGideon', type: 'blade', bey_type: 'defense', image: 'images/blades/MoffGideon.png', tier: 'D', variantsId: 'moffgideon'}, // score: 1 -> D
+    { id: 'mosasaurus', name: 'Mosasaurus', type: 'blade', bey_type: 'attack', image: 'images/blades/Mosasaurus.png', tier: 'D', variantsId: 'mosasaurus'}, // score: 1 -> D
+    { id: 'optimusprimal', name: 'Optimus Primal', type: 'blade', bey_type: 'attack', image: 'images/blades/OptimusPrimal.png', tier: 'C', variantsId: 'optimusprimal'}, // score: 2 -> C
+    { id: 'optimusprime', name: 'Optimus Prime', type: 'blade', bey_type: 'balance', image: 'images/blades/OptimusPrime.png', tier: 'D', variantsId: 'optimusprime'}, // score: 1 -> D
+    { id: 'phoenixfeather', name: 'Phoenix Feather', type: 'blade', bey_type: 'stamina', image: 'images/blades/PhoenixFeather.png', tier: 'D', variantsId: 'phoenixfeather'}, // score: 1.5 -> D
+    { id: 'phoenixrudder', name: 'Phoenix Rudder', type: 'blade', bey_type: 'defense', image: 'images/blades/PhoenixRudder.png', tier: 'C', variantsId: 'phoenixrudder'}, // score: 2 -> C
+    { id: 'pteraswing', name: 'PteraSwing', type: 'blade', bey_type: 'defense', image: 'images/blades/PteraSwing.png', tier: 'D' }, // score: 1.5 -> D
+    { id: 'quetzalcoatlus', name: 'Quetzal coatlus', type: 'blade', bey_type: 'defense', image: 'images/blades/Quetzalcoatlus.png', tier: 'D', variantsId: 'quetzalcoatlus'}, // score: 1 -> D
+    { id: 'reaper', name: 'Reaper', type: 'blade', bey_type: 'attack', image: 'images/blades/Reaper.png', tier: 'C' }, // score: 2.5 -> C
+    { id: 'rhinohorn', name: 'RhinoHorn', type: 'blade', bey_type: 'defense', image: 'images/blades/RhinoHorn.png', tier: 'D', variantsId: 'rhinohorn'}, // score: 1.5 -> D
+    { id: 'rockleone', name: 'RockLeone', type: 'blade', bey_type: 'defense', image: 'images/blades/RockLeone.png', tier: 'D', variantsId: 'rockleone'}, // score: 1.5 -> D
+    { id: 'samuraicalibur', name: 'Samurai Calibur', type: 'blade', bey_type: 'balance', image: 'images/blades/SamuraiCalibur.png', tier: 'C', variantsId: 'samuraicalibur'}, // score: 3 -> C
+    { id: 'samuraisaber', name: 'Samurai Saber', type: 'blade', bey_type: 'attack', image: 'images/blades/SamuraiSaber.png', tier: 'B', variantsId: 'samuraisaber'}, // score: 5 -> B
+    { id: 'samuraisteel', name: 'Samurai Steel', type: 'blade', bey_type: 'balance', image: 'images/blades/SamuraiSteel.png', tier: 'D' }, // score: 1 -> D
+    { id: 'scorpiospear', name: 'Scorpio Spear', type: 'blade', bey_type: 'attack', image: 'images/blades/ScorpioSpear.png', tier: 'B', variantsId: 'scorpiospear'}, // score: 8 -> B
+    { id: 'sharkedge', name: 'SharkEdge', type: 'blade', bey_type: 'attack', image: 'images/blades/SharkEdge.png', tier: 'B', variantsId: 'sharkedge'}, // score: 9.5 -> B
+    { id: 'shelterdrake', name: 'ShelterDrake', type: 'blade', bey_type: 'defense', image: 'images/blades/ShelterDrake.png', tier: 'C', variantsId: 'shelterdrake'}, // score: 2 -> C
+    { id: 'shinobiknife', name: 'ShinobiKnife', type: 'blade', bey_type: 'defense', image: 'images/blades/ShinobiKnife.png', tier: 'D', variantsId: 'shinobiknife'}, // score: 1 -> D
+    { id: 'shinobishadow', name: 'Shinobi Shadow', type: 'blade', bey_type: 'stamina', image: 'images/blades/ShinobiShadow.png', tier: 'D', variantsId: 'shinobishadow'}, // score: 1.5 -> D
+    { id: 'spider-man', name: 'Spider-Man', type: 'blade', bey_type: 'attack', image: 'images/blades/Spider-Man.png', tier: 'D', variantsId: 'spider-man'}, // score: 1 -> D
+    { id: 'sphinx-cowl', name: 'SphinxCowl', type: 'blade', bey_type: 'defense', image: 'images/blades/SphinxCowl.png', tier: 'D', variantsId: 'sphinx-cowl'}, // score: 1.5 -> D
+    { id: 'spinosaurus', name: 'Spinosaurus', type: 'blade', bey_type: 'attack', image: 'images/blades/Spinosaurus.png', tier: 'D', variantsId: 'spinosaurus'}, // score: 1 -> D
+    { id: 'stormpegasis', name: 'Storm Pegasis', type: 'blade', bey_type: 'attack', image: 'images/blades/StormPegasis.png', tier: 'D', variantsId: 'stormpegasis'}, // score: 1 -> D
+    { id: 't.rex', name: 'T.Rex', type: 'blade', bey_type: 'attack', image: 'images/blades/T.Rex.png', tier: 'D', variantsId: 't.rex'}, // score: 1 -> D
+    { id: 'tacklegoat', name: 'TackleGoat', type: 'blade', bey_type: 'defense', image: 'images/blades/TackleGoat.png', tier: 'D', variantsId: 'tacklegoat'}, // score: 1 -> D
+    { id: 'thanos', name: 'Thanos', type: 'blade', bey_type: 'balance', image: 'images/blades/Thanos.png', tier: 'D', variantsId: 'thanos'}, // score: 1 -> D
+    { id: 'tricerapress', name: 'TriceraPress', type: 'blade', bey_type: 'defense', image: 'images/blades/TriceraPress.png', tier: 'C', variantsId: 'tricerapress'}, // score: 2.5 -> C
+    { id: 'tyrannoroar', name: 'TyrannoRoar', type: 'blade', bey_type: 'attack', image: 'images/blades/TyrannoRoar.png', tier: 'B', variantsId: 'tyrannoroar'}, // score: 5 -> B
+    { id: 'venom', name: 'Venom', type: 'blade', bey_type: 'defense', image: 'images/blades/Venom.png', tier: 'C', variantsId: 'venom'}, // score: 2 -> C
+    { id: 'victoryvalkyrie', name: 'Victory Valkyrie', type: 'blade', bey_type: 'attack', image: 'images/blades/VictoryValkyrie.png', tier: 'D', variantsId: 'victoryvalkyrie'}, // score: 1 -> D
+    { id: 'vipertail', name: 'ViperTail', type: 'blade', bey_type: 'attack', image: 'images/blades/ViperTail.png', tier: 'C', variantsId: 'vipertail'}, // score: 2.5 -> C
+    { id: 'weisstiger', name: 'WeissTiger', type: 'blade', bey_type: 'stamina', image: 'images/blades/WeissTiger.png', tier: 'C', variantsId: 'weisstiger'}, // score: 2 -> C
+    { id: 'whalewave', name: 'WhaleWave', type: 'blade', bey_type: 'defense', image: 'images/blades/WhaleWave.png', tier: 'B', variantsId: 'whalewave'}, // score: 6 -> B
+    { id: 'wyverngale', name: 'WyvernGale', type: 'blade', bey_type: 'stamina', image: 'images/blades/WyvernGale.png', tier: 'D', variantsId: 'wyverngale'}, // score: 1.5 -> D
+    { id: 'xenoxcalibur', name: 'Xeno Xcalibur', type: 'blade', bey_type: 'attack', image: 'images/blades/XenoXcalibur.png', tier: 'D', variantsId: 'xenoxcalibur'}, // score: 1 -> D
+    { id: 'yellkong', name: 'YellKong', type: 'blade', bey_type: 'defense', image: 'images/blades/YellKong.png', tier: 'D', variantsId: 'yellkong'}, // score: 1.5 -> D
 
     // Ratchets
-    { id: '0-70', name: '0-70', type: 'ratchet', image: 'images/ratchets/0-70.png' }, { id: '0-80', name: '0-80', type: 'ratchet', image: 'images/ratchets/0-80.png' }, { id: '1-60', name: '1-60', type: 'ratchet', image: 'images/ratchets/1-60.png' }, { id: '1-70', name: '1-70', type: 'ratchet', image: 'images/ratchets/1-70.png' }, { id: '1-80', name: '1-80', type: 'ratchet', image: 'images/ratchets/1-80.png' }, { id: '2-60', name: '2-60', type: 'ratchet', image: 'images/ratchets/2-60.png' }, { id: '2-70', name: '2-70', type: 'ratchet', image: 'images/ratchets/2-70.png' }, { id: '2-80', name: '2-80', type: 'ratchet', image: 'images/ratchets/2-80.png' }, { id: '3-60', name: '3-60', type: 'ratchet', image: 'images/ratchets/3-60.png' }, { id: '3-70', name: '3-70', type: 'ratchet', image: 'images/ratchets/3-70.png' }, { id: '3-80', name: '3-80', type: 'ratchet', image: 'images/ratchets/3-80.png' }, { id: '3-85', name: '3-85', type: 'ratchet', image: 'images/ratchets/3-85.png' }, { id: '4-50', name: '4-50', type: 'ratchet', image: 'images/ratchets/4-50.png' }, { id: '4-55', name: '4-55', type: 'ratchet', image: 'images/ratchets/4-55.png' }, { id: '4-60', name: '4-60', type: 'ratchet', image: 'images/ratchets/4-60.png' }, { id: '4-70', name: '4-70', type: 'ratchet', image: 'images/ratchets/4-70.png' }, { id: '4-80', name: '4-80', type: 'ratchet', image: 'images/ratchets/4-80.png' }, { id: '5-60', name: '5-60', type: 'ratchet', image: 'images/ratchets/5-60.png' }, { id: '5-70', name: '5-70', type: 'ratchet', image: 'images/ratchets/5-70.png' }, { id: '5-80', name: '5-80', type: 'ratchet', image: 'images/ratchets/5-80.png' }, { id: '6-60', name: '6-60', type: 'ratchet', image: 'images/ratchets/6-60.png' }, { id: '6-70', name: '6-70', type: 'ratchet', image: 'images/ratchets/6-70.png' }, { id: '6-80', name: '6-80', type: 'ratchet', image: 'images/ratchets/6-80.png' }, { id: '7-60', name: '7-60', type: 'ratchet', image: 'images/ratchets/7-60.png' }, { id: '7-70', name: '7-70', type: 'ratchet', image: 'images/ratchets/7-70.png' }, { id: '7-80', name: '7-80', type: 'ratchet', image: 'images/ratchets/7-80.png' }, { id: '9-60', name: '9-60', type: 'ratchet', image: 'images/ratchets/9-60.png' }, { id: '9-70', name: '9-70', type: 'ratchet', image: 'images/ratchets/9-70.png' }, { id: '9-80', name: '9-80', type: 'ratchet', image: 'images/ratchets/9-80.png' }, { id: 'm-85', name: 'M-85', type: 'ratchet', image: 'images/ratchets/M-85.png' },
+    { id: '0-70', name: '0-70', type: 'ratchet', image: 'images/ratchets/0-70.png', tier: 'B' }, // score: 39 -> B
+    { id: '0-80', name: '0-80', type: 'ratchet', image: 'images/ratchets/0-80.png', tier: 'B' }, // score: 48.5 -> B
+    { id: '1-60', name: '1-60', type: 'ratchet', image: 'images/ratchets/1-60.png', tier: 'S' }, // score: 3389.15 -> S
+    { id: '1-70', name: '1-70', type: 'ratchet', image: 'images/ratchets/1-70.png', tier: 'A' }, // score: 409.15 -> A
+    { id: '1-80', name: '1-80', type: 'ratchet', image: 'images/ratchets/1-80.png', tier: 'A' }, // score: 114 -> A
+    { id: '2-60', name: '2-60', type: 'ratchet', image: 'images/ratchets/2-60.png', tier: 'B' }, // score: 49.25 -> B
+    { id: '2-70', name: '2-70', type: 'ratchet', image: 'images/ratchets/2-70.png', tier: 'C' }, // score: 13 -> C
+    { id: '2-80', name: '2-80', type: 'ratchet', image: 'images/ratchets/2-80.png', tier: 'D' }, // score: 5 -> D
+    { id: '3-60', name: '3-60', type: 'ratchet', image: 'images/ratchets/3-60.png', tier: 'S' }, // score: 2580.5 -> S
+    { id: '3-70', name: '3-70', type: 'ratchet', image: 'images/ratchets/3-70.png', tier: 'A' }, // score: 114.15 -> A
+    { id: '3-80', name: '3-80', type: 'ratchet', image: 'images/ratchets/3-80.png', tier: 'A' }, // score: 88.25 -> A (Ajustado de B)
+    { id: '3-85', name: '3-85', type: 'ratchet', image: 'images/ratchets/3-85.png', tier: 'C' }, // score: 16 -> C
+    { id: '4-50', name: '4-50', type: 'ratchet', image: 'images/ratchets/4-50.png', tier: 'A' }, // score: 356 -> A
+    { id: '4-55', name: '4-55', type: 'ratchet', image: 'images/ratchets/4-55.png', tier: 'A' }, // score: 82.15 -> A (Ajustado de B)
+    { id: '4-60', name: '4-60', type: 'ratchet', image: 'images/ratchets/4-60.png', tier: 'A' }, // score: 178.5 -> A
+    { id: '4-70', name: '4-70', type: 'ratchet', image: 'images/ratchets/4-70.png', tier: 'C' }, // score: 22.5 -> C
+    { id: '4-80', name: '4-80', type: 'ratchet', image: 'images/ratchets/4-80.png', tier: 'B' }, // score: 28.25 -> B
+    { id: '5-60', name: '5-60', type: 'ratchet', image: 'images/ratchets/5-60.png', tier: 'S' }, // score: 1760.15 -> S
+    { id: '5-70', name: '5-70', type: 'ratchet', image: 'images/ratchets/5-70.png', tier: 'A' }, // score: 150 -> A
+    { id: '5-80', name: '5-80', type: 'ratchet', image: 'images/ratchets/5-80.png', tier: 'A' }, // score: 70 -> A (Ajustado de B)
+    { id: '6-60', name: '6-60', type: 'ratchet', image: 'images/ratchets/6-60.png', tier: 'A' }, // score: 345.25 -> A
+    { id: '6-70', name: '6-70', type: 'ratchet', image: 'images/ratchets/6-70.png', tier: 'D' }, // score: 5 -> D
+    { id: '6-80', name: '6-80', type: 'ratchet', image: 'images/ratchets/6-80.png', tier: 'C' }, // score: 22.5 -> C
+    { id: '7-60', name: '7-60', type: 'ratchet', image: 'images/ratchets/7-60.png', tier: 'S' }, // score: 1174 -> S
+    { id: '7-70', name: '7-70', type: 'ratchet', image: 'images/ratchets/7-70.png', tier: 'A' }, // score: 228.25 -> A
+    { id: '7-80', name: '7-80', type: 'ratchet', image: 'images/ratchets/7-80.png', tier: 'C' }, // score: 17.25 -> C
+    { id: '9-60', name: '9-60', type: 'ratchet', image: 'images/ratchets/9-60.png', tier: 'S' }, // score: 3327.5 -> S
+    { id: '9-70', name: '9-70', type: 'ratchet', image: 'images/ratchets/9-70.png', tier: 'A' }, // score: 296.5 -> A
+    { id: '9-80', name: '9-80', type: 'ratchet', image: 'images/ratchets/9-80.png', tier: 'A' }, // score: 94 -> A (Ajustado de B)
+    { id: 'm-85', name: 'M-85', type: 'ratchet', image: 'images/ratchets/M-85.png', tier: 'C' }, // score: 11 -> C
 
     // Bits
-    { id: 'accel', name: 'Accel', type: 'bit', bey_type: 'attack', image: 'images/bits/Accel.png' },
-    { id: 'ball', name: 'Ball', type: 'bit', bey_type: 'stamina', image: 'images/bits/Ball.png' },
-    { id: 'boundspike', name: 'BoundSpike', type: 'bit', bey_type: 'defense', image: 'images/bits/BoundSpike.png' },
-    { id: 'cyclone', name: 'Cyclone', type: 'bit', bey_type: 'attack', image: 'images/bits/Cyclone.png' },
-    { id: 'diskball', name: 'DiskBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/DiskBall.png' },
-    { id: 'dot', name: 'Dot', type: 'bit', bey_type: 'defense', image: 'images/bits/Dot.png' },
-    { id: 'elevate', name: 'Elevate', type: 'bit', bey_type: 'stamina', image: 'images/bits/Elevate.png' },
-    { id: 'flat', name: 'Flat', type: 'bit', bey_type: 'attack', image: 'images/bits/Flat.png' },
-    { id: 'freeball', name: 'FreeBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/FreeBall.png' },
-    { id: 'gearball', name: 'GearBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/GearBall.png' },
-    { id: 'gearflat', name: 'GearFlat', type: 'bit', bey_type: 'attack', image: 'images/bits/GearFlat.png' },
-    { id: 'gearneedle', name: 'GearNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/GearNeedle.png' },
-    { id: 'gearpoint', name: 'GearPoint', type: 'bit', bey_type: 'attack', image: 'images/bits/GearPoint.png' },
-    { id: 'gearrush', name: 'GearRush', type: 'bit', bey_type: 'attack', image: 'images/bits/GearRush.png' },
-    { id: 'glide', name: 'Glide', type: 'bit', bey_type: 'stamina', image: 'images/bits/Glide.png' },
-    { id: 'hexa', name: 'Hexa', type: 'bit', bey_type: 'balance', image: 'images/bits/Hexa.png' },
-    { id: 'highneedle', name: 'HighNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/HighNeedle.png' },
-    { id: 'hightaper', name: 'HighTaper', type: 'bit', bey_type: 'balance', image: 'images/bits/HighTaper.png' },
-    { id: 'kick', name: 'Kick', type: 'bit', bey_type: 'balance', image: 'images/bits/Kick.png' },
-    { id: 'level', name: 'Level', type: 'bit', bey_type: 'balance', image: 'images/bits/Level.png' },
-    { id: 'lowflat', name: 'LowFlat', type: 'bit', bey_type: 'attack', image: 'images/bits/LowFlat.png' },
-    { id: 'loworb', name: 'LowOrb', type: 'bit', bey_type: 'stamina', image: 'images/bits/LowOrb.png' },
-    { id: 'lowrush', name: 'LowRush', type: 'bit', bey_type: 'attack', image: 'images/bits/LowRush.png' },
-    { id: 'merge', name: 'Merge', type: 'bit', bey_type: 'balance', image: 'images/bits/Merge.png' },
-    { id: 'metalneedle', name: 'MetalNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/MetalNeedle.png' },
-    { id: 'needle', name: 'Needle', type: 'bit', bey_type: 'defense', image: 'images/bits/Needle.png' },
-    { id: 'orb', name: 'Orb', type: 'bit', bey_type: 'stamina', image: 'images/bits/Orb.png' },
-    { id: 'point', name: 'Point', type: 'bit', bey_type: 'attack', image: 'images/bits/Point.png' },
-    { id: 'quake', name: 'Quake', type: 'bit', bey_type: 'attack', image: 'images/bits/Quake.png' },
-    { id: 'rubberaccel', name: 'RubberAccel', type: 'bit', bey_type: 'attack', image: 'images/bits/RubberAccel.png' },
-    { id: 'rush', name: 'Rush', type: 'bit', bey_type: 'attack', image: 'images/bits/Rush.png' },
-    { id: 'spike', name: 'Spike', type: 'bit', bey_type: 'defense', image: 'images/bits/Spike.png' },
-    { id: 'taper', name: 'Taper', type: 'bit', bey_type: 'balance', image: 'images/bits/Taper.png' },
-    { id: 'transpoint', name: 'TransPoint', type: 'bit', bey_type: 'balance', image: 'images/bits/TransPoint.png' },
-    { id: 'underneedle', name: 'UnderNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/UnderNeedle.png' },
-    { id: 'unite', name: 'Unite', type: 'bit', bey_type: 'balance', image: 'images/bits/Unite.png' },
-    { id: 'vortex', name: 'Vortex', type: 'bit', bey_type: 'attack', image: 'images/bits/Vortex.png' },
-    { id: 'wedge', name: 'Wedge', type: 'bit', bey_type: 'defense', image: 'images/bits/Wedge.png' },
-    { id: 'zap', name: 'Zap', type: 'bit', bey_type: 'balance', image: 'images/bits/Zap.png' },
+    { id: 'accel', name: 'Accel', type: 'bit', bey_type: 'attack', image: 'images/bits/Accel.png', tier: 'B' }, // score: 39 -> B
+    { id: 'ball', name: 'Ball', type: 'bit', bey_type: 'stamina', image: 'images/bits/Ball.png', tier: 'S' }, // score: 1298.25 -> S
+    { id: 'boundspike', name: 'BoundSpike', type: 'bit', bey_type: 'defense', image: 'images/bits/BoundSpike.png', tier: 'B' }, // score: 39.5 -> B
+    { id: 'cyclone', name: 'Cyclone', type: 'bit', bey_type: 'attack', image: 'images/bits/Cyclone.png', tier: 'B' }, // score: 79 -> B
+    { id: 'diskball', name: 'DiskBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/DiskBall.png', tier: 'C' }, // score: 17 -> C
+    { id: 'dot', name: 'Dot', type: 'bit', bey_type: 'defense', image: 'images/bits/Dot.png', tier: 'B' }, // score: 39.5 -> B
+    { id: 'elevate', name: 'Elevate', type: 'bit', bey_type: 'stamina', image: 'images/bits/Elevate.png', tier: 'S' }, // score: 1299 -> S
+    { id: 'flat', name: 'Flat', type: 'bit', bey_type: 'attack', image: 'images/bits/Flat.png', tier: 'A' }, // score: 223 -> A
+    { id: 'freeball', name: 'FreeBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/FreeBall.png', tier: 'A' }, // score: 716 -> A
+    { id: 'gearball', name: 'GearBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/GearBall.png', tier: 'B' }, // score: 35 -> B
+    { id: 'gearflat', name: 'GearFlat', type: 'bit', bey_type: 'attack', image: 'images/bits/GearFlat.png', tier: 'B' }, // score: 48.15 -> B
+    { id: 'gearneedle', name: 'GearNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/GearNeedle.png', tier: 'C' }, // score: 11.5 -> C
+    { id: 'gearpoint', name: 'GearPoint', type: 'bit', bey_type: 'attack', image: 'images/bits/GearPoint.png', tier: 'B' }, // score: 54 -> B
+    { id: 'gearrush', name: 'GearRush', type: 'bit', bey_type: 'attack', image: 'images/bits/GearRush.png', tier: 'B' }, // score: 25 -> B
+    { id: 'glide', name: 'Glide', type: 'bit', bey_type: 'stamina', image: 'images/bits/Glide.png', tier: 'C' }, // score: 19.5 -> C
+    { id: 'hexa', name: 'Hexa', type: 'bit', bey_type: 'balance', image: 'images/bits/Hexa.png', tier: 'S' }, // score: 1908.15 -> S
+    { id: 'highneedle', name: 'HighNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/HighNeedle.png', tier: 'B' }, // score: 39.25 -> B
+    { id: 'hightaper', name: 'HighTaper', type: 'bit', bey_type: 'balance', image: 'images/bits/HighTaper.png', tier: 'B' }, // score: 29.25 -> B
+    { id: 'kick', name: 'Kick', type: 'bit', bey_type: 'balance', image: 'images/bits/Kick.png', tier: 'S' }, // score: 1050 -> S
+    { id: 'level', name: 'Level', type: 'bit', bey_type: 'balance', image: 'images/bits/Level.png', tier: 'S' }, // score: 1007.5 -> S
+    { id: 'lowflat', name: 'LowFlat', type: 'bit', bey_type: 'attack', image: 'images/bits/LowFlat.png', tier: 'A' }, // score: 350.15 -> A
+    { id: 'loworb', name: 'LowOrb', type: 'bit', bey_type: 'stamina', image: 'images/bits/LowOrb.png', tier: 'A' }, // score: 351 -> A
+    { id: 'lowrush', name: 'LowRush', type: 'bit', bey_type: 'attack', image: 'images/bits/LowRush.png', tier: 'S' }, // score: 2011.5 -> S
+    { id: 'merge', name: 'Merge', type: 'bit', bey_type: 'balance', image: 'images/bits/Merge.png', tier: 'D' }, // score: 3 -> D
+    { id: 'metalneedle', name: 'MetalNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/MetalNeedle.png', tier: 'D' }, // score: 4.15 -> D
+    { id: 'needle', name: 'Needle', type: 'bit', bey_type: 'defense', image: 'images/bits/Needle.png', tier: 'B' }, // score: 31.5 -> B
+    { id: 'orb', name: 'Orb', type: 'bit', bey_type: 'stamina', image: 'images/bits/Orb.png', tier: 'A' }, // score: 126 -> A
+    { id: 'point', name: 'Point', type: 'bit', bey_type: 'attack', image: 'images/bits/Point.png', tier: 'A' }, // score: 752.15 -> A
+    { id: 'quake', name: 'Quake', type: 'bit', bey_type: 'attack', image: 'images/bits/Quake.png', tier: 'C' }, // score: 21.5 -> C
+    { id: 'rubberaccel', name: 'RubberAccel', type: 'bit', bey_type: 'attack', image: 'images/bits/RubberAccel.png', tier: 'A' }, // score: 110.15 -> A
+    { id: 'rush', name: 'Rush', type: 'bit', bey_type: 'attack', image: 'images/bits/Rush.png', tier: 'S' }, // score: 2214 -> S
+    { id: 'spike', name: 'Spike', type: 'bit', bey_type: 'defense', image: 'images/bits/Spike.png', tier: 'C' }, // score: 19 -> C
+    { id: 'taper', name: 'Taper', type: 'bit', bey_type: 'balance', image: 'images/bits/Taper.png', tier: 'A' }, // score: 336 -> A
+    { id: 'transpoint', name: 'TransPoint', type: 'bit', bey_type: 'balance', image: 'images/bits/TransPoint.png', tier: 'C' }, // score: 24.25 -> C
+    { id: 'underneedle', name: 'UnderNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/UnderNeedle.png', tier: 'A' }, // score: 162.5 -> A
+    { id: 'unite', name: 'Unite', type: 'bit', bey_type: 'balance', image: 'images/bits/Unite.png', tier: 'A' }, // score: 169.25 -> A
+    { id: 'vortex', name: 'Vortex', type: 'bit', bey_type: 'attack', image: 'images/bits/Vortex.png', tier: 'C' }, // score: 24.15 -> C
+    { id: 'wedge', name: 'Wedge', type: 'bit', bey_type: 'defense', image: 'images/bits/Wedge.png', tier: 'A' }, // score: 301.15 -> A
+    { id: 'zap', name: 'Zap', type: 'bit', bey_type: 'balance', image: 'images/bits/Zap.png', tier: 'B' }, // score: 47 -> B
 
-    // --- Peças de Chip (SEM score) ---
-    { id: 'lockchip-dran', name: 'Dran', type: 'lockchip', image: 'images/lockchips/Dran.png' },
-    { id: 'lockchip-fox', name: 'Fox', type: 'lockchip', image: 'images/lockchips/Fox.png' },
-    { id: 'lockchip-hells', name: 'Hells', type: 'lockchip', image: 'images/lockchips/Hells.png' },
-    { id: 'lockchip-hornet', name: 'Hornet', type: 'lockchip', image: 'images/lockchips/Hornet.png' },
-    { id: 'lockchip-kraken', name: 'Kraken', type: 'lockchip', image: 'images/lockchips/Kraken.png' },
-    { id: 'lockchip-leon', name: 'Leon', type: 'lockchip', image: 'images/lockchips/Leon.png' },
-    { id: 'lockchip-perseus', name: 'Perseus', type: 'lockchip', image: 'images/lockchips/Perseus.png' },
-    { id: 'lockchip-rhino', name: 'Rhino', type: 'lockchip', image: 'images/lockchips/Rhino.png' },
-    { id: 'lockchip-sol', name: 'Sol', type: 'lockchip', image: 'images/lockchips/Sol.png' },
-    { id: 'lockchip-stag', name: 'Stag', type: 'lockchip', image: 'images/lockchips/Stag.png' },
-    { id: 'lockchip-valkyrie', name: 'Valkyrie', type: 'lockchip', image: 'images/lockchips/Valkyrie.png' },
-    { id: 'lockchip-wizard', name: 'Wizard', type: 'lockchip', image: 'images/lockchips/Wizard.png' },
+    // --- Peças de Chip (TIER B como padrão - AJUSTE SE NECESSÁRIO) ---
+    { id: 'lockchip-dran', name: 'Dran', type: 'lockchip', image: 'images/lockchips/Dran.png', tier: 'B' },
+    { id: 'lockchip-fox', name: 'Fox', type: 'lockchip', image: 'images/lockchips/Fox.png', tier: 'B' },
+    { id: 'lockchip-hells', name: 'Hells', type: 'lockchip', image: 'images/lockchips/Hells.png', tier: 'B' },
+    { id: 'lockchip-hornet', name: 'Hornet', type: 'lockchip', image: 'images/lockchips/Hornet.png', tier: 'B' },
+    { id: 'lockchip-kraken', name: 'Kraken', type: 'lockchip', image: 'images/lockchips/Kraken.png', tier: 'B' },
+    { id: 'lockchip-leon', name: 'Leon', type: 'lockchip', image: 'images/lockchips/Leon.png', tier: 'B' },
+    { id: 'lockchip-perseus', name: 'Perseus', type: 'lockchip', image: 'images/lockchips/Perseus.png', tier: 'B' },
+    { id: 'lockchip-rhino', name: 'Rhino', type: 'lockchip', image: 'images/lockchips/Rhino.png', tier: 'B' },
+    { id: 'lockchip-sol', name: 'Sol', type: 'lockchip', image: 'images/lockchips/Sol.png', tier: 'B' },
+    { id: 'lockchip-stag', name: 'Stag', type: 'lockchip', image: 'images/lockchips/Stag.png', tier: 'B' },
+    { id: 'lockchip-valkyrie', name: 'Valkyrie', type: 'lockchip', image: 'images/lockchips/Valkyrie.png', tier: 'B' },
+    { id: 'lockchip-wizard', name: 'Wizard', type: 'lockchip', image: 'images/lockchips/Wizard.png', tier: 'B' },
 
-    { id: 'mainblade-arc', name: 'Arc', type: 'mainblade', image: 'images/mainblades/Arc.png' },
-    { id: 'mainblade-brave', name: 'Brave', type: 'mainblade', image: 'images/mainblades/Brave.png' },
-    { id: 'mainblade-brush', name: 'Brush', type: 'mainblade', image: 'images/mainblades/Brush.png' },
-    { id: 'mainblade-dark', name: 'Dark', type: 'mainblade', image: 'images/mainblades/Dark.png' },
-    { id: 'mainblade-fang', name: 'Fang', type: 'mainblade', image: 'images/mainblades/Fang.png' },
-    { id: 'mainblade-fort', name: 'Fort', type: 'mainblade', image: 'images/mainblades/Fort.png' },
-    { id: 'mainblade-reaper', name: 'Reaper', type: 'mainblade', image: 'images/mainblades/Reaper.png' },
-    { id: 'mainblade-volt', name: 'Volt', type: 'mainblade', image: 'images/mainblades/Volt.png' },
-    { id: 'mainblade-wriggle', name: 'Wriggle', type: 'mainblade', image: 'images/mainblades/Wriggle.png' },
-    { id: 'antler', name: 'Antler', type: 'mainblade', image: 'images/mainblades/antler.png' },
+    { id: 'mainblade-arc', name: 'Arc', type: 'mainblade', image: 'images/mainblades/Arc.png', tier: 'B' },
+    { id: 'mainblade-brave', name: 'Brave', type: 'mainblade', image: 'images/mainblades/Brave.png', tier: 'B' },
+    { id: 'mainblade-brush', name: 'Brush', type: 'mainblade', image: 'images/mainblades/Brush.png', tier: 'B' },
+    { id: 'mainblade-dark', name: 'Dark', type: 'mainblade', image: 'images/mainblades/Dark.png', tier: 'B' },
+    { id: 'mainblade-fang', name: 'Fang', type: 'mainblade', image: 'images/mainblades/Fang.png', tier: 'B' },
+    { id: 'mainblade-fort', name: 'Fort', type: 'mainblade', image: 'images/mainblades/Fort.png', tier: 'B' },
+    { id: 'mainblade-reaper', name: 'Reaper', type: 'mainblade', image: 'images/mainblades/Reaper.png', tier: 'B' },
+    { id: 'mainblade-volt', name: 'Volt', type: 'mainblade', image: 'images/mainblades/Volt.png', tier: 'B' },
+    { id: 'mainblade-wriggle', name: 'Wriggle', type: 'mainblade', image: 'images/mainblades/Wriggle.png', tier: 'B' },
+    { id: 'antler', name: 'Antler', type: 'mainblade', image: 'images/mainblades/antler.png', tier: 'B' },
 
-    { id: 'assistblade-bumper', name: 'Bumper', type: 'assistblade', image: 'images/assistblades/Bumper.png' },
-    { id: 'assistblade-charge', name: 'Charge', type: 'assistblade', image: 'images/assistblades/Charge.png' },
-    { id: 'assistblade-jaggy', name: 'Jaggy', type: 'assistblade', image: 'images/assistblades/Jaggy.png' },
-    { id: 'assistblade-round', name: 'Round', type: 'assistblade', image: 'images/assistblades/Round.png' },
-    { id: 'assistblade-slash', name: 'Slash', type: 'assistblade', image: 'images/assistblades/Slash.png' },
-    { id: 'assistblade-turn', name: 'Turn', type: 'assistblade', image: 'images/assistblades/Turn.png' },
+    { id: 'assistblade-bumper', name: 'Bumper', type: 'assistblade', image: 'images/assistblades/Bumper.png', tier: 'B' },
+    { id: 'assistblade-charge', name: 'Charge', type: 'assistblade', image: 'images/assistblades/Charge.png', tier: 'B' },
+    { id: 'assistblade-jaggy', name: 'Jaggy', type: 'assistblade', image: 'images/assistblades/Jaggy.png', tier: 'B' },
+    { id: 'assistblade-round', name: 'Round', type: 'assistblade', image: 'images/assistblades/Round.png', tier: 'B' },
+    { id: 'assistblade-slash', name: 'Slash', type: 'assistblade', image: 'images/assistblades/Slash.png', tier: 'B' },
+    { id: 'assistblade-turn', name: 'Turn', type: 'assistblade', image: 'images/assistblades/Turn.png', tier: 'B' },
 ];
-
-// [REMOVIDO] const ALL_COMBOS = [...]
-// [REMOVIDO] const ALL_CHIP_COMBOS = [...]
-
 
  // --- Traduções (AJUSTADAS) ---
  const translations = {
@@ -251,9 +277,9 @@ const ALL_PARTS = [
         tab_settings: "Configurações",
         tab_score: "Placar",
         // Cabeçalhos das Abas & Conteúdo META
-        meta_question: "Querer saber mais sobre o META?", // [NOVO]
-        meta_cta: "Acesse o link abaixo e esteja um passo mais próximo de se tornar um PRO!", // [NOVO]
-        meta_link_text: "Clique aqui para acessar a Ferramenta de Análise de META", // [NOVO]
+        meta_question: "Querer saber mais sobre o META?",
+        meta_cta: "Acesse o link abaixo e esteja um passo mais próximo de se tornar um PRO!",
+        meta_link_text: "Clique aqui para acessar a Ferramenta de Análise de META",
         deck_builder_header: "Montador de Decks",
         collection_header: "Minha Coleção",
         settings_header: "Importar & Exportar Dados",
@@ -263,6 +289,8 @@ const ALL_PARTS = [
         collection_sort_label: "Ordenar por:",
         sort_name_asc: "Nome (A-Z)",
         sort_name_desc: "Nome (Z-A)",
+        sort_tier_desc: "Tier (S > D)", // [NOVO]
+        sort_tier_asc: "Tier (D > S)",  // [NOVO]
         sort_type: "Tipo (A-D-S-B)",
         blades_section_title: "Blades",
         ratchets_section_title: "Ratchets",
@@ -335,9 +363,9 @@ const ALL_PARTS = [
         tab_settings: "Settings",
         tab_score: "Score",
          // Tab Headers & META Content
-         meta_question: "Want to know more about the META?", // [NEW]
-         meta_cta: "Access the link below and be one step closer to becoming a PRO!", // [NEW]
-         meta_link_text: "Click here to access the META Analysis Tool", // [NEW]
+         meta_question: "Want to know more about the META?",
+         meta_cta: "Access the link below and be one step closer to becoming a PRO!",
+         meta_link_text: "Click here to access the META Analysis Tool",
          deck_builder_header: "Deck Builder",
          collection_header: "My Collection",
          settings_header: "Import & Export Data",
@@ -347,6 +375,8 @@ const ALL_PARTS = [
          collection_sort_label: "Sort by:",
          sort_name_asc: "Name (A-Z)",
          sort_name_desc: "Name (Z-A)",
+         sort_tier_desc: "Tier (S > D)", // [NEW]
+         sort_tier_asc: "Tier (D > S)",  // [NEW]
          sort_type: "Type (A-D-S-B)",
          blades_section_title: "Blades",
          ratchets_section_title: "Ratchets",
@@ -413,7 +443,7 @@ const ALL_PARTS = [
     }
 };
 
-// --- Mapeamento de Peças para Produtos (Mantido para info popup) ---
+// --- Mapeamento de Peças para Produtos (Mantido) ---
 const PART_SOURCES = {
     // Blades Standard/Unique/Crossover
     'aerpegasus': ["UX-00 Aero Pegasus 3-70A"],
@@ -593,5 +623,4 @@ const PART_SOURCES = {
     'assistblade-round': ["CX-00 Starter Wizard Arc R4-55LO", "CX-02 Booster Wizard Arc R4-55LO"],
     'assistblade-slash': ["CX-01 Starter Dran Brave S6-60V", "CX-04 RB Vol. 4 (Dran Brave Recolor)"],
     'assistblade-turn': ["CX-05 RB Vol. 5 (Hells Reaper T4-70K)", "CX-05 RB Vol. 5 (Hells Arc T3-85O)"]
-    // Adicionar fontes para outros Assist Blades quando disponíveis
-}; // Fecha o objeto PART_SOURCES
+};

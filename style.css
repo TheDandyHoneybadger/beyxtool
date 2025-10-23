@@ -7,6 +7,18 @@
     --border-color: #555555;
     --active-tab: #ffffff;
     --owned-glow: 0 0 10px rgba(0, 255, 195, 0.8), 0 0 15px rgba(0, 255, 195, 0.6);
+
+    /* [NOVO] Cores dos Tiers (Ajuste se desejar) */
+    --tier-s-bg: #FFD700; /* Dourado */
+    --tier-s-text: #000000;
+    --tier-a-bg: #C0C0C0; /* Prata */
+    --tier-a-text: #000000;
+    --tier-b-bg: #CD7F32; /* Bronze */
+    --tier-b-text: #000000;
+    --tier-c-bg: #6A7A8C; /* Azul-acinzentado */
+    --tier-c-text: #FFFFFF;
+    --tier-d-bg: #888888; /* Cinza */
+    --tier-d-text: #FFFFFF;
 }
 
 * {
@@ -184,6 +196,28 @@ main {
     padding: 0 2px;
     margin-top: auto;
 }
+
+/* [NOVO] Estilo base para o Tier */
+.part-tier {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 5px;
+    line-height: 1;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+}
+
+/* [NOVO] Cores específicas para cada Tier */
+.part-tier.tier-s { background-color: var(--tier-s-bg); color: var(--tier-s-text); }
+.part-tier.tier-a { background-color: var(--tier-a-bg); color: var(--tier-a-text); }
+.part-tier.tier-b { background-color: var(--tier-b-bg); color: var(--tier-b-text); }
+.part-tier.tier-c { background-color: var(--tier-c-bg); color: var(--tier-c-text); }
+.part-tier.tier-d { background-color: var(--tier-d-bg); color: var(--tier-d-text); }
+/* [FIM NOVO] */
+
 
 .deck-management {
     background-color: var(--primary-bg);
@@ -499,7 +533,7 @@ input[type="text"],
 .meta-cta {
     text-align: center;
     margin-bottom: 2rem;
-    color: var(--text-color); /* MODIFICADO de --muted-text para --text-color */
+    color: var(--text-color);
 }
 
 .meta-link-container {
@@ -511,8 +545,8 @@ input[type="text"],
     gap: 1.5rem;
 }
 .meta-excel-icon {
-    width: 1000px; /* [MODIFICADO] Aumentado */
-    max-width: 100%; /* Garante responsividade */
+    width: 400px;
+    max-width: 100%;
     height: auto;
     display: block;
     margin-left: auto;
@@ -805,6 +839,11 @@ input[type="text"],
         top: 3px;
         left: 3px;
     }
+    /* [NOVO] Ajuste no tamanho da fonte do Tier */
+    .part-tier {
+        font-size: 0.75rem;
+        padding: 1px 4px;
+    }
 
     /* Responsividade do Placar */
     .score-container {
@@ -840,10 +879,13 @@ input[type="text"],
            width: 16px;
            height: 16px;
        }
+       /* [NOVO] Ajuste menor para fonte do Tier */
+       .part-tier {
+           font-size: 0.7rem;
+       }
 
     /* Responsividade do Placar (Pequeno) */
     .score-display {
         font-size: 4rem;
     }
-    /* [REMOVIDO] .meta-excel-icon específico para 480px */
 }
