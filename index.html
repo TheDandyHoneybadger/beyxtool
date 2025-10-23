@@ -6,6 +6,7 @@
     <title>BeyXTool</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -59,68 +60,133 @@
                  <div class="deck-area">
                     <div class="deck-slot" data-slot-id="0" data-bay-type="empty">
                         <div class="part-container">
-                            <div class="part-placeholder" data-type="primeira"><span data-translate="deck_placeholder_primeira">Primeira Peça</span></div>
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="primeira"></span>
+                                <div class="part-placeholder" data-type="primeira"><span data-translate="deck_placeholder_primeira">Primeira Peça</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="primeira" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container chip-specific-placeholder">
-                            <div class="part-placeholder" data-type="mainblade"><span data-translate="deck_placeholder_mainblade">Main Blade</span></div>
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="mainblade"></span>
+                                <div class="part-placeholder" data-type="mainblade"><span data-translate="deck_placeholder_mainblade">Main Blade</span></div>
+                             </div>
                             <p class="part-name-display" data-name-type="mainblade" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container chip-specific-placeholder">
-                            <div class="part-placeholder" data-type="assistblade"><span data-translate="deck_placeholder_assistblade">Assist Blade</span></div>
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="assistblade"></span>
+                                <div class="part-placeholder" data-type="assistblade"><span data-translate="deck_placeholder_assistblade">Assist Blade</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="assistblade" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container standard-or-chip-placeholder">
-                            <div class="part-placeholder" data-type="ratchet"><span data-translate="deck_placeholder_ratchet">Ratchet</span></div>
+                            <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="ratchet"></span>
+                                <div class="part-placeholder" data-type="ratchet"><span data-translate="deck_placeholder_ratchet">Ratchet</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="ratchet" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container standard-or-chip-placeholder">
-                            <div class="part-placeholder" data-type="bit"><span data-translate="deck_placeholder_bit">Bit</span></div>
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="bit"></span>
+                                <div class="part-placeholder" data-type="bit"><span data-translate="deck_placeholder_bit">Bit</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="bit" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
+                        <div class="bay-info-container" id="bay-info-0" style="display: block;">
+                            <p class="bay-height-display" id="bay-height-0"></p>
+                            <div class="chart-container">
+                                <canvas id="chart-slot-0"></canvas>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="deck-slot" data-slot-id="1" data-bay-type="empty">
                          <div class="part-container">
-                            <div class="part-placeholder" data-type="primeira"><span data-translate="deck_placeholder_primeira">Primeira Peça</span></div>
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="primeira"></span>
+                                <div class="part-placeholder" data-type="primeira"><span data-translate="deck_placeholder_primeira">Primeira Peça</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="primeira" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container chip-specific-placeholder">
-                            <div class="part-placeholder" data-type="mainblade"><span data-translate="deck_placeholder_mainblade">Main Blade</span></div>
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="mainblade"></span>
+                                <div class="part-placeholder" data-type="mainblade"><span data-translate="deck_placeholder_mainblade">Main Blade</span></div>
+                             </div>
                             <p class="part-name-display" data-name-type="mainblade" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container chip-specific-placeholder">
-                            <div class="part-placeholder" data-type="assistblade"><span data-translate="deck_placeholder_assistblade">Assist Blade</span></div>
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="assistblade"></span>
+                                <div class="part-placeholder" data-type="assistblade"><span data-translate="deck_placeholder_assistblade">Assist Blade</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="assistblade" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container standard-or-chip-placeholder">
-                            <div class="part-placeholder" data-type="ratchet"><span data-translate="deck_placeholder_ratchet">Ratchet</span></div>
+                            <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="ratchet"></span>
+                                <div class="part-placeholder" data-type="ratchet"><span data-translate="deck_placeholder_ratchet">Ratchet</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="ratchet" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container standard-or-chip-placeholder">
-                            <div class="part-placeholder" data-type="bit"><span data-translate="deck_placeholder_bit">Bit</span></div>
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="bit"></span>
+                                <div class="part-placeholder" data-type="bit"><span data-translate="deck_placeholder_bit">Bit</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="bit" data-translate="deck_placeholder_selecione">Selecione</p>
+                        </div>
+                        <div class="bay-info-container" id="bay-info-1" style="display: block;">
+                            <p class="bay-height-display" id="bay-height-1"></p>
+                            <div class="chart-container">
+                                <canvas id="chart-slot-1"></canvas>
+                            </div>
                         </div>
                     </div>
+
                     <div class="deck-slot" data-slot-id="2" data-bay-type="empty">
                          <div class="part-container">
-                            <div class="part-placeholder" data-type="primeira"><span data-translate="deck_placeholder_primeira">Primeira Peça</span></div>
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="primeira"></span>
+                                <div class="part-placeholder" data-type="primeira"><span data-translate="deck_placeholder_primeira">Primeira Peça</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="primeira" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container chip-specific-placeholder">
-                            <div class="part-placeholder" data-type="mainblade"><span data-translate="deck_placeholder_mainblade">Main Blade</span></div>
+                            <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="mainblade"></span>
+                                <div class="part-placeholder" data-type="mainblade"><span data-translate="deck_placeholder_mainblade">Main Blade</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="mainblade" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container chip-specific-placeholder">
-                            <div class="part-placeholder" data-type="assistblade"><span data-translate="deck_placeholder_assistblade">Assist Blade</span></div>
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="assistblade"></span>
+                                <div class="part-placeholder" data-type="assistblade"><span data-translate="deck_placeholder_assistblade">Assist Blade</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="assistblade" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container standard-or-chip-placeholder">
-                            <div class="part-placeholder" data-type="ratchet"><span data-translate="deck_placeholder_ratchet">Ratchet</span></div>
+                            <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="ratchet"></span>
+                                <div class="part-placeholder" data-type="ratchet"><span data-translate="deck_placeholder_ratchet">Ratchet</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="ratchet" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container standard-or-chip-placeholder">
-                            <div class="part-placeholder" data-type="bit"><span data-translate="deck_placeholder_bit">Bit</span></div>
+                            <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="bit"></span>
+                                <div class="part-placeholder" data-type="bit"><span data-translate="deck_placeholder_bit">Bit</span></div>
+                            </div>
                             <p class="part-name-display" data-name-type="bit" data-translate="deck_placeholder_selecione">Selecione</p>
+                        </div>
+                        <div class="bay-info-container" id="bay-info-2" style="display: block;">
+                            <p class="bay-height-display" id="bay-height-2"></p>
+                            <div class="chart-container">
+                                <canvas id="chart-slot-2"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -138,8 +204,7 @@
             <p class="guide-description" data-translate="guide_description">
                 Guia voltado para iniciantes que querem começar bem no competitivo do Beyblade X, mas não sabem quais produtos comprar.
             </p>
-            <div id="guide-products-container">
-                </div>
+            <div id="guide-products-container"></div>
         </div>
         <div id="collection-tab" class="tab-content">
             <div class="tab-header">
@@ -159,22 +224,16 @@
                     </select>
                 </div>
             </div>
-
             <h3 data-translate="blades_section_title">Blades</h3>
             <div class="parts-grid" id="blades-container"></div>
-
             <h3 data-translate="ratchets_section_title">Ratchets</h3>
             <div class="parts-grid" id="ratchets-container"></div>
-
             <h3 data-translate="bits_section_title">Bits</h3>
             <div class="parts-grid" id="bits-container"></div>
-
             <h3 data-translate="lockchips_section_title">Lock Chips</h3>
             <div class="parts-grid" id="lockchips-container"></div>
-
             <h3 data-translate="mainblades_section_title">Main Blades</h3>
             <div class="parts-grid" id="mainblades-container"></div>
-
             <h3 data-translate="assistblades_section_title">Assist Blades</h3>
             <div class="parts-grid" id="assistblades-container"></div>
         </div>
@@ -193,9 +252,7 @@
                         <button class="score-btn" data-player="1" data-points="3" data-translate="score_3_points">+3 Pontos</button>
                     </div>
                 </div>
-
                 <div class="versus-divider">VS</div>
-
                 <div class="player-section" id="player2">
                     <input type="text" class="player-name" value="Jogador 2" data-translate="player_2_default">
                     <div class="score-display" id="score-p2">0</div>
@@ -217,7 +274,6 @@
             </div>
             <div class="settings-container">
                 <p data-translate="settings_description">Salve sua coleção e decks em um arquivo (.bx) para backup ou para transferir para outro dispositivo.</p>
-
                 <div class="language-settings">
                     <h3 data-translate="language_settings_title">Idioma / Language</h3>
                     <div class="language-selector">
@@ -225,7 +281,6 @@
                         <button id="lang-en" class="lang-button" title="English (US)">🇺🇸</button>
                     </div>
                 </div>
-
                 <div class="data-buttons">
                     <button id="export-button" data-translate="export_button">Exportar Dados (.bx)</button>
                     <button id="import-button" data-translate="import_button">Importar Dados (.bx)</button>
@@ -249,8 +304,7 @@
         <div class="modal-content">
             <span class="close-button" id="variant-selector-close">&times;</span>
             <h3 id="variant-modal-title">Selecionar Variantes</h3>
-            <div id="variant-modal-checkboxes">
-                </div>
+            <div id="variant-modal-checkboxes"></div>
         </div>
     </div>
 
@@ -264,6 +318,25 @@
                     <button id="input-modal-cancel" data-translate="modal_button_cancel">Cancelar</button>
                     <button id="input-modal-ok" data-translate="modal_button_ok">OK</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="part-info-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="part-info-close">&times;</span>
+            <h3 id="info-modal-part-name">Nome da Peça</h3>
+            <div class="modal-scrollable-content">
+                 <div id="info-modal-details">
+                     <h4>Fontes:</h4>
+                     <ul id="info-modal-source-list">
+                         <li>Carregando...</li>
+                     </ul>
+                     <h4>Stats:</h4>
+                     <div class="chart-container info-chart-container">
+                         <canvas id="info-modal-chart"></canvas>
+                     </div>
+                 </div>
             </div>
         </div>
     </div>
