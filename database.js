@@ -1,3 +1,371 @@
+// --- [MODIFICADO] DADOS DO GUIA DE INICIANTE (Hasbro + Takara Tomy CX) ---
+// --- ADICIONE AS IMAGENS DE PRODUTO na pasta images/products/ ---
+const STARTER_GUIDE_PRODUCTS = [
+    // --- Produtos CX (Takara Tomy) ---
+    {
+        productName: "CX-00 Starter Wizard Arc R4-55LO",
+        image: "images/products/CX-00.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-wizard', 'mainblade-arc', 'assistblade-round', '4-55', 'loworb']
+    },
+    {
+        productName: "CX-01 Starter Dran Brave S6-60V",
+        image: "images/products/CX-01.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-dran', 'mainblade-brave', 'assistblade-slash', '6-60', 'vortex']
+    },
+    {
+        productName: "CX-02 Booster Wizard Arc R4-55LO",
+        image: "images/products/CX-02.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-wizard', 'mainblade-arc', 'assistblade-round', '4-55', 'loworb']
+    },
+    {
+        productName: "CX-03 Starter Perseus Dark B6-80W",
+        image: "images/products/CX-03.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-perseus', 'mainblade-dark', 'assistblade-bumper', '6-80', 'wedge']
+    },
+    {
+        productName: "CX-06 Booster WeissTiger 3-60U",
+        image: "images/products/CX-06.png", // ADICIONE ESTA IMAGEM
+        parts: ['weisstiger', '3-60', 'unite'] // (Peça única, não-CX)
+    },
+    {
+        productName: "CX-07 Booster SamuraiCalibur 6-70M",
+        image: "images/products/CX-07.png", // ADICIONE ESTA IMAGEM
+        parts: ['samuraicalibur', '6-70', 'merge'] // (Peça única, não-CX)
+    },
+    {
+        productName: "CX-08 Starter FoxBrush J9-70GR",
+        image: "images/products/CX-08.png", // ADICIONE ESTA IMAGEM
+        parts: ['lockchip-fox', 'mainblade-brush', 'assistblade-jaggy', '9-70', 'gearrush']
+    },
+    {
+        productName: "CX-09 Booster TriceraPress M-85BS",
+        image: "images/products/CX-09.png", // ADICIONE ESTA IMAGEM
+        parts: ['tricerapress', 'm-85', 'boundspike'] // (Peça única, não-CX)
+    },
+
+    // --- Produtos Hasbro ---
+    {
+        productName: "Hasbro Starter Dran Sword 3-60F (F9580)",
+        image: "images/products/hasbro_F9580.png",
+        parts: ['dransword', '3-60', 'flat']
+    },
+    {
+        productName: "Hasbro Starter Hells Scythe 4-60T (F9583)",
+        image: "images/products/hasbro_F9583.png",
+        parts: ['hellsscythe', '4-60', 'taper']
+    },
+    {
+        productName: "Hasbro Starter Knight Shield 3-80N (F9581)",
+        image: "images/products/hasbro_F9581.png",
+        parts: ['knightshield', '3-80', 'needle']
+    },
+    {
+        productName: "Hasbro Starter Wizard Arrow 4-80B (F9582)",
+        image: "images/products/hasbro_F9582.png",
+        parts: ['wizardarrow', '4-80', 'ball']
+    },
+    {
+        productName: "Hasbro Starter Knight Lance 4-80HN (G0184)",
+        image: "images/products/hasbro_G0184.png",
+        parts: ['knightlance', '4-80', 'highneedle']
+    },
+    {
+        productName: "Hasbro Starter Leon Claw 5-60P (G0193)",
+        image: "images/products/hasbro_G0193.png",
+        parts: ['leonclaw', '5-60', 'point']
+    },
+    {
+        productName: "Hasbro Starter Dran Buster 1-60A (G1536)",
+        image: "images/products/hasbro_G1536.png",
+        parts: ['dranbuster', '1-60', 'accel']
+    },
+    {
+        productName: "Hasbro Starter Wand Wizard 5-70DB (G1537)",
+        image: "images/products/hasbro_G1537.png",
+        parts: ['wizardrod', '5-70', 'diskball']
+    },
+    {
+        productName: "Hasbro Starter Wand Wizard 1-60R (G1538)",
+        image: "images/products/hasbro_G1538.png",
+        parts: ['wizardrod', '1-60', 'rush']
+    },
+    {
+        productName: "Hasbro Starter Shinobi Shadow 1-80MN (G1539)",
+        image: "images/products/hasbro_G1539.png",
+        parts: ['shinobishadow', '1-80', 'metalneedle']
+    },
+    {
+        productName: "Hasbro Starter Crimson Garuda 4-70TP (G1673)",
+        image: "images/products/hasbro_G1673.png",
+        parts: ['crimsongaruda', '4-70', 'transpoint']
+    },
+    {
+        productName: "Hasbro Starter Silver Wolf 3-80FB (G1674)",
+        image: "images/products/hasbro_G1674.png",
+        parts: ['silverwolf', '3-80', 'freeball']
+    },
+    {
+        productName: "Hasbro Starter Shelter Drake 7-80GP (G1675)",
+        image: "images/products/hasbro_G1675.png",
+        parts: ['shelterdrake', '7-80', 'gearpoint']
+    },
+    {
+        productName: "Hasbro Starter Golem Rock 1-60UN (G1676)",
+        image: "images/products/hasbro_G1676.png",
+        parts: ['golemrock', '1-60', 'underneedle']
+    },
+    {
+        productName: "Hasbro Starter Dran Buster 5-70DB (G1751)",
+        image: "images/products/hasbro_G1751.png",
+        parts: ['dranbuster', '5-70', 'diskball']
+    },
+    {
+        productName: "Hasbro Starter Hells Hammer 3-70H (G1752)",
+        image: "images/products/hasbro_G1752.png",
+        parts: ['hellshammer', '3-70', 'hexa']
+    },
+    // --- X-Over Starters ---
+    {
+        productName: "Hasbro X-Over Dranzer Spiral 3-80T (F9584)",
+        image: "images/products/hasbro_F9584.png",
+        parts: ['dranzerspiral', '3-80', 'taper']
+    },
+    {
+        productName: "Hasbro X-Over Driger Slash 4-80P (G1843)",
+        image: "images/products/hasbro_G1843.png",
+        parts: ['drigerslash', '4-80', 'point']
+    },
+    // --- Boosters ---
+    {
+        productName: "Hasbro Booster Steel Samurai 4-80T (G0188)",
+        image: "images/products/hasbro_G0188.png",
+        parts: ['samuraisteel', '4-80', 'taper']
+    },
+    {
+        productName: "Hasbro Booster Horn Rhino 3-80S (G0192)",
+        image: "images/products/hasbro_G0192.png",
+        parts: ['rhinohorn', '3-80', 'spike']
+    },
+    {
+        productName: "Hasbro Booster Keel Shark 3-60LF (G0194)",
+        image: "images/products/hasbro_G0194.png",
+        parts: ['sharkedge', '3-60', 'lowflat']
+    },
+    {
+        productName: "Hasbro Booster Talon Ptera 3-80B (G0195)",
+        image: "images/products/hasbro_G0195.png",
+        parts: ['pteraswing', '3-80', 'ball']
+    },
+    {
+        productName: "Hasbro Booster Sting Unicorn 5-60GP (G0283)",
+        image: "images/products/hasbro_G0283.png",
+        parts: ['unicornsting', '5-60', 'gearpoint']
+    },
+    {
+        productName: "Hasbro Booster Roar Tyranno 9-60GF (G0284)",
+        image: "images/products/hasbro_G0284.png",
+        parts: ['tyrannoroar', '9-60', 'gearflat']
+    },
+    {
+        productName: "Hasbro Booster Scythe Incendio 3-80B (G0285)",
+        image: "images/products/hasbro_G0285.png",
+        parts: ['hellsscythe', '3-80', 'ball']
+    },
+    {
+        productName: "Hasbro Booster Savage Bear 3-60S (G0286)",
+        image: "images/products/hasbro_G0286.png",
+        parts: ['bearscratch', '3-60', 'spike']
+    },
+    {
+        productName: "Hasbro Booster Cowl Sphinx 9-80GN (G1530)",
+        image: "images/products/hasbro_G1530.png",
+        parts: ['sphinx-cowl', '9-80', 'gearneedle']
+    },
+    {
+        productName: "Hasbro Booster Arrow Wizard 4-80GB (G1531)",
+        image: "images/products/hasbro_G1531.png",
+        parts: ['wizardarrow', '4-80', 'gearball']
+    },
+    {
+        productName: "Hasbro Booster Obsidian Shell 4-60D (G1533)",
+        image: "images/products/hasbro_G1533.png",
+        parts: ['blackshell', '4-60', 'dot']
+    },
+    {
+        productName: "Hasbro Booster Keel Shark 1-60Q (G1534)",
+        image: "images/products/hasbro_G1534.png",
+        parts: ['sharkedge', '1-60', 'quake']
+    },
+    {
+        productName: "Hasbro Booster Tide Whale 5-80E (G1669)",
+        image: "images/products/hasbro_G1669.png",
+        parts: ['whalewave', '5-80', 'elevate']
+    },
+    {
+        productName: "Hasbro Booster Dagger Dran 4-70Q (G1670)",
+        image: "images/products/hasbro_G1670.png",
+        parts: ['drandagger', '4-70', 'quake']
+    },
+    {
+        productName: "Hasbro Booster Lance Knight 3-60LF (G1671)",
+        image: "images/products/hasbro_G1671.png",
+        parts: ['knightlance', '3-60', 'lowflat']
+    },
+    {
+        productName: "Hasbro Booster Yell Kong 3-60GB (G1754)",
+        image: "images/products/hasbro_G1754.png",
+        parts: ['yellkong', '3-60', 'gearball']
+    },
+    {
+        productName: "Hasbro Booster Arrow Wizard 4-80O (G1755)",
+        image: "images/products/hasbro_G1755.png",
+        parts: ['wizardarrow', '4-80', 'orb']
+    },
+    {
+        productName: "Hasbro Booster Soar Phoenix 5-80H (G1756)",
+        image: "images/products/hasbro_G1756.png",
+        parts: ['phoenixwing', '5-80', 'hexa']
+    },
+    // --- Dual Packs ---
+    {
+        productName: "Knife Shinobi & Keel Shark (G0190)",
+        image: "images/products/hasbro_G0190.png",
+        parts: ['shinobiknife', '4-80', 'highneedle', 'sharkedge', '3-60', 'lowflat']
+    },
+    {
+        productName: "Chain Incendio & Arrow Wizard (G0196)",
+        image: "images/products/hasbro_G0196.png",
+        parts: ['hellschain', '5-60', 'hightaper', 'wizardarrow', '4-60', 'needle']
+    },
+    {
+        productName: "Tail Viper & Sword Dran (G0197)",
+        image: "images/products/hasbro_G0197.png",
+        parts: ['vipertail', '5-60', 'flat', 'dransword', '3-80', 'ball']
+    },
+    {
+        productName: "Yell Kong & Helm Knight (G0198)",
+        image: "images/products/hasbro_G0198.png",
+        parts: ['yellkong', '3-60', 'gearball', 'knightshield', '4-80', 'taper']
+    },
+    {
+        productName: "Bite Croc & Sting Unicorn (G0199)",
+        image: "images/products/hasbro_G0199.png",
+        parts: ['croccrunch', '3-60', 'lowflat', 'unicornsting', '4-60', 'point']
+    },
+    {
+        productName: "Gale Wyvern & Tail Viper (G0282)",
+        image: "images/products/hasbro_G0282.png",
+        parts: ['wyverngale', '3-60', 'taper', 'vipertail', '4-60', 'flat']
+    },
+    {
+        productName: "Beat Tyranno & Knife Shinobi (G1542)",
+        image: "images/products/hasbro_G1542.png",
+        parts: ['tyrannobeat', '3-60', 'spike', 'shinobiknife', '4-80', 'highneedle']
+    },
+    {
+        productName: "Gale Wyvern & Sword Dran (G1543)",
+        image: "images/products/hasbro_G1543.png",
+        parts: ['wyverngale', '5-80', 'gearball', 'dransword', '4-80', 'diskball']
+    },
+    {
+        productName: "Cowl Sphinx & Crest Leon (G1685)",
+        image: "images/products/hasbro_G1685.png",
+        parts: ['sphinx-cowl', '4-80', 'hightaper', 'leoncrest', '7-60', 'gearneedle']
+    },
+    {
+        productName: "Pearl Tiger & Gill Shark (G1686)",
+        image: "images/products/hasbro_G1686.png",
+        parts: ['weisstiger', '3-60', 'unite', 'gillshark', '5-60', 'freeball']
+    },
+    {
+        productName: "Circle Ghost & Chain Incendio (G1687)",
+        image: "images/products/hasbro_G1687.png",
+        parts: ['ghostcircle', '4-60', 'hexa', 'hellschain', '9-80', 'orb']
+    },
+    {
+        productName: "Tackle Goat & Sword Dran (G1688)",
+        image: "images/products/hasbro_G1688.png",
+        parts: ['tacklegoat', '2-70', 'needle', 'dransword', '1-60', 'flat']
+    },
+    // --- Battle Sets ---
+    {
+        productName: "Xtreme Battle Set (F9588)",
+        image: "images/products/hasbro_F9588.png",
+        parts: ['mammothtusk', '3-60', 'taper']
+    },
+    {
+        productName: "Drop Attack Battle Set (G0842)",
+        image: "images/products/hasbro_G0842.png",
+        parts: ['drandagger', '4-70', 'quake', 'hellschain', '5-60', 'hightaper']
+    },
+    {
+        productName: "25th Anniversary Set (G1844)",
+        image: "images/products/hasbro_G1844.png",
+        parts: ['dranzerspiral', '3-80', 'taper', 'drigerslash', '4-80', 'point', 'dracielshield', '7-60', 'dot', 'dragoonsform', '4-60', 'rubberaccel']
+    },
+    // --- Multipacks (Collab) ---
+    {
+        productName: "Star Wars: Darth Vader (BXS-01)",
+        image: "images/products/bxs_darth_vader.png",
+        parts: ['darthvader', '4-60', 'point']
+    },
+    {
+        productName: "Star Wars: General Grievous (BXS-02)",
+        image: "images/products/bxs_general_grievous.png",
+        parts: ['generalgrievous', '3-80', 'highneedle']
+    },
+    {
+        productName: "Star Wars: Moff Gideon (BXS-02)",
+        image: "images/products/bxs_moff_gideon.png",
+        parts: ['moffgideon', '3-80', 'needle']
+    },
+    {
+        productName: "Marvel: Spider-Man (BXS-03)",
+        image: "images/products/bxs_spider_man.png",
+        parts: ['spider-man', '3-60', 'flat']
+    },
+    {
+        productName: "Marvel: Venom (BXS-03)",
+        image: "images/products/bxs_venom.png",
+        parts: ['venom', '3-80', 'needle']
+    },
+    {
+        productName: "Marvel: Thanos (BXS-04)",
+        image: "images/products/bxs_thanos.png",
+        parts: ['thanos', '4-60', 'point']
+    },
+    {
+        productName: "Transformers: Optimus Primal (BXS-05)",
+        image: "images/products/bxs_optimus_primal.png",
+        parts: ['optimusprimal', '3-60', 'flat']
+    },
+    {
+        productName: "Transformers: Optimus Prime (BXS-06)",
+        image: "images/products/bxs_optimus_prime.png",
+        parts: ['optimusprime', '4-60', 'point']
+    },
+    {
+        productName: "Jurassic Park: T. Rex (G1898)",
+        image: "images/products/hasbro_G1898.png",
+        parts: ['t.rex', '3-60', 'spike']
+    },
+    {
+        productName: "Jurassic Park: Mosasaurus (G1898)",
+        image: "images/products/hasbro_G1898_2.png",
+        parts: ['mosasaurus', '4-80', 'ball']
+    },
+    {
+        productName: "Jurassic Park: Spinosaurus (G1899)",
+        image: "images/products/hasbro_G1899.png",
+        parts: ['spinosaurus', '5-60', 'flat']
+    },
+    {
+        productName: "Jurassic Park: Quetzalcoatlus (G1899)",
+        image: "images/products/hasbro_G1899_2.png",
+        parts: ['quetzalcoatlus', '4-55', 'dot']
+    }
+];
+
 // --- BASE DE DADOS DAS VARIANTES (Mantida) ---
 const ALL_VARIANTS = {
     'aerpegasus': [ { name: "Stock", image: "images/blades/AeroPegasus.png" } ],
@@ -73,7 +441,7 @@ const ALL_VARIANTS = {
 };
 
 // --- BASE DE DADOS DAS PEÇAS (com tier) ---
-// ** Tiers baseados nos scores anteriores, ajuste se necessário **
+// ** Tiers baseados nos scores anteriores **
 const ALL_PARTS = [
     // Blades
     { id: 'aerpegasus', name: 'Aero Pegasus', type: 'blade', bey_type: 'stamina', image: 'images/blades/AeroPegasus.png', tier: 'S', variantsId: 'aerpegasus'},
@@ -234,39 +602,37 @@ const ALL_PARTS = [
     { id: 'wedge', name: 'Wedge', type: 'bit', bey_type: 'defense', image: 'images/bits/Wedge.png', tier: 'A' },
     { id: 'zap', name: 'Zap', type: 'bit', bey_type: 'balance', image: 'images/bits/Zap.png', tier: 'B' },
 
-   // --- Peças de Chip (Bits) ---
-    { id: 'lockchip-dran', name: 'Dran (Dran Buster)', type: 'lockchip', image: 'images/lockchips/Dran.png', tier: 'S' },
-    { id: 'lockchip-fox', name: 'Fox (Metal Needle)', type: 'lockchip', image: 'images/lockchips/Fox.png', tier: 'S' },
-    { id: 'lockchip-hells', name: 'Hells (Needle)', type: 'lockchip', image: 'images/lockchips/Hells.png', tier: 'B' },
-    { id: 'lockchip-hornet', name: 'Hornet (Hexa)', type: 'lockchip', image: 'images/lockchips/Hornet.png', tier: 'C' },
-    { id: 'lockchip-kraken', name: 'Kraken (Gear Flat)', type: 'lockchip', image: 'images/lockchips/Kraken.png', tier: 'B' },
-    { id: 'lockchip-leon', name: 'Leon (Point)', type: 'lockchip', image: 'images/lockchips/Leon.png', tier: 'S' },
-    { id: 'lockchip-perseus', name: 'Perseus (Gear Ball)', type: 'lockchip', image: 'images/lockchips/Perseus.png', tier: 'B' },
-    { id: 'lockchip-rhino', name: 'Rhino (Spike)', type: 'lockchip', image: 'images/lockchips/Rhino.png', tier: 'B' },
-    { id: 'lockchip-sol', name: 'Sol (Quake)', type: 'lockchip', image: 'images/lockchips/Sol.png', tier: 'C' },
-    { id: 'lockchip-stag', name: 'Stag (Taper)', type: 'lockchip', image: 'images/lockchips/Stag.png', tier: 'A' },
-	{ id: 'lockchip-valkyrie', name: 'Valkyrie (Accel)', type: 'lockchip', image: 'images/lockchips/Valkyrie.png', tier: 'B' },
-	{ id: 'lockchip-wizard', name: 'Wizard (Ball)', type: 'lockchip', image: 'images/lockchips/Wizard.png', tier: 'A' },
+    // --- Peças de Chip (TIER B como padrão) ---
+    { id: 'lockchip-dran', name: 'Dran', type: 'lockchip', image: 'images/lockchips/Dran.png', tier: 'S' },
+    { id: "lockchip-fox", name: "Fox", type: "lockchip", image: "images/lockchips/Fox.png", tier: "B" },
+    { id: "lockchip-hells", name: "Hells", type: "lockchip", image: "images/lockchips/Hells.png", tier: "S" },
+    { id: "lockchip-hornet", name: "Hornet", type: "lockchip", image: "images/lockchips/Hornet.png", tier: "C" },
+    { id: "lockchip-kraken", name: "Kraken", type: "lockchip", image: "images/lockchips/Kraken.png", tier: "B" },
+    { id: "lockchip-leon", name: "Leon", type: "lockchip", image: "images/lockchips/Leon.png", tier: "S" },
+    { id: "lockchip-perseus", name: "Perseus", type: "lockchip", image: "images/lockchips/Perseus.png", tier: "A" },
+    { id: "lockchip-rhino", name: "Rhino", type: "lockchip", image: "images/lockchips/Rhino.png", tier: "B" },
+    { id: "lockchip-sol", name: "Sol", type: "lockchip", image: "images/lockchips/Sol.png", tier: "C" },
+    { id: "lockchip-stag", name: "Stag", type: "lockchip", image: "images/lockchips/Stag.png", tier: "B" },
+    { id: "lockchip-valkyrie", name: "Valkyrie", type: "lockchip", image: "images/lockchips/Valkyrie.png", tier: "A" },
+    { id: "lockchip-wizard", name: "Wizard", type: "lockchip", image: "images/lockchips/Wizard.png", tier: "S" },
 
-    // --- Peças de Mainblade (Blades) ---
- { id: 'mainblade-arc', name: 'Arc', type: 'mainblade', image: 'images/mainblades/Arc.png', tier: 'S' },
- { id: 'mainblade-brave', name: 'Brave', type: 'mainblade', image: 'images/mainblades/Brave.png', tier: 'C' },
- { id: 'mainblade-brush', name: 'Brush', type: 'mainblade', image: 'images/mainblades/Brush.png', tier: 'B' },
-	{ id: 'mainblade-dark', name: 'Dark', type: 'mainblade', image: 'images/mainblades/Dark.png', tier: 'C' },
-	{ id: 'mainblade-fang', name: 'Fang', type: 'mainblade', image: 'images/mainblades/Fang.png', tier: 'S' },
-	{ id: 'mainblade-fort', name: 'Fort', type: 'mainblade', image: 'images/mainblades/Fort.png', tier: 'B' },
-	{ id: 'mainblade-reaper', name: 'Reaper', type: 'mainblade', image: 'images/mainblades/Reaper.png', tier: 'S' },
-	{ id: 'mainblade-volt', name: 'Volt', type: 'mainblade', image: 'images/mainblades/Volt.png', tier: 'S' },
-	{ id: 'mainblade-wriggle', name: 'Wriggle', type: 'mainblade', image: 'images/mainblades/Wriggle.png', tier: 'B' },
-	{ id: 'antler', name: 'Antler', type: 'mainblade', image: 'images/mainblades/antler.png', tier: 'B' },
+    { id: "mainblade-arc", name: "Arc", type: "mainblade", image: "images/mainblades/Arc.png", tier: "S" },
+    { id: "mainblade-brave", name: "Brave", type: "mainblade", image: "images/mainblades/Brave.png", tier: "A" },
+    { id: "mainblade-brush", name: "Brush", type: "mainblade", image: "images/mainblades/Brush.png", tier: "C" },
+    { id: "mainblade-dark", name: "Dark", type: "mainblade", image: "images/mainblades/Dark.png", tier: "A" },
+    { id: "mainblade-fang", name: "Fang", type: "mainblade", image: "images/mainblades/Fang.png", tier: "S" },
+    { id: "mainblade-fort", name: "Fort", type: "mainblade", image: "images/mainblades/Fort.png", tier: "B" },
+    { id: "mainblade-reaper", name: "Reaper", type: "mainblade", image: "images/mainblades/Reaper.png", tier: "S" },
+    { id: "mainblade-volt", name: "Volt", type: "mainblade", image: "images/mainblades/Volt.png", tier: "A" },
+    { id: "mainblade-wriggle", name: "Wriggle", type: "mainblade", image: "images/mainblades/Wriggle.png", tier: "C" },
+    { id: "antler", name: "Antler", type: "mainblade", image: "images/mainblades/antler.png", tier: "B" },
 
-    // --- Peças de Assistblade (Ratchets) ---
-    { id: 'assistblade-bumper', name: 'Bumper', type: 'assistblade', image: 'images/assistblades/Bumper.png', tier: 'S' },
-   { id: 'assistblade-charge', name: 'Charge', type: 'assistblade', image: 'images/assistblades/Charge.png', tier: 'B' },
-    { id: 'assistblade-jaggy', name: 'Jaggy', type: 'assistblade', image: 'images/assistblades/Jaggy.png', tier: 'B' },
-    { id: 'assistblade-round', name: 'Round', type: 'assistblade', image: 'images/assistblades/Round.png', tier: 'A' },
-    { id: 'assistblade-slash', name: 'Slash', type: 'assistblade', image: 'images/assistblades/Slash.png', tier: 'A' },
-    { id: 'assistblade-turn', name: 'Turn', type: 'assistblade', image: 'images/assistblades/Turn.png', tier: 'S' },
+    { id: "assistblade-bumper", name: "Bumper", type: "assistblade", image: "images/assistblades/Bumper.png", tier: "S" },
+    { id: "assistblade-charge", name: "Charge", type: "assistblade", image: "images/assistblades/Charge.png", tier: "B" },
+    { id: "assistblade-jaggy", name: "Jaggy", type: "assistblade", image: "images/assistblades/Jaggy.png", tier: "C" },
+    { id: "assistblade-round", name: "Round", type: "assistblade", image: "images/assistblades/Round.png", tier: "A" },
+    { id: "assistblade-slash", name: "Slash", type: "assistblade", image: "images/assistblades/Slash.png", tier: "S" },
+    { id: "assistblade-turn", name: "Turn", type: "assistblade", image: "images/assistblades/Turn.png", tier: "S" },
 ];
 
  // --- Traduções (AJUSTADAS) ---
@@ -278,6 +644,7 @@ const ALL_PARTS = [
         tab_collection: "Coleção",
         tab_settings: "Configurações",
         tab_score: "Placar",
+        tab_guide: "Guia de Iniciante",
         // Cabeçalhos das Abas & Conteúdo META
         meta_question: "Querer saber mais sobre o META?",
         meta_cta: "Acesse o link abaixo e esteja um passo mais próximo de se tornar um PRO!",
@@ -286,13 +653,15 @@ const ALL_PARTS = [
         collection_header: "Minha Coleção",
         settings_header: "Importar & Exportar Dados",
         score_header: "Placar da Partida",
+        guide_header: "Guia de Iniciante",
+        guide_description: "Guia voltado para iniciantes que querem começar bem no competitivo do Beyblade X, mas não sabem quais produtos comprar.",
         // Aba Coleção
         collection_filter_label: "Mostrar Apenas os que Possuo",
         collection_sort_label: "Ordenar por:",
         sort_name_asc: "Nome (A-Z)",
         sort_name_desc: "Nome (Z-A)",
-        sort_tier_desc: "Tier (S > D)", // [NOVO]
-        sort_tier_asc: "Tier (D > S)",  // [NOVO]
+        sort_tier_desc: "Tier (S > D)",
+        sort_tier_asc: "Tier (D > S)",
         sort_type: "Tipo (A-D-S-B)",
         blades_section_title: "Blades",
         ratchets_section_title: "Ratchets",
@@ -364,6 +733,7 @@ const ALL_PARTS = [
         tab_collection: "Collection",
         tab_settings: "Settings",
         tab_score: "Score",
+        tab_guide: "Starter Guide",
          // Tab Headers & META Content
          meta_question: "Want to know more about the META?",
          meta_cta: "Access the link below and be one step closer to becoming a PRO!",
@@ -372,13 +742,15 @@ const ALL_PARTS = [
          collection_header: "My Collection",
          settings_header: "Import & Export Data",
          score_header: "Match Scoreboard",
+         guide_header: "Starter Guide",
+         guide_description: "A guide for beginners who want a competitive start in Beyblade X but don't know which products to buy.",
          // Collection Tab
          collection_filter_label: "Show Only Owned",
          collection_sort_label: "Sort by:",
          sort_name_asc: "Name (A-Z)",
          sort_name_desc: "Name (Z-A)",
-         sort_tier_desc: "Tier (S > D)", // [NEW]
-         sort_tier_asc: "Tier (D > S)",  // [NEW]
+         sort_tier_desc: "Tier (S > D)",
+         sort_tier_asc: "Tier (D > S)",
          sort_type: "Type (A-D-S-B)",
          blades_section_title: "Blades",
          ratchets_section_title: "Ratchets",
@@ -446,151 +818,151 @@ const ALL_PARTS = [
 };
 
 // --- Mapeamento de Peças para Produtos (Mantido) ---
+// (Este mapa ainda contém Takara Tomy, o que é bom para o pop-up "Encontrado em:")
 const PART_SOURCES = {
     // Blades Standard/Unique/Crossover
     'aerpegasus': ["UX-00 Aero Pegasus 3-70A"],
     'arc': ["CX-00 Starter Wizard Arc R4-55LO", "CX-02 Booster Wizard Arc R4-55LO"],
-    'bearscratch': ["BX-?? Booster BearScratch 5-60F"],
-    'blackshell': ["BX-?? Booster BlackShell 4-60D", "BX-?? Booster BlackShell 9-80B"],
+    'bearscratch': ["BX-?? Booster BearScratch 5-60F", "G0286 Savage Bear 3-60S (Hasbro)"],
+    'blackshell': ["BX-?? Booster BlackShell 4-60D", "BX-?? Booster BlackShell 9-80B", "G1533 Obsidian Shell 4-60D (Hasbro)"],
     'brave': ["CX-01 Starter Dran Brave S6-60V", "CX-04 RB Vol. 4 (Dran Brave Recolor)"],
     'cobaltdragoon': ["BX-00 Cobalt Dragoon 2-60C (Prize / Special Event)"],
     'cobaltdrake': ["BX-00 Cobalt Drake 4-60F (Prize)", "BX-?? Booster Cobalt Drake 9-60R"],
-    'crimsongaruda': ["BX-?? Booster Crimson Garuda 4-70TP"],
-    'croccrunch': ["BX-?? Booster CrocCrunch 2-60Q", "BX-?? Bite Croc 3-60LF"],
+    'crimsongaruda': ["BX-?? Booster Crimson Garuda 4-70TP", "G1673 Scarlet Garuda 4-70TP (Hasbro)"],
+    'croccrunch': ["BX-?? Booster CrocCrunch 2-60Q", "BX-?? Bite Croc 3-60LF", "G0199 Bite Croc (Hasbro)"],
     'dark': ["CX-03 Starter Perseus Dark B6-80W", "CX-04 RB Vol. 4 (Perseus Dark Recolor)"],
     'darthvader': ["BXS-01 Star Wars Multipack (Darth Vader 4-60P vs Luke Skywalker 4-80B)"],
-    'dracielshield': ["BX-00 Draciel Shield 7-60D (Prize / BXG-11)"],
-    'dragoonsform': ["BX-00 Dragoon Storm 4-60RA (Prize / BXG-01)"],
-    'dranbuster': ["UX-01 Starter DranBuster 1-60A", "BX-00 DranBuster 3-70N (CoroCoro Promo)"],
-    'drandagger': ["UX-02 Starter DranDagger 4-70P", "BX-20 Starter DranDagger 4-60R", "BX-22 Entry Set (DranDagger 4-60R)", "UX-05 RB Vol. 1 (DranDagger 9-60LF)", "UX-05 RB Vol. 1 (DranDagger 2-80GP)", "BX-?? Battle Set (Dagger Dran 4-70Q - Hasbro?)"],
-    'dransword': ["BX-01 Starter DranSword 3-60F", "BX-07 Start Dash Set", "BX-14 RB Vol. 1 (DranSword 3-80B)", "BX-17 Battle Entry Set", "BX-22 Entry Set", "BX-?? Deck Set (DranSword 4-80DB)", "BX-00 DranSword Metal Coat Blue (Prize)"],
-    'dranzerspiral': ["BX-00 Dranzer Spiral 3-80T (Prize / BXG-15 / Anniversary Set)"],
-    'drigerslash': ["BX-00 Driger Slash 4-80P (Prize / BXG-04)"],
+    'dracielshield': ["BX-00 Draciel Shield 7-60D (Prize / BXG-11)", "G1844 25th Anniversary Set (Hasbro)"],
+    'dragoonsform': ["BX-00 Dragoon Storm 4-60RA (Prize / BXG-01)", "G1844 25th Anniversary Set (Hasbro)"],
+    'dranbuster': ["UX-01 Starter DranBuster 1-60A", "BX-00 DranBuster 3-70N (CoroCoro Promo)", "G1536 Buster Dran 1-60A (Hasbro)", "G1751 Buster Dran 5-70DB (Hasbro)"],
+    'drandagger': ["UX-02 Starter DranDagger 4-70P", "BX-20 Starter DranDagger 4-60R", "BX-22 Entry Set (DranDagger 4-60R)", "UX-05 RB Vol. 1 (DranDagger 9-60LF)", "UX-05 RB Vol. 1 (DranDagger 2-80GP)", "G1670 Dagger Dran 4-70Q (Hasbro)", "G0842 Drop Attack Battle Set (Hasbro)"],
+    'dransword': ["BX-01 Starter DranSword 3-60F", "BX-07 Start Dash Set", "BX-14 RB Vol. 1 (DranSword 3-80B)", "BX-17 Battle Entry Set", "BX-22 Entry Set", "BX-?? Deck Set (DranSword 4-80DB)", "BX-00 DranSword Metal Coat Blue (Prize)", "F9580 Sword Dran 3-60F (Hasbro)", "G0197 Tail Viper and Sword Dran Dual Pack (Hasbro)", "G1543 Gale Wyvern and Sword Dran Dual Pack (Hasbro)", "G1688 Tackle Goat and Sword Dran Dual Pack (Hasbro)"],
+    'dranzerspiral': ["BX-00 Dranzer Spiral 3-80T (Prize / BXG-15 / Anniversary Set)", "F9584 Dranzer Spiral 3-80T (Hasbro)", "G1844 25th Anniversary Set (Hasbro)"],
+    'drigerslash': ["BX-00 Driger Slash 4-80P (Prize / BXG-04)", "G1843 Driger Slash 4-80P (Hasbro)", "G1844 25th Anniversary Set (Hasbro)"],
     'generalgrievous': ["BXS-02 Star Wars Multipack (Obi-Wan Kenobi 4-60P vs General Grievous 3-80HN)"],
-    'ghostcircle': ["BX-?? Booster GhostCircle 0-80GB", "BX-?? Booster GhostCircle 4-60H"],
-    'gillshark': ["CX-11 Emperor Might Deck Set (SharkGill 5-60FB)"],
-    'golemrock': ["UX-13 Booster GolemRock 1-60UN", "CX-11 Emperor Might Deck Set (GolemRock M-85HN)"],
-    'hellschain': ["BX-21 Starter HellsChain 5-60HT", "BX-?? Booster HellsChain 9-80O"],
-    'hellshammer': ["UX-03 Starter HellsHammer 3-70H", "UX-04 Battle Entry Set U (HellsHammer Blade)"],
-    'hellsscythe': ["BX-02 Starter HellsScythe 4-60T", "BX-08 3on3 Deck Set (HellsScythe 3-80B)", "BX-14 RB Vol. 1 (HellsScythe 4-80LF)", "BX-00 Hells Scythe 3-80F (WBBA Prize)"],
+    'ghostcircle': ["BX-?? Booster GhostCircle 0-80GB", "BX-?? Booster GhostCircle 4-60H", "G1687 Circle Ghost (Hasbro)"],
+    'gillshark': ["CX-11 Emperor Might Deck Set (SharkGill 5-60FB)", "G1686 Pearl Tiger and Gill Shark Dual Pack (Hasbro)"],
+    'golemrock': ["UX-13 Booster GolemRock 1-60UN", "CX-11 Emperor Might Deck Set (GolemRock M-85HN)", "G1676 Rock Golem 1-60UN (Hasbro)"],
+    'hellschain': ["BX-21 Starter HellsChain 5-60HT", "BX-?? Booster HellsChain 9-80O", "G0196 Chain Incendio (Hasbro)", "G0842 Drop Attack Battle Set (Hasbro)", "G1687 Circle Ghost and Chain Incendio Dual Pack (Hasbro)"],
+    'hellshammer': ["UX-03 Starter HellsHammer 3-70H", "UX-04 Battle Entry Set U (HellsHammer Blade)", "G1752 Hammer Incendio 3-70H (Hasbro)"],
+    'hellsscythe': ["BX-02 Starter HellsScythe 4-60T", "BX-08 3on3 Deck Set (HellsScythe 3-80B)", "BX-14 RB Vol. 1 (HellsScythe 4-80LF)", "BX-00 Hells Scythe 3-80F (WBBA Prize)", "F9583 Scythe Incendio 4-60T (Hasbro)", "G0285 Scythe Incendio 3-80B (Hasbro)"],
     'impactdrake': ["UX-09 Booster ImpactDrake 9-60LR", "BX-?? Booster ImpactDrake 7-80GP"],
-    'knightlance': ["BX-13 Booster KnightLance 4-80HN", "BX-21 3on3 Deck Set (KnightLance 3-60LF)", "BX-24 RB Vol. 2 (KnightLance 4-60GB)"],
+    'knightlance': ["BX-13 Booster KnightLance 4-80HN", "BX-21 3on3 Deck Set (KnightLance 3-60LF)", "BX-24 RB Vol. 2 (KnightLance 4-60GB)", "G0184 Lance Knight 4-80HN (Hasbro)", "G1671 Lance Knight 3-60LF (Hasbro)"],
     'knightmail': ["UX-04 Battle Entry Set U (KnightMail 3-85BS)"],
-    'knightshield': ["BX-04 Starter KnightShield 3-80N", "BX-06 Booster KnightShield 3-60LF", "BX-08 3on3 Deck Set (KnightShield 4-80T)", "BX-14 RB Vol. 1 (KnightShield 4-60LF)", "BX-?? Booster KnightShield 5-80T"],
-    'leonclaw': ["BX-15 Starter LeonClaw 5-60P", "BX-24 RB Vol. 2 (LeonClaw 3-80HN)", "BX-00 Gold LeonClaw 5-60P (Prize / BXG-05)", "BX-?? Booster LeonClaw 0-80E"],
-    'leoncrest': ["UX-06 Booster LeonCrest 7-60GN", "BX-?? Booster LeonCrest 9-80K"],
+    'knightshield': ["BX-04 Starter KnightShield 3-80N", "BX-06 Booster KnightShield 3-60LF", "BX-08 3on3 Deck Set (KnightShield 4-80T)", "BX-14 RB Vol. 1 (KnightShield 4-60LF)", "BX-?? Booster KnightShield 5-80T", "F9581 Helm Knight 3-80N (Hasbro)", "G0198 Yell Kong and Helm Knight Dual Pack (Hasbro)"],
+    'leonclaw': ["BX-15 Starter LeonClaw 5-60P", "BX-24 RB Vol. 2 (LeonClaw 3-80HN)", "BX-00 Gold LeonClaw 5-60P (Prize / BXG-05)", "BX-?? Booster LeonClaw 0-80E", "G0193 Claw Leon 5-60P (Hasbro)"],
+    'leoncrest': ["UX-06 Booster LeonCrest 7-60GN", "BX-?? Booster LeonCrest 9-80K", "G1685 Cowl Sphinx and Crest Leon Dual Pack (Hasbro)"],
     'lightningl-drago': ["BX-00 Lightning L-Drago 1-60F (Prize / BXG-08 - Both Types)"],
-    'mammothtusk': ["BX-?? Xtreme Battle Set (Tusk Mammoth 3-60T - Hasbro)", "BX-?? Booster MammothTusk 2-80E"],
+    'mammothtusk': ["BX-?? Xtreme Battle Set (Tusk Mammoth 3-60T - Hasbro)", "BX-?? Booster MammothTusk 2-80E", "F9588 Xtreme Battle Set (Hasbro)"],
     'moffgideon': ["BXS-02 Star Wars Multipack (The Mandalorian 3-60F vs Moff Gideon 3-80N)"],
+    'mosasaurus': ["BXS-?? Mosasaurus (Hasbro)", "G1898 T. Rex and Mosasaurus Multipack Set (Hasbro)"], // G1898
     'optimusprimal': ["BXS-05 Transformers Multipack (Optimus Primal 3-60F vs Starscream 3-80N)"],
     'optimusprime': ["BXS-06 Transformers Multipack (Optimus Prime 4-60P vs Megatron 4-80B)"],
     'phoenixfeather': ["UX-10 Booster PhoenixFeather 4-60LF", "BX-00 Phoenix Feather 3-60F (Prize)", "BX-?? Booster PhoenixFeather 2-60N"],
     'phoenixrudder': ["UX-11 Booster PhoenixRudder 9-70G", "BX-?? Booster PhoenixRudder 4-70LF"],
-    'phoenixwing': ["BX-23 Starter PhoenixWing 9-60GF", "BX-00 PhoenixWing 9-80DB (Prize / BXC-05)", "BX-?? Booster PhoenixWing 5-80H"],
-    'pteraswing': ["UX-04 Battle Entry Set U (PteraSwing Blade)"],
+    'phoenixwing': ["BX-23 Starter PhoenixWing 9-60GF", "BX-00 PhoenixWing 9-80DB (Prize / BXC-05)", "BX-?? Booster PhoenixWing 5-80H", "F9324 Soar Phoenix Deluxe String Launcher Set (Hasbro)", "G1756 Soar Phoenix 5-80H (Hasbro)"],
+    'pteraswing': ["UX-04 Battle Entry Set U (PteraSwing Blade)", "G0195 Talon Ptera 3-80B (Hasbro)"],
     'reaper': ["CX-05 RB Vol. 5 (HellsReaper T4-70K)", "CX-05 RB Vol. 5 (RhinoReaper C4-55D)"],
-    'rhinohorn': ["BX-19 Booster RhinoHorn 3-80S", "BX-?? Booster RhinoHorn 5-80Q"],
+    'rhinohorn': ["BX-19 Booster RhinoHorn 3-80S", "BX-?? Booster RhinoHorn 5-80Q", "G0192 Horn Rhino 3-80S (Hasbro)"],
     'rockleone': ["BX-00 Rock Leone 6-80GN (Prize / BXG-20)"],
     'samuraicalibur': ["CX-07 Booster SamuraiCalibur 6-70M"],
     'samuraisaber': ["UX-07 Starter SamuraiSaber 2-70L"],
-    'samuraisteel': ["BX-?? Booster Steel Samurai 4-80T (Hasbro)"],
+    'samuraisteel': ["G0188 Steel Samurai 4-80T (Hasbro)"],
     'scorpiospear': ["UX-14 Starter ScorpioSpear 0-70Z"],
-    'sharkedge': ["BX-14 RB Vol. 1 (SharkEdge 3-60LF)", "BX-20 3on3 Deck Set (SharkEdge 3-80F)", "BX-14 RB Vol. 1 (SharkEdge 4-80N)", "BX-00 SharkEdge 5-60GF (Prize / BXG-06)", "BX-?? Booster SharkEdge 1-60Q", "BX-00 Maguro Edge 3-60LF (Promo)"],
+    'sharkedge': ["BX-14 RB Vol. 1 (SharkEdge 3-60LF)", "BX-20 3on3 Deck Set (SharkEdge 3-80F)", "BX-14 RB Vol. 1 (SharkEdge 4-80N)", "BX-00 SharkEdge 5-60GF (Prize / BXG-06)", "BX-?? Booster SharkEdge 1-60Q", "BX-00 Maguro Edge 3-60LF (Promo)", "G0194 Keel Shark 3-60LF (Hasbro)", "G0190 Knife Shinobi and Keel Shark Dual Pack (Hasbro)", "G1534 Keel Shark 1-60Q (Hasbro)"],
     'sharkscale': ["UX-15 SharkScale Deck Set (SharkScale 4-50UF)"],
-    'shelterdrake': ["BX-39 RB Vol. 3 (ShelterDrake 5-70O)", "BX-39 RB Vol. 3 (ShelterDrake 7-80GP)", "BX-?? Booster ShelterDrake 3-60D"],
-    'shinobiknife': ["BX-00 Shinobi Knife 4-60LF Metal Coat Blue (Prize)", "BX-?? Dual Pack (Knife Shinobi 4-80HN - Hasbro?)"],
-    'shinobishadow': ["UX-05 RB Vol. 1 (ShinobiShadow 9-60LF)", "UX-05 RB Vol. 1 (ShinobiShadow 3-70GP)", "UX-05 RB Vol. 1 (ShinobiShadow 1-80MN)", "BX-?? Booster ShinobiShadow 3-80F"],
-    'silverwolf': ["UX-08 Starter SilverWolf 3-80FB"],
+    'shelterdrake': ["BX-39 RB Vol. 3 (ShelterDrake 5-70O)", "BX-39 RB Vol. 3 (ShelterDrake 7-80GP)", "BX-?? Booster ShelterDrake 3-60D", "G1675 Shelter Drake 7-80GP (Hasbro)"],
+    'shinobiknife': ["BX-00 Shinobi Knife 4-60LF Metal Coat Blue (Prize)", "G0190 Knife Shinobi (Hasbro)", "G1542 Beat Tyranno and Knife Shinobi Dual Pack (Hasbro)"],
+    'shinobishadow': ["UX-05 RB Vol. 1 (ShinobiShadow 9-60LF)", "UX-05 RB Vol. 1 (ShinobiShadow 3-70GP)", "UX-05 RB Vol. 1 (ShinobiShadow 1-80MN)", "BX-?? Booster ShinobiShadow 3-80F", "G1539 Shadow Shinobi 1-80MN (Hasbro)"],
+    'silverwolf': ["UX-08 Starter SilverWolf 3-80FB", "G1674 Sterling Wolf 3-80FB (Hasbro)"],
     'spider-man': ["BXS-03 Marvel Multipack (Spider-Man 3-60F vs Venom 3-80N)"],
-    'sphinx-cowl': ["BX-27 RB Vol. 3 (SphinxCowl 9-80GN)", "BX-27 RB Vol. 3 (SphinxCowl 4-80HT)", "BX-27 RB Vol. 3 (SphinxCowl 5-60O)", "BX-?? Booster SphinxCowl 1-80GF"],
+    'sphinx-cowl': ["BX-27 RB Vol. 3 (SphinxCowl 9-80GN)", "BX-27 RB Vol. 3 (SphinxCowl 4-80HT)", "BX-27 RB Vol. 3 (SphinxCowl 5-60O)", "BX-?? Booster SphinxCowl 1-80GF", "G1530 Cowl Sphinx 9-80GN (Hasbro)", "G1685 Cowl Sphinx and Crest Leon Dual Pack (Hasbro)"],
+    'spinosaurus': ["BXS-?? Spinosaurus (Hasbro)", "G1899 Spinosaurus and Quetzalcoatlus Multipack Set (Hasbro)"], // G1899
     'stormpegasis': ["BX-00 Storm Pegasis 3-70RA (Prize / BXG-02)"],
-    'tacklegoat': ["BX-?? Booster TackleGoat 7-70T", "BX-?? Booster Tackle Goat 2-70N"],
+    't.rex': ["BXS-?? T.Rex (Hasbro)", "G1898 T. Rex and Mosasaurus Multipack Set (Hasbro)"], // G1898
+    'tacklegoat': ["BX-?? Booster TackleGoat 7-70T", "BX-?? Booster Tackle Goat 2-70N", "G1688 Tackle Goat (Hasbro)"],
     'thanos': ["BXS-04 Marvel Multipack (Iron Man 4-80B vs Thanos 4-60P)"],
     'tricerapress': ["CX-09 Booster TriceraPress M-85BS"],
-    'tyrannobeat': ["BX-?? Tyranno Beat 3-60S", "BX-?? Tyranno Beat 4-70Q", "UX-04 Battle Entry Set U (TyrannoBeat Blade)"],
-    'tyrannoroar': ["UX-15 SharkScale Deck Set (TyrannoRoar 1-70L)", "BX-?? Booster Roar Tyranno 9-60GF"],
-    'unicornsting': ["BX-26 Booster UnicornSting 5-60GP", "BX-?? Booster UnicornSting 3-70D", "BX-?? Sting Unicorn 4-60P"],
+    'tyrannobeat': ["BX-?? Tyranno Beat 3-60S", "BX-?? Tyranno Beat 4-70Q", "UX-04 Battle Entry Set U (TyrannoBeat Blade)", "G1542 Beat Tyranno (Hasbro)"],
+    'tyrannoroar': ["UX-15 SharkScale Deck Set (TyrannoRoar 1-70L)", "BX-?? Booster Roar Tyranno 9-60GF", "G0284 Roar Tyranno 9-60GF (Hasbro)"],
     'venom': ["BXS-03 Marvel Multipack (Spider-Man 3-60F vs Venom 3-80N)"],
     'victoryvalkyrie': ["BX-00 Victory Valkyrie 2-60RA (Prize / BXG-07)"],
-    'vipertail': ["BX-16 RB Vol. 1 (ViperTail 5-80O)", "BX-16 RB Vol. 1 (ViperTail 3-80HN)", "BX-16 RB Vol. 1 (ViperTail 4-60F)", "BX-24 RB Vol. 2 (ViperTail 5-60F)", "BX-?? Booster ViperTail 5-70D"],
-    'weisstiger': ["CX-06 Booster WeissTiger 3-60U"],
-    'whalewave': ["BX-?? Booster WhaleWave 5-80E", "BX-?? Booster WhaleWave 4-70HN", "BX-?? Booster WhaleWave 7-60K", "BX-?? Booster WhaleWave 3-80GB"],
-    'wizardarrow': ["BX-03 Starter WizardArrow 4-80B", "BX-05 Booster WizardArrow 4-60N", "BX-08 3on3 Deck Set (WizardArrow 4-60N)", "BX-14 RB Vol. 1 (WizardArrow 3-60T)", "BX-17 Battle Entry Set (WizardArrow 4-80B)", "BX-24 RB Vol. 2 (WizardArrow 4-80GB)", "BX-?? Booster WizardArrow 4-80N", "BX-?? Arrow Wizard 4-80O"],
-    'wizardrod': ["UX-00 WizardRod 5-70DB (Prize)", "BX-?? Booster WizardRod 1-60R"],
-    'wyverngale': ["BX-24 RB Vol. 2 (WyvernGale 5-80GB)", "BX-24 RB Vol. 2 (WyvernGale 3-60T)", "BX-?? Booster WyvernGale 0-80C", "BX-?? Booster WyvernGale 2-60S"],
+    'vipertail': ["BX-16 RB Vol. 1 (ViperTail 5-80O)", "BX-16 RB Vol. 1 (ViperTail 3-80HN)", "BX-16 RB Vol. 1 (ViperTail 4-60F)", "BX-24 RB Vol. 2 (ViperTail 5-60F)", "BX-?? Booster ViperTail 5-70D", "G0197 Tail Viper (Hasbro)", "G0282 Gale Wyvern and Tail Viper Dual Pack (Hasbro)"],
+    'weisstiger': ["CX-06 Booster WeissTiger 3-60U", "G1686 Pearl Tiger (Hasbro)"],
+    'whalewave': ["BX-?? Booster WhaleWave 5-80E", "BX-?? Booster WhaleWave 4-70HN", "BX-?? Booster WhaleWave 7-60K", "BX-?? Booster WhaleWave 3-80GB", "G1669 Tide Whale 5-80E (Hasbro)"],
+    'wyverngale': ["BX-24 RB Vol. 2 (WyvernGale 5-80GB)", "BX-24 RB Vol. 2 (WyvernGale 3-60T)", "BX-?? Booster WyvernGale 0-80C", "BX-?? Booster WyvernGale 2-60S", "G0282 Gale Wyvern (Hasbro)", "G1543 Gale Wyvern and Sword Dran Dual Pack (Hasbro)"],
     'xenoxcalibur': ["BX-00 Xeno Xcalibur 3-60GF (Prize / BXG-13)"],
-    'yellkong': ["BX-?? Booster Yell Kong 3-60GB"],
+    'yellkong': ["BX-?? Booster Yell Kong 3-60GB", "G0198 Yell Kong (Hasbro)", "G1754 Yell Kong 3-60GB (Hasbro)"],
     // --- Ratchets ---
     '0-70': ["UX-14 Starter ScorpioSpear 0-70Z"],
     '0-80': ["BX-?? GhostCircle 0-80GB"],
-    '1-60': ["UX-01 Starter DranBuster 1-60A", "UX-13 Booster GolemRock 1-60UN", "BX-00 Lightning L-Drago 1-60F"],
+    '1-60': ["UX-01 Starter DranBuster 1-60A", "UX-13 Booster GolemRock 1-60UN", "BX-00 Lightning L-Drago 1-60F", "G1536 Buster Dran 1-60A (Hasbro)", "G1676 Rock Golem 1-60UN (Hasbro)", "G1688 Tackle Goat and Sword Dran Dual Pack (Hasbro)"],
     '1-70': ["UX-15 Deck Set (TyrannoRoar 1-70L)"],
-    '1-80': ["UX-05 RB Vol. 1 (ShinobiShadow 1-80MN)", "BX-?? SphinxCowl 1-80GF"],
+    '1-80': ["UX-05 RB Vol. 1 (ShinobiShadow 1-80MN)", "BX-?? SphinxCowl 1-80GF", "G1539 Shadow Shinobi 1-80MN (Hasbro)"],
     '2-60': ["BX-?? Antler Stag B 2-60HN", "BX-?? WyvernGale 2-60S", "BX-00 Victory Valkyrie 2-60RA"],
-    '2-70': ["UX-07 Starter SamuraiSaber 2-70L", "BX-?? Tackle Goat 2-70N"],
+    '2-70': ["UX-07 Starter SamuraiSaber 2-70L", "BX-?? Tackle Goat 2-70N", "G1688 Tackle Goat (Hasbro)"],
     '2-80': ["UX-05 RB Vol. 1 (DranDagger 2-80GP)", "BX-?? MammothTusk 2-80E"],
-    '3-60': ["BX-01 Starter DranSword 3-60F", "BX-06 Booster KnightShield 3-60LF", "BX-14 RB Vol. 1 (SharkEdge 3-60LF)", "BX-00 Xeno Xcalibur 3-60GF", "BXS-05 Optimus Primal 3-60F", "BXS-03 Spider-Man 3-60F"],
-    '3-70': ["UX-03 Starter HellsHammer 3-70H", "UX-05 RB Vol. 1 (ShinobiShadow 3-70GP)", "BX-00 Storm Pegasis 3-70RA", "UX-00 AeroPegasus 3-70A", "BX-00 DranBuster 3-70N"],
-    '3-80': ["BX-04 Starter KnightShield 3-80N", "BX-19 Booster RhinoHorn 3-80S", "BX-08 3on3 Deck Set (HellsScythe 3-80B)", "BX-14 RB Vol. 1 (DranSword 3-80B)", "BX-16 RB Vol. 1 (ViperTail 3-80HN)", "BX-24 RB Vol. 2 (LeonClaw 3-80HN)", "UX-08 Starter SilverWolf 3-80FB", "BX-00 Dranzer Spiral 3-80T", "BXS-02 General Grievous 3-80HN", "BXS-03 Venom 3-80N", "BXS-05 Starscream 3-80N", "BXS-02 Moff Gideon 3-80N"],
+    '3-60': ["BX-01 Starter DranSword 3-60F", "BX-06 Booster KnightShield 3-60LF", "BX-14 RB Vol. 1 (SharkEdge 3-60LF)", "BX-00 Xeno Xcalibur 3-60GF", "BXS-05 Optimus Primal 3-60F", "BXS-03 Spider-Man 3-60F", "F9580 Sword Dran 3-60F (Hasbro)", "G0194 Keel Shark 3-60LF (Hasbro)", "G1671 Lance Knight 3-60LF (Hasbro)", "G0199 Bite Croc (Hasbro)", "G0190 Keel Shark (Hasbro)", "G0282 Gale Wyvern (Hasbro)", "G0286 Savage Bear 3-60S (Hasbro)", "G1542 Beat Tyranno (Hasbro)", "G1754 Yell Kong 3-60GB (Hasbro)", "F9588 Xtreme Battle Set (Hasbro)", "G1898 T. Rex (Hasbro)"],
+    '3-70': ["UX-03 Starter HellsHammer 3-70H", "UX-05 RB Vol. 1 (ShinobiShadow 3-70GP)", "BX-00 Storm Pegasis 3-70RA", "UX-00 AeroPegasus 3-70A", "BX-00 DranBuster 3-70N", "G1752 Hammer Incendio 3-70H (Hasbro)"],
+    '3-80': ["BX-04 Starter KnightShield 3-80N", "BX-19 Booster RhinoHorn 3-80S", "BX-08 3on3 Deck Set (HellsScythe 3-80B)", "BX-14 RB Vol. 1 (DranSword 3-80B)", "BX-16 RB Vol. 1 (ViperTail 3-80HN)", "BX-24 RB Vol. 2 (LeonClaw 3-80HN)", "UX-08 Starter SilverWolf 3-80FB", "BX-00 Dranzer Spiral 3-80T", "BXS-02 General Grievous 3-80HN", "BXS-03 Venom 3-80N", "BXS-05 Starscream 3-80N", "BXS-02 Moff Gideon 3-80N", "F9581 Helm Knight 3-80N (Hasbro)", "G0192 Horn Rhino 3-80S (Hasbro)", "G0195 Talon Ptera 3-80B (Hasbro)", "G0285 Scythe Incendio 3-80B (Hasbro)", "G1674 Sterling Wolf 3-80FB (Hasbro)", "F9584 Dranzer Spiral 3-80T (Hasbro)", "G0197 Sword Dran (Hasbro)", "G1844 25th Anniversary Set (Dranzer)"],
     '3-85': ["UX-04 Battle Entry Set U (KnightMail 3-85BS)", "CX-05 RB Vol. 5 (HellsArc T3-85O)"],
     '4-50': ["UX-15 SharkScale Deck Set (SharkScale 4-50UF)"],
-    '4-55': ["CX-00 Starter Wizard Arc R4-55LO", "CX-02 Booster", "CX-05 RB Vol. 5 (RhinoReaper C4-55D)", "BX-?? Quetzalcoatlus 4-55D"],
-    '4-60': ["BX-02 Starter HellsScythe 4-60T", "BX-05 Booster WizardArrow 4-60N", "BX-16 RB Vol. 1 (ViperTail 4-60F)", "BX-20 Starter DranDagger 4-60R", "BX-00 Dragoon Storm 4-60RA", "BXS-01 Darth Vader 4-60P", "BXS-04 Thanos 4-60P", "BXS-06 Optimus Prime 4-60P"],
-    '4-70': ["UX-02 Starter DranDagger 4-70P", "BX-?? TyrannoBeat 4-70Q", "BX-?? CrimsonGaruda 4-70TP", "BX-?? PhoenixRudder 4-70LF", "BX-?? WhaleWave 4-70HN"],
-    '4-80': ["BX-03 Starter WizardArrow 4-80B", "BX-13 Booster KnightLance 4-80HN", "BX-08 3on3 Deck Set (KnightShield 4-80T)", "BX-14 RB Vol. 1 (HellsScythe 4-80LF)", "BX-14 RB Vol. 1 (SharkEdge 4-80N)", "BX-24 RB Vol. 2 (WizardArrow 4-80GB)", "BX-27 RB Vol. 3 (SphinxCowl 4-80HT)", "BX-00 Driger Slash 4-80P", "BXS-01 Luke Skywalker 4-80B", "BXS-04 Iron Man 4-80B", "BXS-06 Megatron 4-80B", "BX-?? Steel Samurai 4-80T"],
-    '5-60': ["BX-15 Starter LeonClaw 5-60P", "BX-26 Booster UnicornSting 5-60GP", "BX-24 RB Vol. 2 (ViperTail 5-60F)", "BX-00 SharkEdge 5-60GF (Prize / BXG-06)", "CX-11 Deck Set (SharkGill 5-60FB)", "BX-?? BearScratch 5-60F"],
-    '5-70': ["UX-00 WizardRod 5-70DB", "BX-39 RB Vol. 3 (ShelterDrake 5-70O)", "BX-?? ViperTail 5-70D"],
-    '5-80': ["BX-16 RB Vol. 1 (ViperTail 5-80O)", "BX-24 RB Vol. 2 (WyvernGale 5-80GB)", "BX-27 RB Vol. 3 (SphinxCowl 5-60O)", "BX-?? PhoenixWing 5-80H", "BX-?? RhinoHorn 5-80Q", "BX-?? WhaleWave 5-80E"],
+    '4-55': ["CX-00 Starter Wizard Arc R4-55LO", "CX-02 Booster", "CX-05 RB Vol. 5 (RhinoReaper C4-55D)", "BX-?? Quetzalcoatlus 4-55D", "G1899 Quetzalcoatlus (Hasbro)"],
+    '4-60': ["BX-02 Starter HellsScythe 4-60T", "BX-05 Booster WizardArrow 4-60N", "BX-16 RB Vol. 1 (ViperTail 4-60F)", "BX-20 Starter DranDagger 4-60R", "BX-00 Dragoon Storm 4-60RA", "BXS-01 Darth Vader 4-60P", "BXS-04 Thanos 4-60P", "BXS-06 Optimus Prime 4-60P", "F9583 Scythe Incendio 4-60T (Hasbro)", "G1533 Obsidian Shell 4-60D (Hasbro)", "G0196 Arrow Wizard (Hasbro)", "G0199 Sting Unicorn (Hasbro)", "G0282 Tail Viper (Hasbro)", "G1687 Circle Ghost (Hasbro)", "G1844 25th Anniversary Set (Dragoon)"],
+    '4-70': ["UX-02 Starter DranDagger 4-70P", "BX-?? TyrannoBeat 4-70Q", "BX-?? CrimsonGaruda 4-70TP", "BX-?? PhoenixRudder 4-70LF", "BX-?? WhaleWave 4-70HN", "G1670 Dagger Dran 4-70Q (Hasbro)", "G1673 Scarlet Garuda 4-70TP (Hasbro)"],
+    '4-80': ["BX-03 Starter WizardArrow 4-80B", "BX-13 Booster KnightLance 4-80HN", "BX-08 3on3 Deck Set (KnightShield 4-80T)", "BX-14 RB Vol. 1 (HellsScythe 4-80LF)", "BX-14 RB Vol. 1 (SharkEdge 4-80N)", "BX-24 RB Vol. 2 (WizardArrow 4-80GB)", "BX-27 RB Vol. 3 (SphinxCowl 4-80HT)", "BX-00 Driger Slash 4-80P", "BXS-01 Luke Skywalker 4-80B", "BXS-04 Iron Man 4-80B", "BXS-06 Megatron 4-80B", "G0184 Lance Knight 4-80HN (Hasbro)", "G0188 Steel Samurai 4-80T (Hasbro)", "F9582 Arrow Wizard 4-80B (Hasbro)", "G1531 Arrow Wizard 4-80GB (Hasbro)", "G1843 Driger Slash 4-80P (Hasbro)", "G0190 Knife Shinobi (Hasbro)", "G0198 Helm Knight (Hasbro)", "G1542 Knife Shinobi (Hasbro)", "G1685 Cowl Sphinx (Hasbro)", "G1898 Mosasaurus (Hasbro)"],
+    '5-60': ["BX-15 Starter LeonClaw 5-60P", "BX-26 Booster UnicornSting 5-60GP", "BX-24 RB Vol. 2 (ViperTail 5-60F)", "BX-00 SharkEdge 5-60GF (Prize / BXG-06)", "CX-11 Deck Set (SharkGill 5-60FB)", "BX-?? BearScratch 5-60F", "G0193 Claw Leon 5-60P (Hasbro)", "G0283 Sting Unicorn 5-60GP (Hasbro)", "G0197 Tail Viper (Hasbro)", "G1686 Gill Shark (Hasbro)", "G1899 Spinosaurus (Hasbro)"],
+    '5-70': ["UX-00 WizardRod 5-70DB", "BX-39 RB Vol. 3 (ShelterDrake 5-70O)", "BX-?? ViperTail 5-70D", "G1537 Wand Wizard 5-70DB (Hasbro)", "G1751 Buster Dran 5-70DB (Hasbro)"],
+    '5-80': ["BX-16 RB Vol. 1 (ViperTail 5-80O)", "BX-24 RB Vol. 2 (WyvernGale 5-80GB)", "BX-27 RB Vol. 3 (SphinxCowl 5-60O)", "BX-?? PhoenixWing 5-80H", "BX-?? RhinoHorn 5-80Q", "BX-?? WhaleWave 5-80E", "G1669 Tide Whale 5-80E (Hasbro)", "G1756 Soar Phoenix 5-80H (Hasbro)", "G1543 Gale Wyvern (Hasbro)"],
     '6-60': ["BX-?? OrochiCluster 6-60LF"],
     '6-70': ["CX-07 Booster SamuraiCalibur 6-70M"],
     '6-80': ["BX-00 Rock Leone 6-80GN (Prize / BXG-20)"],
-    '7-60': ["UX-06 Booster LeonCrest 7-60GN", "BX-00 Draciel Shield 7-60D", "BX-?? WhaleWave 7-60K"],
+    '7-60': ["UX-06 Booster LeonCrest 7-60GN", "BX-00 Draciel Shield 7-60D", "BX-?? WhaleWave 7-60K", "G1685 Crest Leon (Hasbro)", "G1844 25th Anniversary Set (Draciel)"],
     '7-70': ["BX-?? GoatTackle 7-70T", "BX-?? Tackle Goat 2-70N"],
-    '7-80': ["BX-39 RB Vol. 3 (ShelterDrake 7-80GP)", "BX-?? ImpactDrake 7-80GP"],
-    '9-60': ["BX-23 Starter PhoenixWing 9-60GF", "UX-09 Booster ImpactDrake 9-60LR", "UX-05 RB Vol. 1 (DranDagger 9-60LF)", "UX-05 RB Vol. 1 (ShinobiShadow 9-60LF)"],
+    '7-80': ["BX-39 RB Vol. 3 (ShelterDrake 7-80GP)", "BX-?? ImpactDrake 7-80GP", "G1675 Shelter Drake 7-80GP (Hasbro)"],
+    '9-60': ["BX-23 Starter PhoenixWing 9-60GF", "UX-09 Booster ImpactDrake 9-60LR", "UX-05 RB Vol. 1 (DranDagger 9-60LF)", "UX-05 RB Vol. 1 (ShinobiShadow 9-60LF)", "G0284 Roar Tyranno 9-60GF (Hasbro)"],
     '9-70': ["UX-11 Booster PhoenixRudder 9-70G", "CX-?? Starter FoxBrush J9-70GR"],
-    '9-80': ["BX-?? BlackShell 9-80B", "BX-?? HellsChain 9-80O", "BX-27 RB Vol. 3 (SphinxCowl 9-80GN)"],
+    '9-80': ["BX-?? BlackShell 9-80B", "BX-?? HellsChain 9-80O", "BX-27 RB Vol. 3 (SphinxCowl 9-80GN)", "G1530 Cowl Sphinx 9-80GN (Hasbro)", "G1687 Chain Incendio (Hasbro)"],
     'm-85': ["CX-09 Booster TriceraPress M-85BS", "CX-11 Emperor Might Deck Set (GolemRock M-85HN)"],
     // --- Bits ---
-    'accel': ["UX-01 Starter DranBuster 1-60A", "UX-00 AeroPegasus 3-70A"],
-    'ball': ["BX-03 Starter WizardArrow 4-80B", "BX-08 3on3 Deck Set (HellsScythe 3-80B)", "BX-14 RB Vol. 1 (DranSword 3-80B)", "BXS-01 Luke Skywalker 4-80B", "BXS-04 Iron Man 4-80B", "BXS-06 Megatron 4-80B"],
+    'accel': ["UX-01 Starter DranBuster 1-60A", "UX-00 AeroPegasus 3-70A", "G1536 Buster Dran 1-60A (Hasbro)"],
+    'ball': ["BX-03 Starter WizardArrow 4-80B", "BX-08 3on3 Deck Set (HellsScythe 3-80B)", "BX-14 RB Vol. 1 (DranSword 3-80B)", "BXS-01 Luke Skywalker 4-80B", "BXS-04 Iron Man 4-80B", "BXS-06 Megatron 4-80B", "F9582 Arrow Wizard 4-80B (Hasbro)", "G0195 Talon Ptera 3-80B (Hasbro)", "G0285 Scythe Incendio 3-80B (Hasbro)", "G1898 Mosasaurus (Hasbro)"],
     'boundspike': ["UX-04 Battle Entry Set U (KnightMail 3-85BS)", "CX-09 Booster TriceraPress M-85BS"],
     'cyclone': ["BX-00 Cobalt Dragoon 2-60C"],
-    'diskball': ["UX-00 WizardRod 5-70DB", "BX-00 PhoenixWing 9-80DB", "CX-?? Starter FoxBrush J0-80DB"],
-    'dot': ["BX-00 Draciel Shield 7-60D", "BX-?? BlackShell 4-60D", "BX-?? ShelterDrake 3-60D", "BX-?? UnicornSting 3-70D", "BX-?? ViperTail 5-70D"],
-    'elevate': ["BX-?? MammothTusk 2-80E", "BX-?? WhaleWave 5-80E"],
-    'flat': ["BX-01 Starter DranSword 3-60F", "BX-14 RB Vol. 1 (SharkEdge 3-80F)", "BX-00 Lightning L-Drago 1-60F", "BXS-05 Optimus Primal 3-60F", "BXS-03 Spider-Man 3-60F"],
-    'freeball': ["UX-08 Starter SilverWolf 3-80FB", "CX-11 Deck Set (SharkGill 5-60FB)"],
-    'gearball': ["BX-24 RB Vol. 2 (WyvernGale 5-80GB)", "BX-24 RB Vol. 2 (KnightLance 4-60GB)", "BX-24 RB Vol. 2 (WizardArrow 4-80GB)"],
-    'gearflat': ["BX-23 Starter PhoenixWing 9-60GF", "BX-00 SharkEdge 5-60GF", "BX-00 Xeno Xcalibur 3-60GF", "UX-15 Deck Set (HellsBrave J3-60GF)"],
-    'gearneedle': ["UX-06 Booster LeonCrest 7-60GN", "BX-27 RB Vol. 3 (SphinxCowl 9-80GN)", "BX-00 Rock Leone 6-80GN"],
-    'gearpoint': ["BX-26 Booster UnicornSting 5-60GP", "UX-05 RB Vol. 1 (DranDagger 2-80GP)", "UX-05 RB Vol. 1 (ShinobiShadow 3-70GP)", "BX-39 RB Vol. 3 (ShelterDrake 7-80GP)"],
+    'diskball': ["UX-00 WizardRod 5-70DB", "BX-00 PhoenixWing 9-80DB", "CX-?? Starter FoxBrush J0-80DB", "G1537 Wand Wizard 5-70DB (Hasbro)", "G1751 Buster Dran 5-70DB (Hasbro)", "G1543 Sword Dran (Hasbro)"],
+    'dot': ["BX-00 Draciel Shield 7-60D", "BX-?? BlackShell 4-60D", "BX-?? ShelterDrake 3-60D", "BX-?? UnicornSting 3-70D", "BX-?? ViperTail 5-70D", "G1533 Obsidian Shell 4-60D (Hasbro)", "G1844 25th Anniversary Set (Draciel)", "G1899 Quetzalcoatlus (Hasbro)"],
+    'elevate': ["BX-?? MammothTusk 2-80E", "BX-?? WhaleWave 5-80E", "G1669 Tide Whale 5-80E (Hasbro)"],
+    'flat': ["BX-01 Starter DranSword 3-60F", "BX-14 RB Vol. 1 (SharkEdge 3-80F)", "BX-00 Lightning L-Drago 1-60F", "BXS-05 Optimus Primal 3-60F", "BXS-03 Spider-Man 3-60F", "F9580 Sword Dran 3-60F (Hasbro)", "G0197 Tail Viper 5-60F (Hasbro)", "G0282 Tail Viper (Hasbro)", "G1899 Spinosaurus (Hasbro)"],
+    'freeball': ["UX-08 Starter SilverWolf 3-80FB", "CX-11 Deck Set (SharkGill 5-60FB)", "G1674 Sterling Wolf 3-80FB (Hasbro)", "G1686 Gill Shark (Hasbro)"],
+    'gearball': ["BX-24 RB Vol. 2 (WyvernGale 5-80GB)", "BX-24 RB Vol. 2 (KnightLance 4-60GB)", "BX-24 RB Vol. 2 (WizardArrow 4-80GB)", "G1531 Arrow Wizard 4-80GB (Hasbro)", "G1754 Yell Kong 3-60GB (Hasbro)", "G1543 Gale Wyvern (Hasbro)", "G0198 Yell Kong (Hasbro)"],
+    'gearflat': ["BX-23 Starter PhoenixWing 9-60GF", "BX-00 SharkEdge 5-60GF", "BX-00 Xeno Xcalibur 3-60GF", "UX-15 Deck Set (HellsBrave J3-60GF)", "G0284 Roar Tyranno 9-60GF (Hasbro)"],
+    'gearneedle': ["UX-06 Booster LeonCrest 7-60GN", "BX-27 RB Vol. 3 (SphinxCowl 9-80GN)", "BX-00 Rock Leone 6-80GN", "G1530 Cowl Sphinx 9-80GN (Hasbro)", "G1685 Crest Leon (Hasbro)"],
+    'gearpoint': ["BX-26 Booster UnicornSting 5-60GP", "UX-05 RB Vol. 1 (DranDagger 2-80GP)", "UX-05 RB Vol. 1 (ShinobiShadow 3-70GP)", "BX-39 RB Vol. 3 (ShelterDrake 7-80GP)", "G0283 Sting Unicorn 5-60GP (Hasbro)", "G1675 Shelter Drake 7-80GP (Hasbro)"],
     'gearrush': ["CX-?? Starter FoxBrush J9-70GR"],
-    'glide': ["UX-?? Booster PhoenixRudder 9-70G"],
-    'hexa': ["UX-03 Starter HellsHammer 3-70H"],
-    'highneedle': ["BX-13 Booster KnightLance 4-80HN", "BX-16 RB Vol. 1 (ViperTail 3-80HN)", "BX-24 RB Vol. 2 (LeonClaw 3-80HN)", "BXS-02 General Grievous 3-80HN", "CX-11 Deck Set (GolemRock M-85HN)"],
-    'hightaper': ["BX-21 Starter HellsChain 5-60HT", "BX-27 RB Vol. 3 (SphinxCowl 4-80HT)"],
+    'hexa': ["UX-03 Starter HellsHammer 3-70H", "G1752 Hammer Incendio 3-70H (Hasbro)", "G1687 Circle Ghost (Hasbro)", "G1756 Soar Phoenix 5-80H (Hasbro)"],
+    'highneedle': ["BX-13 Booster KnightLance 4-80HN", "BX-16 RB Vol. 1 (ViperTail 3-80HN)", "BX-24 RB Vol. 2 (LeonClaw 3-80HN)", "BXS-02 General Grievous 3-80HN", "CX-11 Deck Set (GolemRock M-85HN)", "G0184 Lance Knight 4-80HN (Hasbro)", "G0190 Knife Shinobi (Hasbro)", "G1542 Knife Shinobi (Hasbro)"],
+    'hightaper': ["BX-21 Starter HellsChain 5-60HT", "BX-27 RB Vol. 3 (SphinxCowl 4-80HT)", "G0196 Chain Incendio (Hasbro)", "G0842 Drop Attack Battle Set (Hasbro)", "G1685 Cowl Sphinx (Hasbro)"],
     'kick': ["CX-05 RB Vol. 5 (HellsReaper T4-70K)", "BX-?? LeonCrest 9-80K", "BX-?? WhaleWave 7-60K"],
     'level': ["UX-07 Starter SamuraiSaber 2-70L", "UX-15 Deck Set (TyrannoRoar 1-70L)"],
-    'lowflat': ["BX-06 Booster KnightShield 3-60LF", "BX-14 RB Vol. 1 (HellsScythe 4-80LF)", "BX-14 RB Vol. 1 (SharkEdge 3-60LF)", "UX-05 RB Vol. 1 (DranDagger 9-60LF)", "UX-05 RB Vol. 1 (ShinobiShadow 9-60LF)", "UX-10 Booster PhoenixFeather 4-60LF"],
+    'lowflat': ["BX-06 Booster KnightShield 3-60LF", "BX-14 RB Vol. 1 (HellsScythe 4-80LF)", "BX-14 RB Vol. 1 (SharkEdge 3-60LF)", "UX-05 RB Vol. 1 (DranDagger 9-60LF)", "UX-05 RB Vol. 1 (ShinobiShadow 9-60LF)", "UX-10 Booster PhoenixFeather 4-60LF", "G0194 Keel Shark 3-60LF (Hasbro)", "G1671 Lance Knight 3-60LF (Hasbro)", "G0199 Bite Croc (Hasbro)"],
     'loworb': ["CX-00 Starter Wizard Arc R4-55LO", "CX-02 Booster"],
     'lowrush': ["UX-09 Booster ImpactDrake 9-60LR"],
     'merge': ["CX-07 Booster SamuraiCalibur 6-70M"],
-    'metalneedle': ["UX-05 RB Vol. 1 (ShinobiShadow 1-80MN)"],
-    'needle': ["BX-04 Starter KnightShield 3-80N", "BX-05 Booster WizardArrow 4-60N", "BXS-03 Venom 3-80N", "BXS-05 Starscream 3-80N"],
-    'orb': ["BX-16 RB Vol. 1 (ViperTail 5-80O)", "BX-27 RB Vol. 3 (SphinxCowl 5-60O)", "BX-39 RB Vol. 3 (ShelterDrake 5-70O)", "CX-05 RB Vol. 5 (HellsArc T3-85O)"],
-    'point': ["BX-15 Starter LeonClaw 5-60P", "UX-02 Starter DranDagger 4-70P", "BX-00 Driger Slash 4-80P", "BXS-01 Darth Vader 4-60P", "BXS-04 Thanos 4-60P", "BXS-06 Optimus Prime 4-60P"],
-    'quake': ["BX-14 RB Vol. 1 (SharkEdge 1-60Q - Assuming BX-14 has this)", "BX-?? CrocCrunch 2-60Q", "BX-?? TyrannoBeat 4-70Q", "BX-?? RhinoHorn 5-80Q"],
-    'rush': ["BX-20 Starter DranDagger 4-60R", "BX-?? WizardRod 1-60R", "BX-?? CobaltDrake 9-60R"],
-    'spike': ["BX-19 Booster RhinoHorn 3-80S"],
-    'taper': ["BX-02 Starter HellsScythe 4-60T", "BX-08 3on3 Deck Set (KnightShield 4-80T)", "BX-14 RB Vol. 1 (WizardArrow 3-60T)", "BX-24 RB Vol. 2 (WyvernGale 3-60T)", "BX-00 Dranzer Spiral 3-80T", "BX-?? Steel Samurai 4-80T"],
-    'transpoint': ["BX-?? CrimsonGaruda 4-70TP"],
-    'unite': ["CX-06 Booster WeissTiger 3-60U", "CX-?? Starter FoxBrush J2-60U"],
-    'underneedle': ["UX-13 Booster GolemRock 1-60UN"],
+    'metalneedle': ["UX-05 RB Vol. 1 (ShinobiShadow 1-80MN)", "G1539 Shadow Shinobi 1-80MN (Hasbro)"],
+    'needle': ["BX-04 Starter KnightShield 3-80N", "BX-05 Booster WizardArrow 4-60N", "BXS-03 Venom 3-80N", "BXS-05 Starscream 3-80N", "F9581 Helm Knight 3-80N (Hasbro)", "G1688 Tackle Goat (Hasbro)"],
+    'orb': ["BX-16 RB Vol. 1 (ViperTail 5-80O)", "BX-27 RB Vol. 3 (SphinxCowl 5-60O)", "BX-39 RB Vol. 3 (ShelterDrake 5-70O)", "CX-05 RB Vol. 5 (HellsArc T3-85O)", "G1755 Arrow Wizard 4-80O (Hasbro)", "G1687 Chain Incendio (Hasbro)"],
+    'point': ["BX-15 Starter LeonClaw 5-60P", "UX-02 Starter DranDagger 4-70P", "BX-00 Driger Slash 4-80P", "BXS-01 Darth Vader 4-60P", "BXS-04 Thanos 4-60P", "BXS-06 Optimus Prime 4-60P", "G0193 Claw Leon 5-60P (Hasbro)", "G1843 Driger Slash 4-80P (Hasbro)", "G0199 Sting Unicorn (Hasbro)"],
+    'quake': ["BX-14 RB Vol. 1 (SharkEdge 1-60Q - Assuming BX-14 has this)", "BX-?? CrocCrunch 2-60Q", "BX-?? TyrannoBeat 4-70Q", "BX-?? RhinoHorn 5-80Q", "G1534 Keel Shark 1-60Q (Hasbro)", "G1670 Dagger Dran 4-70Q (Hasbro)"],
+    'rush': ["BX-20 Starter DranDagger 4-60R", "BX-?? WizardRod 1-60R", "BX-?? CobaltDrake 9-60R", "G1538 Wand Wizard 1-60R (Hasbro)"],
+    'spike': ["BX-19 Booster RhinoHorn 3-80S", "G0192 Horn Rhino 3-80S (Hasbro)", "G0286 Savage Bear 3-60S (Hasbro)", "G1542 Beat Tyranno (Hasbro)", "G1898 T. Rex (Hasbro)"],
+    'taper': ["BX-02 Starter HellsScythe 4-60T", "BX-08 3on3 Deck Set (KnightShield 4-80T)", "BX-14 RB Vol. 1 (WizardArrow 3-60T)", "BX-24 RB Vol. 2 (WyvernGale 3-60T)", "BX-00 Dranzer Spiral 3-80T", "F9583 Scythe Incendio 4-60T (Hasbro)", "G0188 Steel Samurai 4-80T (Hasbro)", "F9584 Dranzer Spiral 3-80T (Hasbro)", "G0198 Helm Knight (Hasbro)", "G0282 Gale Wyvern (Hasbro)"],
+    'transpoint': ["BX-?? CrimsonGaruda 4-70TP", "G1673 Scarlet Garuda 4-70TP (Hasbro)"],
+    'unite': ["CX-06 Booster WeissTiger 3-60U", "CX-?? Starter FoxBrush J2-60U", "G1686 Pearl Tiger (Hasbro)"],
+    'underneedle': ["UX-13 Booster GolemRock 1-60UN", "G1676 Rock Golem 1-60UN (Hasbro)"],
     'vortex': ["CX-01 Starter Dran Brave S6-60V", "CX-04 RB Vol. 4"],
     'wedge': ["CX-03 Starter Perseus Dark B6-80W", "CX-04 RB Vol. 4"],
     'zap': ["UX-14 Starter ScorpioSpear 0-70Z"],
-    'rubberaccel': ["BX-00 Dragoon Storm 4-60RA", "BX-00 Storm Pegasis 3-70RA", "BX-00 Victory Valkyrie 2-60RA"],
+    'rubberaccel': ["BX-00 Dragoon Storm 4-60RA", "BX-00 Storm Pegasis 3-70RA", "BX-00 Victory Valkyrie 2-60RA", "G1844 25th Anniversary Set (Dragoon)"],
 
     // Lock Chips (CX System)
     'lockchip-dran': ["CX-01 Starter Dran Brave S6-60V", "CX-04 RB Vol. 4 (Dran Brave Recolor)"],
@@ -598,30 +970,30 @@ const PART_SOURCES = {
     'lockchip-perseus': ["CX-03 Starter Perseus Dark B6-80W", "CX-04 RB Vol. 4 (Perseus Dark Recolor)"],
     'lockchip-hells': ["CX-05 RB Vol. 5 (Hells Reaper T4-70K)", "CX-05 RB Vol. 5 (Hells Arc T3-85O)"],
     'lockchip-rhino': ["CX-05 RB Vol. 5 (Rhino Reaper C4-55D)"],
-    'lockchip-fox': ["CX-08 Starter FoxBrush J9-70GR"], // Assumindo código CX-08
-    'lockchip-hornet': ["CX-?? Fort Hornet R 7-60T"], // Necessita confirmação do produto
-    'lockchip-kraken': ["CX-?? Wriggle Kraken S 3-85O"], // Necessita confirmação do produto
-    'lockchip-leon': ["CX-?? LeonFang T4-60A"], // Necessita confirmação do produto
-    'lockchip-stag': ["CX-?? Antler Stag B 2-60HN"], // Necessita confirmação do produto
-    'lockchip-valkyrie': ["CX-?? ValkyrieVolt S4-70V"], // Necessita confirmação do produto
-    'lockchip-sol': ["CX-?? Sol Eclipse E5-70E"], // Necessita confirmação do produto
+    'lockchip-fox': ["CX-08 Starter FoxBrush J9-70GR"],
+    'lockchip-hornet': ["CX-?? Fort Hornet R 7-60T"],
+    'lockchip-kraken': ["CX-?? Wriggle Kraken S 3-85O"],
+    'lockchip-leon': ["CX-?? LeonFang T4-60A"],
+    'lockchip-stag': ["CX-?? Antler Stag B 2-60HN"],
+    'lockchip-valkyrie': ["CX-?? ValkyrieVolt S4-70V"],
+    'lockchip-sol': ["CX-?? Sol Eclipse E5-70E"],
 
     // Main Blades (CX System)
     'mainblade-brave': ["CX-01 Starter Dran Brave S6-60V", "CX-04 RB Vol. 4 (Dran Brave Recolor)"],
     'mainblade-arc': ["CX-00 Starter Wizard Arc R4-55LO", "CX-02 Booster Wizard Arc R4-55LO", "CX-05 RB Vol. 5 (Hells Arc T3-85O)"],
     'mainblade-dark': ["CX-03 Starter Perseus Dark B6-80W", "CX-04 RB Vol. 4 (Perseus Dark Recolor)"],
     'mainblade-reaper': ["CX-05 RB Vol. 5 (Hells Reaper T4-70K)", "CX-05 RB Vol. 5 (Rhino Reaper C4-55D)"],
-    'mainblade-brush': ["CX-08 Starter FoxBrush J9-70GR"], // Assumindo código CX-08
-    'mainblade-fang': ["CX-?? LeonFang T4-60A"], // Necessita confirmação do produto
-    'mainblade-fort': ["CX-?? Fort Hornet R 7-60T"], // Necessita confirmação do produto
-    'mainblade-volt': ["CX-?? ValkyrieVolt S4-70V"], // Necessita confirmação do produto
-    'mainblade-wriggle': ["CX-?? Wriggle Kraken S 3-85O"], // Necessita confirmação do produto
-    'antler': ["CX-?? Antler Stag B 2-60HN"], // ID 'antler'usado como no seu ALL_PARTS. Necessita confirmação do produto
+    'mainblade-brush': ["CX-08 Starter FoxBrush J9-70GR"],
+    'mainblade-fang': ["CX-?? LeonFang T4-60A"],
+    'mainblade-fort': ["CX-?? Fort Hornet R 7-60T"],
+    'mainblade-volt': ["CX-?? ValkyrieVolt S4-70V"],
+    'mainblade-wriggle': ["CX-?? Wriggle Kraken S 3-85O"],
+    'antler': ["CX-?? Antler Stag B 2-60HN"],
 
     // Assist Blades (CX System)
     'assistblade-bumper': ["CX-03 Starter Perseus Dark B6-80W", "CX-04 RB Vol. 4 (Perseus Dark Recolor)"],
     'assistblade-charge': ["CX-05 RB Vol. 5 (Rhino Reaper C4-55D)"],
-    'assistblade-jaggy': ["CX-08 Starter FoxBrush J9-70GR"], // Assumindo código CX-08
+    'assistblade-jaggy': ["CX-08 Starter FoxBrush J9-70GR"],
     'assistblade-round': ["CX-00 Starter Wizard Arc R4-55LO", "CX-02 Booster Wizard Arc R4-55LO"],
     'assistblade-slash': ["CX-01 Starter Dran Brave S6-60V", "CX-04 RB Vol. 4 (Dran Brave Recolor)"],
     'assistblade-turn': ["CX-05 RB Vol. 5 (Hells Reaper T4-70K)", "CX-05 RB Vol. 5 (Hells Arc T3-85O)"]

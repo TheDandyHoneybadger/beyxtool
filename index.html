@@ -14,6 +14,7 @@
         <nav>
             <a href="#" class="tab-link" data-tab="meta" data-translate="tab_meta">META</a>
             <a href="#" class="tab-link" data-tab="deck-builder" data-translate="tab_deck_builder">Deck Builder</a>
+            <a href="#" class="tab-link" data-tab="guide" data-translate="tab_guide">Guia</a>
             <a href="#" class="tab-link" data-tab="collection" data-translate="tab_collection">Coleção</a>
             <a href="#" class="tab-link" data-tab="score" data-translate="tab_score">Placar</a>
             <a href="#" class="tab-link" data-tab="settings" data-translate="tab_settings">Configurações</a>
@@ -32,7 +33,7 @@
                  </a>
                  <img src="images/excel.png" alt="Excel icon" class="meta-excel-icon">
              </div>
-             </div>
+        </div>
 
         <div id="deck-builder-tab" class="tab-content">
             <div class="tab-header">
@@ -130,6 +131,16 @@
             </div>
         </div>
 
+        <div id="guide-tab" class="tab-content">
+            <div class="tab-header">
+                <h2 data-translate="guide_header">Guia de Iniciante</h2>
+            </div>
+            <p class="guide-description" data-translate="guide_description">
+                Guia voltado para iniciantes que querem começar bem no competitivo do Beyblade X, mas não sabem quais produtos comprar.
+            </p>
+            <div id="guide-products-container">
+                </div>
+        </div>
         <div id="collection-tab" class="tab-content">
             <div class="tab-header">
                 <h2 data-translate="collection_header">Minha Coleção</h2>
@@ -142,6 +153,8 @@
                     <select id="collection-sort">
                         <option value="name_asc" data-translate="sort_name_asc">Nome (A-Z)</option>
                         <option value="name_desc" data-translate="sort_name_desc">Nome (Z-A)</option>
+                        <option value="tier_desc" data-translate="sort_tier_desc">Tier (S > D)</option>
+                        <option value="tier_asc" data-translate="sort_tier_asc">Tier (D > S)</option>
                         <option value="type" data-translate="sort_type">Tipo (A-D-S-B)</option>
                     </select>
                 </div>
