@@ -14,6 +14,7 @@
         <nav>
             <a href="#" class="tab-link" data-tab="meta" data-translate="tab_meta">META</a>
             <a href="#" class="tab-link" data-tab="deck-builder" data-translate="tab_deck_builder">Deck Builder</a>
+            <a href="#" class="tab-link" data-tab="guide" data-translate="tab_guide">Guia</a>
             <a href="#" class="tab-link" data-tab="collection" data-translate="tab_collection">Coleção</a>
             <a href="#" class="tab-link" data-tab="score" data-translate="tab_score">Placar</a>
             <a href="#" class="tab-link" data-tab="settings" data-translate="tab_settings">Configurações</a>
@@ -22,11 +23,16 @@
 
     <main>
         <div id="meta-tab" class="tab-content">
-            <div class="tab-header">
-                <h2 data-translate="meta_header">Top 10 Combos do META</h2>
-            </div>
-            <div id="meta-combos-container">
-                </div>
+             <div class="tab-header centered-header">
+                 <h2 data-translate="meta_question">Querer saber mais sobre o META?</h2>
+             </div>
+             <p class="meta-cta" data-translate="meta_cta">Acesse o link abaixo e esteja um passo mais próximo de se tornar um PRO!</p>
+             <div class="meta-link-container">
+                 <a href="https://docs.google.com/spreadsheets/d/15wiNF1pTAUzohfu4mTglFeM1rgfL62C5-8nrp5u3CcQ/edit?gid=1993417626#gid=1993417626" target="_blank" rel="noopener noreferrer" data-translate="meta_link_text">
+                     Clique aqui para acessar a Ferramenta de Análise de META
+                 </a>
+                 <img src="images/excel.png" alt="Excel icon" class="meta-excel-icon">
+             </div>
         </div>
 
         <div id="deck-builder-tab" class="tab-content">
@@ -72,7 +78,6 @@
                             <div class="part-placeholder" data-type="bit"><span data-translate="deck_placeholder_bit">Bit</span></div>
                             <p class="part-name-display" data-name-type="bit" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
-                        <div class="bey-score"><span data-translate="deck_score_label">Soma:</span> <span>0.00</span></div>
                     </div>
                     <div class="deck-slot" data-slot-id="1" data-bay-type="empty">
                          <div class="part-container">
@@ -95,7 +100,6 @@
                             <div class="part-placeholder" data-type="bit"><span data-translate="deck_placeholder_bit">Bit</span></div>
                             <p class="part-name-display" data-name-type="bit" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
-                        <div class="bey-score"><span data-translate="deck_score_label">Soma:</span> <span>0.00</span></div>
                     </div>
                     <div class="deck-slot" data-slot-id="2" data-bay-type="empty">
                          <div class="part-container">
@@ -118,17 +122,25 @@
                             <div class="part-placeholder" data-type="bit"><span data-translate="deck_placeholder_bit">Bit</span></div>
                             <p class="part-name-display" data-name-type="bit" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
-                        <div class="bey-score"><span data-translate="deck_score_label">Soma:</span> <span>0.00</span></div>
                     </div>
                 </div>
                 <div class="deck-info">
-                    <p><span data-translate="deck_total_score_label">Pontuação Total do Deck:</span> <span id="deck-score">0.00</span></p>
                     <button id="clear-deck-button" data-translate="clear_deck_button">Limpar Beyblades</button>
                     <button id="export-deck-button" data-translate="export_deck_list_button">Exportar Deck List</button>
                 </div>
             </div>
         </div>
 
+        <div id="guide-tab" class="tab-content">
+            <div class="tab-header">
+                <h2 data-translate="guide_header">Guia de Iniciante</h2>
+            </div>
+            <p class="guide-description" data-translate="guide_description">
+                Guia voltado para iniciantes que querem começar bem no competitivo do Beyblade X, mas não sabem quais produtos comprar.
+            </p>
+            <div id="guide-products-container">
+                </div>
+        </div>
         <div id="collection-tab" class="tab-content">
             <div class="tab-header">
                 <h2 data-translate="collection_header">Minha Coleção</h2>
@@ -141,8 +153,8 @@
                     <select id="collection-sort">
                         <option value="name_asc" data-translate="sort_name_asc">Nome (A-Z)</option>
                         <option value="name_desc" data-translate="sort_name_desc">Nome (Z-A)</option>
-                        <option value="score_desc" data-translate="sort_score_desc">Pontuação (Maior)</option>
-                        <option value="score_asc" data-translate="sort_score_asc">Pontuação (Menor)</option>
+                        <option value="tier_desc" data-translate="sort_tier_desc">Tier (S > D)</option>
+                        <option value="tier_asc" data-translate="sort_tier_asc">Tier (D > S)</option>
                         <option value="type" data-translate="sort_type">Tipo (A-D-S-B)</option>
                     </select>
                 </div>
@@ -198,6 +210,7 @@
                 <button id="reset-score-button" data-translate="score_reset_button">Reiniciar Placar</button>
             </div>
         </div>
+
         <div id="settings-tab" class="tab-content">
             <div class="tab-header">
                 <h2 data-translate="settings_header">Importar & Exportar Dados</h2>
@@ -227,7 +240,6 @@
             <span class="close-button" id="part-selector-close">&times;</span>
             <h3 id="modal-title">Selecione uma Peça</h3>
             <div class="modal-scrollable-content">
-                <div id="modal-suggestions-container"></div>
                 <div id="modal-parts-list-container"></div>
             </div>
         </div>

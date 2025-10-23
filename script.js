@@ -1,13 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Verifica se as variáveis do database.js foram carregadas
-    if (typeof ALL_VARIANTS === 'undefined' || typeof ALL_PARTS === 'undefined' || typeof ALL_COMBOS === 'undefined' || typeof translations === 'undefined') {
+    // [MODIFICADO] Verifica se as variáveis do database.js foram carregadas
+    if (typeof ALL_VARIANTS === 'undefined' || typeof ALL_PARTS === 'undefined' || typeof translations === 'undefined' || typeof STARTER_GUIDE_PRODUCTS === 'undefined') {
         alert("Erro: Arquivo database.js não carregado ou corrompido. Verifique o console para mais detalhes.");
-        console.error("Variáveis de database.js (ALL_VARIANTS, ALL_PARTS, ALL_COMBOS, translations) não encontradas.");
+        console.error("Variáveis de database.js (ALL_VARIANTS, ALL_PARTS, translations, STARTER_GUIDE_PRODUCTS) não encontradas.");
         return;
     }
 
-    const TOP_10_COMBOS = ALL_COMBOS.slice(0, 10);
     let currentLanguage = 'pt-br';
 
     let app_data = {
@@ -40,14 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const collection_tab = document.getElementById('collection-tab');
     const deck_slots = document.querySelectorAll('.deck-slot');
     const clear_deck_button = document.getElementById('clear-deck-button');
-    const meta_combos_container = document.getElementById('meta-combos-container');
     const deck_selector = document.getElementById('deck-selector');
     const deck_name_input = document.getElementById('deck-name-input');
     const add_deck_button = document.getElementById('add-deck-button');
     const delete_deck_button = document.getElementById('delete-deck-button');
     const part_modal = document.getElementById('part-selector-modal');
     const modal_title = document.getElementById('modal-title');
-    const modal_suggestions_container = document.getElementById('modal-suggestions-container');
     const modal_parts_list_container = document.getElementById('modal-parts-list-container');
     const part_modal_close = document.getElementById('part-selector-close');
     const variant_modal = document.getElementById('variant-selector-modal');
@@ -70,6 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetScoreButton = document.getElementById('reset-score-button');
     const p1NameInput = document.querySelector('#player1 .player-name');
     const p2NameInput = document.querySelector('#player2 .player-name');
+    
+    // [NOVO] Elemento do Guia
+    const guide_products_container = document.getElementById('guide-products-container');
 
     const showInputModal = (titleKey, placeholderKey, defaultValue = "") => {
         return new Promise((resolve) => {
@@ -104,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
                  if (element.placeholder !== undefined && key.includes('placeholder')) { element.placeholder = langPack[key]; }
                  else if (element.title !== undefined && key.includes('title')) { element.title = langPack[key]; }
                  else if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('part-placeholder')) { element.textContent = langPack[key]; }
-                 else if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('bey-score')) { element.textContent = langPack[key]; }
                  else if (element.tagName === 'INPUT' && (key === 'player_1_default' || key === 'player_2_default')) {
                     const defaultP1_pt = translations['pt-br']?.player_1_default || "Jogador 1";
                     const defaultP1_en = translations['en']?.player_1_default || "Player 1";
@@ -146,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (correspondingContent) correspondingContent.classList.add('active');
             });
         });
-        const initialTab = document.querySelector('.tab-link[data-tab="meta"]');
+        const initialTab = document.querySelector('.tab-link[data-tab="deck-builder"]');
         if (initialTab) initialTab.click();
     };
 
@@ -217,23 +216,77 @@ document.addEventListener('DOMContentLoaded', () => {
              });
          }
 
-         // Carregar nomes dos players
          const p1Name = localStorage.getItem('beyXToolP1Name');
          const p2Name = localStorage.getItem('beyXToolP2Name');
-         const langPack = translations[currentLanguage] || translations['pt-br']; // Garante fallback para pt-br
+         const langPack = translations[currentLanguage] || translations['pt-br'];
          if (p1NameInput) p1NameInput.value = p1Name || langPack.player_1_default || "Jogador 1";
          if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Jogador 2";
     };
 
-    const renderMetaCombos = () => {
-        if (!meta_combos_container) return; meta_combos_container.innerHTML = '';
-        TOP_10_COMBOS.forEach((combo, index) => {
-            const blade_part = ALL_PARTS.find(p => p.name === combo.blade); const ratchet_part = ALL_PARTS.find(p => p.name === combo.ratchet); const bit_part = ALL_PARTS.find(p => p.name === combo.bit); if (!blade_part || !ratchet_part || !bit_part) return;
-            const combo_card = document.createElement('div'); combo_card.className = 'meta-combo-card';
-            combo_card.innerHTML = `<div class="rank">#${index + 1}</div><div class="parts"><div class="part-display"><img src="${blade_part.image || 'images/placeholder.png'}" alt="${combo.blade}"><span>${combo.blade}</span></div><div class="part-display"><img src="${ratchet_part.image || 'images/placeholder.png'}" alt="${combo.ratchet}"><span>${combo.ratchet}</span></div><div class="part-display"><img src="${bit_part.image || 'images/placeholder.png'}" alt="${combo.bit}"><span>${combo.bit}</span></div></div><div class="points">${combo.points.toFixed(2)} pts</div>`;
-            meta_combos_container.appendChild(combo_card);
+    // --- [NOVO] Função para renderizar o Guia de Iniciante ---
+    const renderStarterGuide = () => {
+        if (!guide_products_container || typeof STARTER_GUIDE_PRODUCTS === 'undefined') {
+             console.error("Container do Guia de Iniciante ou dados não encontrados.");
+             return;
+        }
+        
+        guide_products_container.innerHTML = ''; // Limpa o container
+
+        STARTER_GUIDE_PRODUCTS.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+
+            // 1. Cria o Cabeçalho do Produto
+            const header = document.createElement('div');
+            header.className = 'product-card-header';
+            header.innerHTML = `
+                <img src="${product.image || 'images/products/placeholder.png'}" alt="${product.productName}" class="product-image">
+                <h4 class="product-name">${product.productName}</h4>
+            `;
+            productCard.appendChild(header);
+
+            // 2. Cria o container das Peças
+            const partsContainer = document.createElement('div');
+            partsContainer.className = 'product-parts';
+
+            // 3. Adiciona cada Peça
+            product.parts.forEach(partId => {
+                const part = ALL_PARTS.find(p => p.id === partId);
+                if (!part) {
+                    console.warn(`Peça do Guia não encontrada em ALL_PARTS: ${partId}`);
+                    return;
+                }
+
+                // Cria o card da peça (reutilizando estilos .part-card)
+                const partItem = document.createElement('div');
+                partItem.className = 'product-part-item'; // Classe para estilo (sem hover/clique)
+
+                const tierDisplay = part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : '';
+                partItem.innerHTML = `<img src="${part.image || 'images/placeholder.png'}" alt="${part.name}"><p>${part.name}</p>${tierDisplay}`;
+
+                // Adiciona o símbolo de tipo (copiado de renderParts)
+                if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) {
+                    const typeSymbolDiv = document.createElement('div');
+                    typeSymbolDiv.className = 'part-type-symbol';
+                    const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1);
+                    const imgPath = `images/types/${part.bey_type.toLowerCase()}.png`;
+                    const img = new Image();
+                    img.src = imgPath;
+                    img.onload = () => {
+                        typeSymbolDiv.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`;
+                        partItem.appendChild(typeSymbolDiv);
+                    }
+                    img.onerror = () => { console.warn(`Imagem de tipo não encontrada: ${imgPath}`); }
+                }
+                
+                partsContainer.appendChild(partItem);
+            });
+
+            productCard.appendChild(partsContainer);
+            guide_products_container.appendChild(productCard);
         });
     };
+    // --- [FIM NOVO] ---
 
     const renderParts = () => {
         const containers = { blades: blades_container, ratchets: ratchets_container, bits: bits_container, mainblades: mainblades_container, assistblades: assistblades_container, lockchips: lockchips_container };
@@ -254,6 +307,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        const tierOrder = { 'S': 1, 'A': 2, 'B': 3, 'C': 4, 'D': 5 };
+
         switch (sortValue) {
             case 'name_asc':
                 partsToRender.sort((a, b) => a.name.localeCompare(b.name));
@@ -261,23 +316,27 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'name_desc':
                 partsToRender.sort((a, b) => b.name.localeCompare(a.name));
                 break;
-            case 'score_desc':
+            case 'tier_desc':
                 partsToRender.sort((a, b) => {
-                    if (b.score !== a.score) return b.score - a.score;
+                    const tierA = tierOrder[a.tier] || 6;
+                    const tierB = tierOrder[b.tier] || 6;
+                    if (tierA !== tierB) return tierA - tierB;
                     return a.name.localeCompare(b.name);
                 });
                 break;
-            case 'score_asc':
-                partsToRender.sort((a, b) => {
-                    if (a.score !== b.score) return a.score - b.score;
+            case 'tier_asc':
+                 partsToRender.sort((a, b) => {
+                    const tierA = tierOrder[a.tier] || 0;
+                    const tierB = tierOrder[b.tier] || 0;
+                    if (tierA !== tierB) return tierB - tierA;
                     return a.name.localeCompare(b.name);
                 });
                 break;
             case 'type':
-                const typeOrder = { 'attack': 1, 'defense': 2, 'stamina': 3, 'balance': 4 };
+                const typeOrderBey = { 'attack': 1, 'defense': 2, 'stamina': 3, 'balance': 4 };
                 partsToRender.sort((a, b) => {
-                    const typeA = a.bey_type ? typeOrder[a.bey_type.toLowerCase()] : 5;
-                    const typeB = b.bey_type ? typeOrder[b.bey_type.toLowerCase()] : 5;
+                    const typeA = a.bey_type ? typeOrderBey[a.bey_type.toLowerCase()] : 5;
+                    const typeB = b.bey_type ? typeOrderBey[b.bey_type.toLowerCase()] : 5;
                     if (typeA !== typeB) return typeA - typeB;
                     return a.name.localeCompare(b.name);
                 });
@@ -297,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let isOwned = (part.type === 'blade') ? (collectionSet?.has(part.id) && collectionSet.get(part.id).size > 0) : collectionSet?.has(part.id);
             if (isOwned) part_card.classList.add('owned');
 
-            part_card.innerHTML = `<img src="${part.image || 'images/placeholder.png'}" alt="${part.name}"><p>${part.name}</p><div class="part-score">${part.score.toFixed(2)}</div>`;
+            part_card.innerHTML = `<img src="${part.image || 'images/placeholder.png'}" alt="${part.name}"><p>${part.name}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`;
 
             if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) {
                 const typeSymbolDiv = document.createElement('div');
@@ -313,23 +372,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.onerror = () => { console.warn(`Imagem de tipo não encontrada: ${imgPath}`); }
             }
 
-            // --- [INÍCIO DA LÓGICA ATUALIZADA DE HOLD/CLIQUE] ---
+            // --- Lógica de Hold/Clique ---
             let pressTimerOwner = null;
             let pressTimerInfo = null;
             let didOwnerHold = false;
             let didInfoHold = false;
-            let interactionStartTime = 0; // Para medir tempo de clique
+            let interactionStartTime = 0;
 
             const startHold = (e) => {
                 if (e.button === 2) return;
-                interactionStartTime = Date.now(); // Marca o tempo de início
+                interactionStartTime = Date.now();
                 didOwnerHold = false;
                 didInfoHold = false;
-
-                pressTimerOwner = setTimeout(() => {
-                    didOwnerHold = true;
-                }, 500);
-
+                pressTimerOwner = setTimeout(() => { didOwnerHold = true; }, 500);
                 pressTimerInfo = setTimeout(() => {
                     didInfoHold = true;
                     didOwnerHold = false;
@@ -340,33 +395,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const releaseHold = (e) => {
                 clearTimeout(pressTimerOwner);
                 clearTimeout(pressTimerInfo);
-
                 const interactionTime = Date.now() - interactionStartTime;
-                const isMouseEvent = e.type === 'mouseup'; // Verifica se foi evento de mouse
-
-                if (didInfoHold) {
-                    // >= 2s: Info foi mostrado, não faz nada ao soltar.
-                } else if (didOwnerHold) {
-                    // 0.5s <= tempo < 2s: Faz o toggle (ação normal de hold para touch/mouse).
-                    togglePartOwnership(part);
-                } else if (isMouseEvent && interactionTime < 500) {
-                    // < 0.5s E é mouse: Faz o toggle (ação de clique rápido no PC).
-                    togglePartOwnership(part);
-                }
-                // Se for evento de toque (touchend) e interactionTime < 500, não faz nada (evita swipe click).
-
-                didOwnerHold = false;
-                didInfoHold = false;
-                interactionStartTime = 0;
+                const isMouseEvent = e.type === 'mouseup';
+                if (didInfoHold) { /* Info shown */ }
+                else if (didOwnerHold) { togglePartOwnership(part); }
+                else if (isMouseEvent && interactionTime < 500) { togglePartOwnership(part); }
+                didOwnerHold = false; didInfoHold = false; interactionStartTime = 0;
             };
 
-
             const abortHold = (e) => {
-                 clearTimeout(pressTimerOwner);
-                 clearTimeout(pressTimerInfo);
-                 didOwnerHold = false;
-                 didInfoHold = false;
-                 interactionStartTime = 0;
+                 clearTimeout(pressTimerOwner); clearTimeout(pressTimerInfo);
+                 didOwnerHold = false; didInfoHold = false; interactionStartTime = 0;
             };
 
             part_card.addEventListener('mousedown', startHold);
@@ -376,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
             part_card.addEventListener('mouseleave', abortHold);
             part_card.addEventListener('touchcancel', abortHold);
             part_card.addEventListener('contextmenu', (e) => e.preventDefault());
-             // --- [FIM DA LÓGICA ATUALIZADA DE HOLD/CLIQUE] ---
+            // --- Fim Lógica ---
 
             container.appendChild(part_card);
         });
@@ -393,7 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updateDeckUI = () => {
         const currentDeck = app_data.decks[app_data.active_deck_index]; if (!currentDeck) return;
-        let totalDeckScore = 0; const langPack = translations[currentLanguage]; const selectText = langPack.deck_placeholder_selecione || 'Select';
+        const langPack = translations[currentLanguage]; const selectText = langPack.deck_placeholder_selecione || 'Select';
 
         deck_slots.forEach((slot, bayIndex) => {
             let bay = currentDeck.bays[bayIndex];
@@ -404,7 +443,6 @@ document.addEventListener('DOMContentLoaded', () => {
                  if (!bay.hasOwnProperty('part4')) bay.part4 = null;
                  if (!bay.hasOwnProperty('part5')) bay.part5 = null;
             }
-            let bayScore = 0;
 
             const selectors = {
                 p1ph: slot.querySelector('.part-placeholder[data-type="primeira"]'), p1n: slot.querySelector('.part-name-display[data-name-type="primeira"]'),
@@ -412,13 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 abph: slot.querySelector('.part-placeholder[data-type="assistblade"]'), abn: slot.querySelector('.part-name-display[data-name-type="assistblade"]'),
                 rph: slot.querySelector('.part-placeholder[data-type="ratchet"]'), rn: slot.querySelector('.part-name-display[data-name-type="ratchet"]'),
                 bph: slot.querySelector('.part-placeholder[data-type="bit"]'), bn: slot.querySelector('.part-name-display[data-name-type="bit"]'),
-                scoreEl: slot.querySelector('.bey-score span:last-child')
             };
-
-            const scoreLabelEl = slot.querySelector('.bey-score span:first-child');
-             if (scoreLabelEl && langPack.deck_score_label) {
-                 scoreLabelEl.textContent = langPack.deck_score_label + ": ";
-             }
 
             if (Object.values(selectors).some(el => !el)) { console.error(`Elementos faltando no slot ${bayIndex}. Verifique o HTML.`); return; }
 
@@ -429,18 +461,16 @@ document.addEventListener('DOMContentLoaded', () => {
                  n.textContent = selectText;
              };
             const set = (ph, n, part) => {
-                if (!part) return 0;
-                const name = part.variant ? `${part.baseName} (${part.variant})` : part.name;
+                if (!part) return;
+                const name = part.displayName || part.name;
                 let img = part.image || 'images/placeholder.png';
                 if (part.type==='blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) {
                     const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant);
                     if (vData?.image) img=vData.image;
                     else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock'); if (sVar?.image) img=sVar.image; }
                 }
-                const score = (typeof part.score === 'number') ? part.score : 0;
-                ph.innerHTML = `<img src="${img}" alt="${name}"><span class="part-score-deck">${score.toFixed(2)}</span>`;
+                ph.innerHTML = `<img src="${img}" alt="${name}">`;
                 n.textContent = name;
-                return score;
             };
 
             reset(selectors.p1ph, selectors.p1n, 'deck_placeholder_primeira');
@@ -450,35 +480,23 @@ document.addEventListener('DOMContentLoaded', () => {
             reset(selectors.bph, selectors.bn, 'deck_placeholder_bit');
 
             if (bay.type === 'standard') {
-                bayScore += set(selectors.p1ph, selectors.p1n, bay.part1);
-                bayScore += set(selectors.rph, selectors.rn, bay.part4);
-                bayScore += set(selectors.bph, selectors.bn, bay.part5);
+                set(selectors.p1ph, selectors.p1n, bay.part1);
+                set(selectors.rph, selectors.rn, bay.part4);
+                set(selectors.bph, selectors.bn, bay.part5);
             } else if (bay.type === 'chip') {
-                bayScore += set(selectors.p1ph, selectors.p1n, bay.part1);
-                bayScore += set(selectors.mbph, selectors.mbn, bay.part2);
-                bayScore += set(selectors.abph, selectors.abn, bay.part3);
-                bayScore += set(selectors.rph, selectors.rn, bay.part4);
-                bayScore += set(selectors.bph, selectors.bn, bay.part5);
+                set(selectors.p1ph, selectors.p1n, bay.part1);
+                set(selectors.mbph, selectors.mbn, bay.part2);
+                set(selectors.abph, selectors.abn, bay.part3);
+                set(selectors.rph, selectors.rn, bay.part4);
+                set(selectors.bph, selectors.bn, bay.part5);
             }
-
-            selectors.scoreEl.textContent = bayScore.toFixed(2);
-            totalDeckScore += bayScore;
         });
-
-        const deckInfoScoreP = document.querySelector('.deck-info p');
-        if (deckInfoScoreP) {
-            const totalLabel = langPack.deck_total_score_label || 'Total Deck Score:';
-             deckInfoScoreP.querySelector('span:first-of-type').textContent = totalLabel + " ";
-             deckInfoScoreP.querySelector('#deck-score').textContent = totalDeckScore.toFixed(2);
-        }
-
         renderDeckManager();
     };
 
 
     const showProductInfoPopup = (part, element) => {
         document.querySelectorAll('.part-info-popup').forEach(p => p.remove());
-        // [MODIFICADO] Busca a fonte usando o ID base da Blade, se for uma variante
         const sourceId = part.baseId || part.id;
         const sources = PART_SOURCES[sourceId];
         if (!sources || sources.length === 0) return;
@@ -490,71 +508,57 @@ document.addEventListener('DOMContentLoaded', () => {
         popup.style.left = `${window.scrollX + rect.left + (element.offsetWidth / 2) - (popup.offsetWidth / 2)}px`;
     };
 
-    // --- [FUNÇÃO MODIFICADA] togglePartOwnership ---
     const togglePartOwnership = (part) => {
         document.querySelectorAll('.part-info-popup').forEach(p => p.remove());
-        // Encontra o card *antes* de modificar os dados
         const partCard = document.querySelector(`#collection-tab .part-card[data-part-id="${part.id}"]`);
 
         if (part.type === 'blade') {
             const variantList = part.variantsId ? ALL_VARIANTS[part.variantsId] : null;
             if (part.variantsId && variantList && variantList.length > 1) {
-                // Se tem variantes e mais de uma, abre o seletor (não muda posse aqui)
                 openVariantSelector(part);
             } else {
-                // Se não tem variantes ou só tem uma, faz o toggle direto
                 const collectionSet = app_data.collection.blades;
                 if (!collectionSet) return;
 
                 if (collectionSet.has(part.id)) {
-                    // Remove da coleção
                     collectionSet.delete(part.id);
-                    if (partCard) partCard.classList.remove('owned'); // Atualiza a classe
-                    // Remove de decks
+                    if (partCard) partCard.classList.remove('owned');
                     app_data.decks.forEach(deck => deck.bays.forEach(bay => {
                         if (bay.part1 && (bay.part1.baseId || bay.part1.id) === part.id) clearBay(bay);
                     }));
                 } else {
-                    // Adiciona à coleção
                     const variantToAdd = (part.variantsId && variantList?.length === 1) ? variantList[0].name : 'owned';
                     collectionSet.set(part.id, new Set([variantToAdd]));
-                    if (partCard) partCard.classList.add('owned'); // Atualiza a classe
+                    if (partCard) partCard.classList.add('owned');
                 }
-                saveAppData(); // Salva a alteração
-                updateDeckUI(); // Atualiza o deck builder se a peça foi removida
-                // Não chama renderParts()
+                saveAppData();
+                updateDeckUI();
+                 if (collection_filter && collection_filter.checked) { renderParts(); }
             }
         } else {
-            // Lógica para Ratchets, Bits, etc. (sem variantes)
             const collectionSetKey = part.type + 's';
             const collection_set = app_data.collection[collectionSetKey];
             if (!collection_set) return;
 
             if (collection_set.has(part.id)) {
-                // Remove
                 collection_set.delete(part.id);
-                if (partCard) partCard.classList.remove('owned'); // Atualiza classe
-                // Remove de decks (part2 a part5)
-                app_data.decks.forEach(deck => deck.bays.forEach(bay => {
-                    if (bay.part2?.id === part.id) bay.part2 = null;
-                    if (bay.part3?.id === part.id) bay.part3 = null;
-                    if (bay.part4?.id === part.id) bay.part4 = null;
-                    if (bay.part5?.id === part.id) bay.part5 = null;
-                }));
+                if (partCard) partCard.classList.remove('owned');
+                 app_data.decks.forEach(deck => deck.bays.forEach(bay => {
+                     if (bay.part2?.id === part.id) bay.part2 = null;
+                     if (bay.part3?.id === part.id) bay.part3 = null;
+                     if (bay.part4?.id === part.id) bay.part4 = null;
+                     if (bay.part5?.id === part.id) bay.part5 = null;
+                 }));
             } else {
-                // Adiciona
                 collection_set.add(part.id);
-                if (partCard) partCard.classList.add('owned'); // Atualiza classe
+                if (partCard) partCard.classList.add('owned');
             }
-            saveAppData(); // Salva
-            updateDeckUI(); // Atualiza deck builder
-            // Não chama renderParts()
+            saveAppData();
+            updateDeckUI();
+             if (collection_filter && collection_filter.checked) { renderParts(); }
         }
     };
-    // --- [FIM DA FUNÇÃO MODIFICADA] ---
 
-
-    // --- [MANIPULADOR DE CLIQUE MODIFICADO] openVariantSelector ---
     const openVariantSelector = (part) => {
         variant_modal_part = part;
         const titlePrefix = translations[currentLanguage].variant_modal_title_prefix || "Select Variants for";
@@ -567,7 +571,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const variantList = ALL_VARIANTS[part.variantsId];
         if (!variantList) { closeVariantModal(); return; }
 
-        // Encontra o card principal na coleção ANTES de adicionar listeners
         const mainCard = document.querySelector(`#collection-tab .part-card[data-part-id="${part.id}"]`);
 
         variantList.forEach(vData => {
@@ -582,41 +585,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentOwned = app_data.collection.blades.get(part.id) || new Set();
                 let wasModified = false;
 
-                // Atualiza a posse da variante específica
                 if (currentOwned.has(vData.name)) {
                     currentOwned.delete(vData.name);
-                    card.classList.remove('selected'); // Atualiza visual do card da variante
+                    card.classList.remove('selected');
                     wasModified = true;
                 } else {
                     currentOwned.add(vData.name);
-                    card.classList.add('selected'); // Atualiza visual do card da variante
+                    card.classList.add('selected');
                     wasModified = true;
                 }
 
                 if (wasModified) {
-                    // Atualiza a coleção principal
                     if (currentOwned.size > 0) {
                         app_data.collection.blades.set(part.id, currentOwned);
-                        if (mainCard) mainCard.classList.add('owned'); // Atualiza classe do card principal
+                        if (mainCard) mainCard.classList.add('owned');
                     } else {
                         app_data.collection.blades.delete(part.id);
-                        if (mainCard) mainCard.classList.remove('owned'); // Atualiza classe do card principal
-                        // Remove a blade de qualquer deck se nenhuma variante for possuída
+                        if (mainCard) mainCard.classList.remove('owned');
                         app_data.decks.forEach(d => d.bays.forEach(b => {
                             if (b.part1?.baseId === part.id) clearBay(b);
                         }));
                     }
-                    saveAppData(); // Salva
-                    updateDeckUI(); // Atualiza deck builder
-                    // Não chama renderParts()
+                    saveAppData();
+                    updateDeckUI();
+                     if (collection_filter && collection_filter.checked) { renderParts(); }
                 }
-                 closeVariantModal(); // Fecha o modal após o clique
+                 closeVariantModal();
             });
             grid.appendChild(card);
         });
         variant_modal.style.display = 'block';
     };
-    // --- [FIM DO MANIPULADOR MODIFICADO] ---
 
     const closeVariantModal = () => { if (variant_modal) variant_modal.style.display = 'none'; variant_modal_part = null; };
 
@@ -636,10 +635,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const { slotId, type } = active_deck_slot;
         const bay = app_data.decks[app_data.active_deck_index].bays[slotId];
         if (!bay) return;
-
-        if (part.type === 'blade' && !part.baseId) {
-            part = { ...part, baseId: part.id, baseName: part.name, variant: part.variant || 'Stock' };
-        }
 
         const targetPartMap = {
             'primeira': 'part1', 'mainblade': 'part2', 'assistblade': 'part3',
@@ -688,9 +683,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const titlePrefix = translations[currentLanguage].part_selector_modal_title_prefix || "Select:";
         modal_title.textContent = `${titlePrefix} ${type.charAt(0).toUpperCase() + type.slice(1)}`;
 
-        const currentBay = app_data.decks[app_data.active_deck_index].bays[slotId];
-        const ownedPartsCollection = app_data.collection;
-
         const usedPartIds = new Set();
         const currentDeck = app_data.decks[app_data.active_deck_index];
         currentDeck.bays.forEach((bay, index) => {
@@ -703,148 +695,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         let availableParts = [];
-        let showStandardSuggestions = false;
-        let showChipSuggestions = false;
 
         if (type === 'primeira') {
             availableParts = [...getOwnedParts('blade'), ...getOwnedParts('lockchip')];
-            showStandardSuggestions = (!currentBay.type || currentBay.type === 'standard');
-            showChipSuggestions = (!currentBay.type || currentBay.type === 'chip');
         } else if (type === 'ratchet' || type === 'bit') {
             availableParts = getOwnedParts(type);
-            showStandardSuggestions = (currentBay.type === 'standard');
-            showChipSuggestions = (currentBay.type === 'chip');
         } else if (type === 'mainblade' || type === 'assistblade') {
             availableParts = getOwnedParts(type);
-            showChipSuggestions = (!currentBay.type || currentBay.type === 'chip');
         } else {
              console.error("Tipo de peça desconhecido:", type); return;
         }
 
         const partsToShow = availableParts.filter(part => !usedPartIds.has(part.baseId || part.id));
-
-        modal_suggestions_container.innerHTML = '';
-        let suggestionsFound = false;
-        modal_suggestions_container.style.display = 'none';
-
-        if (showStandardSuggestions || showChipSuggestions) {
-            modal_suggestions_container.style.display = 'block';
-
-            if (showStandardSuggestions && (type === 'primeira' || type === 'ratchet' || type === 'bit')) {
-                const headerText = translations[currentLanguage].part_suggestions_header || 'META Suggestions (Owned)';
-                modal_suggestions_container.innerHTML += `<h4>${headerText}</h4>`;
-                const matchingCombos = ALL_COMBOS.filter(combo => {
-                    const bladePart = ALL_PARTS.find(p => p.name === combo.blade);
-                    const ratchetPart = ALL_PARTS.find(p => p.name === combo.ratchet);
-                    const bitPart = ALL_PARTS.find(p => p.name === combo.bit);
-                    if (!bladePart || !ratchetPart || !bitPart) return false;
-                    const bladeOwned = ownedPartsCollection.blades.has(bladePart.id) && ownedPartsCollection.blades.get(bladePart.id).size > 0;
-                    const ratchetOwned = ownedPartsCollection.ratchets.has(ratchetPart.id);
-                    const bitOwned = ownedPartsCollection.bits.has(bitPart.id);
-                    if (!bladeOwned || !ratchetOwned || !bitOwned) return false;
-                    if (usedPartIds.has(bladePart.id) || usedPartIds.has(ratchetPart.id) || usedPartIds.has(bitPart.id)) return false;
-
-                    if (!currentBay.type || currentBay.type === 'standard') {
-                        if (currentBay.part1 && (currentBay.part1.baseId || currentBay.part1.id) !== bladePart.id) return false;
-                        if (currentBay.part4 && currentBay.part4.id !== ratchetPart.id) return false;
-                        if (currentBay.part5 && currentBay.part5.id !== bitPart.id) return false;
-                    } else { return false; }
-                    return true;
-                });
-                if (matchingCombos.length > 0) {
-                     suggestionsFound = true;
-                     matchingCombos.forEach(combo => {
-                        const bladePart = ALL_PARTS.find(p => p.name === combo.blade);
-                        const ratchetPart = ALL_PARTS.find(p => p.name === combo.ratchet);
-                        const bitPart = ALL_PARTS.find(p => p.name === combo.bit);
-                        if (!bladePart || !ratchetPart || !bitPart) return;
-                        const card = document.createElement('div');
-                        card.className = 'suggestion-card';
-
-                        card.innerHTML = `
-                            <div class="suggestion-part"><img src="${bladePart.image || 'images/placeholder.png'}"><span>${bladePart.name}</span></div>
-                            <div class="suggestion-part"><img src="${ratchetPart.image || 'images/placeholder.png'}"><span>${ratchetPart.name}</span></div>
-                            <div class="suggestion-part"><img src="${bitPart.image || 'images/placeholder.png'}"><span>${bitPart.name}</span></div>
-                            <div class="suggestion-points">${combo.points.toFixed(2)} META Points</div>`;
-
-                        card.addEventListener('click', () => applySuggestion(slotId, combo));
-                        modal_suggestions_container.appendChild(card);
-                     });
-                 }
-            }
-
-            if (showChipSuggestions && typeof ALL_CHIP_COMBOS !== 'undefined' && ALL_CHIP_COMBOS.length > 0 && (type === 'primeira' || type === 'mainblade' || type === 'assistblade' || type === 'ratchet' || type === 'bit')) {
-                const headerText = translations[currentLanguage].part_chip_suggestions_header || 'Combo Suggestions (Chip)';
-                if (!suggestionsFound || !showStandardSuggestions) { modal_suggestions_container.innerHTML += `<h4>${headerText}</h4>`; }
-                else { modal_suggestions_container.innerHTML += `<hr style="margin: 1rem 0; border-color: var(--border-color);"><h4>${headerText}</h4>`; }
-
-                const matchingChipCombos = ALL_CHIP_COMBOS.filter(combo => {
-                    const chipPart = ALL_PARTS.find(p => p.name === combo.lockchip && p.type === 'lockchip');
-                    const mainPart = ALL_PARTS.find(p => p.name === combo.mainblade && p.type === 'mainblade');
-                    const assistPart = ALL_PARTS.find(p => p.name === combo.assistblade && p.type === 'assistblade');
-                    const ratchetPart = combo.ratchet ? ALL_PARTS.find(p => p.name === combo.ratchet && p.type === 'ratchet') : null;
-                    const bitPart = combo.bit ? ALL_PARTS.find(p => p.name === combo.bit && p.type === 'bit') : null;
-                    if (!chipPart || !mainPart || !assistPart) return false;
-
-                    const chipOwned = ownedPartsCollection.lockchips.has(chipPart.id);
-                    const mainOwned = ownedPartsCollection.mainblades.has(mainPart.id);
-                    const assistOwned = ownedPartsCollection.assistblades.has(assistPart.id);
-                    const ratchetOwned = !ratchetPart || ownedPartsCollection.ratchets.has(ratchetPart.id);
-                    const bitOwned = !bitPart || ownedPartsCollection.bits.has(bitPart.id);
-                    if (!chipOwned || !mainOwned || !assistOwned || !ratchetOwned || !bitOwned) return false;
-
-                    if (usedPartIds.has(chipPart.id) || usedPartIds.has(mainPart.id) || usedPartIds.has(assistPart.id) || (ratchetPart && usedPartIds.has(ratchetPart.id)) || (bitPart && usedPartIds.has(bitPart.id))) return false;
-
-                    if (!currentBay.type || currentBay.type === 'chip') {
-                        if (currentBay.part1 && currentBay.part1.id !== chipPart.id) return false;
-                        if (currentBay.part2 && currentBay.part2.id !== mainPart.id) return false;
-                        if (currentBay.part3 && currentBay.part3.id !== assistPart.id) return false;
-                        if (ratchetPart && currentBay.part4 && currentBay.part4.id !== ratchetPart.id) return false;
-                        if (bitPart && currentBay.part5 && currentBay.part5.id !== bitPart.id) return false;
-                    } else { return false; }
-                    return true;
-                });
-
-                if (matchingChipCombos.length > 0) {
-                    suggestionsFound = true;
-                    matchingChipCombos.forEach(combo => {
-                        const chipPart = ALL_PARTS.find(p => p.name === combo.lockchip && p.type === 'lockchip');
-                        const mainPart = ALL_PARTS.find(p => p.name === combo.mainblade && p.type === 'mainblade');
-                        const assistPart = ALL_PARTS.find(p => p.name === combo.assistblade && p.type === 'assistblade');
-                        if (!chipPart || !mainPart || !assistPart) return;
-
-                        const card = document.createElement('div');
-                        card.className = 'suggestion-card';
-
-                        let html = `
-                            <div class="suggestion-part"><img src="${chipPart.image || 'images/placeholder.png'}"><span>${chipPart.name}</span></div>
-                            <div class="suggestion-part"><img src="${mainPart.image || 'images/placeholder.png'}"><span>${mainPart.name}</span></div>
-                            <div class="suggestion-part"><img src="${assistPart.image || 'images/placeholder.png'}"><span>${assistPart.name}</span></div>`;
-
-                        if (combo.ratchet) {
-                            const rPart = ALL_PARTS.find(p=>p.name === combo.ratchet && p.type === 'ratchet');
-                            if(rPart) html += `<div class="suggestion-part"><img src="${rPart.image || 'images/placeholder.png'}"><span>${rPart.name}</span></div>`;
-                        }
-                         if (combo.bit) {
-                             const bPart = ALL_PARTS.find(p=>p.name === combo.bit && p.type === 'bit');
-                             if(bPart) html += `<div class="suggestion-part"><img src="${bPart.image || 'images/placeholder.png'}"><span>${bPart.name}</span></div>`;
-                         }
-
-                        html += `<div class="suggestion-points">${combo.points.toFixed(2)} pts</div>`;
-                        card.innerHTML = html;
-
-                        card.addEventListener('click', () => applyChipSuggestion(slotId, combo));
-                        modal_suggestions_container.appendChild(card);
-                     });
-                 }
-            }
-
-            if (!suggestionsFound && modal_suggestions_container.innerHTML.includes('<h4>')) {
-                modal_suggestions_container.innerHTML += `<p>${translations[currentLanguage].part_suggestions_none || 'No suggestions found...'}</p>`;
-            } else if (!suggestionsFound) {
-                 modal_suggestions_container.style.display = 'none';
-            }
-        }
 
         const individualHeader = translations[currentLanguage].part_individual_header || 'Individual Parts (Owned)';
         modal_parts_list_container.innerHTML = `<h4>${individualHeader}</h4><div class="parts-grid"></div>`;
@@ -860,13 +722,14 @@ document.addEventListener('DOMContentLoaded', () => {
                  if (!part || !part.name) return;
                 const part_card = document.createElement('div');
                 part_card.className = 'part-card owned';
-                part_card.innerHTML = `<img src="${part.image || 'images/placeholder.png'}" alt="${part.name}"><p>${part.name}</p><div class="part-score">${(typeof part.score === 'number' ? part.score : 0).toFixed(2)}</div>`;
+                // [MODIFICADO] Adiciona tier e usa displayName
+                part_card.innerHTML = `<img src="${part.image || 'images/placeholder.png'}" alt="${part.displayName || part.name}"><p>${part.displayName || part.name}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`;
                 part_card.addEventListener('click', () => selectPartForDeck(part));
                 partsGrid.appendChild(part_card);
             });
         }
 
-         if(partsToShow.length > 0 || suggestionsFound) {
+         if(partsToShow.length > 0) {
             part_modal.style.display = 'block';
          } else {
              const nonePrefix = translations[currentLanguage].part_individual_none_prefix || 'No';
@@ -875,50 +738,8 @@ document.addEventListener('DOMContentLoaded', () => {
          }
     };
 
-
-    const applySuggestion = (slotId, combo) => {
-        const bay = app_data.decks[app_data.active_deck_index].bays[slotId];
-        if (!bay) return;
-        const bladePart = ALL_PARTS.find(p => p.name === combo.blade);
-        const ratchetPart = ALL_PARTS.find(p => p.name === combo.ratchet);
-        const bitPart = ALL_PARTS.find(p => p.name === combo.bit);
-        if (!bladePart || !ratchetPart || !bitPart) return;
-        const ownedBladeVersion = getOwnedParts('blade').find(p => (p.baseId || p.id) === bladePart.id);
-        if (!ownedBladeVersion) { alert("Erro: Blade sugerida não encontrada na coleção."); return; }
-        clearBay(bay);
-        bay.type = 'standard';
-        bay.part1 = ownedBladeVersion;
-        bay.part4 = ratchetPart;
-        bay.part5 = bitPart;
-        updateDeckUI();
-        saveAppData();
-        closePartModal();
-    };
-
-    const applyChipSuggestion = (slotId, combo) => {
-        const bay = app_data.decks[app_data.active_deck_index].bays[slotId];
-        if (!bay) return;
-        const chipPart = ALL_PARTS.find(p => p.name === combo.lockchip && p.type === 'lockchip');
-        const mainPart = ALL_PARTS.find(p => p.name === combo.mainblade && p.type === 'mainblade');
-        const assistPart = ALL_PARTS.find(p => p.name === combo.assistblade && p.type === 'assistblade');
-        const ratchetPart = combo.ratchet ? ALL_PARTS.find(p => p.name === combo.ratchet && p.type === 'ratchet') : bay.part4;
-        const bitPart = combo.bit ? ALL_PARTS.find(p => p.name === combo.bit && p.type === 'bit') : bay.part5;
-
-        if (!chipPart || !mainPart || !assistPart) return;
-
-        bay.part1 = chipPart;
-        bay.part2 = mainPart;
-        bay.part3 = assistPart;
-        bay.type = 'chip';
-        bay.part4 = ratchetPart;
-        bay.part5 = bitPart;
-
-        updateDeckUI();
-        saveAppData();
-        closePartModal();
-    };
-
-	    const getOwnedParts = (partType) => {
+    // --- [FUNÇÃO MODIFICADA] getOwnedParts ---
+	const getOwnedParts = (partType) => {
         const ownedParts = [];
         const collectionSetKey = partType + 's';
         const collectionSet = app_data.collection[collectionSetKey];
@@ -932,18 +753,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (basePart.variantsId && ALL_VARIANTS[basePart.variantsId]) {
                         variantsSet.forEach(variantName => {
                              const variantData = ALL_VARIANTS[basePart.variantsId].find(v => v.name === variantName);
+                             // [MODIFICADO] Cria displayName para remover "(Stock)"
+                             const displayName = (variantName === "Stock" || variantName === "owned") ? basePart.name : `${basePart.name} (${variantName})`;
                              ownedParts.push({
                                  ...basePart,
                                  id: `${basePart.id}-${variantName.replace(/\s+/g, '-')}`,
                                  baseId: basePart.id,
                                  baseName: basePart.name,
                                  name: `${basePart.name} (${variantName})`,
+                                 displayName: displayName, // Nome para exibição
                                  variant: variantName,
                                  image: variantData?.image || basePart.image
                              });
                         });
-                    } else if (variantsSet.has('owned')) {
-                        ownedParts.push({ ...basePart, baseId: basePart.id, baseName: basePart.name });
+                    } else if (variantsSet.has('owned')) { // Fallback para blades sem variantesId mas marcadas como 'owned'
+                        ownedParts.push({ ...basePart, baseId: basePart.id, baseName: basePart.name, displayName: basePart.name, variant: 'owned' });
                     }
                 } else {
                      console.warn(`Peça Blade com ID ${partId} encontrada na coleção mas não em ALL_PARTS.`);
@@ -953,15 +777,16 @@ document.addEventListener('DOMContentLoaded', () => {
             collectionSet.forEach(partId => {
                 const part = ALL_PARTS.find(p => p.id === partId);
                 if (part) {
-                     ownedParts.push(part);
+                     ownedParts.push({...part, displayName: part.name}); // Adiciona displayName
                 } else {
                     console.warn(`Peça ${partType} com ID ${partId} encontrada na coleção mas não em ALL_PARTS.`);
                 }
             });
         }
-        ownedParts.sort((a, b) => a.name.localeCompare(b.name));
+        ownedParts.sort((a, b) => (a.displayName || a.name).localeCompare(b.displayName || b.name));
         return ownedParts;
     };
+    // --- [FIM DA FUNÇÃO MODIFICADA] ---
 
     // --- Funções do Placar ---
     const updateScoreDisplay = () => {
@@ -1090,16 +915,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         completeBays.forEach((bay, index) => {
             if (index > 0) deckString += "\n";
+            // [MODIFICADO] Usa displayName ou name
             if (bay.type === 'standard') {
-                deckString += `B: ${bay.part1.baseName || bay.part1.name}\n`;
-                deckString += `R: ${bay.part4.name}\n`;
-                deckString += `BT: ${bay.part5.name}\n`;
+                deckString += `B: ${bay.part1.displayName || bay.part1.name}\n`;
+                deckString += `R: ${bay.part4.displayName || bay.part4.name}\n`;
+                deckString += `BT: ${bay.part5.displayName || bay.part5.name}\n`;
             } else if (bay.type === 'chip') {
-                deckString += `C: ${bay.part1.name}\n`;
-                deckString += `MB: ${bay.part2.name}\n`;
-                deckString += `AB: ${bay.part3.name}\n`;
-                if (bay.part4) deckString += `R: ${bay.part4.name}\n`;
-                if (bay.part5) deckString += `BT: ${bay.part5.name}\n`;
+                deckString += `C: ${bay.part1.displayName || bay.part1.name}\n`;
+                deckString += `MB: ${bay.part2.displayName || bay.part2.name}\n`;
+                deckString += `AB: ${bay.part3.displayName || bay.part3.name}\n`;
+                if (bay.part4) deckString += `R: ${bay.part4.displayName || bay.part4.name}\n`;
+                if (bay.part5) deckString += `BT: ${bay.part5.displayName || bay.part5.name}\n`;
             }
         });
 
@@ -1145,6 +971,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('beyblade_x_data', imported_data_str);
                         loadAppData();
                         renderParts();
+                        renderStarterGuide(); // [NOVO] Renderiza o guia ao importar
                         updateDeckUI();
                         alert(translations[currentLanguage].alert_import_success);
                     }
@@ -1172,10 +999,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setupTabs();
     loadAppData();
     renderParts();
-    renderMetaCombos();
+    renderStarterGuide(); // [NOVO]
     updateDeckUI();
     setLanguage(currentLanguage);
-    updateScoreDisplay(); // Inicializa o placar
+    updateScoreDisplay();
 
     langPtBrButton?.addEventListener('click', () => setLanguage('pt-br'));
     langEnButton?.addEventListener('click', () => setLanguage('en'));
