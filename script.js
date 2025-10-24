@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const p1NameInput = document.querySelector('#player1 .player-name');
     const p2NameInput = document.querySelector('#player2 .player-name');
     const guide_products_container = document.getElementById('guide-products-container');
-    // Seletores do Novo Modal de Info
     const partInfoModal = document.getElementById('part-info-modal');
     const partInfoModalClose = document.getElementById('part-info-close');
     const infoModalPartName = document.getElementById('info-modal-part-name');
@@ -97,96 +96,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const closeInputModal = () => {
-        if (inputModal) inputModal.style.display = 'none';
-        onInputConfirm = null;
-    };
+    const closeInputModal = () => { if (inputModal) inputModal.style.display = 'none'; onInputConfirm = null; };
 
     const translateUI = () => {
-        const langPack = translations[currentLanguage];
-        if (!langPack) return;
+        const langPack = translations[currentLanguage]; if (!langPack) return;
         document.querySelectorAll('[data-translate]').forEach(element => {
-            const key = element.dataset.translate;
-            if (langPack[key]) {
+            const key = element.dataset.translate; if (langPack[key]) {
                  if (element.placeholder !== undefined && key.includes('placeholder')) { element.placeholder = langPack[key]; }
                  else if (element.title !== undefined && key.includes('title')) { element.title = langPack[key]; }
                  else if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('part-placeholder')) { element.textContent = langPack[key]; }
-                 else if (element.tagName === 'INPUT' && (key === 'player_1_default' || key === 'player_2_default')) {
-                    const defaultP1_pt = translations['pt-br']?.player_1_default || "Jogador 1";
-                    const defaultP1_en = translations['en']?.player_1_default || "Player 1";
-                    const defaultP2_pt = translations['pt-br']?.player_2_default || "Jogador 2";
-                    const defaultP2_en = translations['en']?.player_2_default || "Player 2";
-
-                    if (key === 'player_1_default' && (element.value === defaultP1_pt || element.value === defaultP1_en)) {
-                         element.value = langPack[key];
-                    } else if (key === 'player_2_default' && (element.value === defaultP2_pt || element.value === defaultP2_en)) {
-                         element.value = langPack[key];
-                    }
-                 }
+                 else if (element.tagName === 'INPUT' && (key === 'player_1_default' || key === 'player_2_default')) { const defaultP1_pt = translations['pt-br']?.player_1_default || "Jogador 1"; const defaultP1_en = translations['en']?.player_1_default || "Player 1"; const defaultP2_pt = translations['pt-br']?.player_2_default || "Jogador 2"; const defaultP2_en = translations['en']?.player_2_default || "Player 2"; if (key === 'player_1_default' && (element.value === defaultP1_pt || element.value === defaultP1_en)) { element.value = langPack[key]; } else if (key === 'player_2_default' && (element.value === defaultP2_pt || element.value === defaultP2_en)) { element.value = langPack[key]; } }
                  else if (element.tagName !== 'BUTTON' || !element.id.startsWith('lang-')) { element.textContent = langPack[key]; }
             } else { console.warn(`Translation key not found: ${key}`); }
         });
-        updateDeckUI(); // Atualiza gráficos após tradução
+        updateDeckUI();
     };
 
+    const setLanguage = (lang) => { if (translations[lang]) { currentLanguage = lang; localStorage.setItem('beyXToolLanguage', lang); if (lang === 'pt-br') { langPtBrButton?.classList.add('active'); langEnButton?.classList.remove('active'); } else { langPtBrButton?.classList.remove('active'); langEnButton?.classList.add('active'); } translateUI(); } else { console.error(`Idioma não suportado: ${lang}`); } };
 
-    const setLanguage = (lang) => {
-        if (translations[lang]) {
-            currentLanguage = lang;
-            localStorage.setItem('beyXToolLanguage', lang);
-            if (lang === 'pt-br') { langPtBrButton?.classList.add('active'); langEnButton?.classList.remove('active'); }
-            else { langPtBrButton?.classList.remove('active'); langEnButton?.classList.add('active'); }
-            translateUI();
-        } else { console.error(`Idioma não suportado: ${lang}`); }
-    };
+    const setupTabs = () => { tabLinks.forEach(link => { link.addEventListener('click', (event) => { event.preventDefault(); tabLinks.forEach(l => l.classList.remove('active')); tabContents.forEach(c => c.classList.remove('active')); const tabId = link.dataset.tab; const correspondingContent = document.getElementById(tabId + '-tab'); link.classList.add('active'); if (correspondingContent) correspondingContent.classList.add('active'); }); }); const initialTab = document.querySelector('.tab-link[data-tab="deck-builder"]'); if (initialTab) initialTab.click(); };
 
-    const setupTabs = () => {
-        tabLinks.forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                tabLinks.forEach(l => l.classList.remove('active'));
-                tabContents.forEach(c => c.classList.remove('active'));
-                const tabId = link.dataset.tab;
-                const correspondingContent = document.getElementById(tabId + '-tab');
-                link.classList.add('active');
-                if (correspondingContent) correspondingContent.classList.add('active');
-            });
-        });
-        const initialTab = document.querySelector('.tab-link[data-tab="deck-builder"]');
-        if (initialTab) initialTab.click();
-    };
-
-    const createNewDeck = (name) => ({
-        name: name,
-        bays: [ { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }, { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }, { type: null, part1: null, part2: null, part3: null, part4: null, part5: null } ]
-    });
+    const createNewDeck = (name) => ({ name: name, bays: [ { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }, { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }, { type: null, part1: null, part2: null, part3: null, part4: null, part5: null } ] });
     const getSerializableCollection = () => ({ blades: Object.fromEntries(Array.from(app_data.collection.blades.entries(), ([id, set]) => [id, [...set]])), ratchets: [...app_data.collection.ratchets], bits: [...app_data.collection.bits], mainblades: [...app_data.collection.mainblades], assistblades: [...app_data.collection.assistblades], lockchips: [...app_data.collection.lockchips], });
-    const loadCollectionFromParsed = (parsedCollection) => {
-        const collection = { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() };
-        try { if (parsedCollection) { if (parsedCollection.blades) collection.blades = new Map(Object.entries(parsedCollection.blades).map(([id, variants]) => [id, new Set(variants)])); if (parsedCollection.ratchets) collection.ratchets = new Set(parsedCollection.ratchets); if (parsedCollection.bits) collection.bits = new Set(parsedCollection.bits); if (parsedCollection.mainblades) collection.mainblades = new Set(parsedCollection.mainblades); if (parsedCollection.assistblades) collection.assistblades = new Set(parsedCollection.assistblades); if (parsedCollection.lockchips) collection.lockchips = new Set(parsedCollection.lockchips); } } catch(e) { console.error("Erro ao processar coleção salva:", e); } return collection;
-    };
+    const loadCollectionFromParsed = (parsedCollection) => { const collection = { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() }; try { if (parsedCollection) { if (parsedCollection.blades) collection.blades = new Map(Object.entries(parsedCollection.blades).map(([id, variants]) => [id, new Set(variants)])); if (parsedCollection.ratchets) collection.ratchets = new Set(parsedCollection.ratchets); if (parsedCollection.bits) collection.bits = new Set(parsedCollection.bits); if (parsedCollection.mainblades) collection.mainblades = new Set(parsedCollection.mainblades); if (parsedCollection.assistblades) collection.assistblades = new Set(parsedCollection.assistblades); if (parsedCollection.lockchips) collection.lockchips = new Set(parsedCollection.lockchips); } } catch(e) { console.error("Erro ao processar coleção salva:", e); } return collection; };
     const saveAppData = () => { try { localStorage.setItem('beyblade_x_data', JSON.stringify({ collection: getSerializableCollection(), decks: app_data.decks, active_deck_index: app_data.active_deck_index })); } catch (e) { console.error("Erro ao salvar dados:", e); alert(translations[currentLanguage].alert_save_error); } };
 
-    const loadAppData = () => {
-        const saved_data_str = localStorage.getItem('beyblade_x_data');
-        if (saved_data_str) {
-            try {
-                const parsed = JSON.parse(saved_data_str);
-                app_data.collection = loadCollectionFromParsed(parsed.collection || {});
-                app_data.decks = Array.isArray(parsed.decks) ? parsed.decks : [];
-                app_data.active_deck_index = (typeof parsed.active_deck_index === 'number') ? parsed.active_deck_index : 0;
-                app_data.decks.forEach(deck => { deck.bays.forEach((bay, index, arr) => { if (!bay || typeof bay !== 'object' || !bay.hasOwnProperty('part4') || !bay.hasOwnProperty('part5')) { arr[index] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }; } }); while (deck.bays.length < 3) { deck.bays.push({ type: null, part1: null, part2: null, part3: null, part4: null, part5: null }); } deck.bays = deck.bays.slice(0, 3); });
-            } catch (e) { console.error("Erro ao carregar dados salvos:", e); app_data = { collection: { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() }, decks: [], active_deck_index: 0 }; }
-        }
-        if (app_data.decks.length === 0) app_data.decks.push(createNewDeck("Meu Primeiro Deck"));
-        if (app_data.active_deck_index >= app_data.decks.length || app_data.active_deck_index < 0) app_data.active_deck_index = 0;
-        const activeDeck = app_data.decks[app_data.active_deck_index]; if (activeDeck) { while (activeDeck.bays.length < 3) { activeDeck.bays.push({ type: null, part1: null, part2: null, part3: null, part4: null, part5: null }); } activeDeck.bays = activeDeck.bays.slice(0, 3); activeDeck.bays.forEach((bay, index, arr) => { if (!bay || typeof bay !== 'object' || !bay.hasOwnProperty('part4') || !bay.hasOwnProperty('part5')) { arr[index] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }; } }); }
-        const p1Name = localStorage.getItem('beyXToolP1Name'); const p2Name = localStorage.getItem('beyXToolP2Name'); const langPack = translations[currentLanguage] || translations['pt-br']; if (p1NameInput) p1NameInput.value = p1Name || langPack.player_1_default || "Jogador 1"; if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Jogador 2";
-    };
+    const loadAppData = () => { const saved_data_str = localStorage.getItem('beyblade_x_data'); if (saved_data_str) { try { const parsed = JSON.parse(saved_data_str); app_data.collection = loadCollectionFromParsed(parsed.collection || {}); app_data.decks = Array.isArray(parsed.decks) ? parsed.decks : []; app_data.active_deck_index = (typeof parsed.active_deck_index === 'number') ? parsed.active_deck_index : 0; app_data.decks.forEach(deck => { deck.bays.forEach((bay, index, arr) => { if (!bay || typeof bay !== 'object' || !bay.hasOwnProperty('part4') || !bay.hasOwnProperty('part5')) { arr[index] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }; } }); while (deck.bays.length < 3) { deck.bays.push({ type: null, part1: null, part2: null, part3: null, part4: null, part5: null }); } deck.bays = deck.bays.slice(0, 3); }); } catch (e) { console.error("Erro ao carregar dados salvos:", e); app_data = { collection: { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() }, decks: [], active_deck_index: 0 }; } } if (app_data.decks.length === 0) app_data.decks.push(createNewDeck("Meu Primeiro Deck")); if (app_data.active_deck_index >= app_data.decks.length || app_data.active_deck_index < 0) app_data.active_deck_index = 0; const activeDeck = app_data.decks[app_data.active_deck_index]; if (activeDeck) { while (activeDeck.bays.length < 3) { activeDeck.bays.push({ type: null, part1: null, part2: null, part3: null, part4: null, part5: null }); } activeDeck.bays = activeDeck.bays.slice(0, 3); activeDeck.bays.forEach((bay, index, arr) => { if (!bay || typeof bay !== 'object' || !bay.hasOwnProperty('part4') || !bay.hasOwnProperty('part5')) { arr[index] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }; } }); } const p1Name = localStorage.getItem('beyXToolP1Name'); const p2Name = localStorage.getItem('beyXToolP2Name'); const langPack = translations[currentLanguage] || translations['pt-br']; if (p1NameInput) p1NameInput.value = p1Name || langPack.player_1_default || "Jogador 1"; if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Jogador 2"; };
 
     // --- Funções de Renderização ---
 
-    // [MODIFICADO] Adiciona ícone (?) e listener
     const renderStarterGuide = () => {
         if (!guide_products_container || typeof STARTER_GUIDE_PRODUCTS === 'undefined') { console.error("Container do Guia de Iniciante ou dados não encontrados."); return; }
         guide_products_container.innerHTML = '';
@@ -197,30 +135,31 @@ document.addEventListener('DOMContentLoaded', () => {
             product.parts.forEach(partId => {
                 const part = ALL_PARTS.find(p => p.id === partId); if (!part) { console.warn(`Peça do Guia ${partId} não encontrada.`); return; }
                 const partItem = document.createElement('div'); partItem.className = 'product-part-item'; partItem.dataset.partId = part.id;
-                const tierDisplay = part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : '';
-                const infoIcon = `<span class="part-info-icon" data-part-id="${part.id}">?</span>`; // Ícone de info
-                partItem.innerHTML = `${infoIcon}<img src="${part.image || 'images/placeholder.png'}" alt="${part.name}"><p>${part.name}</p>${tierDisplay}`;
+                
+                const infoIconSpan = document.createElement('span'); infoIconSpan.className = 'part-info-icon'; infoIconSpan.dataset.partId = part.id; infoIconSpan.textContent = '?';
+                const imgElement = document.createElement('img'); imgElement.src = part.image || 'images/placeholder.png'; imgElement.alt = part.name;
+                const nameElement = document.createElement('p'); nameElement.textContent = part.name;
+                
+                partItem.appendChild(infoIconSpan);
+                partItem.appendChild(imgElement);
+                partItem.appendChild(nameElement);
+
+                if (part.tier) { const tierElement = document.createElement('div'); tierElement.className = `part-tier tier-${part.tier.toLowerCase()}`; tierElement.textContent = part.tier; partItem.appendChild(tierElement); }
 
                 const collectionSet = app_data.collection[part.type + 's']; let isOwned = false;
-                if (part.type === 'blade' || part.type === 'lockchip' || part.type === 'mainblade' || part.type === 'assistblade') { isOwned = collectionSet?.has(part.id); }
-                else { isOwned = collectionSet?.has(part.id); }
+                if (['blade', 'lockchip', 'mainblade', 'assistblade'].includes(part.type)) { isOwned = collectionSet?.has(part.id); } else { isOwned = collectionSet?.has(part.id); }
                 if (isOwned) partItem.classList.add('owned');
-
-                // Listener para o ícone de info
-                const infoButton = partItem.querySelector('.part-info-icon');
-                if (infoButton) {
-                    infoButton.addEventListener('click', (event) => {
-                        event.stopPropagation(); // Impede que o clique ative o toggle de posse do card pai
-                        openPartInfoModal(part.id);
-                    });
-                }
+                
+                infoIconSpan.addEventListener('click', (event) => { event.stopPropagation(); openPartInfoModal(part.id); });
 
                 if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) {
                     const typeSymbolDiv = document.createElement('div'); typeSymbolDiv.className = 'part-type-symbol';
-                    const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); const imgPath = `images/types/${part.bey_type.toLowerCase()}.png`;
-                    const img = new Image(); img.src = imgPath;
-                    img.onload = () => { typeSymbolDiv.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; partItem.appendChild(typeSymbolDiv); }
-                    img.onerror = () => { console.warn(`Imagem de tipo ${imgPath} não encontrada.`); }
+                    const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1);
+                    const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`;
+                    const iconLoaderImg = new Image(); // Variável renomeada
+                    iconLoaderImg.src = imgPath;
+                    iconLoaderImg.onload = () => { typeSymbolDiv.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; partItem.appendChild(typeSymbolDiv); };
+                    iconLoaderImg.onerror = () => { console.warn(`Imagem de tipo ${imgPath} não encontrada.`); };
                 }
                 partsContainer.appendChild(partItem);
             });
@@ -228,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // [MODIFICADO] Remove timer do popup, adiciona ícone (?) e listener
     const renderParts = () => {
         const containers = { blades: blades_container, ratchets: ratchets_container, bits: bits_container, mainblades: mainblades_container, assistblades: assistblades_container, lockchips: lockchips_container };
         Object.values(containers).forEach(c => { if(c) c.innerHTML = ''; });
@@ -238,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (filterOn) { partsToRender = partsToRender.filter(part => { const cs = app_data.collection[part.type + 's']; return part.type === 'blade' ? (cs?.has(part.id) && cs.get(part.id).size > 0) : cs?.has(part.id); }); }
         const tierOrder = { 'S': 1, 'A': 2, 'B': 3, 'C': 4, 'D': 5 };
         switch (sortValue) { case 'name_asc': partsToRender.sort((a, b) => a.name.localeCompare(b.name)); break; case 'name_desc': partsToRender.sort((a, b) => b.name.localeCompare(a.name)); break; case 'tier_desc': partsToRender.sort((a, b) => (tierOrder[a.tier] || 6) - (tierOrder[b.tier] || 6) || a.name.localeCompare(b.name)); break; case 'tier_asc': partsToRender.sort((a, b) => (tierOrder[b.tier] || 0) - (tierOrder[a.tier] || 0) || a.name.localeCompare(b.name)); break; case 'type': const typeOrderBey = { 'attack': 1, 'defense': 2, 'stamina': 3, 'balance': 4 }; partsToRender.sort((a, b) => (a.bey_type ? typeOrderBey[a.bey_type.toLowerCase()] : 5) - (b.bey_type ? typeOrderBey[b.bey_type.toLowerCase()] : 5) || a.name.localeCompare(b.name)); break; default: partsToRender.sort((a, b) => a.name.localeCompare(b.name)); }
+
         partsToRender.forEach(part => {
             const container = containers[part.type + 's']; if (!container) return;
             const collectionSet = app_data.collection[part.type + 's'];
@@ -245,38 +184,32 @@ document.addEventListener('DOMContentLoaded', () => {
             let isOwned = (part.type === 'blade') ? (collectionSet?.has(part.id) && collectionSet.get(part.id).size > 0) : collectionSet?.has(part.id);
             if (isOwned) part_card.classList.add('owned');
 
-            const infoIcon = `<span class="part-info-icon" data-part-id="${part.id}">?</span>`; // Ícone de info
+            const infoIcon = `<span class="part-info-icon" data-part-id="${part.id}">?</span>`;
             part_card.innerHTML = `${infoIcon}<img src="${part.image || 'images/placeholder.png'}" alt="${part.name}"><p>${part.name}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`;
 
-            // Listener para o ícone de info
             const infoButton = part_card.querySelector('.part-info-icon');
-            if (infoButton) {
-                infoButton.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Impede que o clique ative o toggle de posse do card pai
-                    openPartInfoModal(part.id);
-                });
+            if (infoButton) { infoButton.addEventListener('click', (event) => { event.stopPropagation(); openPartInfoModal(part.id); }); }
+
+            if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) { 
+                const typeSymbolDiv = document.createElement('div'); typeSymbolDiv.className = 'part-type-symbol'; 
+                const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); 
+                const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`; 
+                const iconLoaderImg = new Image(); // Variável renomeada
+                iconLoaderImg.src = imgPath; 
+                iconLoaderImg.onload = () => { typeSymbolDiv.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; part_card.appendChild(typeSymbolDiv); };
+                iconLoaderImg.onerror = () => { console.warn(`Imagem de tipo ${imgPath} não encontrada.`); };
             }
 
-            if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) {
-                const typeSymbolDiv = document.createElement('div'); typeSymbolDiv.className = 'part-type-symbol';
-                const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); const imgPath = `images/types/${part.bey_type.toLowerCase()}.png`;
-                const img = new Image(); img.src = imgPath;
-                img.onload = () => { typeSymbolDiv.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; part_card.appendChild(typeSymbolDiv); }
-                img.onerror = () => { console.warn(`Imagem de tipo ${imgPath} não encontrada.`); }
-            }
-            // Lógica de Hold/Clique (sem timer de info)
-            let pressTimerOwner = null; let didOwnerHold = false; let interactionStartTime = 0;
-            const startHold = (e) => { if (e.button === 2) return; interactionStartTime = Date.now(); didOwnerHold = false; pressTimerOwner = setTimeout(() => { didOwnerHold = true; }, 500); };
-            const releaseHold = (e) => { clearTimeout(pressTimerOwner); const interactionTime = Date.now() - interactionStartTime; const isMouseEvent = e.type === 'mouseup'; if (didOwnerHold || (isMouseEvent && interactionTime < 500)) { togglePartOwnership(part); } didOwnerHold = false; interactionStartTime = 0; };
-            const abortHold = () => { clearTimeout(pressTimerOwner); didOwnerHold = false; interactionStartTime = 0; };
-            part_card.addEventListener('mousedown', startHold); part_card.addEventListener('touchstart', startHold, { passive: true }); part_card.addEventListener('mouseup', releaseHold); part_card.addEventListener('touchend', releaseHold); part_card.addEventListener('mouseleave', abortHold); part_card.addEventListener('touchcancel', abortHold); part_card.addEventListener('contextmenu', (e) => e.preventDefault());
+            // Lógica de Dois Cliques
+            let lastClickTime = 0; const doubleClickDelay = 400;
+            part_card.addEventListener('click', (event) => { if (event.target.classList.contains('part-info-icon')) return; const now = Date.now(); if (now - lastClickTime < doubleClickDelay) { togglePartOwnership(part); lastClickTime = 0; } else { lastClickTime = now; } });
+            part_card.addEventListener('contextmenu', (e) => e.preventDefault());
+
             container.appendChild(part_card);
         });
     };
 
     const renderDeckManager = () => { if (!deck_selector || !deck_name_input) return; if (app_data.active_deck_index < 0 || app_data.active_deck_index >= app_data.decks.length) app_data.active_deck_index = 0; if (app_data.decks.length === 0) return; const currentDeck = app_data.decks[app_data.active_deck_index]; if (!currentDeck) return; deck_selector.innerHTML = ''; app_data.decks.forEach((deck, index) => { const option = document.createElement('option'); option.value = index; option.textContent = deck.name || `Deck ${index + 1}`; deck_selector.appendChild(option); }); deck_selector.value = app_data.active_deck_index; deck_name_input.value = currentDeck.name; };
-
-    // [Removido] Wrapper displayProductInfoWithCleanup e showProductInfoPopup original não são mais necessários
 
     const renderDeckBayChart = (bayIndex, bay) => {
         const langPack = translations[currentLanguage]; const canvas = document.getElementById(`chart-slot-${bayIndex}`); const infoContainer = document.getElementById(`bay-info-${bayIndex}`); const heightDisplay = document.getElementById(`bay-height-${bayIndex}`);
@@ -307,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (Object.values(selectors).some(el => !el)) { console.error(`Elementos faltando no slot ${bayIndex}. Verifique o HTML.`); return; }
             slot.dataset.bayType = bay.type || 'empty';
             const reset = (ph, n, icon, placeholderKey) => { ph.innerHTML = `<span data-translate="${placeholderKey}">${langPack[placeholderKey]||placeholderKey.replace('deck_placeholder_', '').replace('_section_title', '')}</span>`; n.textContent = selectText; icon.innerHTML = ''; };
-            const set = (ph, n, icon, part, partSlotName) => { if (!part) return; const name = part.displayName || part.name; let img = part.image || 'images/placeholder.png'; if (part.type==='blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) { const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant); if (vData?.image) img=vData.image; else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock'); if (sVar?.image) img=sVar.image; } } ph.innerHTML = `<img src="${img}" alt="${name}">`; n.textContent = name; icon.innerHTML = ''; if ((partSlotName === 'primeira' && part.type === 'blade') || partSlotName === 'bit') { if (part.bey_type) { const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); const imgPath = `images/types/${part.bey_type.toLowerCase()}.png`; icon.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; }}};
+            const set = (ph, n, icon, part, partSlotName) => { if (!part) return; const name = part.displayName || part.name; let imgHTML = part.image || 'images/placeholder.png'; if (part.type==='blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) { const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant); if (vData?.image) imgHTML=vData.image; else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock'); if (sVar?.image) imgHTML=sVar.image; } } ph.innerHTML = `<img src="${imgHTML}" alt="${name}">`; n.textContent = name; icon.innerHTML = ''; if ((partSlotName === 'primeira' && part.type === 'blade') || partSlotName === 'bit') { if (part.bey_type) { const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`; icon.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; }}};
             reset(selectors.p1ph, selectors.p1n, selectors.p1icon, 'deck_placeholder_primeira'); reset(selectors.mbph, selectors.mbn, selectors.mbicon, 'deck_placeholder_mainblade'); reset(selectors.abph, selectors.abn, selectors.abicon, 'deck_placeholder_assistblade'); reset(selectors.rph, selectors.rn, selectors.ricon, 'deck_placeholder_ratchet'); reset(selectors.bph, selectors.bn, selectors.bicon, 'deck_placeholder_bit');
             if (bay.type === 'standard') { set(selectors.p1ph, selectors.p1n, selectors.p1icon, bay.part1, 'primeira'); set(selectors.rph, selectors.rn, selectors.ricon, bay.part4, 'ratchet'); set(selectors.bph, selectors.bn, selectors.bicon, bay.part5, 'bit'); }
             else if (bay.type === 'chip') { set(selectors.p1ph, selectors.p1n, selectors.p1icon, bay.part1, 'primeira'); set(selectors.mbph, selectors.mbn, selectors.mbicon, bay.part2, 'mainblade'); set(selectors.abph, selectors.abn, selectors.abicon, bay.part3, 'assistblade'); set(selectors.rph, selectors.rn, selectors.ricon, bay.part4, 'ratchet'); set(selectors.bph, selectors.bn, selectors.bicon, bay.part5, 'bit'); }
@@ -320,7 +253,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Funções de Manipulação da Coleção/Deck ---
 
     const togglePartOwnership = (part) => {
-        // document.querySelectorAll('.part-info-popup').forEach(p => p.remove()); // Não é mais necessário
         const partCard = document.querySelector(`#collection-tab .part-card[data-part-id="${part.id}"]`);
         if (part.type === 'blade') {
             const variantList = part.variantsId ? ALL_VARIANTS[part.variantsId] : null;
@@ -393,80 +325,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportData = () => { saveAppData(); const data_str = localStorage.getItem('beyblade_x_data'); if (!data_str) { alert("Não há dados para exportar."); return; } const data_blob = new Blob([data_str], {type: 'application/json;charset=utf-8'}); const url = URL.createObjectURL(data_blob); const a = document.createElement('a'); a.href = url; const timestamp = new Date().toISOString().slice(0, 10); a.download = `beyxtool_dados_${timestamp}.bx`; document.body.appendChild(a); a.click(); setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100); };
     const importData = (event) => { const file = event.target.files[0]; if (!file) return; if (!file.name.endsWith('.bx') && file.type !== 'application/json') { alert("Por favor, selecione um arquivo .bx válido."); if (import_file_input) import_file_input.value = ''; return; } const reader = new FileReader(); reader.onload = (e) => { try { const imported_data_str = e.target.result; if (!imported_data_str) throw new Error(translations[currentLanguage].alert_file_read_error || "Erro ao ler o arquivo."); const parsed = JSON.parse(imported_data_str); if (typeof parsed === 'object' && parsed !== null && 'collection' in parsed && 'decks' in parsed && 'active_deck_index' in parsed) { const confirmMsg = translations[currentLanguage].confirm_import_overwrite || "Importar substituirá dados atuais. Continuar?"; if (confirm(confirmMsg)) { localStorage.setItem('beyblade_x_data', imported_data_str); loadAppData(); renderParts(); renderStarterGuide(); updateDeckUI(); alert(translations[currentLanguage].alert_import_success || "Dados importados com sucesso!"); } } else { throw new Error(translations[currentLanguage].alert_invalid_file_format || "Formato inválido ou corrompido."); } } catch (error) { console.error("Erro ao importar dados:", error); alert(`${translations[currentLanguage].alert_import_error || "Erro ao importar:"} ${error.message}`); } finally { if (import_file_input) import_file_input.value = ''; } }; reader.onerror = (error) => { console.error("Erro ao ler arquivo:", error); alert(translations[currentLanguage].alert_file_read_error || "Erro ao ler o arquivo selecionado."); if (import_file_input) import_file_input.value = ''; }; reader.readAsText(file); };
 
-    // --- [NOVO] Funções para o Modal de Info ---
+    // --- Funções para o Modal de Info ---
     const drawPartStatsChart = (canvasId, part) => {
-        const langPack = translations[currentLanguage];
-        const canvas = document.getElementById(canvasId);
-        if (!canvas || !part) return;
-
-        // Destroi gráfico anterior no modal
-        if (canvasId === 'info-modal-chart' && infoModalChartInstance) {
-            infoModalChartInstance.destroy();
-            infoModalChartInstance = null;
-        }
-
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
+        const langPack = translations[currentLanguage]; const canvas = document.getElementById(canvasId); if (!canvas || !part) return;
+        if (canvasId === 'info-modal-chart' && infoModalChartInstance) { infoModalChartInstance.destroy(); infoModalChartInstance = null; }
+        const ctx = canvas.getContext('2d'); if (!ctx) return;
         const parseStat = (value) => { const num = parseFloat(value); return isNaN(num) ? 0 : num; };
-
-        // Define os stats a serem exibidos (pode variar por tipo de peça)
-        let chartData = [];
-        let chartLabels = [];
-
-        if (part.type === 'blade') {
-            chartData = [parseStat(part.attack), parseStat(part.defense), parseStat(part.stamina)];
-            chartLabels = [ `${langPack.chart_label_attack || 'Attack'}: ${chartData[0]}`, `${langPack.chart_label_defense || 'Defense'}: ${chartData[1]}`, `${langPack.chart_label_stamina || 'Stamina'}: ${chartData[2]}` ];
-        } else if (part.type === 'ratchet') {
-             chartData = [parseStat(part.attack), parseStat(part.defense), parseStat(part.stamina), parseStat(part.height)];
-             chartLabels = [ `${langPack.chart_label_attack || 'Attack'}: ${chartData[0]}`, `${langPack.chart_label_defense || 'Defense'}: ${chartData[1]}`, `${langPack.chart_label_stamina || 'Stamina'}: ${chartData[2]}`, `${langPack.chart_label_height || 'Height'}: ${chartData[3]}` ];
-        } else if (part.type === 'bit') {
-            chartData = [parseStat(part.attack), parseStat(part.defense), parseStat(part.stamina), parseStat(part.dash), parseStat(part.burst_resistance)];
-            chartLabels = [ `${langPack.chart_label_attack || 'Attack'}: ${chartData[0]}`, `${langPack.chart_label_defense || 'Defense'}: ${chartData[1]}`, `${langPack.chart_label_stamina || 'Stamina'}: ${chartData[2]}`, `${langPack.chart_label_dash || 'Dash'}: ${chartData[3]}`, `${langPack.chart_label_burst || 'Burst'}: ${chartData[4]}` ];
-        } else {
-             // Peças CX ou sem stats - não desenha gráfico
-             canvas.style.display = 'none'; // Esconde o canvas
-             return;
-        }
-         canvas.style.display = 'block'; // Garante que o canvas está visível
-
+        let chartData = []; let chartLabels = [];
+        if (part.type === 'blade') { chartData = [parseStat(part.attack), parseStat(part.defense), parseStat(part.stamina)]; chartLabels = [ `${langPack.chart_label_attack || 'Attack'}: ${chartData[0]}`, `${langPack.chart_label_defense || 'Defense'}: ${chartData[1]}`, `${langPack.chart_label_stamina || 'Stamina'}: ${chartData[2]}` ]; }
+        else if (part.type === 'ratchet') { chartData = [parseStat(part.attack), parseStat(part.defense), parseStat(part.stamina), parseStat(part.height)]; chartLabels = [ `${langPack.chart_label_attack || 'Attack'}: ${chartData[0]}`, `${langPack.chart_label_defense || 'Defense'}: ${chartData[1]}`, `${langPack.chart_label_stamina || 'Stamina'}: ${chartData[2]}`, `${langPack.chart_label_height || 'Height'}: ${chartData[3]}` ]; }
+        else if (part.type === 'bit') { chartData = [parseStat(part.attack), parseStat(part.defense), parseStat(part.stamina), parseStat(part.dash), parseStat(part.burst_resistance)]; chartLabels = [ `${langPack.chart_label_attack || 'Attack'}: ${chartData[0]}`, `${langPack.chart_label_defense || 'Defense'}: ${chartData[1]}`, `${langPack.chart_label_stamina || 'Stamina'}: ${chartData[2]}`, `${langPack.chart_label_dash || 'Dash'}: ${chartData[3]}`, `${langPack.chart_label_burst || 'Burst'}: ${chartData[4]}` ]; }
+        else { canvas.style.display = 'none'; return; } // Peças sem stats definidos para gráfico
+        canvas.style.display = 'block';
         const data = { labels: chartLabels, datasets: [{ label: part.name, data: chartData, fill: true, backgroundColor: 'rgba(0, 255, 195, 0.2)', borderColor: 'rgb(0, 255, 195)', pointBackgroundColor: 'rgb(0, 255, 195)', pointBorderColor: '#fff', pointHoverBackgroundColor: '#fff', pointHoverBorderColor: 'rgb(0, 255, 195)' }] };
         const options = { responsive: true, maintainAspectRatio: true, scales: { r: { angleLines: { color: 'rgba(255, 255, 255, 0.3)' }, grid: { color: 'rgba(255, 255, 255, 0.3)' }, pointLabels: { display: true, color: '#FFFFFF', font: { size: 9 } }, ticks: { display: false, stepSize: 25, maxTicksLimit: 5 }, min: 0, suggestedMax: 100 }}, plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(context) { let label = ''; const fullLabel = context.chart.data.labels[context.dataIndex]; const statNameMatch = fullLabel.match(/^[^:]+/); if (statNameMatch) { label = statNameMatch[0] + ': '; } if (context.parsed.r !== null) { label += context.parsed.r; } return label; } }}}};
-
         try { const chartInstance = new Chart(ctx, { type: 'radar', data: data, options: options }); if (canvasId === 'info-modal-chart') infoModalChartInstance = chartInstance; }
         catch (error) { console.error(`Erro ao criar gráfico de stats para ${part.id}:`, error); canvas.style.display = 'none';}
     };
 
     const openPartInfoModal = (partId) => {
-        const part = ALL_PARTS.find(p => p.id === partId);
-        if (!part || !partInfoModal) return;
-
-        // Preenche Nome
+        const part = ALL_PARTS.find(p => p.id === partId); if (!part || !partInfoModal) return;
         infoModalPartName.textContent = part.name;
-
-        // Preenche Fontes
-        const sources = PART_SOURCES[part.id];
-        if (sources && sources.length > 0) {
-            infoModalSourceList.innerHTML = sources.map(s => `<li>${s}</li>`).join('');
-        } else {
-            infoModalSourceList.innerHTML = `<li>Informação não disponível.</li>`;
-        }
-
-        // Desenha Gráfico de Stats
+        const sources = PART_SOURCES[part.id]; if (sources && sources.length > 0) { infoModalSourceList.innerHTML = sources.map(s => `<li>${s}</li>`).join(''); } else { infoModalSourceList.innerHTML = `<li>Informação não disponível.</li>`; }
         drawPartStatsChart('info-modal-chart', part);
-
-        // Mostra o modal
         partInfoModal.style.display = 'block';
     };
 
-    const closePartInfoModal = () => {
-        if (partInfoModal) partInfoModal.style.display = 'none';
-        // Destroi o gráfico do modal
-        if (infoModalChartInstance) {
-            infoModalChartInstance.destroy();
-            infoModalChartInstance = null;
-        }
-    };
+    const closePartInfoModal = () => { if (partInfoModal) partInfoModal.style.display = 'none'; if (infoModalChartInstance) { infoModalChartInstance.destroy(); infoModalChartInstance = null; } };
 
     // --- INICIALIZAÇÃO E EVENT LISTENERS ---
     const savedLanguage = localStorage.getItem('beyXToolLanguage'); if (savedLanguage && translations[savedLanguage]) currentLanguage = savedLanguage;
@@ -474,7 +359,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listeners
     langPtBrButton?.addEventListener('click', () => setLanguage('pt-br')); langEnButton?.addEventListener('click', () => setLanguage('en'));
-    collection_filter?.addEventListener('change', renderParts); collection_sort?.addEventListener('change', renderParts);
+    collection_filter?.addEventListener('change', () => { renderParts(); renderStarterGuide(); });
+    collection_sort?.addEventListener('change', renderParts);
     export_button?.addEventListener('click', exportData); import_button?.addEventListener('click', () => import_file_input?.click()); import_file_input?.addEventListener('change', importData);
     clear_deck_button?.addEventListener('click', clearDeck); export_deck_button?.addEventListener('click', exportDeckList);
     deck_slots.forEach(slot => { slot.querySelectorAll('.part-placeholder').forEach(ph => { ph.addEventListener('click', () => { const sId = slot.dataset.slotId; const t = ph.dataset.type; if(sId !== undefined && t) openPartSelector(sId, t); }); }); });
@@ -483,15 +369,12 @@ document.addEventListener('DOMContentLoaded', () => {
     part_modal_close?.addEventListener('click', closePartModal); variant_modal_close?.addEventListener('click', closeVariantModal);
     inputModalOk?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(inputModalField.value); }); inputModalCancel?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); }); inputModalClose?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); }); inputModalField?.addEventListener('keypress', (e) => { if (e.key === 'Enter' && onInputConfirm) { onInputConfirm(inputModalField.value); } });
     scoreButtons.forEach(button => button.addEventListener('click', handleScoreButton)); resetScoreButton?.addEventListener('click', resetScore);
-    p1NameInput?.addEventListener('blur', () => savePlayerName(1, p1NameInput)); p2NameInput?.addEventListener('blur', () => savePlayerName(2, p2NameInput)); p1NameInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { savePlayerName(1, p1NameInput); p1NameInput.blur(); } }); p2NameInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { savePlayerName(2, p2NameInput); p2NameInput.blur(); } });
-    partInfoModalClose?.addEventListener('click', closePartInfoModal); // Listener para fechar novo modal
+    p1NameInput?.addEventListener('blur', () => savePlayerName(1, p1NameInput));
+    p2NameInput?.addEventListener('blur', () => savePlayerName(2, p2NameInput)); // [CORRIGIDO] Removido o 'ci>'
+    p1NameInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { savePlayerName(1, p1NameInput); p1NameInput.blur(); } });
+    p2NameInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { savePlayerName(2, p2NameInput); p2NameInput.blur(); } });
+    partInfoModalClose?.addEventListener('click', closePartInfoModal);
 
-    // Listener Global para fechar Modais
-    window.addEventListener('click', (event) => {
-        if (event.target === part_modal) closePartModal();
-        if (event.target === variant_modal) closeVariantModal();
-        if (event.target === inputModal) { if (onInputConfirm) onInputConfirm(null); }
-        if (event.target === partInfoModal) closePartInfoModal(); // Fecha modal de info
-    });
+    window.addEventListener('click', (event) => { if (event.target === part_modal) closePartModal(); if (event.target === variant_modal) closeVariantModal(); if (event.target === inputModal) { if (onInputConfirm) onInputConfirm(null); } if (event.target === partInfoModal) closePartInfoModal(); });
 
 }); // Fim do DOMContentLoaded
