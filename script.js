@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    let currentLanguage = 'pt-br';
-    let deckChartInstances = [null, null, null]; // Array para armazenar instâncias dos gráficos do deck
-    let infoModalChartInstance = null; // Instância do gráfico no modal de info
+    let currentLanguage = 'en'; // MODIFICADO AQUI
+    let deckChartInstances = [null, null, null];
+    let infoModalChartInstance = null;
 
     let app_data = {
         collection: { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() },
@@ -121,7 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadCollectionFromParsed = (parsedCollection) => { const collection = { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() }; try { if (parsedCollection) { if (parsedCollection.blades) collection.blades = new Map(Object.entries(parsedCollection.blades).map(([id, variants]) => [id, new Set(variants)])); if (parsedCollection.ratchets) collection.ratchets = new Set(parsedCollection.ratchets); if (parsedCollection.bits) collection.bits = new Set(parsedCollection.bits); if (parsedCollection.mainblades) collection.mainblades = new Set(parsedCollection.mainblades); if (parsedCollection.assistblades) collection.assistblades = new Set(parsedCollection.assistblades); if (parsedCollection.lockchips) collection.lockchips = new Set(parsedCollection.lockchips); } } catch(e) { console.error("Erro ao processar coleção salva:", e); } return collection; };
     const saveAppData = () => { try { localStorage.setItem('beyblade_x_data', JSON.stringify({ collection: getSerializableCollection(), decks: app_data.decks, active_deck_index: app_data.active_deck_index })); } catch (e) { console.error("Erro ao salvar dados:", e); alert(translations[currentLanguage].alert_save_error); } };
 
-    const loadAppData = () => { const saved_data_str = localStorage.getItem('beyblade_x_data'); if (saved_data_str) { try { const parsed = JSON.parse(saved_data_str); app_data.collection = loadCollectionFromParsed(parsed.collection || {}); app_data.decks = Array.isArray(parsed.decks) ? parsed.decks : []; app_data.active_deck_index = (typeof parsed.active_deck_index === 'number') ? parsed.active_deck_index : 0; app_data.decks.forEach(deck => { deck.bays.forEach((bay, index, arr) => { if (!bay || typeof bay !== 'object' || !bay.hasOwnProperty('part4') || !bay.hasOwnProperty('part5')) { arr[index] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }; } }); while (deck.bays.length < 3) { deck.bays.push({ type: null, part1: null, part2: null, part3: null, part4: null, part5: null }); } deck.bays = deck.bays.slice(0, 3); }); } catch (e) { console.error("Erro ao carregar dados salvos:", e); app_data = { collection: { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() }, decks: [], active_deck_index: 0 }; } } if (app_data.decks.length === 0) app_data.decks.push(createNewDeck("Meu Primeiro Deck")); if (app_data.active_deck_index >= app_data.decks.length || app_data.active_deck_index < 0) app_data.active_deck_index = 0; const activeDeck = app_data.decks[app_data.active_deck_index]; if (activeDeck) { while (activeDeck.bays.length < 3) { activeDeck.bays.push({ type: null, part1: null, part2: null, part3: null, part4: null, part5: null }); } activeDeck.bays = activeDeck.bays.slice(0, 3); activeDeck.bays.forEach((bay, index, arr) => { if (!bay || typeof bay !== 'object' || !bay.hasOwnProperty('part4') || !bay.hasOwnProperty('part5')) { arr[index] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }; } }); } const p1Name = localStorage.getItem('beyXToolP1Name'); const p2Name = localStorage.getItem('beyXToolP2Name'); const langPack = translations[currentLanguage] || translations['pt-br']; if (p1NameInput) p1NameInput.value = p1Name || langPack.player_1_default || "Jogador 1"; if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Jogador 2"; };
+    const loadAppData = () => { const saved_data_str = localStorage.getItem('beyblade_x_data'); if (saved_data_str) { try { const parsed = JSON.parse(saved_data_str); app_data.collection = loadCollectionFromParsed(parsed.collection || {}); app_data.decks = Array.isArray(parsed.decks) ? parsed.decks : []; app_data.active_deck_index = (typeof parsed.active_deck_index === 'number') ? parsed.active_deck_index : 0; app_data.decks.forEach(deck => { deck.bays.forEach((bay, index, arr) => { if (!bay || typeof bay !== 'object' || !bay.hasOwnProperty('part4') || !bay.hasOwnProperty('part5')) { arr[index] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }; } }); while (deck.bays.length < 3) { deck.bays.push({ type: null, part1: null, part2: null, part3: null, part4: null, part5: null }); } deck.bays = deck.bays.slice(0, 3); }); } catch (e) { console.error("Erro ao carregar dados salvos:", e); app_data = { collection: { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() }, decks: [], active_deck_index: 0 }; } } if (app_data.decks.length === 0) app_data.decks.push(createNewDeck("Meu Primeiro Deck")); if (app_data.active_deck_index >= app_data.decks.length || app_data.active_deck_index < 0) app_data.active_deck_index = 0; const activeDeck = app_data.decks[app_data.active_deck_index]; if (activeDeck) { while (activeDeck.bays.length < 3) { activeDeck.bays.push({ type: null, part1: null, part2: null, part3: null, part4: null, part5: null }); } activeDeck.bays = activeDeck.bays.slice(0, 3); activeDeck.bays.forEach((bay, index, arr) => { if (!bay || typeof bay !== 'object' || !bay.hasOwnProperty('part4') || !bay.hasOwnProperty('part5')) { arr[index] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }; } }); }
+        const p1Name = localStorage.getItem('beyXToolP1Name'); const p2Name = localStorage.getItem('beyXToolP2Name');
+        const langPack = translations[currentLanguage] || translations['en']; // MODIFICADO AQUI
+        if (p1NameInput) p1NameInput.value = p1Name || langPack.player_1_default || "Player 1";
+        if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Player 2";
+    };
 
     // --- Funções de Renderização ---
 
@@ -135,28 +140,20 @@ document.addEventListener('DOMContentLoaded', () => {
             product.parts.forEach(partId => {
                 const part = ALL_PARTS.find(p => p.id === partId); if (!part) { console.warn(`Peça do Guia ${partId} não encontrada.`); return; }
                 const partItem = document.createElement('div'); partItem.className = 'product-part-item'; partItem.dataset.partId = part.id;
-                
                 const infoIconSpan = document.createElement('span'); infoIconSpan.className = 'part-info-icon'; infoIconSpan.dataset.partId = part.id; infoIconSpan.textContent = '?';
                 const imgElement = document.createElement('img'); imgElement.src = part.image || 'images/placeholder.png'; imgElement.alt = part.name;
                 const nameElement = document.createElement('p'); nameElement.textContent = part.name;
-                
-                partItem.appendChild(infoIconSpan);
-                partItem.appendChild(imgElement);
-                partItem.appendChild(nameElement);
-
+                partItem.appendChild(infoIconSpan); partItem.appendChild(imgElement); partItem.appendChild(nameElement);
                 if (part.tier) { const tierElement = document.createElement('div'); tierElement.className = `part-tier tier-${part.tier.toLowerCase()}`; tierElement.textContent = part.tier; partItem.appendChild(tierElement); }
-
                 const collectionSet = app_data.collection[part.type + 's']; let isOwned = false;
                 if (['blade', 'lockchip', 'mainblade', 'assistblade'].includes(part.type)) { isOwned = collectionSet?.has(part.id); } else { isOwned = collectionSet?.has(part.id); }
                 if (isOwned) partItem.classList.add('owned');
-                
                 infoIconSpan.addEventListener('click', (event) => { event.stopPropagation(); openPartInfoModal(part.id); });
-
                 if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) {
                     const typeSymbolDiv = document.createElement('div'); typeSymbolDiv.className = 'part-type-symbol';
                     const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1);
-                    const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`;
-                    const iconLoaderImg = new Image(); // Variável renomeada
+                    const imgPath = `images/types/${part.bey_type.toLowerCase()}.png`;
+                    const iconLoaderImg = new Image();
                     iconLoaderImg.src = imgPath;
                     iconLoaderImg.onload = () => { typeSymbolDiv.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; partItem.appendChild(typeSymbolDiv); };
                     iconLoaderImg.onerror = () => { console.warn(`Imagem de tipo ${imgPath} não encontrada.`); };
@@ -193,14 +190,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) { 
                 const typeSymbolDiv = document.createElement('div'); typeSymbolDiv.className = 'part-type-symbol'; 
                 const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); 
-                const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`; 
-                const iconLoaderImg = new Image(); // Variável renomeada
+                const imgPath = `images/types/${part.bey_type.toLowerCase()}.png`; 
+                const iconLoaderImg = new Image(); 
                 iconLoaderImg.src = imgPath; 
                 iconLoaderImg.onload = () => { typeSymbolDiv.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; part_card.appendChild(typeSymbolDiv); };
                 iconLoaderImg.onerror = () => { console.warn(`Imagem de tipo ${imgPath} não encontrada.`); };
             }
 
-            // Lógica de Dois Cliques
             let lastClickTime = 0; const doubleClickDelay = 400;
             part_card.addEventListener('click', (event) => { if (event.target.classList.contains('part-info-icon')) return; const now = Date.now(); if (now - lastClickTime < doubleClickDelay) { togglePartOwnership(part); lastClickTime = 0; } else { lastClickTime = now; } });
             part_card.addEventListener('contextmenu', (e) => e.preventDefault());
@@ -240,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (Object.values(selectors).some(el => !el)) { console.error(`Elementos faltando no slot ${bayIndex}. Verifique o HTML.`); return; }
             slot.dataset.bayType = bay.type || 'empty';
             const reset = (ph, n, icon, placeholderKey) => { ph.innerHTML = `<span data-translate="${placeholderKey}">${langPack[placeholderKey]||placeholderKey.replace('deck_placeholder_', '').replace('_section_title', '')}</span>`; n.textContent = selectText; icon.innerHTML = ''; };
-            const set = (ph, n, icon, part, partSlotName) => { if (!part) return; const name = part.displayName || part.name; let imgHTML = part.image || 'images/placeholder.png'; if (part.type==='blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) { const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant); if (vData?.image) imgHTML=vData.image; else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock'); if (sVar?.image) imgHTML=sVar.image; } } ph.innerHTML = `<img src="${imgHTML}" alt="${name}">`; n.textContent = name; icon.innerHTML = ''; if ((partSlotName === 'primeira' && part.type === 'blade') || partSlotName === 'bit') { if (part.bey_type) { const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`; icon.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; }}};
+            const set = (ph, n, icon, part, partSlotName) => { if (!part) return; const name = part.displayName || part.name; let imgHTML = part.image || 'images/placeholder.png'; if (part.type==='blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) { const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant); if (vData?.image) imgHTML=vData.image; else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock'); if (sVar?.image) imgHTML=sVar.image; } } ph.innerHTML = `<img src="${imgHTML}" alt="${name}">`; n.textContent = name; icon.innerHTML = ''; if ((partSlotName === 'primeira' && part.type === 'blade') || partSlotName === 'bit') { if (part.bey_type) { const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); const imgPath = `images/types/${part.bey_type.toLowerCase()}.png`; icon.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; }}};
             reset(selectors.p1ph, selectors.p1n, selectors.p1icon, 'deck_placeholder_primeira'); reset(selectors.mbph, selectors.mbn, selectors.mbicon, 'deck_placeholder_mainblade'); reset(selectors.abph, selectors.abn, selectors.abicon, 'deck_placeholder_assistblade'); reset(selectors.rph, selectors.rn, selectors.ricon, 'deck_placeholder_ratchet'); reset(selectors.bph, selectors.bn, selectors.bicon, 'deck_placeholder_bit');
             if (bay.type === 'standard') { set(selectors.p1ph, selectors.p1n, selectors.p1icon, bay.part1, 'primeira'); set(selectors.rph, selectors.rn, selectors.ricon, bay.part4, 'ratchet'); set(selectors.bph, selectors.bn, selectors.bicon, bay.part5, 'bit'); }
             else if (bay.type === 'chip') { set(selectors.p1ph, selectors.p1n, selectors.p1icon, bay.part1, 'primeira'); set(selectors.mbph, selectors.mbn, selectors.mbicon, bay.part2, 'mainblade'); set(selectors.abph, selectors.abn, selectors.abicon, bay.part3, 'assistblade'); set(selectors.rph, selectors.rn, selectors.ricon, bay.part4, 'ratchet'); set(selectors.bph, selectors.bn, selectors.bicon, bay.part5, 'bit'); }
@@ -311,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateScoreDisplay = () => { if (scoreP1Display) scoreP1Display.textContent = scoreP1; if (scoreP2Display) scoreP2Display.textContent = scoreP2; };
     const handleScoreButton = (e) => { const player = e.target.dataset.player; const points = parseInt(e.target.dataset.points, 10); if (player === '1') { scoreP1 += points; } else if (player === '2') { scoreP2 += points; } updateScoreDisplay(); };
     const resetScore = () => { const langPack = translations[currentLanguage]; const confirmMsg = langPack.confirm_reset_score || "Tem certeza que deseja reiniciar o placar?"; if (confirm(confirmMsg)) { scoreP1 = 0; scoreP2 = 0; updateScoreDisplay(); } };
-    const savePlayerName = (playerNumber, inputElement) => { if (!inputElement) return; const newName = inputElement.value.trim(); const key = `beyXToolP${playerNumber}Name`; const defaultKey = `player_${playerNumber}_default`; const langPack = translations[currentLanguage]; const defaultValue = langPack[defaultKey] || (playerNumber === 1 ? "Jogador 1" : "Jogador 2"); if (newName) { localStorage.setItem(key, newName); } else { inputElement.value = defaultValue; localStorage.setItem(key, defaultValue); } };
+    const savePlayerName = (playerNumber, inputElement) => { if (!inputElement) return; const newName = inputElement.value.trim(); const key = `beyXToolP${playerNumber}Name`; const defaultKey = `player_${playerNumber}_default`; const langPack = translations[currentLanguage]; const defaultValue = langPack[defaultKey] || (playerNumber === 1 ? "Player 1" : "Player 2"); if (newName) { localStorage.setItem(key, newName); } else { inputElement.value = defaultValue; localStorage.setItem(key, defaultValue); } };
 
     // --- Funções de Gerenciamento de Deck ---
     const addDeck = () => { const newDeckName = `Deck ${app_data.decks.length + 1}`; app_data.decks.push(createNewDeck(newDeckName)); app_data.active_deck_index = app_data.decks.length - 1; updateDeckUI(); saveAppData(); };
@@ -370,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
     inputModalOk?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(inputModalField.value); }); inputModalCancel?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); }); inputModalClose?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); }); inputModalField?.addEventListener('keypress', (e) => { if (e.key === 'Enter' && onInputConfirm) { onInputConfirm(inputModalField.value); } });
     scoreButtons.forEach(button => button.addEventListener('click', handleScoreButton)); resetScoreButton?.addEventListener('click', resetScore);
     p1NameInput?.addEventListener('blur', () => savePlayerName(1, p1NameInput));
-    p2NameInput?.addEventListener('blur', () => savePlayerName(2, p2NameInput)); // [CORRIGIDO] Removido o 'ci>'
+    p2NameInput?.addEventListener('blur', () => savePlayerName(2, p2NameInput)); // [CORRIGIDO]
     p1NameInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { savePlayerName(1, p1NameInput); p1NameInput.blur(); } });
     p2NameInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { savePlayerName(2, p2NameInput); p2NameInput.blur(); } });
     partInfoModalClose?.addEventListener('click', closePartInfoModal);
