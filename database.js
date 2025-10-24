@@ -294,12 +294,12 @@ const STARTER_GUIDE_PRODUCTS = [
     {
         productName: "Xtreme Battle Set (F9588)",
         image: "images/products/hasbro_F9588.webp",
-        parts: ['mammothtusk', '3-60', 'taper']
+        parts: ['drandagger', '4-60', 'rush', 'mammothtusk', '3-60', 'taper']
     },
     {
         productName: "Drop Attack Battle Set (G0842)",
         image: "images/products/hasbro_G0842.webp",
-        parts: ['drandagger', '4-70', 'quake', 'hellschain', '5-60', 'hightaper']
+        parts: ['hoverwyvern', '3-85', 'needle', 'impactdrake', '9-60', 'lowrush']
     },
     {
         productName: "25th Anniversary Set (G1844)",
