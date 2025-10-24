@@ -128,20 +128,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Player 2";
     };
 
-    // --- Funções de Renderização ---
+    // --- Funções de Renderização --- 
 
     const renderStarterGuide = () => {
         if (!guide_products_container || typeof STARTER_GUIDE_PRODUCTS === 'undefined') { console.error("Container do Guia de Iniciante ou dados não encontrados."); return; }
         guide_products_container.innerHTML = '';
         STARTER_GUIDE_PRODUCTS.forEach(product => {
             const productCard = document.createElement('div'); productCard.className = 'product-card';
-            const header = document.createElement('div'); header.className = 'product-card-header'; header.innerHTML = `<img src="${product.image || 'images/products/placeholder.png'}" alt="${product.productName}" class="product-image"><h4 class="product-name">${product.productName}</h4>`; productCard.appendChild(header);
+            const header = document.createElement('div'); header.className = 'product-card-header'; header.innerHTML = `<img src="${product.image || 'images/products/placeholder.webp'}" alt="${product.productName}" class="product-image"><h4 class="product-name">${product.productName}</h4>`; productCard.appendChild(header);
             const partsContainer = document.createElement('div'); partsContainer.className = 'product-parts';
             product.parts.forEach(partId => {
                 const part = ALL_PARTS.find(p => p.id === partId); if (!part) { console.warn(`Peça do Guia ${partId} não encontrada.`); return; }
                 const partItem = document.createElement('div'); partItem.className = 'product-part-item'; partItem.dataset.partId = part.id;
                 const infoIconSpan = document.createElement('span'); infoIconSpan.className = 'part-info-icon'; infoIconSpan.dataset.partId = part.id; infoIconSpan.textContent = '?';
-                const imgElement = document.createElement('img'); imgElement.src = part.image || 'images/placeholder.png'; imgElement.alt = part.name;
+                const imgElement = document.createElement('img'); imgElement.src = part.image || 'images/placeholder.webp'; imgElement.alt = part.name;
                 const nameElement = document.createElement('p'); nameElement.textContent = part.name;
                 partItem.appendChild(infoIconSpan); partItem.appendChild(imgElement); partItem.appendChild(nameElement);
                 if (part.tier) { const tierElement = document.createElement('div'); tierElement.className = `part-tier tier-${part.tier.toLowerCase()}`; tierElement.textContent = part.tier; partItem.appendChild(tierElement); }
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) {
                     const typeSymbolDiv = document.createElement('div'); typeSymbolDiv.className = 'part-type-symbol';
                     const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1);
-                    const imgPath = `images/types/${part.bey_type.toLowerCase()}.png`;
+                    const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`;
                     const iconLoaderImg = new Image();
                     iconLoaderImg.src = imgPath;
                     iconLoaderImg.onload = () => { typeSymbolDiv.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; partItem.appendChild(typeSymbolDiv); };
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isOwned) part_card.classList.add('owned');
 
             const infoIcon = `<span class="part-info-icon" data-part-id="${part.id}">?</span>`;
-            part_card.innerHTML = `${infoIcon}<img src="${part.image || 'images/placeholder.png'}" alt="${part.name}"><p>${part.name}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`;
+            part_card.innerHTML = `${infoIcon}<img src="${part.image || 'images/placeholder.webp'}" alt="${part.name}"><p>${part.name}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`;
 
             const infoButton = part_card.querySelector('.part-info-icon');
             if (infoButton) { infoButton.addEventListener('click', (event) => { event.stopPropagation(); openPartInfoModal(part.id); }); }
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) { 
                 const typeSymbolDiv = document.createElement('div'); typeSymbolDiv.className = 'part-type-symbol'; 
                 const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); 
-                const imgPath = `images/types/${part.bey_type.toLowerCase()}.png`; 
+                const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`; 
                 const iconLoaderImg = new Image(); 
                 iconLoaderImg.src = imgPath; 
                 iconLoaderImg.onload = () => { typeSymbolDiv.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; part_card.appendChild(typeSymbolDiv); };
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (Object.values(selectors).some(el => !el)) { console.error(`Elementos faltando no slot ${bayIndex}. Verifique o HTML.`); return; }
             slot.dataset.bayType = bay.type || 'empty';
             const reset = (ph, n, icon, placeholderKey) => { ph.innerHTML = `<span data-translate="${placeholderKey}">${langPack[placeholderKey]||placeholderKey.replace('deck_placeholder_', '').replace('_section_title', '')}</span>`; n.textContent = selectText; icon.innerHTML = ''; };
-            const set = (ph, n, icon, part, partSlotName) => { if (!part) return; const name = part.displayName || part.name; let imgHTML = part.image || 'images/placeholder.png'; if (part.type==='blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) { const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant); if (vData?.image) imgHTML=vData.image; else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock'); if (sVar?.image) imgHTML=sVar.image; } } ph.innerHTML = `<img src="${imgHTML}" alt="${name}">`; n.textContent = name; icon.innerHTML = ''; if ((partSlotName === 'primeira' && part.type === 'blade') || partSlotName === 'bit') { if (part.bey_type) { const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); const imgPath = `images/types/${part.bey_type.toLowerCase()}.png`; icon.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; }}};
+            const set = (ph, n, icon, part, partSlotName) => { if (!part) return; const name = part.displayName || part.name; let imgHTML = part.image || 'images/placeholder.webp'; if (part.type==='blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) { const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant); if (vData?.image) imgHTML=vData.image; else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock'); if (sVar?.image) imgHTML=sVar.image; } } ph.innerHTML = `<img src="${imgHTML}" alt="${name}">`; n.textContent = name; icon.innerHTML = ''; if ((partSlotName === 'primeira' && part.type === 'blade') || partSlotName === 'bit') { if (part.bey_type) { const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`; icon.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; }}};
             reset(selectors.p1ph, selectors.p1n, selectors.p1icon, 'deck_placeholder_primeira'); reset(selectors.mbph, selectors.mbn, selectors.mbicon, 'deck_placeholder_mainblade'); reset(selectors.abph, selectors.abn, selectors.abicon, 'deck_placeholder_assistblade'); reset(selectors.rph, selectors.rn, selectors.ricon, 'deck_placeholder_ratchet'); reset(selectors.bph, selectors.bn, selectors.bicon, 'deck_placeholder_bit');
             if (bay.type === 'standard') { set(selectors.p1ph, selectors.p1n, selectors.p1icon, bay.part1, 'primeira'); set(selectors.rph, selectors.rn, selectors.ricon, bay.part4, 'ratchet'); set(selectors.bph, selectors.bn, selectors.bicon, bay.part5, 'bit'); }
             else if (bay.type === 'chip') { set(selectors.p1ph, selectors.p1n, selectors.p1icon, bay.part1, 'primeira'); set(selectors.mbph, selectors.mbn, selectors.mbicon, bay.part2, 'mainblade'); set(selectors.abph, selectors.abn, selectors.abicon, bay.part3, 'assistblade'); set(selectors.rph, selectors.rn, selectors.ricon, bay.part4, 'ratchet'); set(selectors.bph, selectors.bn, selectors.bicon, bay.part5, 'bit'); }
@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const openPartSelector = (slotId, type) => {
         active_deck_slot = { slotId, type }; const langPack = translations[currentLanguage]; const titlePrefix = langPack.part_selector_modal_title_prefix || "Select:"; modal_title.textContent = `${titlePrefix} ${type.charAt(0).toUpperCase() + type.slice(1)}`; const usedPartIds = new Set(); const currentDeck = app_data.decks[app_data.active_deck_index]; currentDeck.bays.forEach((bay, index) => { if (index.toString() === slotId) return; if (bay.part1) usedPartIds.add(bay.part1.baseId || bay.part1.id); if (bay.part2) usedPartIds.add(bay.part2.id); if (bay.part3) usedPartIds.add(bay.part3.id); if (bay.part4) usedPartIds.add(bay.part4.id); if (bay.part5) usedPartIds.add(bay.part5.id); }); let availableParts = [];
         if (type === 'primeira') { availableParts = [...getOwnedParts('blade'), ...getOwnedParts('lockchip')]; } else if (type === 'ratchet' || type === 'bit' || type === 'mainblade' || type === 'assistblade') { availableParts = getOwnedParts(type); } else { console.error("Tipo de peça desconhecido:", type); return; } const partsToShow = availableParts.filter(part => !usedPartIds.has(part.baseId || part.id)); const individualHeader = langPack.part_individual_header || 'Individual Parts (Owned)'; modal_parts_list_container.innerHTML = `<h4>${individualHeader}</h4><div class="parts-grid"></div>`; const partsGrid = modal_parts_list_container.querySelector('.parts-grid'); if (!partsGrid) return;
-        if (partsToShow.length === 0) { const nonePrefix = langPack.part_individual_none_prefix || 'No'; const noneSuffix = langPack.part_individual_none_suffix || 'parts available...'; partsGrid.innerHTML = `<p>${nonePrefix} ${type} ${noneSuffix}</p>`; } else { partsToShow.forEach(part => { if (!part || !part.name) return; const part_card = document.createElement('div'); part_card.className = 'part-card owned'; part_card.innerHTML = `<img src="${part.image || 'images/placeholder.png'}" alt="${part.displayName || part.name}"><p>${part.displayName || part.name}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`; part_card.addEventListener('click', () => selectPartForDeck(part)); partsGrid.appendChild(part_card); }); }
+        if (partsToShow.length === 0) { const nonePrefix = langPack.part_individual_none_prefix || 'No'; const noneSuffix = langPack.part_individual_none_suffix || 'parts available...'; partsGrid.innerHTML = `<p>${nonePrefix} ${type} ${noneSuffix}</p>`; } else { partsToShow.forEach(part => { if (!part || !part.name) return; const part_card = document.createElement('div'); part_card.className = 'part-card owned'; part_card.innerHTML = `<img src="${part.image || 'images/placeholder.webp'}" alt="${part.displayName || part.name}"><p>${part.displayName || part.name}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`; part_card.addEventListener('click', () => selectPartForDeck(part)); partsGrid.appendChild(part_card); }); }
         if(partsToShow.length > 0) { part_modal.style.display = 'block'; } else { const nonePrefix = langPack.part_individual_none_prefix || 'No'; const noneSuffix = langPack.part_individual_none_suffix || 'parts available...'; alert(`${nonePrefix} ${type} ${noneSuffix}`); }
     };
 
