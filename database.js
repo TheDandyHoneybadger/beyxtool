@@ -366,7 +366,594 @@ const STARTER_GUIDE_PRODUCTS = [
         productName: "Jurassic Park: Quetzalcoatlus (G1899)",
         image: "images/products/hasbro_G1899_2.webp",
         parts: ['quetzalcoatlus', '4-55', 'dot']
-    }
+    },
+	{
+
+        productName: "StarterDranSword 3-60F",
+
+        image: "images/products/takara_BX01.webp", // Placeholder image name
+
+        parts: ['dransword', '3-60', 'flat']
+
+    },
+
+    {
+
+        productName: "StarterHellsScythe 4-60T",
+
+        image: "images/products/takara_BX02.webp", // Placeholder image name
+
+        parts: ['hellsscythe', '4-60', 'taper']
+
+    },
+
+    {
+
+        productName: "StarterWizardArrow 4-80B",
+
+        image: "images/products/takara_BX03.webp", // Placeholder image name
+
+        parts: ['wizardarrow', '4-80', 'ball']
+
+    },
+
+    {
+
+        productName: "StarterKnightShield 3-80N",
+
+        image: "images/products/takara_BX04.webp", // Placeholder image name
+
+        parts: ['knightshield', '3-80', 'needle']
+
+    },
+
+    {
+
+        productName: "BoosterWizardArrow 4-80B",
+
+        image: "images/products/takara_BX05.webp", // Placeholder image name
+
+        parts: ['wizardarrow', '4-80', 'ball']
+
+    },
+
+    {
+
+        productName: "BoosterKnightShield 3-80N",
+
+        image: "images/products/takara_BX06.webp", // Placeholder image name
+
+        parts: ['knightshield', '3-80', 'needle']
+
+    },
+
+    {
+
+        productName: "BoosterKnightLance 4-80HN",
+
+        image: "images/products/takara_BX13.webp", // Placeholder image name
+
+        parts: ['knightlance', '4-80', 'highneedle']
+
+    },
+
+    {
+
+        productName: "StarterLeonClaw 5-60P",
+
+        image: "images/products/takara_BX15.webp", // Placeholder image name
+
+        parts: ['leonclaw', '5-60', 'point']
+
+    },
+
+    {
+
+        productName: "BoosterRhinoHorn 3-80S",
+
+        image: "images/products/takara_BX19.webp", // Placeholder image name
+
+        parts: ['rhinohorn', '3-80', 'spike']
+
+    },
+
+    {
+
+        productName: "DranSword 3-60FEntry Package",
+
+        image: "images/products/takara_BX22.webp", // Placeholder image name
+
+        parts: ['dransword', '3-60', 'flat']
+
+    },
+
+    {
+
+        productName: "StarterPhoenixWing 9-60GF",
+
+        image: "images/products/takara_BX23.webp", // Placeholder image name
+
+        parts: ['phoenixwing', '9-60', 'gearflat']
+
+    },
+
+    {
+
+        productName: "BoosterUnicornSting 5-60GP",
+
+        image: "images/products/takara_BX26.webp", // Placeholder image name
+
+        parts: ['unicornsting', '5-60', 'gearpoint']
+
+    },
+
+    {
+
+        productName: "BoosterWeissTiger 3-60U",
+
+        image: "images/products/takara_BX33.webp", // Placeholder image name
+
+        parts: ['weisstiger', '3-60', 'unite']
+
+    },
+
+    {
+
+        productName: "StarterCobaltDragoon 2-60C",
+
+        image: "images/products/takara_BX34.webp", // Placeholder image name
+
+        parts: ['cobaltdragoon', '2-60', 'cyclone']
+
+    },
+
+    {
+
+        productName: "BoosterCrimsonGaruda 4-70TP",
+
+        image: "images/products/takara_BX38.webp", // Placeholder image name
+
+        parts: ['crimsongaruda', '4-70', 'transpoint']
+
+    },
+
+    {
+
+        productName: "BoosterTriceraPress M-85BS",
+
+        image: "images/products/takara_BX44.webp", // Placeholder image name
+
+        parts: ['tricerapress', 'm-85', 'boundspike']
+
+    },
+
+    {
+
+        productName: "BoosterSamuraiCalibur 6-70M",
+
+        image: "images/products/takara_BX45.webp", // Placeholder image name
+
+        parts: ['samuraicalibur', '6-70', 'merge']
+
+    },
+
+    {
+
+        productName: "StarterDranBuster 1-60A",
+
+        image: "images/products/takara_UX01.webp", // Placeholder image name
+
+        parts: ['dranbuster', '1-60', 'accel']
+
+    },
+
+    {
+
+        productName: "StarterHellsHammer 3-70H",
+
+        image: "images/products/takara_UX02.webp", // Placeholder image name
+
+        parts: ['hellshammer', '3-70', 'hexa']
+
+    },
+
+    {
+
+        productName: "BoosterWizardRod 5-70DB",
+
+        image: "images/products/takara_UX03.webp", // Placeholder image name
+
+        parts: ['wizardrod', '5-70', 'diskball']
+
+    },
+
+    {
+
+        productName: "BoosterLeonCrest 7-60GN",
+
+        image: "images/products/takara_UX06.webp", // Placeholder image name
+
+        parts: ['leoncrest', '7-60', 'gearneedle']
+
+    },
+
+    {
+
+        productName: "StarterSilverWolf 3-80FB",
+
+        image: "images/products/takara_UX08.webp", // Placeholder image name
+
+        parts: ['silverwolf', '3-80', 'freeball']
+
+    },
+
+    {
+
+        productName: "StarterSamuraiSaber 2-70L",
+
+        image: "images/products/takara_UX09.webp", // Placeholder image name
+
+        parts: ['samuraisaber', '2-70', 'level']
+
+    },
+
+    {
+
+        productName: "StarterImpactDrake 9-60LR",
+
+        image: "images/products/takara_UX11.webp", // Placeholder image name
+
+        parts: ['impactdrake', '9-60', 'lowrush']
+
+    },
+
+    {
+
+        productName: "BoosterGolemRock 1-60UN",
+
+        image: "images/products/takara_UX13.webp", // Placeholder image name
+
+        parts: ['golemrock', '1-60', 'underneedle']
+
+    },
+
+    {
+
+        productName: "StarterScorpioSpear 0-70Z",
+
+        image: "images/products/takara_UX14.webp", // Placeholder image name
+
+        parts: ['scorpiospear', '0-70', 'zap']
+
+    },
+
+    {
+
+        productName: "StarterDranBrave S6-60V",
+
+        image: "images/products/takara_CX01.webp", // Placeholder image name
+
+        parts: ['lockchip-dran', 'mainblade-brave', 'assistblade-slash', '6-60', 'vortex']
+
+    },
+
+    {
+
+        productName: "StarterWizardArc R4-55LO",
+
+        image: "images/products/takara_CX02.webp", // Placeholder image name
+
+        parts: ['lockchip-wizard', 'mainblade-arc', 'assistblade-round', '4-55', 'loworb']
+
+    },
+
+    {
+
+        productName: "BoosterPerseusDark B6-80W",
+
+        image: "images/products/takara_CX03.webp", // Placeholder image name
+
+        parts: ['lockchip-perseus', 'mainblade-dark', 'assistblade-bumper', '6-80', 'wedge']
+
+    },
+
+    // Skipping PegasusBlast ATr - Bit 'ATr' not clearly defined in ALL_PARTS
+
+    // Skipping SolEclipse D5-70TK - Bit 'TK' not clearly defined in ALL_PARTS
+
+    // Skipping WolfHunt F0-60DB - Parts not defined in ALL_PARTS
+
+    {
+
+        productName: "StarterDranSword 3-60F", // CoroCoro Spirit Festival version
+
+        image: "images/products/takara_BX01_limited.webp", // Placeholder image name
+
+        parts: ['dransword', '3-60', 'flat']
+
+    },
+
+    {
+
+        productName: "StarterHellsScythe 4-60T", // CoroCoro Spirit Festival version
+
+        image: "images/products/takara_BX02_limited.webp", // Placeholder image name
+
+        parts: ['hellsscythe', '4-60', 'taper']
+
+    },
+
+    {
+
+        productName: "BoosterDranzerSpiral 3-80T",
+
+        image: "images/products/takara_BX00_dranzerspiral.webp", // Placeholder image name
+
+        parts: ['dranzerspiral', '3-80', 'taper']
+
+    },
+
+    {
+
+        productName: "BoosterCobaltDrake 4-60F(Metal Coat: Blue)",
+
+        image: "images/products/takara_BX00_cobaltdrake_mcblue.webp", // Placeholder image name
+
+        parts: ['cobaltdrake', '4-60', 'flat']
+
+    },
+
+    {
+
+        productName: "BoosterHellsScythe 4-60T(Metal Coat: Gold)",
+
+        image: "images/products/takara_BX00_hellsscythe_mcgold.webp", // Placeholder image name
+
+        parts: ['hellsscythe', '4-60', 'taper']
+
+    },
+
+    {
+
+        productName: "DranSword 3-60F(Metal Coat: Bronze)",
+
+        image: "images/products/takara_BX00_dransword_mcbronze.webp", // Placeholder image name
+
+        parts: ['dransword', '3-60', 'flat']
+
+    },
+
+    {
+
+        productName: "DranSword 3-60F(Metal Coat: Silver)",
+
+        image: "images/products/takara_BX00_dransword_mcsilver.webp", // Placeholder image name
+
+        parts: ['dransword', '3-60', 'flat']
+
+    },
+
+    {
+
+        productName: "DranSword 3-60F(Metal Coat: Gold)",
+
+        image: "images/products/takara_BX00_dransword_mcgold.webp", // Placeholder image name
+
+        parts: ['dransword', '3-60', 'flat']
+
+    },
+
+    {
+
+        productName: "StarterPhoenixWing 9-60GF", // Toys R Us Pre-sale
+
+        image: "images/products/takara_BX23_presale.webp", // Placeholder image name
+
+        parts: ['phoenixwing', '9-60', 'gearflat']
+
+    },
+
+    {
+
+        productName: "BoosterHellsScythe 3-80F(SP X Bey)",
+
+        image: "images/products/takara_BX00_hellsscythe_spx.webp", // Placeholder image name
+
+        parts: ['hellsscythe', '3-80', 'flat']
+
+    },
+
+    {
+
+        productName: "BoosterDranSword 3-60F(Sushiro Ver.)",
+
+        image: "images/products/takara_BX00_dransword_sushiro.webp", // Placeholder image name
+
+        parts: ['dransword', '3-60', 'flat']
+
+    },
+
+    {
+
+        productName: "BoosterLeonClaw 5-60P(Metal Coat: Gold)",
+
+        image: "images/products/takara_BX00_leonclaw_mcgold.webp", // Placeholder image name
+
+        parts: ['leonclaw', '5-60', 'point']
+
+    },
+
+    {
+
+        productName: "BoosterSharkEdge 5-60GF(Metal Coat: Blue)",
+
+        image: "images/products/takara_BX00_sharkedge_mcblue.webp", // Placeholder image name
+
+        parts: ['sharkedge', '5-60', 'gearflat']
+
+    },
+
+    {
+
+        productName: "BoosterDrigerSlash 4-80P",
+
+        image: "images/products/takara_BX00_drigerslash.webp", // Placeholder image name
+
+        parts: ['drigerslash', '4-80', 'point']
+
+    },
+
+    {
+
+        productName: "BoosterHellsChain 5-60HT(Metal Coat: Black)",
+
+        image: "images/products/takara_BX00_hellschain_mcblack.webp", // Placeholder image name
+
+        parts: ['hellschain', '5-60', 'hightaper']
+
+    },
+
+    {
+
+        productName: "BoosterDranBuster 1-60A(Metal Coat: Red)",
+
+        image: "images/products/takara_UX00_dranbuster_mcred.webp", // Placeholder image name
+
+        parts: ['dranbuster', '1-60', 'accel']
+
+    },
+
+    {
+
+        productName: "BoosterAeroPegasus 3-70A",
+
+        image: "images/products/takara_UX00_aeropegasus.webp", // Placeholder image name
+
+        parts: ['aerpegasus', '3-70', 'accel']
+
+    },
+
+    {
+
+        productName: "StarterDranDagger 2-80GP(Metal Coat: Black Giants)",
+
+        image: "images/products/takara_BX00_drandagger_mcblackgiants.webp", // Placeholder image name
+
+        parts: ['drandagger', '2-80', 'gearpoint']
+
+    },
+
+    {
+
+        productName: "StarterCobaltDragoon 2-60C(Metal Coat: Black)",
+
+        image: "images/products/takara_BX00_cobaltdragoon_mcblack.webp", // Placeholder image name
+
+        parts: ['cobaltdragoon', '2-60', 'cyclone']
+
+    },
+
+    {
+
+        productName: "BoosterPhoenixWing 9-80DB(Bladers Select Bey)",
+
+        image: "images/products/takara_BX00_phoenixwing_bladersselect.webp", // Placeholder image name
+
+        parts: ['phoenixwing', '9-80', 'diskball']
+
+    },
+
+    {
+
+        productName: "BoosterShinobiKnife 4-60LF(Metal Coat: Blue)",
+
+        image: "images/products/takara_BX00_shinobiknife_mcblue.webp", // Placeholder image name
+
+        parts: ['shinobiknife', '4-60', 'lowflat']
+
+    },
+
+    {
+
+        productName: "CobaltDrake 4-60F(Clear Ver.)",
+
+        image: "images/products/takara_BX00_cobaltdrake_clear.webp", // Placeholder image name
+
+        parts: ['cobaltdrake', '4-60', 'flat']
+
+    },
+
+    {
+
+        productName: "BoosterDracielShield 7-60D",
+
+        image: "images/products/takara_BX00_dracielshield.webp", // Placeholder image name
+
+        parts: ['dracielshield', '7-60', 'dot']
+
+    },
+
+    {
+
+        productName: "MammothTusk 2-80E(Metal Coat: Black)",
+
+        image: "images/products/takara_BX00_mammothtusk_mcblack.webp", // Placeholder image name
+
+        parts: ['mammothtusk', '2-80', 'elevate']
+
+    },
+
+    {
+
+        productName: "ValkyrieVolt S4-70V(Metal Coat: Gold)",
+
+        image: "images/products/takara_CX00_valkyrievolt_mcgold.webp", // Placeholder image name
+
+        parts: ['lockchip-valkyrie', 'mainblade-volt', 'assistblade-slash', '4-70', 'vortex']
+
+    },
+
+    {
+
+        productName: "KnightMail 3-85BS(Metal Coat: Navy)",
+
+        image: "images/products/takara_UX00_knightmail_mcnavy.webp", // Placeholder image name
+
+        parts: ['knightmail', '3-85', 'boundspike']
+
+    },
+
+    {
+
+        productName: "BoosterRock Leone 6-80GN",
+
+        image: "images/products/takara_BX00_rockleone.webp", // Placeholder image name
+
+        parts: ['rockleone', '6-80', 'gearneedle']
+
+    },
+
+    // Skipping PegasusBlast ATr (Metal Coat: Red) - Bit 'ATr' not clearly defined
+
+    {
+
+        productName: "WizardArc R4-55LO(Metal Coat: Black)",
+
+        image: "images/products/takara_CX00_wizardarc_mcblack.webp", // Placeholder image name
+
+        parts: ['lockchip-wizard', 'mainblade-arc', 'assistblade-round', '4-55', 'loworb']
+
+    },
+
+    {
+
+        productName: "BoosterLeonFang T4-60A(Red Ver.)",
+
+        image: "images/products/takara_CX00_leonfang_red.webp", // Placeholder image name
+
+        parts: ['lockchip-leon', 'mainblade-fang', 'assistblade-turn', '4-60', 'accel']
+
+    },
 ];
 
 
