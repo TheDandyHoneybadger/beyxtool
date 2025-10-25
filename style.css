@@ -64,7 +64,7 @@ main { padding: 2rem; }
 #deck-selector, #deck-name-input { background-color: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 5px; padding: 8px; font-size: 1rem; }
 #deck-name-input { min-width: 200px; }
 
-button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, .lang-button, #collection-filter, #collection-sort, #deck-selector, input[type="checkbox"], .score-btn, #reset-score-button, .meta-link-container a, .part-info-icon, .youtube-thumbnail-link { cursor: pointer; }
+button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, .lang-button, #collection-filter, #collection-sort, #deck-selector, input[type="checkbox"], .score-btn, #reset-score-button, .meta-link-container a, .part-info-icon, .youtube-thumbnail-link, summary { cursor: pointer; } /* Adicionado summary */
 #deck-name-input, #input-modal-field, input[type="text"], .player-name { cursor: text; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
 
 .deck-builder-container, .settings-container { display: flex; flex-direction: column; align-items: center; gap: 2rem; }
@@ -142,8 +142,13 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
 #reset-score-button { padding: 0.8rem 1.5rem; font-size: 1.1rem; background-color: #a94442; border: 1px solid #843534; color: var(--text-color); font-weight: bold; border-radius: 5px; transition: background-color 0.3s; }
 #reset-score-button:hover { background-color: #c9302c; }
 
+/* --- [MODIFICADO] Estilos da Aba Guia --- */
 .guide-description { color: var(--muted-text); text-align: center; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
-#guide-products-container { display: flex; flex-direction: row; flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
+/* Container principal dos spoilers */
+#guide-products-container {
+    display: block; /* Alterado de flex/grid */
+    padding: 0; /* Removido padding para os spoilers ocuparem a largura */
+}
 .product-card { background-color: var(--primary-bg); border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; display: flex; flex-direction: row; align-items: stretch; min-height: 160px; width: calc(50% - 0.75rem); flex-grow: 1; min-width: 320px; }
 .product-card-header { flex: 1; min-width: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem; background-color: var(--card-bg); border-right: 1px solid var(--border-color); }
 .product-image { width: 100%; max-width: 150px; height: auto; border-radius: 6px; }
@@ -152,6 +157,8 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
 .product-part-item { background-color: var(--card-bg); border-radius: 8px; padding: 0.5rem; text-align: center; border: 2px solid var(--border-color); position: relative; display: flex; flex-direction: column; justify-content: space-between; width: 110px; min-height: 140px; cursor: default; }
 .product-part-item img { width: 100%; max-width: 80px; height: 80px; object-fit: contain; margin-bottom: 0.5rem; align-self: center; }
 .product-part-item p { font-size: 0.9rem; font-weight: bold; min-height: 2.2rem; display: flex; align-items: center; justify-content: center; word-break: break-word; padding: 0 2px; margin-top: auto; color: var(--text-color); }
+/* --- Fim dos Estilos Originais do Guia --- */
+
 
 .bay-info-container { width: 100%; margin-top: 1rem; display: block !important; }
 .bay-height-display { font-size: 0.9rem; font-weight: bold; color: var(--muted-text); text-align: center; margin-bottom: 0.5rem; min-height: 1.1rem; }
@@ -165,13 +172,34 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
 .info-chart-container { max-width: 300px; margin-top: 1rem; margin-left: auto; margin-right: auto;}
 
 
-/* --- [MODIFICADO] Media Queries para Mobile --- */
+/* --- Media Queries (Incluindo ajustes para Guia/Spoilers) --- */
 
 @media (max-width: 900px) {
-    #guide-products-container { flex-direction: column; }
-    .product-card { width: 100%; flex-direction: column; }
-    .product-card-header { border-right: none; border-bottom: 1px solid var(--border-color); width: 100%; min-width: 0; flex-basis: auto; }
-    .product-parts { flex-basis: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.8rem; padding: 1rem; width: 100%; justify-items: center; }
+    /* Guia */
+    /* Removido o flex-direction: column de #guide-products-container */
+    .brand-products-grid { /* Ajusta o grid dentro do spoiler */
+         flex-direction: column;
+         align-items: center;
+     }
+     .brand-products-grid .product-card { /* Cards dentro do grid */
+         width: 95%; /* Ocupa mais largura */
+         max-width: 500px;
+         flex-direction: column; /* Garante empilhamento interno se já não estiver */
+     }
+     .brand-products-grid .product-card-header { /* Adapta o header do card */
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        width: 100%;
+        min-width: unset;
+     }
+     .brand-products-grid .product-parts { /* Adapta grid de peças */
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 0.8rem;
+        padding: 1rem;
+        width: 100%;
+        justify-items: center;
+     }
 }
 
 @media (max-width: 768px) {
@@ -180,11 +208,11 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
     nav { width: 100%; justify-content: center; gap: 5px; }
     .tab-link { padding: 8px 10px; font-size: 0.85rem; flex-grow: 1; text-align: center; }
     .tab-header { flex-direction: column; align-items: center; gap: 0.8rem; }
-    
+
     .deck-management { flex-direction: column; align-items: stretch; }
     .deck-selector-group, .deck-name-group, .deck-buttons-group { justify-content: center; width: 100%; }
     #deck-name-input { min-width: 0; flex-grow: 1; }
-    
+
     /* Deck slots empilhados em tablets */
     .deck-area { flex-direction: column; align-items: center; gap: 1.5rem; }
     .deck-slot { width: 90%; max-width: 300px; min-width: 0; padding: 0.8rem; gap: 0.2rem; }
@@ -198,21 +226,22 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
     .variant-card img, .part-card img { max-width: 45px; height: 45px; }
     .variant-card p, .part-card p { font-size: 0.75rem; min-height: 1.6rem; }
     .part-card { min-height: 120px; }
-    
+
     .part-type-symbol, .part-type-icon-placeholder { width: 18px; height: 18px; left: 20px; top: 28px;}
     .part-info-icon { width: 18px; height: 18px; font-size: 0.8rem; left: 3px; bottom: 3px; }
     .part-tier { font-size: 0.7rem; padding: 1px 3px; top: 3px; right: 3px; }
-    
+
     .score-container { flex-direction: column; align-items: center; gap: 1rem; }
     .versus-divider { transform: rotate(90deg); margin: 0.5rem 0; }
     .player-section { min-width: 90%; gap: 1rem; padding: 1rem; }
     .score-display { font-size: 5rem; }
     .score-buttons { width: 90%; }
-    
+
+    /* Guia: Partes dentro do card */
     .product-part-item { width: 90px; min-height: 120px;}
     .product-part-item img { max-width: 50px; height: 50px; }
     .product-part-item p { font-size: 0.8rem; min-height: 1.8rem; }
-    
+
     .chart-container { max-width: 220px; }
     .bay-info-container { margin-top: 0.5rem;}
     .bay-height-display { font-size: 0.8rem; }
@@ -226,7 +255,7 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
      .part-placeholder { width: 50px; height: 50px; }
      .part-placeholder span { font-size: 0.65rem; }
      .part-name-display { font-size: 0.7rem; }
-     
+
      #variant-modal-grid, .parts-grid { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 0.5rem; }
      .variant-card img, .part-card img { max-width: 35px; height: 35px; }
      .variant-card p, .part-card p { font-size: 0.7rem; min-height: 1.4rem; }
@@ -235,14 +264,106 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
      .part-type-symbol, .part-type-icon-placeholder { width: 16px; height: 16px; left: 18px; top: 25px;}
      .part-info-icon { width: 16px; height: 16px; font-size: 0.7rem; }
      .part-tier { font-size: 0.65rem; }
-     
+
      .score-display { font-size: 4rem; }
-     
-     .product-parts { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 0.5rem; }
+
+     /* Guia */
+     .brand-spoiler-title {
+         font-size: 1rem;
+         padding: 0.6rem 1rem;
+     }
+     .brand-spoiler-title::before {
+         font-size: 1.2rem;
+         right: 1rem;
+     }
+     .brand-products-grid {
+         padding: 1rem;
+         gap: 1rem;
+     }
+     .brand-products-grid .product-card {
+         min-width: 280px; /* Ajuste mínimo */
+     }
+     .brand-products-grid .product-parts {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 0.5rem;
+     }
      .product-part-item { width: 80px; min-height: 110px;}
      .product-part-item img { max-width: 40px; height: 40px; }
      .product-part-item p { font-size: 0.75rem; min-height: 1.5rem; }
-     
+
      .chart-container { max-width: 200px; }
      .bay-info-container { margin-top: 0.5rem; }
 }
+
+/* --- Estilos para Spoilers no Guia --- */
+.brand-spoiler {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    background-color: var(--primary-bg); /* Fundo ligeiramente diferente */
+    overflow: hidden;
+}
+
+.brand-spoiler-title {
+    background-color: var(--card-bg);
+    padding: 0.8rem 1.2rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    list-style: none; /* Remove marcador padrão */
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+    user-select: none; /* Evita seleção de texto no título */
+    color: var(--text-color); /* Garante cor do texto */
+}
+
+/* Remove marcador padrão em diferentes navegadores */
+.brand-spoiler-title::-webkit-details-marker {
+    display: none;
+}
+.brand-spoiler-title::marker { /* Para Firefox */
+    display: none;
+}
+summary { /* Fallback genérico */
+    list-style: none;
+    display: block; /* Garante que funcione como bloco */
+}
+
+/* Indicador +/- */
+.brand-spoiler-title::before {
+    content: '+';
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    line-height: 1;
+    transition: transform 0.2s ease-in-out;
+    color: var(--muted-text); /* Cor do indicador */
+}
+
+.brand-spoiler[open] > .brand-spoiler-title::before {
+    content: '−'; /* Usando caractere de menos */
+    color: var(--text-color); /* Cor quando aberto */
+}
+
+/* Container dos cards de produto dentro do spoiler */
+.brand-products-grid {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center; /* Centraliza os cards */
+}
+
+/* Ajustes nos product cards DENTRO do grid do spoiler */
+.brand-products-grid .product-card {
+   width: calc(50% - 0.75rem); /* Tenta manter 2 colunas */
+   min-width: 300px; /* Largura mínima */
+   max-width: 45%; /* Evita que fiquem muito largos */
+   flex-grow: 1;
+   /* Herda outros estilos de .product-card */
+}
+
+/* --- Fim dos Estilos para Spoilers --- */

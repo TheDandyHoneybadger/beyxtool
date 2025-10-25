@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    let currentLanguage = 'en'; // MODIFICADO AQUI
+    let currentLanguage = 'en'; // Mantido 'en' como padrão inicial
     let deckChartInstances = [null, null, null];
     let infoModalChartInstance = null;
 
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showInputModal = (titleKey, placeholderKey, defaultValue = "") => {
         return new Promise((resolve) => {
-            const langPack = translations[currentLanguage];
+            const langPack = translations[currentLanguage] || translations['en']; // Garante fallback para inglês
             inputModalTitle.textContent = langPack[titleKey] || titleKey;
             inputModalField.placeholder = langPack[placeholderKey] || placeholderKey;
             inputModalField.value = defaultValue;
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             inputModalField.focus();
             onInputConfirm = (value) => {
                 if (titleKey === 'deck_name_label' && value !== null && value.trim() === "") {
-                    alert(langPack.alert_deck_name_empty || "O nome do deck não pode ser vazio.");
+                    alert(langPack.alert_deck_name_empty || "Deck name cannot be empty."); // Fallback
                     return;
                 }
                 closeInputModal();
@@ -109,7 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
                  else if (element.tagName !== 'BUTTON' || !element.id.startsWith('lang-')) { element.textContent = langPack[key]; }
             } else { console.warn(`Translation key not found: ${key}`); }
         });
-        updateDeckUI();
+        updateDeckUI(); // Renderiza o deck novamente para atualizar placeholders como "Selecione"
+        renderStarterGuide(); // Re-renderiza o guia para traduzir os títulos dos spoilers
     };
 
     const setLanguage = (lang) => { if (translations[lang]) { currentLanguage = lang; localStorage.setItem('beyXToolLanguage', lang); if (lang === 'pt-br') { langPtBrButton?.classList.add('active'); langEnButton?.classList.remove('active'); } else { langPtBrButton?.classList.remove('active'); langEnButton?.classList.add('active'); } translateUI(); } else { console.error(`Idioma não suportado: ${lang}`); } };
@@ -119,50 +120,152 @@ document.addEventListener('DOMContentLoaded', () => {
     const createNewDeck = (name) => ({ name: name, bays: [ { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }, { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }, { type: null, part1: null, part2: null, part3: null, part4: null, part5: null } ] });
     const getSerializableCollection = () => ({ blades: Object.fromEntries(Array.from(app_data.collection.blades.entries(), ([id, set]) => [id, [...set]])), ratchets: [...app_data.collection.ratchets], bits: [...app_data.collection.bits], mainblades: [...app_data.collection.mainblades], assistblades: [...app_data.collection.assistblades], lockchips: [...app_data.collection.lockchips], });
     const loadCollectionFromParsed = (parsedCollection) => { const collection = { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() }; try { if (parsedCollection) { if (parsedCollection.blades) collection.blades = new Map(Object.entries(parsedCollection.blades).map(([id, variants]) => [id, new Set(variants)])); if (parsedCollection.ratchets) collection.ratchets = new Set(parsedCollection.ratchets); if (parsedCollection.bits) collection.bits = new Set(parsedCollection.bits); if (parsedCollection.mainblades) collection.mainblades = new Set(parsedCollection.mainblades); if (parsedCollection.assistblades) collection.assistblades = new Set(parsedCollection.assistblades); if (parsedCollection.lockchips) collection.lockchips = new Set(parsedCollection.lockchips); } } catch(e) { console.error("Erro ao processar coleção salva:", e); } return collection; };
-    const saveAppData = () => { try { localStorage.setItem('beyblade_x_data', JSON.stringify({ collection: getSerializableCollection(), decks: app_data.decks, active_deck_index: app_data.active_deck_index })); } catch (e) { console.error("Erro ao salvar dados:", e); alert(translations[currentLanguage].alert_save_error); } };
+    const saveAppData = () => { try { localStorage.setItem('beyblade_x_data', JSON.stringify({ collection: getSerializableCollection(), decks: app_data.decks, active_deck_index: app_data.active_deck_index })); } catch (e) { console.error("Erro ao salvar dados:", e); const langPack = translations[currentLanguage] || translations['en']; alert(langPack.alert_save_error); } };
 
     const loadAppData = () => { const saved_data_str = localStorage.getItem('beyblade_x_data'); if (saved_data_str) { try { const parsed = JSON.parse(saved_data_str); app_data.collection = loadCollectionFromParsed(parsed.collection || {}); app_data.decks = Array.isArray(parsed.decks) ? parsed.decks : []; app_data.active_deck_index = (typeof parsed.active_deck_index === 'number') ? parsed.active_deck_index : 0; app_data.decks.forEach(deck => { deck.bays.forEach((bay, index, arr) => { if (!bay || typeof bay !== 'object' || !bay.hasOwnProperty('part4') || !bay.hasOwnProperty('part5')) { arr[index] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }; } }); while (deck.bays.length < 3) { deck.bays.push({ type: null, part1: null, part2: null, part3: null, part4: null, part5: null }); } deck.bays = deck.bays.slice(0, 3); }); } catch (e) { console.error("Erro ao carregar dados salvos:", e); app_data = { collection: { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() }, decks: [], active_deck_index: 0 }; } } if (app_data.decks.length === 0) app_data.decks.push(createNewDeck("Deck 01")); if (app_data.active_deck_index >= app_data.decks.length || app_data.active_deck_index < 0) app_data.active_deck_index = 0; const activeDeck = app_data.decks[app_data.active_deck_index]; if (activeDeck) { while (activeDeck.bays.length < 3) { activeDeck.bays.push({ type: null, part1: null, part2: null, part3: null, part4: null, part5: null }); } activeDeck.bays = activeDeck.bays.slice(0, 3); activeDeck.bays.forEach((bay, index, arr) => { if (!bay || typeof bay !== 'object' || !bay.hasOwnProperty('part4') || !bay.hasOwnProperty('part5')) { arr[index] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }; } }); }
         const p1Name = localStorage.getItem('beyXToolP1Name'); const p2Name = localStorage.getItem('beyXToolP2Name');
-        const langPack = translations[currentLanguage] || translations['en']; // MODIFICADO AQUI
+        const langPack = translations[currentLanguage] || translations['en'];
         if (p1NameInput) p1NameInput.value = p1Name || langPack.player_1_default || "Player 1";
         if (p2NameInput) p2NameInput.value = p2Name || langPack.player_2_default || "Player 2";
     };
 
-    // --- Funções de Renderização --- 
+    // --- Funções de Renderização ---
 
+    // [MODIFICADO] Função renderStarterGuide atualizada com spoilers
     const renderStarterGuide = () => {
-        if (!guide_products_container || typeof STARTER_GUIDE_PRODUCTS === 'undefined') { console.error("Container do Guia de Iniciante ou dados não encontrados."); return; }
-        guide_products_container.innerHTML = '';
-        STARTER_GUIDE_PRODUCTS.forEach(product => {
-            const productCard = document.createElement('div'); productCard.className = 'product-card';
-            const header = document.createElement('div'); header.className = 'product-card-header'; header.innerHTML = `<img src="${product.image || 'images/products/placeholder.webp'}" alt="${product.productName}" class="product-image"><h4 class="product-name">${product.productName}</h4>`; productCard.appendChild(header);
-            const partsContainer = document.createElement('div'); partsContainer.className = 'product-parts';
-            product.parts.forEach(partId => {
-                const part = ALL_PARTS.find(p => p.id === partId); if (!part) { console.warn(`Peça do Guia ${partId} não encontrada.`); return; }
-                const partItem = document.createElement('div'); partItem.className = 'product-part-item'; partItem.dataset.partId = part.id;
-                const infoIconSpan = document.createElement('span'); infoIconSpan.className = 'part-info-icon'; infoIconSpan.dataset.partId = part.id; infoIconSpan.textContent = '?';
-                const imgElement = document.createElement('img'); imgElement.src = part.image || 'images/placeholder.webp'; imgElement.alt = part.name;
-                const nameElement = document.createElement('p'); nameElement.textContent = part.name;
-                partItem.appendChild(infoIconSpan); partItem.appendChild(imgElement); partItem.appendChild(nameElement);
-                if (part.tier) { const tierElement = document.createElement('div'); tierElement.className = `part-tier tier-${part.tier.toLowerCase()}`; tierElement.textContent = part.tier; partItem.appendChild(tierElement); }
-                const collectionSet = app_data.collection[part.type + 's']; let isOwned = false;
-                if (['blade', 'lockchip', 'mainblade', 'assistblade'].includes(part.type)) { isOwned = collectionSet?.has(part.id); } else { isOwned = collectionSet?.has(part.id); }
-                if (isOwned) partItem.classList.add('owned');
-                infoIconSpan.addEventListener('click', (event) => { event.stopPropagation(); openPartInfoModal(part.id); });
-                if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) {
-                    const typeSymbolDiv = document.createElement('div'); typeSymbolDiv.className = 'part-type-symbol';
-                    const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1);
-                    const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`;
-                    const iconLoaderImg = new Image();
-                    iconLoaderImg.src = imgPath;
-                    iconLoaderImg.onload = () => { typeSymbolDiv.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; partItem.appendChild(typeSymbolDiv); };
-                    iconLoaderImg.onerror = () => { console.warn(`Imagem de tipo ${imgPath} não encontrada.`); };
-                }
-                partsContainer.appendChild(partItem);
-            });
-            productCard.appendChild(partsContainer); guide_products_container.appendChild(productCard);
-        });
+        if (!guide_products_container || typeof STARTER_GUIDE_PRODUCTS === 'undefined' || typeof STARTER_GUIDE_PRODUCTS.hasbro === 'undefined' || typeof STARTER_GUIDE_PRODUCTS.takaraTomy === 'undefined') {
+            console.error("Container do Guia de Iniciante ou dados (STARTER_GUIDE_PRODUCTS.hasbro / .takaraTomy) não encontrados.");
+            guide_products_container.innerHTML = '<p>Erro ao carregar dados do guia.</p>'; // Mensagem de erro no HTML
+            return;
+        }
+        guide_products_container.innerHTML = ''; // Limpa o container principal
+
+        const brands = [
+            { key: 'hasbro', titleKey: 'guide_spoiler_hasbro', defaultTitle: 'Hasbro Products', openByDefault: true },
+            { key: 'takaraTomy', titleKey: 'guide_spoiler_takara', defaultTitle: 'Takara Tomy Products', openByDefault: false }
+        ];
+
+        brands.forEach(brandInfo => {
+            const products = STARTER_GUIDE_PRODUCTS[brandInfo.key];
+            if (!products || products.length === 0) return; // Pula se não houver produtos para esta marca
+
+            const detailsElement = document.createElement('details');
+            detailsElement.className = 'brand-spoiler';
+            if (brandInfo.openByDefault) {
+                detailsElement.open = true;
+            }
+
+            const summaryElement = document.createElement('summary');
+            summaryElement.className = 'brand-spoiler-title';
+            summaryElement.dataset.translate = brandInfo.titleKey;
+            // Define o texto inicial baseado no idioma atual ou padrão
+            const langPack = translations[currentLanguage] || translations['en']; // Garante que temos um langPack
+            summaryElement.textContent = langPack[brandInfo.titleKey] || brandInfo.defaultTitle;
+
+
+            const gridContainer = document.createElement('div');
+            gridContainer.className = 'brand-products-grid'; // Usando nova classe para possível estilo específico
+
+            products.forEach(product => {
+                // --- Criação do Product Card (Lógica existente adaptada) ---
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+
+                const header = document.createElement('div');
+                header.className = 'product-card-header';
+                header.innerHTML = `<img src="${product.image || 'images/products/placeholder.webp'}" alt="${product.productName}" class="product-image"><h4 class="product-name">${product.productName}</h4>`;
+                productCard.appendChild(header);
+
+                const partsContainer = document.createElement('div');
+                partsContainer.className = 'product-parts';
+
+                product.parts.forEach(partId => {
+                    const part = ALL_PARTS.find(p => p.id === partId);
+                    if (!part) {
+                        console.warn(`Peça do Guia ${partId} no produto ${product.productName} não encontrada em ALL_PARTS.`);
+                        return; // Pula a renderização desta peça se não encontrada
+                    }
+                    const partItem = document.createElement('div');
+                    partItem.className = 'product-part-item';
+                    partItem.dataset.partId = part.id;
+
+                    const infoIconSpan = document.createElement('span');
+                    infoIconSpan.className = 'part-info-icon';
+                    infoIconSpan.dataset.partId = part.id;
+                    infoIconSpan.textContent = '?';
+
+                    const imgElement = document.createElement('img');
+                    imgElement.src = part.image || 'images/placeholder.webp';
+                    imgElement.alt = part.name;
+
+                    const nameElement = document.createElement('p');
+                    nameElement.textContent = part.name;
+
+                    partItem.appendChild(infoIconSpan);
+                    partItem.appendChild(imgElement);
+                    partItem.appendChild(nameElement);
+
+                    if (part.tier) {
+                        const tierElement = document.createElement('div');
+                        tierElement.className = `part-tier tier-${part.tier.toLowerCase()}`;
+                        tierElement.textContent = part.tier;
+                        partItem.appendChild(tierElement);
+                    }
+
+                    // Lógica de verificação de propriedade ajustada
+                    let isOwned = false;
+                    const collectionSetKey = part.type + 's'; // e.g., 'blades', 'ratchets', 'lockchips'
+                    const collectionSet = app_data.collection[collectionSetKey];
+
+                    if (part.type === 'blade') {
+                        isOwned = collectionSet?.has(part.id) && collectionSet.get(part.id).size > 0;
+                    } else if (['lockchip', 'mainblade', 'assistblade', 'ratchet', 'bit'].includes(part.type)) {
+                        // Verifica se o ID existe diretamente no Set correspondente
+                        isOwned = collectionSet?.has(part.id);
+                    }
+                    // Adicione mais `else if` se houver outros tipos de peças com lógicas diferentes
+
+                    if (isOwned) {
+                        partItem.classList.add('owned');
+                    }
+
+                    infoIconSpan.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        openPartInfoModal(part.id);
+                    });
+
+                    if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) {
+                        const typeSymbolDiv = document.createElement('div');
+                        typeSymbolDiv.className = 'part-type-symbol';
+                        const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1);
+                        const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`;
+                        const iconLoaderImg = new Image();
+                        iconLoaderImg.src = imgPath;
+                        iconLoaderImg.onload = () => {
+                            typeSymbolDiv.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`;
+                            partItem.appendChild(typeSymbolDiv);
+                        };
+                        iconLoaderImg.onerror = () => {
+                            console.warn(`Imagem de tipo ${imgPath} não encontrada.`);
+                        };
+                    }
+
+                    partsContainer.appendChild(partItem);
+                }); // Fim do forEach partId
+                productCard.appendChild(partsContainer);
+                // --- Fim da Criação do Product Card ---
+                gridContainer.appendChild(productCard);
+            }); // Fim do forEach product
+
+            detailsElement.appendChild(summaryElement);
+            detailsElement.appendChild(gridContainer);
+            guide_products_container.appendChild(detailsElement);
+        }); // Fim do forEach brandInfo
+
+        // Garante que os títulos dos spoilers sejam traduzidos ao carregar/mudar idioma
+        // A função translateUI() já chama renderStarterGuide(), então não precisa chamar aqui novamente.
     };
+    // [FIM DA MODIFICAÇÃO]
 
     const renderParts = () => {
         const containers = { blades: blades_container, ratchets: ratchets_container, bits: bits_container, mainblades: mainblades_container, assistblades: assistblades_container, lockchips: lockchips_container };
@@ -187,12 +290,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const infoButton = part_card.querySelector('.part-info-icon');
             if (infoButton) { infoButton.addEventListener('click', (event) => { event.stopPropagation(); openPartInfoModal(part.id); }); }
 
-            if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) { 
-                const typeSymbolDiv = document.createElement('div'); typeSymbolDiv.className = 'part-type-symbol'; 
-                const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); 
-                const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`; 
-                const iconLoaderImg = new Image(); 
-                iconLoaderImg.src = imgPath; 
+            if ((part.type === 'blade' || part.type === 'bit') && part.bey_type) {
+                const typeSymbolDiv = document.createElement('div'); typeSymbolDiv.className = 'part-type-symbol';
+                const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1);
+                const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`;
+                const iconLoaderImg = new Image();
+                iconLoaderImg.src = imgPath;
                 iconLoaderImg.onload = () => { typeSymbolDiv.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; part_card.appendChild(typeSymbolDiv); };
                 iconLoaderImg.onerror = () => { console.warn(`Imagem de tipo ${imgPath} não encontrada.`); };
             }
@@ -208,13 +311,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderDeckManager = () => { if (!deck_selector || !deck_name_input) return; if (app_data.active_deck_index < 0 || app_data.active_deck_index >= app_data.decks.length) app_data.active_deck_index = 0; if (app_data.decks.length === 0) return; const currentDeck = app_data.decks[app_data.active_deck_index]; if (!currentDeck) return; deck_selector.innerHTML = ''; app_data.decks.forEach((deck, index) => { const option = document.createElement('option'); option.value = index; option.textContent = deck.name || `Deck ${index + 1}`; deck_selector.appendChild(option); }); deck_selector.value = app_data.active_deck_index; deck_name_input.value = currentDeck.name; };
 
     const renderDeckBayChart = (bayIndex, bay) => {
-        const langPack = translations[currentLanguage]; const canvas = document.getElementById(`chart-slot-${bayIndex}`); const infoContainer = document.getElementById(`bay-info-${bayIndex}`); const heightDisplay = document.getElementById(`bay-height-${bayIndex}`);
+        const langPack = translations[currentLanguage] || translations['en']; // Fallback
+        const canvas = document.getElementById(`chart-slot-${bayIndex}`); const infoContainer = document.getElementById(`bay-info-${bayIndex}`); const heightDisplay = document.getElementById(`bay-height-${bayIndex}`);
         if (!canvas || !infoContainer || !heightDisplay) { console.error(`Elementos do gráfico para o slot ${bayIndex} não encontrados.`); return; }
         if (deckChartInstances[bayIndex]) { deckChartInstances[bayIndex].destroy(); deckChartInstances[bayIndex] = null; }
         infoContainer.style.display = 'block';
         let p1 = bay.part1; let p4 = bay.part4; let p5 = bay.part5;
         const parseStat = (value) => { const num = parseFloat(value); return isNaN(num) ? 0 : num; };
         let bladeAtk = 0, bladeDef = 0, bladeStm = 0; if (bay.type === 'standard' && p1) { bladeAtk = parseStat(p1.attack); bladeDef = parseStat(p1.defense); bladeStm = parseStat(p1.stamina); }
+        // Para CX, as stats numéricas viriam das peças individuais se definidas, mas atualmente não estão.
         let ratchetAtk = parseStat(p4?.attack); let ratchetDef = parseStat(p4?.defense); let ratchetStm = parseStat(p4?.stamina); let ratchetHeight = parseStat(p4?.height);
         let bitAtk = parseStat(p5?.attack); let bitDef = parseStat(p5?.defense); let bitStm = parseStat(p5?.stamina); let dash = parseStat(p5?.dash); let burst = parseStat(p5?.burst_resistance);
         let totalAtk = bladeAtk + ratchetAtk + bitAtk; let totalDef = bladeDef + ratchetDef + bitDef; let totalStm = bladeStm + ratchetStm + bitStm;
@@ -229,7 +334,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updateDeckUI = () => {
         const currentDeck = app_data.decks[app_data.active_deck_index]; if (!currentDeck) return;
-        const langPack = translations[currentLanguage]; const selectText = langPack.deck_placeholder_selecione || 'Select';
+        const langPack = translations[currentLanguage] || translations['en']; // Fallback
+        const selectText = langPack.deck_placeholder_selecione || 'Select';
         deck_slots.forEach((slot, bayIndex) => {
             let bay = currentDeck.bays[bayIndex]; if (!bay || typeof bay !== 'object') { currentDeck.bays[bayIndex] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }; bay = currentDeck.bays[bayIndex]; } else { if (!bay.hasOwnProperty('part4')) bay.part4 = null; if (!bay.hasOwnProperty('part5')) bay.part5 = null; }
             const selectors = { p1ph: slot.querySelector('.part-placeholder[data-type="primeira"]'), p1n: slot.querySelector('.part-name-display[data-name-type="primeira"]'), p1icon: slot.querySelector('.part-type-icon-placeholder[data-icon-type="primeira"]'), mbph: slot.querySelector('.part-placeholder[data-type="mainblade"]'), mbn: slot.querySelector('.part-name-display[data-name-type="mainblade"]'), mbicon: slot.querySelector('.part-type-icon-placeholder[data-icon-type="mainblade"]'), abph: slot.querySelector('.part-placeholder[data-type="assistblade"]'), abn: slot.querySelector('.part-name-display[data-name-type="assistblade"]'), abicon: slot.querySelector('.part-type-icon-placeholder[data-icon-type="assistblade"]'), rph: slot.querySelector('.part-placeholder[data-type="ratchet"]'), rn: slot.querySelector('.part-name-display[data-name-type="ratchet"]'), ricon: slot.querySelector('.part-type-icon-placeholder[data-icon-type="ratchet"]'), bph: slot.querySelector('.part-placeholder[data-type="bit"]'), bn: slot.querySelector('.part-name-display[data-name-type="bit"]'), bicon: slot.querySelector('.part-type-icon-placeholder[data-icon-type="bit"]') };
@@ -245,7 +351,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderDeckManager();
     };
 
-
     // --- Funções de Manipulação da Coleção/Deck ---
 
     const togglePartOwnership = (part) => {
@@ -255,75 +360,308 @@ document.addEventListener('DOMContentLoaded', () => {
             if (part.variantsId && variantList && variantList.length > 1) { openVariantSelector(part); }
             else {
                 const collectionSet = app_data.collection.blades; if (!collectionSet) return;
-                if (collectionSet.has(part.id)) { collectionSet.delete(part.id); if (partCard) partCard.classList.remove('owned'); app_data.decks.forEach(deck => deck.bays.forEach(bay => { if (bay.part1 && (bay.part1.baseId || bay.part1.id) === part.id) { clearBay(bay); updateDeckUI(); } })); }
+                if (collectionSet.has(part.id)) { collectionSet.delete(part.id); if (partCard) partCard.classList.remove('owned'); app_data.decks.forEach(deck => deck.bays.forEach(bay => { if (bay.part1 && (bay.part1.baseId || bay.part1.id) === part.id) { clearBay(bay); } })); updateDeckUI(); } // Chamar updateDeckUI uma vez fora do loop interno
                 else { const variantToAdd = (part.variantsId && variantList?.length === 1) ? variantList[0].name : 'owned'; collectionSet.set(part.id, new Set([variantToAdd])); if (partCard) partCard.classList.add('owned'); }
                 saveAppData(); if (collection_filter?.checked) { renderParts(); } renderStarterGuide();
             }
         } else {
             const collectionSetKey = part.type + 's'; const collection_set = app_data.collection[collectionSetKey]; if (!collection_set) return;
+            let needsDeckUpdate = false;
             if (collection_set.has(part.id)) {
                 collection_set.delete(part.id); if (partCard) partCard.classList.remove('owned');
-                 app_data.decks.forEach(deck => deck.bays.forEach(bay => { let changed = false; if (part.type === 'ratchet' && bay.part4?.id === part.id) { bay.part4 = null; changed = true; } else if (part.type === 'bit' && bay.part5?.id === part.id) { bay.part5 = null; changed = true; } else if (part.type === 'lockchip' && bay.part1?.id === part.id) { clearBay(bay); changed = true; } else if (part.type === 'mainblade' && bay.part2?.id === part.id) { bay.part2 = null; changed = true; } else if (part.type === 'assistblade' && bay.part3?.id === part.id) { bay.part3 = null; changed = true; } if(changed) updateDeckUI(); }));
+                 app_data.decks.forEach(deck => deck.bays.forEach(bay => { let changed = false; if (part.type === 'ratchet' && bay.part4?.id === part.id) { bay.part4 = null; changed = true; } else if (part.type === 'bit' && bay.part5?.id === part.id) { bay.part5 = null; changed = true; } else if (part.type === 'lockchip' && bay.part1?.id === part.id) { clearBay(bay); changed = true; } else if (part.type === 'mainblade' && bay.part2?.id === part.id) { bay.part2 = null; changed = true; } else if (part.type === 'assistblade' && bay.part3?.id === part.id) { bay.part3 = null; changed = true; } if(changed) needsDeckUpdate = true; }));
             } else { collection_set.add(part.id); if (partCard) partCard.classList.add('owned'); }
+            if (needsDeckUpdate) updateDeckUI(); // Chamar updateDeckUI apenas se necessário
             saveAppData(); if (collection_filter?.checked) { renderParts(); } renderStarterGuide();
         }
     };
 
     const openVariantSelector = (part) => {
-        variant_modal_part = part; const titlePrefix = translations[currentLanguage].variant_modal_title_prefix || "Select Variants for"; variant_modal_title.textContent = `${titlePrefix} ${part.name}`; variant_modal_checkboxes.innerHTML = '<div id="variant-modal-grid"></div>'; const grid = document.getElementById('variant-modal-grid'); if (!grid) return; const owned = app_data.collection.blades.get(part.id) || new Set(); const variantList = ALL_VARIANTS[part.variantsId]; if (!variantList) { closeVariantModal(); return; } const mainCard = document.querySelector(`#collection-tab .part-card[data-part-id="${part.id}"]`);
-        variantList.forEach(vData => { if (!vData?.name) return; const card = document.createElement('div'); card.className = 'variant-card'; card.dataset.variantName = vData.name; card.innerHTML = `<img src="${vData.image || ''}" alt="${vData.name}"><p>${vData.name}</p>`; if (owned.has(vData.name)) card.classList.add('selected');
-            card.addEventListener('click', () => { const currentOwned = app_data.collection.blades.get(part.id) || new Set(); let wasModified = false; if (currentOwned.has(vData.name)) { currentOwned.delete(vData.name); card.classList.remove('selected'); wasModified = true; app_data.decks.forEach(deck => deck.bays.forEach(bay => { if (bay.part1?.baseId === part.id && bay.part1.variant === vData.name) { clearBay(bay); updateDeckUI();} })); } else { currentOwned.add(vData.name); card.classList.add('selected'); wasModified = true; }
-                if (wasModified) { if (currentOwned.size > 0) { app_data.collection.blades.set(part.id, currentOwned); if (mainCard) mainCard.classList.add('owned'); } else { app_data.collection.blades.delete(part.id); if (mainCard) mainCard.classList.remove('owned'); app_data.decks.forEach(d => d.bays.forEach(b => { if (b.part1?.baseId === part.id) {clearBay(b); updateDeckUI();} })); }
-                    saveAppData(); if (collection_filter?.checked) { renderParts(); } renderStarterGuide(); }
-                closeVariantModal();
+        variant_modal_part = part;
+        const langPack = translations[currentLanguage] || translations['en']; // Fallback
+        const titlePrefix = langPack.variant_modal_title_prefix || "Select Variants for";
+        variant_modal_title.textContent = `${titlePrefix} ${part.name}`;
+        variant_modal_checkboxes.innerHTML = '<div id="variant-modal-grid"></div>';
+        const grid = document.getElementById('variant-modal-grid');
+        if (!grid) return;
+
+        const owned = app_data.collection.blades.get(part.id) || new Set();
+        const variantList = ALL_VARIANTS[part.variantsId];
+        if (!variantList) { closeVariantModal(); return; }
+
+        const mainCard = document.querySelector(`#collection-tab .part-card[data-part-id="${part.id}"]`);
+
+        variantList.forEach(vData => {
+            if (!vData?.name) return;
+            const card = document.createElement('div');
+            card.className = 'variant-card';
+            card.dataset.variantName = vData.name;
+            card.innerHTML = `<img src="${vData.image || 'images/placeholder.webp'}" alt="${vData.name}"><p>${vData.name}</p>`; // Adicionado placeholder
+            if (owned.has(vData.name)) card.classList.add('selected');
+
+            card.addEventListener('click', () => {
+                const currentOwned = app_data.collection.blades.get(part.id) || new Set();
+                let wasModified = false;
+                let needsDeckUpdate = false; // Flag para atualizar o deck
+
+                if (currentOwned.has(vData.name)) {
+                    currentOwned.delete(vData.name);
+                    card.classList.remove('selected');
+                    wasModified = true;
+                    // Verifica se essa variante estava em uso e precisa limpar o bay
+                    app_data.decks.forEach(deck => deck.bays.forEach(bay => {
+                        if (bay.part1?.baseId === part.id && bay.part1.variant === vData.name) {
+                            clearBay(bay);
+                            needsDeckUpdate = true;
+                        }
+                    }));
+                } else {
+                    currentOwned.add(vData.name);
+                    card.classList.add('selected');
+                    wasModified = true;
+                }
+
+                if (wasModified) {
+                    if (currentOwned.size > 0) {
+                        app_data.collection.blades.set(part.id, currentOwned);
+                        if (mainCard) mainCard.classList.add('owned');
+                    } else {
+                        app_data.collection.blades.delete(part.id);
+                        if (mainCard) mainCard.classList.remove('owned');
+                        // Se não há mais variantes, remove de todos os decks
+                        app_data.decks.forEach(d => d.bays.forEach(b => {
+                            if (b.part1?.baseId === part.id) {
+                                clearBay(b);
+                                needsDeckUpdate = true;
+                            }
+                        }));
+                    }
+                    if (needsDeckUpdate) updateDeckUI(); // Atualiza a UI do deck se necessário
+                    saveAppData();
+                    if (collection_filter?.checked) { renderParts(); }
+                    renderStarterGuide();
+                }
+                // closeVariantModal(); // Decide se fecha automaticamente ou não
             });
             grid.appendChild(card);
         });
         variant_modal.style.display = 'block';
     };
 
+
     const closeVariantModal = () => { if (variant_modal) variant_modal.style.display = 'none'; variant_modal_part = null; };
     const clearBay = (bay) => { if (bay) { bay.type = null; bay.part1 = null; bay.part2 = null; bay.part3 = null; bay.part4 = null; bay.part5 = null; } };
     const closePartModal = () => { if (part_modal) part_modal.style.display = 'none'; };
 
     const selectPartForDeck = (part) => {
-        const { slotId, type } = active_deck_slot; const bay = app_data.decks[app_data.active_deck_index].bays[slotId]; if (!bay) return; const targetPartMap = { 'primeira': 'part1', 'mainblade': 'part2', 'assistblade': 'part3', 'ratchet': 'part4', 'bit': 'part5' }; const targetPartKey = targetPartMap[type]; if (!targetPartKey) { console.error("Tipo de placeholder inválido:", type); closePartModal(); return; } const basePartId = part.baseId || part.id; const basePartData = ALL_PARTS.find(p => p.id === basePartId); if (!basePartData) { console.error(`Peça base ${basePartId} não encontrada em ALL_PARTS.`); closePartModal(); return; } const partForDeck = { ...basePartData, ...part }; const langPack = translations[currentLanguage];
-        if (targetPartKey === 'part1') { const newType = (partForDeck.type === 'blade') ? 'standard' : (partForDeck.type === 'lockchip') ? 'chip' : null; if (!newType) return; if (bay.type !== newType) { clearBay(bay); bay.type = newType; } bay.part1 = partForDeck; }
-        else if (targetPartKey === 'part2' || targetPartKey === 'part3') { if (bay.type === 'chip') { if ((targetPartKey === 'part2' && partForDeck.type === 'mainblade') || (targetPartKey === 'part3' && partForDeck.type === 'assistblade')) { bay[targetPartKey] = partForDeck; } else { alert(langPack.alert_incompatible_part.replace('{partType}', partForDeck.type).replace('{bayType}', 'Chip Slot')); closePartModal(); return; } } else { alert(langPack.alert_incompatible_part.replace('{partType}', partForDeck.type).replace('{bayType}', bay.type || 'Empty')); closePartModal(); return; } }
-        else if (targetPartKey === 'part4' || targetPartKey === 'part5') { if (bay.type === 'standard' || bay.type === 'chip') { if ((targetPartKey === 'part4' && partForDeck.type === 'ratchet') || (targetPartKey === 'part5' && partForDeck.type === 'bit')) { bay[targetPartKey] = partForDeck; } else { alert(langPack.alert_incompatible_part.replace('{partType}', partForDeck.type).replace('{bayType}', 'Ratchet/Bit Slot')); closePartModal(); return; } } else { alert(langPack.alert_incompatible_part.replace('{partType}', partForDeck.type).replace('{bayType}', 'Empty Slot')); closePartModal(); return; } }
-        updateDeckUI(); saveAppData(); closePartModal();
+        const { slotId, type } = active_deck_slot;
+        if (slotId === null || type === null) { console.error("active_deck_slot inválido"); return; } // Verificação adicional
+        const currentDeck = app_data.decks[app_data.active_deck_index];
+        if (!currentDeck || !currentDeck.bays[slotId]) { console.error(`Deck ou Bay inválido: index ${app_data.active_deck_index}, slot ${slotId}`); return; }
+        const bay = currentDeck.bays[slotId];
+
+        const targetPartMap = { 'primeira': 'part1', 'mainblade': 'part2', 'assistblade': 'part3', 'ratchet': 'part4', 'bit': 'part5' };
+        const targetPartKey = targetPartMap[type];
+        if (!targetPartKey) { console.error("Tipo de placeholder inválido:", type); closePartModal(); return; }
+
+        const basePartId = part.baseId || part.id;
+        const basePartData = ALL_PARTS.find(p => p.id === basePartId);
+        if (!basePartData) { console.error(`Peça base ${basePartId} não encontrada em ALL_PARTS.`); closePartModal(); return; }
+
+        // Cria uma cópia da peça para evitar modificar ALL_PARTS, incluindo dados da variante se houver
+        const partForDeck = { ...basePartData, ...(part.baseId && { baseId: part.baseId, variant: part.variant, displayName: part.displayName, image: part.image || basePartData.image }) };
+
+        const langPack = translations[currentLanguage] || translations['en']; // Fallback
+
+        if (targetPartKey === 'part1') { // Selecionando a primeira peça (Blade ou Lock Chip)
+            const newType = (partForDeck.type === 'blade') ? 'standard' : (partForDeck.type === 'lockchip') ? 'chip' : null;
+            if (!newType) { console.error("Tipo inválido para primeira peça:", partForDeck.type); closePartModal(); return; }
+
+            if (bay.type !== newType && bay.type !== null) { // Se o tipo está mudando E não era nulo
+                clearBay(bay); // Limpa o bay completamente
+            }
+            bay.type = newType;
+            bay.part1 = partForDeck;
+
+            // Limpa peças incompatíveis se mudou de standard para chip ou vice-versa
+            if (newType === 'standard') {
+                bay.part2 = null;
+                bay.part3 = null;
+            } else if (newType === 'chip') {
+                // Mantém Ratchet e Bit se já existirem
+            }
+
+        } else if (targetPartKey === 'part2' || targetPartKey === 'part3') { // Main Blade ou Assist Blade
+            if (bay.type === 'chip') {
+                if ((targetPartKey === 'part2' && partForDeck.type === 'mainblade') || (targetPartKey === 'part3' && partForDeck.type === 'assistblade')) {
+                    bay[targetPartKey] = partForDeck;
+                } else {
+                    alert(langPack.alert_incompatible_part.replace('{partType}', partForDeck.type).replace('{bayType}', 'Chip Slot'));
+                    closePartModal(); return;
+                }
+            } else { // Tentando adicionar MB/AB a um bay standard ou vazio
+                alert(langPack.alert_incompatible_part.replace('{partType}', partForDeck.type).replace('{bayType}', bay.type || 'Empty'));
+                closePartModal(); return;
+            }
+        } else if (targetPartKey === 'part4' || targetPartKey === 'part5') { // Ratchet ou Bit
+            if (bay.type === 'standard' || bay.type === 'chip') {
+                if ((targetPartKey === 'part4' && partForDeck.type === 'ratchet') || (targetPartKey === 'part5' && partForDeck.type === 'bit')) {
+                    bay[targetPartKey] = partForDeck;
+                } else {
+                    alert(langPack.alert_incompatible_part.replace('{partType}', partForDeck.type).replace('{bayType}', 'Ratchet/Bit Slot'));
+                    closePartModal(); return;
+                }
+            } else { // Tentando adicionar R/B a um bay vazio
+                 alert(langPack.alert_incompatible_part.replace('{partType}', partForDeck.type).replace('{bayType}', 'Empty Slot'));
+                 closePartModal(); return;
+            }
+        }
+
+        updateDeckUI();
+        saveAppData();
+        closePartModal();
     };
 
+
     const openPartSelector = (slotId, type) => {
-        active_deck_slot = { slotId, type }; const langPack = translations[currentLanguage]; const titlePrefix = langPack.part_selector_modal_title_prefix || "Select:"; modal_title.textContent = `${titlePrefix} ${type.charAt(0).toUpperCase() + type.slice(1)}`; const usedPartIds = new Set(); const currentDeck = app_data.decks[app_data.active_deck_index]; currentDeck.bays.forEach((bay, index) => { if (index.toString() === slotId) return; if (bay.part1) usedPartIds.add(bay.part1.baseId || bay.part1.id); if (bay.part2) usedPartIds.add(bay.part2.id); if (bay.part3) usedPartIds.add(bay.part3.id); if (bay.part4) usedPartIds.add(bay.part4.id); if (bay.part5) usedPartIds.add(bay.part5.id); }); let availableParts = [];
-        if (type === 'primeira') { availableParts = [...getOwnedParts('blade'), ...getOwnedParts('lockchip')]; } else if (type === 'ratchet' || type === 'bit' || type === 'mainblade' || type === 'assistblade') { availableParts = getOwnedParts(type); } else { console.error("Tipo de peça desconhecido:", type); return; } const partsToShow = availableParts.filter(part => !usedPartIds.has(part.baseId || part.id)); const individualHeader = langPack.part_individual_header || 'Individual Parts (Owned)'; modal_parts_list_container.innerHTML = `<h4>${individualHeader}</h4><div class="parts-grid"></div>`; const partsGrid = modal_parts_list_container.querySelector('.parts-grid'); if (!partsGrid) return;
-        if (partsToShow.length === 0) { const nonePrefix = langPack.part_individual_none_prefix || 'No'; const noneSuffix = langPack.part_individual_none_suffix || 'parts available...'; partsGrid.innerHTML = `<p>${nonePrefix} ${type} ${noneSuffix}</p>`; } else { partsToShow.forEach(part => { if (!part || !part.name) return; const part_card = document.createElement('div'); part_card.className = 'part-card owned'; part_card.innerHTML = `<img src="${part.image || 'images/placeholder.webp'}" alt="${part.displayName || part.name}"><p>${part.displayName || part.name}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`; part_card.addEventListener('click', () => selectPartForDeck(part)); partsGrid.appendChild(part_card); }); }
-        if(partsToShow.length > 0) { part_modal.style.display = 'block'; } else { const nonePrefix = langPack.part_individual_none_prefix || 'No'; const noneSuffix = langPack.part_individual_none_suffix || 'parts available...'; alert(`${nonePrefix} ${type} ${noneSuffix}`); }
+        active_deck_slot = { slotId, type };
+        const langPack = translations[currentLanguage] || translations['en']; // Fallback
+        const titlePrefix = langPack.part_selector_modal_title_prefix || "Select:";
+        const partTypeName = langPack[`deck_placeholder_${type}`] || type.charAt(0).toUpperCase() + type.slice(1);
+        modal_title.textContent = `${titlePrefix} ${partTypeName}`;
+
+        const usedPartIds = new Set();
+        const currentDeck = app_data.decks[app_data.active_deck_index];
+        if (!currentDeck) return;
+
+        // Coleta IDs base ou IDs únicos de peças usadas nos OUTROS slots
+        currentDeck.bays.forEach((bay, index) => {
+            if (index.toString() === slotId) return; // Ignora o slot atual
+            if (bay.part1) usedPartIds.add(bay.part1.baseId || bay.part1.id); // Adiciona ID base da Blade ou ID do Lock Chip
+            if (bay.part2) usedPartIds.add(bay.part2.id); // ID do Main Blade
+            if (bay.part3) usedPartIds.add(bay.part3.id); // ID do Assist Blade
+            if (bay.part4) usedPartIds.add(bay.part4.id); // ID do Ratchet
+            if (bay.part5) usedPartIds.add(bay.part5.id); // ID do Bit
+        });
+
+        let availableParts = [];
+        if (type === 'primeira') {
+            availableParts = [...getOwnedParts('blade'), ...getOwnedParts('lockchip')];
+        } else if (type === 'ratchet' || type === 'bit' || type === 'mainblade' || type === 'assistblade') {
+            availableParts = getOwnedParts(type);
+        } else {
+            console.error("Tipo de peça desconhecido:", type);
+            return;
+        }
+
+        // Filtra as peças disponíveis, removendo aquelas cujo ID base (para Blades) ou ID único (outras) já está em uso
+        const partsToShow = availableParts.filter(part => !usedPartIds.has(part.baseId || part.id));
+
+        const individualHeader = langPack.part_individual_header || 'Individual Parts (Owned)';
+        modal_parts_list_container.innerHTML = `<h4>${individualHeader}</h4><div class="parts-grid"></div>`;
+        const partsGrid = modal_parts_list_container.querySelector('.parts-grid');
+        if (!partsGrid) return;
+
+        if (partsToShow.length === 0) {
+            const nonePrefix = langPack.part_individual_none_prefix || 'No';
+            const noneSuffix = langPack.part_individual_none_suffix || 'parts available (check collection or parts already in use in the deck).';
+            partsGrid.innerHTML = `<p>${nonePrefix} ${partTypeName} ${noneSuffix}</p>`;
+        } else {
+            partsToShow.forEach(part => {
+                if (!part || !part.name) return;
+                const part_card = document.createElement('div');
+                part_card.className = 'part-card owned'; // Todas aqui são 'owned'
+                // Usa displayName se existir (para variantes de Blade), senão usa name
+                const displayName = part.displayName || part.name;
+                // Usa a imagem da variante se existir ( Blades), senão a imagem base
+                 const displayImage = (part.type === 'blade' && part.variant && part.image) ? part.image : (part.image || 'images/placeholder.webp');
+
+                part_card.innerHTML = `<img src="${displayImage}" alt="${displayName}"><p>${displayName}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`;
+                part_card.addEventListener('click', () => selectPartForDeck(part));
+                partsGrid.appendChild(part_card);
+            });
+        }
+
+        // Só abre o modal se houver peças para mostrar
+        part_modal.style.display = 'block';
+
     };
+
 
     const getOwnedParts = (partType) => { const ownedParts = []; const collectionSetKey = partType + 's'; const collectionSet = app_data.collection[collectionSetKey]; if (!collectionSet) return ownedParts; if (partType === 'blade') { collectionSet.forEach((variantsSet, partId) => { const basePart = ALL_PARTS.find(p => p.id === partId); if (!basePart) { console.warn(`Peça Blade ${partId} na coleção mas não em ALL_PARTS.`); return; } if (basePart.variantsId && ALL_VARIANTS[basePart.variantsId]) { variantsSet.forEach(variantName => { const variantData = ALL_VARIANTS[basePart.variantsId].find(v => v.name === variantName); const displayName = (variantName === "Stock" || variantName === "owned") ? basePart.name : `${basePart.name} (${variantName})`; ownedParts.push({ ...basePart, id: `${basePart.id}-${variantName.replace(/\s+/g, '-')}`, baseId: basePart.id, baseName: basePart.name, name: `${basePart.name} (${variantName})`, displayName: displayName, variant: variantName, image: variantData?.image || basePart.image }); }); } else if (variantsSet.has('owned')) { ownedParts.push({ ...basePart, baseId: basePart.id, baseName: basePart.name, displayName: basePart.name, variant: 'owned' }); } }); } else { collectionSet.forEach(partId => { const part = ALL_PARTS.find(p => p.id === partId); if (part) { ownedParts.push({...part, displayName: part.name}); } else { console.warn(`Peça ${partType} ${partId} na coleção mas não em ALL_PARTS.`); } }); } ownedParts.sort((a, b) => (a.displayName || a.name).localeCompare(b.displayName || b.name)); return ownedParts; };
 
     // --- Funções do Placar ---
     const updateScoreDisplay = () => { if (scoreP1Display) scoreP1Display.textContent = scoreP1; if (scoreP2Display) scoreP2Display.textContent = scoreP2; };
     const handleScoreButton = (e) => { const player = e.target.dataset.player; const points = parseInt(e.target.dataset.points, 10); if (player === '1') { scoreP1 += points; } else if (player === '2') { scoreP2 += points; } updateScoreDisplay(); };
-    const resetScore = () => { const langPack = translations[currentLanguage]; const confirmMsg = langPack.confirm_reset_score || "Tem certeza que deseja reiniciar o placar?"; if (confirm(confirmMsg)) { scoreP1 = 0; scoreP2 = 0; updateScoreDisplay(); } };
-    const savePlayerName = (playerNumber, inputElement) => { if (!inputElement) return; const newName = inputElement.value.trim(); const key = `beyXToolP${playerNumber}Name`; const defaultKey = `player_${playerNumber}_default`; const langPack = translations[currentLanguage]; const defaultValue = langPack[defaultKey] || (playerNumber === 1 ? "Player 1" : "Player 2"); if (newName) { localStorage.setItem(key, newName); } else { inputElement.value = defaultValue; localStorage.setItem(key, defaultValue); } };
+    const resetScore = () => { const langPack = translations[currentLanguage] || translations['en']; const confirmMsg = langPack.confirm_reset_score || "Are you sure you want to reset the scoreboard?"; if (confirm(confirmMsg)) { scoreP1 = 0; scoreP2 = 0; updateScoreDisplay(); } };
+    const savePlayerName = (playerNumber, inputElement) => { if (!inputElement) return; const newName = inputElement.value.trim(); const key = `beyXToolP${playerNumber}Name`; const defaultKey = `player_${playerNumber}_default`; const langPack = translations[currentLanguage] || translations['en']; const defaultValue = langPack[defaultKey] || (playerNumber === 1 ? "Player 1" : "Player 2"); if (newName) { localStorage.setItem(key, newName); } else { inputElement.value = defaultValue; localStorage.setItem(key, defaultValue); } };
 
     // --- Funções de Gerenciamento de Deck ---
     const addDeck = () => { const newDeckName = `Deck ${app_data.decks.length + 1}`; app_data.decks.push(createNewDeck(newDeckName)); app_data.active_deck_index = app_data.decks.length - 1; updateDeckUI(); saveAppData(); };
-    const deleteDeck = () => { if (app_data.decks.length <= 1) { alert(translations[currentLanguage].alert_cannot_delete_last_deck); return; } const deck = app_data.decks[app_data.active_deck_index]; if (!deck) return; const confirmTxt = `${translations[currentLanguage].confirm_delete_deck_prefix}${deck.name}${translations[currentLanguage].confirm_delete_deck_suffix}`; if (confirm(confirmTxt)) { app_data.decks.splice(app_data.active_deck_index, 1); app_data.active_deck_index = Math.max(0, app_data.active_deck_index - 1); updateDeckUI(); saveAppData(); } };
-    const renameDeck = () => { const deck = app_data.decks[app_data.active_deck_index]; if (!deck || !deck_name_input) return; const newName = deck_name_input.value.trim(); if (newName && newName !== deck.name) { deck.name = newName; renderDeckManager(); saveAppData(); } else if (!newName) { deck_name_input.value = deck.name; alert(translations[currentLanguage].alert_deck_name_empty); } deck_name_input.blur(); };
+    const deleteDeck = () => { const langPack = translations[currentLanguage] || translations['en']; if (app_data.decks.length <= 1) { alert(langPack.alert_cannot_delete_last_deck); return; } const deck = app_data.decks[app_data.active_deck_index]; if (!deck) return; const confirmTxt = `${langPack.confirm_delete_deck_prefix}${deck.name}${langPack.confirm_delete_deck_suffix}`; if (confirm(confirmTxt)) { app_data.decks.splice(app_data.active_deck_index, 1); app_data.active_deck_index = Math.max(0, app_data.active_deck_index - 1); updateDeckUI(); saveAppData(); } };
+    const renameDeck = () => { const deck = app_data.decks[app_data.active_deck_index]; if (!deck || !deck_name_input) return; const newName = deck_name_input.value.trim(); const langPack = translations[currentLanguage] || translations['en']; if (newName && newName !== deck.name) { deck.name = newName; renderDeckManager(); saveAppData(); } else if (!newName) { deck_name_input.value = deck.name; alert(langPack.alert_deck_name_empty); } deck_name_input.blur(); };
     const switchDeck = () => { if (!deck_selector) return; const newIndex = parseInt(deck_selector.value, 10); if (!isNaN(newIndex) && newIndex >= 0 && newIndex < app_data.decks.length) { app_data.active_deck_index = newIndex; updateDeckUI(); saveAppData(); } else { deck_selector.value = app_data.active_deck_index; } };
     const clearDeck = () => { if (app_data.decks[app_data.active_deck_index]) { app_data.decks[app_data.active_deck_index].bays.forEach(clearBay); updateDeckUI(); saveAppData(); } };
 
     // --- Funções de Import/Export ---
-    const exportDeckList = async () => { const deck = app_data.decks[app_data.active_deck_index]; if (!deck) return; const completeBays = deck.bays.filter(b => (b?.type === 'standard' && b.part1 && b.part4 && b.part5) || (b?.type === 'chip' && b.part1 && b.part2 && b.part3 && b.part4 && b.part5)); if (completeBays.length === 0) { alert(translations[currentLanguage].alert_export_deck_empty); return; } const personName = await showInputModal('prompt_export_person_name', 'prompt_export_person_placeholder'); if (personName === null) return; const eventName = await showInputModal('prompt_export_tournament_name', 'prompt_export_tournament_placeholder'); if (eventName === null) return; const today = new Date(); const formattedDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getFullYear()).slice(-2)}`; let deckString = `=== DECK LIST ===\n---- ${formattedDate} ----\n==== NOME ====\n${personName}\n\n==== EVENTO ====\n${eventName}\n\n===== DECK =====\n`; completeBays.forEach((bay, index) => { if (index > 0) deckString += "\n"; if (bay.type === 'standard') { deckString += `B: ${bay.part1.displayName || bay.part1.name}\nR: ${bay.part4.displayName || bay.part4.name}\nBT: ${bay.part5.displayName || bay.part5.name}\n`; } else if (bay.type === 'chip') { deckString += `C: ${bay.part1.displayName || bay.part1.name}\nMB: ${bay.part2.displayName || bay.part2.name}\nAB: ${bay.part3.displayName || bay.part3.name}\n${bay.part4 ? `R: ${bay.part4.displayName || bay.part4.name}\n` : ''}${bay.part5 ? `BT: ${bay.part5.displayName || bay.part5.name}\n` : ''}`; } }); deckString += `\n===============\nCriado por\nhttps://beyxtool.pages.dev/\n`; navigator.clipboard.writeText(deckString).then(() => alert(translations[currentLanguage].alert_export_copied)).catch(err => { console.error("Falha ao copiar:", err); alert(`${translations[currentLanguage].alert_export_copy_failed} ${deckString}`); }); };
-    const exportData = () => { saveAppData(); const data_str = localStorage.getItem('beyblade_x_data'); if (!data_str) { alert("Não há dados para exportar."); return; } const data_blob = new Blob([data_str], {type: 'application/json;charset=utf-8'}); const url = URL.createObjectURL(data_blob); const a = document.createElement('a'); a.href = url; const timestamp = new Date().toISOString().slice(0, 10); a.download = `beyxtool_dados_${timestamp}.bx`; document.body.appendChild(a); a.click(); setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100); };
-    const importData = (event) => { const file = event.target.files[0]; if (!file) return; if (!file.name.endsWith('.bx') && file.type !== 'application/json') { alert("Por favor, selecione um arquivo .bx válido."); if (import_file_input) import_file_input.value = ''; return; } const reader = new FileReader(); reader.onload = (e) => { try { const imported_data_str = e.target.result; if (!imported_data_str) throw new Error(translations[currentLanguage].alert_file_read_error || "Erro ao ler o arquivo."); const parsed = JSON.parse(imported_data_str); if (typeof parsed === 'object' && parsed !== null && 'collection' in parsed && 'decks' in parsed && 'active_deck_index' in parsed) { const confirmMsg = translations[currentLanguage].confirm_import_overwrite || "Importar substituirá dados atuais. Continuar?"; if (confirm(confirmMsg)) { localStorage.setItem('beyblade_x_data', imported_data_str); loadAppData(); renderParts(); renderStarterGuide(); updateDeckUI(); alert(translations[currentLanguage].alert_import_success || "Dados importados com sucesso!"); } } else { throw new Error(translations[currentLanguage].alert_invalid_file_format || "Formato inválido ou corrompido."); } } catch (error) { console.error("Erro ao importar dados:", error); alert(`${translations[currentLanguage].alert_import_error || "Erro ao importar:"} ${error.message}`); } finally { if (import_file_input) import_file_input.value = ''; } }; reader.onerror = (error) => { console.error("Erro ao ler arquivo:", error); alert(translations[currentLanguage].alert_file_read_error || "Erro ao ler o arquivo selecionado."); if (import_file_input) import_file_input.value = ''; }; reader.readAsText(file); };
+    const exportDeckList = async () => {
+        const deck = app_data.decks[app_data.active_deck_index];
+        const langPack = translations[currentLanguage] || translations['en']; // Fallback
+        if (!deck) return;
+
+        const completeBays = deck.bays.filter(b =>
+            (b?.type === 'standard' && b.part1 && b.part4 && b.part5) ||
+            (b?.type === 'chip' && b.part1 && b.part2 && b.part3 && b.part4 && b.part5)
+        );
+
+        if (completeBays.length === 0) {
+            alert(langPack.alert_export_deck_empty);
+            return;
+        }
+
+        const personName = await showInputModal('prompt_export_person_name', 'prompt_export_person_placeholder');
+        if (personName === null) return; // User cancelled
+
+        const eventName = await showInputModal('prompt_export_tournament_name', 'prompt_export_tournament_placeholder');
+        if (eventName === null) return; // User cancelled
+
+        const today = new Date();
+        const formattedDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getFullYear()).slice(-2)}`;
+
+        let deckString = `=== DECK LIST ===\n---- ${formattedDate} ----\n==== NOME ====\n${personName}\n\n==== EVENTO ====\n${eventName}\n\n===== DECK =====\n`;
+
+        completeBays.forEach((bay, index) => {
+            if (index > 0) deckString += "\n";
+            const part1Name = bay.part1.displayName || bay.part1.name;
+            const part4Name = bay.part4.displayName || bay.part4.name;
+            const part5Name = bay.part5.displayName || bay.part5.name;
+
+            if (bay.type === 'standard') {
+                deckString += `B: ${part1Name}\nR: ${part4Name}\nBT: ${part5Name}\n`;
+            } else if (bay.type === 'chip') {
+                const part2Name = bay.part2.displayName || bay.part2.name;
+                const part3Name = bay.part3.displayName || bay.part3.name;
+                deckString += `C: ${part1Name}\nMB: ${part2Name}\nAB: ${part3Name}\n${part4Name ? `R: ${part4Name}\n` : ''}${part5Name ? `BT: ${part5Name}\n` : ''}`;
+            }
+        });
+
+        deckString += `\n===============\nCriado por\nhttps://beyxtool.pages.dev/\n`; // Mantenha ou ajuste o link se necessário
+
+        navigator.clipboard.writeText(deckString)
+            .then(() => alert(langPack.alert_export_copied))
+            .catch(err => {
+                console.error("Falha ao copiar:", err);
+                alert(`${langPack.alert_export_copy_failed} ${deckString}`);
+            });
+    };
+
+    const exportData = () => { saveAppData(); const data_str = localStorage.getItem('beyblade_x_data'); const langPack = translations[currentLanguage] || translations['en']; if (!data_str) { alert("Não há dados para exportar."); return; } const data_blob = new Blob([data_str], {type: 'application/json;charset=utf-8'}); const url = URL.createObjectURL(data_blob); const a = document.createElement('a'); a.href = url; const timestamp = new Date().toISOString().slice(0, 10); a.download = `beyxtool_dados_${timestamp}.bx`; document.body.appendChild(a); a.click(); setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100); };
+    const importData = (event) => { const file = event.target.files[0]; const langPack = translations[currentLanguage] || translations['en']; if (!file) return; if (!file.name.endsWith('.bx') && file.type !== 'application/json') { alert("Por favor, selecione um arquivo .bx válido."); if (import_file_input) import_file_input.value = ''; return; } const reader = new FileReader(); reader.onload = (e) => { try { const imported_data_str = e.target.result; if (!imported_data_str) throw new Error(langPack.alert_file_read_error || "Erro ao ler o arquivo."); const parsed = JSON.parse(imported_data_str); if (typeof parsed === 'object' && parsed !== null && 'collection' in parsed && 'decks' in parsed && 'active_deck_index' in parsed) { const confirmMsg = langPack.confirm_import_overwrite || "Importar substituirá dados atuais. Continuar?"; if (confirm(confirmMsg)) { localStorage.setItem('beyblade_x_data', imported_data_str); loadAppData(); renderParts(); renderStarterGuide(); updateDeckUI(); alert(langPack.alert_import_success || "Dados importados com sucesso!"); } } else { throw new Error(langPack.alert_invalid_file_format || "Formato inválido ou corrompido."); } } catch (error) { console.error("Erro ao importar dados:", error); alert(`${langPack.alert_import_error || "Erro ao importar:"} ${error.message}`); } finally { if (import_file_input) import_file_input.value = ''; } }; reader.onerror = (error) => { console.error("Erro ao ler arquivo:", error); alert(langPack.alert_file_read_error || "Erro ao ler o arquivo selecionado."); if (import_file_input) import_file_input.value = ''; }; reader.readAsText(file); };
 
     // --- Funções para o Modal de Info ---
     const drawPartStatsChart = (canvasId, part) => {
-        const langPack = translations[currentLanguage]; const canvas = document.getElementById(canvasId); if (!canvas || !part) return;
+        const langPack = translations[currentLanguage] || translations['en']; // Fallback
+        const canvas = document.getElementById(canvasId); if (!canvas || !part) return;
         if (canvasId === 'info-modal-chart' && infoModalChartInstance) { infoModalChartInstance.destroy(); infoModalChartInstance = null; }
         const ctx = canvas.getContext('2d'); if (!ctx) return;
         const parseStat = (value) => { const num = parseFloat(value); return isNaN(num) ? 0 : num; };
@@ -342,7 +680,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const openPartInfoModal = (partId) => {
         const part = ALL_PARTS.find(p => p.id === partId); if (!part || !partInfoModal) return;
         infoModalPartName.textContent = part.name;
-        const sources = PART_SOURCES[part.id]; if (sources && sources.length > 0) { infoModalSourceList.innerHTML = sources.map(s => `<li>${s}</li>`).join(''); } else { infoModalSourceList.innerHTML = `<li>Informação não disponível.</li>`; }
+        const sources = PART_SOURCES[part.id]; const langPack = translations[currentLanguage] || translations['en']; if (sources && sources.length > 0) { infoModalSourceList.innerHTML = sources.map(s => `<li>${s}</li>`).join(''); } else { infoModalSourceList.innerHTML = `<li>Informação não disponível.</li>`; }
+        // Atualiza título da seção de fontes
+        const sourceTitleElement = infoModalSourceList.previousElementSibling; if (sourceTitleElement && sourceTitleElement.tagName === 'H4') { sourceTitleElement.textContent = langPack.part_source_title || 'Found in:'; }
         drawPartStatsChart('info-modal-chart', part);
         partInfoModal.style.display = 'block';
     };
@@ -351,7 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- INICIALIZAÇÃO E EVENT LISTENERS ---
     const savedLanguage = localStorage.getItem('beyXToolLanguage'); if (savedLanguage && translations[savedLanguage]) currentLanguage = savedLanguage;
-    setupTabs(); loadAppData(); renderParts(); renderStarterGuide(); setLanguage(currentLanguage); updateScoreDisplay();
+    setupTabs(); loadAppData(); renderParts(); /* renderStarterGuide é chamado por setLanguage */ setLanguage(currentLanguage); updateScoreDisplay();
 
     // Listeners
     langPtBrButton?.addEventListener('click', () => setLanguage('pt-br')); langEnButton?.addEventListener('click', () => setLanguage('en'));
@@ -366,7 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
     inputModalOk?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(inputModalField.value); }); inputModalCancel?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); }); inputModalClose?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); }); inputModalField?.addEventListener('keypress', (e) => { if (e.key === 'Enter' && onInputConfirm) { onInputConfirm(inputModalField.value); } });
     scoreButtons.forEach(button => button.addEventListener('click', handleScoreButton)); resetScoreButton?.addEventListener('click', resetScore);
     p1NameInput?.addEventListener('blur', () => savePlayerName(1, p1NameInput));
-    p2NameInput?.addEventListener('blur', () => savePlayerName(2, p2NameInput)); // [CORRIGIDO]
+    p2NameInput?.addEventListener('blur', () => savePlayerName(2, p2NameInput));
     p1NameInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { savePlayerName(1, p1NameInput); p1NameInput.blur(); } });
     p2NameInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { savePlayerName(2, p2NameInput); p2NameInput.blur(); } });
     partInfoModalClose?.addEventListener('click', closePartInfoModal);
