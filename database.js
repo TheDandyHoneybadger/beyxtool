@@ -1077,10 +1077,20 @@ const ALL_PARTS = [
          part_source_title: "Encontrado em:",
          modal_button_cancel: "Cancelar",
          modal_button_ok: "OK",
-         confirm_reset_score: "Tem certeza que deseja reiniciar o placar?"
+         confirm_reset_score: "Tem certeza que deseja reiniciar o placar?",
+		 score_spin_finish: "Spin Finish",
+        score_burst_finish: "Burst Finish",
+        score_over_finish: "Over Finish",
+        score_extreme_finish: "EXTREME FINISH",
+        score_toggle_layout_button: "Layout Vert./Horiz.", // Texto para o botão de layout
     },
     'en': {
         // Tabs
+		score_spin_finish: "Spin Finish",
+        score_burst_finish: "Burst Finish",
+        score_over_finish: "Over Finish",
+        score_extreme_finish: "EXTREME FINISH",
+        score_toggle_layout_button: "Toggle Layout",
         tab_meta: "META",
         tab_deck_builder: "Deck Builder",
         tab_collection: "Collection",

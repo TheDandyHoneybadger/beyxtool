@@ -212,8 +212,10 @@
             <p class="guide-description" data-translate="guide_description">
                 Guia voltado para iniciantes que querem começar bem no competitivo do Beyblade X, mas não sabem quais produtos comprar.
             </p>
-            <div id="guide-products-container"></div>
+            <div id="guide-products-container">
+                </div>
         </div>
+
         <div id="collection-tab" class="tab-content">
             <div class="tab-header">
                 <h2 data-translate="collection_header">Minha Coleção</h2>
@@ -250,32 +252,68 @@
             <div class="tab-header">
                 <h2 data-translate="score_header">Placar da Partida</h2>
             </div>
-            <div class="score-container">
-                <div class="player-section" id="player1">
-                    <input type="text" class="player-name" value="Jogador 1" data-translate="player_1_default">
-                    <div class="score-display" id="score-p1">0</div>
-                    <div class="score-buttons">
-                        <button class="score-btn" data-player="1" data-points="1" data-translate="score_1_point">+1 Ponto</button>
-                        <button class="score-btn" data-player="1" data-points="2" data-translate="score_2_points">+2 Pontos</button>
-                        <button class="score-btn" data-player="1" data-points="3" data-translate="score_3_points">+3 Pontos</button>
-                    </div>
-                </div>
-                <div class="versus-divider">VS</div>
-                <div class="player-section" id="player2">
-                    <input type="text" class="player-name" value="Jogador 2" data-translate="player_2_default">
-                    <div class="score-display" id="score-p2">0</div>
-                    <div class="score-buttons">
-                        <button class="score-btn" data-player="2" data-points="1" data-translate="score_1_point">+1 Ponto</button>
-                        <button class="score-btn" data-player="2" data-points="2" data-translate="score_2_points">+2 Pontos</button>
-                        <button class="score-btn" data-player="2" data-points="3" data-translate="score_3_points">+3 Pontos</button>
-                    </div>
-                </div>
-            </div>
-            <div class="score-controls">
+
+            <div class="score-controls-top">
+                <button id="toggle-layout-button" data-translate="score_toggle_layout_button" title="Alternar Layout">Layout</button>
                 <button id="reset-score-button" data-translate="score_reset_button">Reiniciar Placar</button>
             </div>
-        </div>
 
+            <div class="score-container vertical-score" id="score-container">
+                <div class="player-section" id="player1">
+                    <div class="score-display" id="score-p1">0</div>
+                    <div class="score-buttons">
+                        <div class="split-score-btn" data-player="1" data-points="1">
+                            <span class="btn-side btn-decrease" title="Remover 1 Ponto">-</span>
+                            <span class="btn-label" data-translate="score_spin_finish">Spin Finish</span>
+                            <span class="btn-side btn-increase" title="Adicionar 1 Ponto">+</span>
+                        </div>
+                        <div class="split-score-btn" data-player="1" data-points="2">
+                            <span class="btn-side btn-decrease" title="Remover 2 Pontos">-</span>
+                            <span class="btn-label" data-translate="score_burst_finish">Burst Finish</span>
+                            <span class="btn-side btn-increase" title="Adicionar 2 Pontos">+</span>
+                        </div>
+                        <div class="split-score-btn" data-player="1" data-points="2">
+                            <span class="btn-side btn-decrease" title="Remover 2 Pontos">-</span>
+                            <span class="btn-label" data-translate="score_over_finish">Over Finish</span>
+                            <span class="btn-side btn-increase" title="Adicionar 2 Pontos">+</span>
+                        </div>
+                        <div class="split-score-btn" data-player="1" data-points="3">
+                            <span class="btn-side btn-decrease" title="Remover 3 Pontos">-</span>
+                            <span class="btn-label" data-translate="score_extreme_finish">EXTREME FINISH</span>
+                            <span class="btn-side btn-increase" title="Adicionar 3 Pontos">+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="versus-divider">VS</div>
+
+                <div class="player-section" id="player2">
+                     <div class="score-display" id="score-p2">0</div>
+                    <div class="score-buttons">
+                        <div class="split-score-btn" data-player="2" data-points="1">
+                            <span class="btn-side btn-decrease" title="Remover 1 Ponto">-</span>
+                            <span class="btn-label" data-translate="score_spin_finish">Spin Finish</span>
+                            <span class="btn-side btn-increase" title="Adicionar 1 Ponto">+</span>
+                        </div>
+                        <div class="split-score-btn" data-player="2" data-points="2">
+                            <span class="btn-side btn-decrease" title="Remover 2 Pontos">-</span>
+                            <span class="btn-label" data-translate="score_burst_finish">Burst Finish</span>
+                            <span class="btn-side btn-increase" title="Adicionar 2 Pontos">+</span>
+                        </div>
+                        <div class="split-score-btn" data-player="2" data-points="2">
+                            <span class="btn-side btn-decrease" title="Remover 2 Pontos">-</span>
+                            <span class="btn-label" data-translate="score_over_finish">Over Finish</span>
+                            <span class="btn-side btn-increase" title="Adicionar 2 Pontos">+</span>
+                        </div>
+                        <div class="split-score-btn" data-player="2" data-points="3">
+                            <span class="btn-side btn-decrease" title="Remover 3 Pontos">-</span>
+                            <span class="btn-label" data-translate="score_extreme_finish">EXTREME FINISH</span>
+                            <span class="btn-side btn-increase" title="Adicionar 3 Pontos">+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
         <div id="settings-tab" class="tab-content">
             <div class="tab-header">
                 <h2 data-translate="settings_header">Importar & Exportar Dados</h2>
@@ -285,9 +323,7 @@
                 <div class="language-settings">
                     <h3 data-translate="language_settings_title">Idioma / Language</h3>
                     <div class="language-selector">
-                        <button id="lang-pt-br" class="lang-button active" title="Português (Brasil)">🇧🇷</button>
-                        <button id="lang-en" class="lang-button" title="English (US)">🇺🇸</button>
-                    </div>
+                        <button id="lang-pt-br" class="lang-button" title="Português (Brasil)">🇧🇷</button> <button id="lang-en" class="lang-button active" title="English (US)">🇺🇸</button> </div>
                 </div>
                 <div class="data-buttons">
                     <button id="export-button" data-translate="export_button">Exportar Dados (.bx)</button>
@@ -312,7 +348,10 @@
         <div class="modal-content">
             <span class="close-button" id="variant-selector-close">&times;</span>
             <h3 id="variant-modal-title">Selecionar Variantes</h3>
-            <div id="variant-modal-checkboxes"></div>
+            <div id="variant-modal-checkboxes">
+                </div>
+             <div class="modal-buttons"> <button id="variant-modal-done" data-translate="modal_button_ok">OK</button>
+            </div>
         </div>
     </div>
 
@@ -336,8 +375,7 @@
             <h3 id="info-modal-part-name">Nome da Peça</h3>
             <div class="modal-scrollable-content">
                  <div id="info-modal-details">
-                     <h4>Sources:</h4>
-                     <ul id="info-modal-source-list">
+                     <h4 data-translate="part_source_title">Sources:</h4> <ul id="info-modal-source-list">
                          <li>Loading...</li>
                      </ul>
                      <h4>Stats:</h4>

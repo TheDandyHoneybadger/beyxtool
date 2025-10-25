@@ -64,8 +64,9 @@ main { padding: 2rem; }
 #deck-selector, #deck-name-input { background-color: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 5px; padding: 8px; font-size: 1rem; }
 #deck-name-input { min-width: 200px; }
 
-button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, .lang-button, #collection-filter, #collection-sort, #deck-selector, input[type="checkbox"], .score-btn, #reset-score-button, .meta-link-container a, .part-info-icon, .youtube-thumbnail-link, summary { cursor: pointer; } /* Adicionado summary */
-#deck-name-input, #input-modal-field, input[type="text"], .player-name { cursor: text; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
+/* Adicionado summary aos cursores pointer */
+button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, .lang-button, #collection-filter, #collection-sort, #deck-selector, input[type="checkbox"], .score-btn, #reset-score-button, .meta-link-container a, .part-info-icon, .youtube-thumbnail-link, summary, .btn-side { cursor: pointer; }
+#deck-name-input, #input-modal-field, input[type="text"] { cursor: text; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; } /* Removido .player-name */
 
 .deck-builder-container, .settings-container { display: flex; flex-direction: column; align-items: center; gap: 2rem; }
 .deck-area { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; }
@@ -126,21 +127,6 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
 .input-modal-body { margin-top: 1rem; }
 #input-modal-field { width: 100%; padding: 10px; background-color: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 5px; margin-bottom: 1.5rem; font-size: 1rem; }
 #confirm-modal-text { margin-bottom: 1.5rem; }
-.danger-button { background-color: #d9534f; border-color: #d43f3a; }
-.danger-button:hover { background-color: #c9302c; border-color: #ac2925; }
-
-.score-container { display: flex; justify-content: space-around; align-items: flex-start; flex-wrap: wrap; gap: 2rem; margin-top: 2rem; }
-.player-section { flex: 1; min-width: 280px; max-width: 400px; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; background-color: var(--primary-bg); padding: 1.5rem; border-radius: 8px; }
-.player-name { width: 80%; background-color: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 5px; padding: 8px; font-size: 1.2rem; font-weight: bold; text-align: center; }
-.score-display { font-size: 6rem; font-weight: bold; color: var(--active-tab); line-height: 1; }
-.score-buttons { display: flex; flex-direction: column; gap: 0.75rem; width: 80%; }
-.score-btn { padding: 0.8rem 1rem; font-size: 1rem; font-weight: bold; background-color: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 5px; transition: background-color 0.3s, color 0.3s; }
-.score-btn:hover { background-color: #404040; color: var(--active-tab); }
-.score-btn:active { transform: scale(0.98); }
-.versus-divider { font-size: 3rem; font-weight: bold; color: var(--muted-text); align-self: center; padding: 0 1rem; }
-.score-controls { display: flex; justify-content: center; margin-top: 2.5rem; }
-#reset-score-button { padding: 0.8rem 1.5rem; font-size: 1.1rem; background-color: #a94442; border: 1px solid #843534; color: var(--text-color); font-weight: bold; border-radius: 5px; transition: background-color 0.3s; }
-#reset-score-button:hover { background-color: #c9302c; }
 
 /* --- [MODIFICADO] Estilos da Aba Guia --- */
 .guide-description { color: var(--muted-text); text-align: center; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
@@ -149,7 +135,8 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
     display: block; /* Alterado de flex/grid */
     padding: 0; /* Removido padding para os spoilers ocuparem a largura */
 }
-.product-card { background-color: var(--primary-bg); border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; display: flex; flex-direction: row; align-items: stretch; min-height: 160px; width: calc(50% - 0.75rem); flex-grow: 1; min-width: 320px; }
+/* Estilos gerais do product card mantidos, mas ajustados dentro do grid específico */
+.product-card { background-color: var(--primary-bg); border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; display: flex; flex-direction: row; align-items: stretch; min-height: 160px; /* Removido width e flex-grow daqui */ }
 .product-card-header { flex: 1; min-width: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem; background-color: var(--card-bg); border-right: 1px solid var(--border-color); }
 .product-image { width: 100%; max-width: 150px; height: auto; border-radius: 6px; }
 .product-name { font-size: 1.1rem; font-weight: bold; color: var(--active-tab); text-align: center; }
@@ -171,12 +158,181 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
 #info-modal-source-list li { margin-bottom: 0.3rem; font-size: 0.9rem;}
 .info-chart-container { max-width: 300px; margin-top: 1rem; margin-left: auto; margin-right: auto;}
 
+/* --- [ATUALIZADO] Estilos Placar (Sem Nomes, Placar Maior) --- */
 
-/* --- Media Queries (Incluindo ajustes para Guia/Spoilers) --- */
+.score-controls-top {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap; /* Para telas menores */
+}
+/* REMOVIDO .player-name */
+
+/* Ajustes no container principal */
+.score-container {
+    gap: 1rem; /* Espaçamento entre jogadores e VS */
+    align-items: stretch; /* Alinha altura dos cards */
+    transition: all 0.3s ease-in-out; /* Suaviza a troca de layout */
+}
+
+/* Layout Vertical (Padrão) */
+.score-container.vertical-score {
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch; /* Garante altura igual se possível */
+    flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+    gap: 2rem;
+}
+.score-container.vertical-score .player-section {
+    flex: 1;
+    min-width: 300px;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* Reduzido o gap */
+    background-color: var(--primary-bg);
+    padding: 1rem; /* Reduzido o padding vertical */
+    border-radius: 8px;
+}
+.score-container.vertical-score .versus-divider {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--muted-text);
+    align-self: center;
+    padding: 0 1rem;
+    display: block;
+}
+.score-container.vertical-score .score-display {
+    font-size: 8rem; /* Aumentado */
+    font-weight: bold;
+    color: var(--active-tab);
+    line-height: 1;
+    margin-bottom: 0.5rem; /* Adicionado espaço abaixo */
+}
+
+
+/* Layout Horizontal */
+.score-container.horizontal-score {
+    display: flex;
+    flex-direction: column; /* Empilha os jogadores */
+    align-items: center; /* Centraliza horizontalmente */
+    gap: 1rem; /* Espaço entre jogadores */
+}
+.score-container.horizontal-score .player-section {
+    width: 90%; /* Ocupa quase toda a largura */
+    max-width: 600px; /* Limite máximo */
+    min-width: unset; /* Remove mínimo */
+    display: flex; /* Muda para flex row interno */
+    flex-direction: row; /* Placar | Botões */
+    align-items: center;
+    justify-content: space-between; /* Afasta placar dos botões */
+    gap: 1.5rem; /* Aumenta o gap horizontal */
+    padding: 1rem;
+    background-color: var(--primary-bg);
+    border-radius: 8px;
+}
+/* REMOVIDO .score-container.horizontal-score .player-name */
+.score-container.horizontal-score .score-display {
+    font-size: 5rem; /* Aumentado um pouco */
+    margin: 0; /* Removido margin extra */
+    min-width: 80px; /* Garante espaço */
+    text-align: center;
+    flex-shrink: 0; /* Evita que o placar encolha */
+    font-weight: bold;
+    color: var(--active-tab);
+    line-height: 1;
+}
+.score-container.horizontal-score .score-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    width: auto;
+    flex-grow: 1; /* Permite que os botões ocupem o espaço restante */
+    max-width: 350px; /* Ajuste conforme necessário */
+    margin-top: 0;
+}
+.score-container.horizontal-score .versus-divider {
+    display: none;
+}
+
+
+/* Estilos dos Novos Botões Divididos */
+.score-buttons { /* Estilos gerais que se aplicam a ambos layouts */
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* Espaço entre os botões */
+    width: 90%; /* Aumenta a largura dos botões no vertical */
+    margin-top: 1rem; /* Mantém espaço no vertical */
+}
+/* Ajuste para largura dos botões no vertical para 100% */
+.score-container.vertical-score .score-buttons {
+    width: 100%;
+    max-width: 350px; /* Limita largura máxima no vertical também */
+}
+
+.split-score-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-color);
+    min-height: 50px;
+    overflow: hidden;
+    padding: 0;
+    transition: box-shadow 0.2s;
+}
+.split-score-btn:hover {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.btn-side {
+    padding: 0.8rem 1rem;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s, color 0.2s;
+    min-width: 50px;
+    user-select: none;
+}
+.btn-side:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--active-tab);
+}
+.btn-side:active {
+    background-color: rgba(0, 255, 195, 0.3);
+    transform: scale(0.95);
+}
+.btn-decrease {
+    border-right: 1px solid var(--border-color);
+}
+.btn-increase {
+    border-left: 1px solid var(--border-color);
+}
+
+.btn-label {
+    flex-grow: 1;
+    text-align: center;
+    padding: 0.5rem 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+/* --- [FIM] Estilos Placar Atualizado --- */
+
+
+/* --- Media Queries (Incluindo ajustes para Guia/Spoilers E Placar) --- */
 
 @media (max-width: 900px) {
     /* Guia */
-    /* Removido o flex-direction: column de #guide-products-container */
     .brand-products-grid { /* Ajusta o grid dentro do spoiler */
          flex-direction: column;
          align-items: center;
@@ -231,11 +387,42 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
     .part-info-icon { width: 18px; height: 18px; font-size: 0.8rem; left: 3px; bottom: 3px; }
     .part-tier { font-size: 0.7rem; padding: 1px 3px; top: 3px; right: 3px; }
 
-    .score-container { flex-direction: column; align-items: center; gap: 1rem; }
-    .versus-divider { transform: rotate(90deg); margin: 0.5rem 0; }
-    .player-section { min-width: 90%; gap: 1rem; padding: 1rem; }
-    .score-display { font-size: 5rem; }
-    .score-buttons { width: 90%; }
+    /* Placar Responsivo Tablet */
+    .score-container.vertical-score {
+        gap: 1rem; /* Reduz espaço no vertical em tablet */
+    }
+    .score-container.vertical-score .player-section {
+        min-width: 280px; /* Reduz mínimo */
+        max-width: 400px; /* Reduz máximo */
+    }
+    .score-container.vertical-score .score-display {
+        font-size: 7rem; /* Reduz um pouco no tablet */
+    }
+    .score-container.vertical-score .versus-divider {
+        transform: rotate(90deg); /* Gira VS se quebrar linha */
+        margin: 0.5rem 0;
+    }
+
+    .score-container.horizontal-score .player-section {
+        flex-direction: column; /* Empilha tudo no horizontal em tablet */
+        width: 95%;
+        gap: 0.5rem;
+    }
+     /* REMOVIDO .score-container.horizontal-score .player-name */
+    .score-container.horizontal-score .score-display {
+        font-size: 6rem; /* Aumenta um pouco aqui */
+        margin: 0.5rem 0;
+    }
+    .score-container.horizontal-score .score-buttons {
+        grid-template-columns: 1fr; /* Uma coluna no horizontal em tablet */
+        width: 90%;
+        max-width: 300px;
+    }
+    .btn-label {
+        font-size: 0.8rem; /* Reduz um pouco a fonte do botão */
+    }
+    /* Fim Placar Responsivo Tablet */
+
 
     /* Guia: Partes dentro do card */
     .product-part-item { width: 90px; min-height: 120px;}
@@ -265,9 +452,43 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
      .part-info-icon { width: 16px; height: 16px; font-size: 0.7rem; }
      .part-tier { font-size: 0.65rem; }
 
-     .score-display { font-size: 4rem; }
+     /* Placar Responsivo Mobile */
+     .score-controls-top {
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    .score-controls-top button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        flex-grow: 1;
+    }
+    .score-container.vertical-score .player-section {
+        min-width: 95%;
+    }
+    .score-container.vertical-score .score-display {
+        font-size: 6rem; /* Reduz mais */
+    }
+     .score-container.horizontal-score .score-display {
+        font-size: 5rem; /* Reduz mais */
+    }
+     .score-container.horizontal-score .score-buttons {
+        width: 100%; /* Botões ocupam largura total */
+        grid-template-columns: 1fr; /* Garante uma coluna */
+    }
+    .split-score-btn {
+        min-height: 45px;
+    }
+    .btn-side {
+        padding: 0.6rem 0.8rem;
+        font-size: 1.3rem;
+        min-width: 40px;
+    }
+    .btn-label {
+        font-size: 0.75rem;
+    }
+     /* Fim Placar Responsivo Mobile */
 
-     /* Guia */
+     /* Guia Responsivo Mobile */
      .brand-spoiler-title {
          font-size: 1rem;
          padding: 0.6rem 1rem;
@@ -282,6 +503,7 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
      }
      .brand-products-grid .product-card {
          min-width: 280px; /* Ajuste mínimo */
+         width: 95%;
      }
      .brand-products-grid .product-parts {
         grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
@@ -290,6 +512,7 @@ button, .tab-link, .part-card, .part-placeholder, .variant-card, .close-button, 
      .product-part-item { width: 80px; min-height: 110px;}
      .product-part-item img { max-width: 40px; height: 40px; }
      .product-part-item p { font-size: 0.75rem; min-height: 1.5rem; }
+     /* Fim Guia Responsivo Mobile */
 
      .chart-container { max-width: 200px; }
      .bay-info-container { margin-top: 0.5rem; }
@@ -367,3 +590,194 @@ summary { /* Fallback genérico */
 }
 
 /* --- Fim dos Estilos para Spoilers --- */
+
+
+/* --- [NOVO] Estilos Globais para Botões --- */
+
+/* Estilo Base para a maioria dos botões */
+button {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 0.6rem 1.2rem; /* Padding padrão */
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, transform 0.1s;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    line-height: 1.2;
+    vertical-align: middle;
+    user-select: none; /* Evita seleção de texto no botão */
+}
+
+button:hover {
+    background-color: #404040; /* Escurece no hover */
+    border-color: var(--text-color); /* Destaca borda */
+}
+
+button:active {
+    transform: scale(0.97); /* Efeito de pressionar */
+    background-color: #505050; /* Fundo ligeiramente diferente no active */
+}
+
+button:disabled { /* Estilo para botões desabilitados */
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--muted-text);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Botões de Ícone Pequenos (Ex: +/- no Deck Manager) */
+.deck-buttons-group button {
+    width: 40px; /* Tamanho fixo */
+    height: 40px;
+    font-size: 1.5rem;
+    line-height: 1; /* Centraliza o ícone */
+    padding: 0; /* Remove padding padrão */
+}
+
+/* Botões dentro de Modais */
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end; /* Alinha à direita */
+    gap: 0.75rem; /* Espaço entre botões */
+    margin-top: 1rem; /* Espaço acima dos botões */
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+.modal-buttons button {
+     padding: 0.5rem 1rem; /* Padding ligeiramente menor */
+     font-size: 0.9rem;
+}
+
+/* Estilo de Ação Primária (OK, Confirmar, Salvar) */
+#input-modal-ok,
+#variant-modal-done,
+/* Adicione outros IDs/Classes de botões primários aqui se necessário */
+.primary-action-button /* Classe genérica opcional */
+{
+    background-color: #007bff; /* Azul como exemplo */
+    border-color: #0056b3;
+    color: white;
+}
+#input-modal-ok:hover,
+#variant-modal-done:hover,
+.primary-action-button:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+#input-modal-ok:active,
+#variant-modal-done:active,
+.primary-action-button:active {
+    background-color: #004085;
+}
+
+
+/* Estilo de Perigo (Excluir, Resetar) */
+.danger-button,
+#reset-score-button, /* Aplicando também ao botão de resetar placar */
+#delete-deck-button /* Aplicando ao botão de deletar deck */
+{
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    color: white; /* Garante texto branco */
+}
+.danger-button:hover,
+#reset-score-button:hover,
+#delete-deck-button:hover {
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+.danger-button:active,
+#reset-score-button:active,
+#delete-deck-button:active {
+    background-color: #ac2925;
+}
+
+
+/* Overrides para Botões com Estilo Específico */
+
+/* Botões de Idioma (Manter estilo circular) */
+.lang-button {
+    padding: 5px; /* Manter padding específico */
+    border-radius: 50%; /* Manter circular */
+    width: 50px;
+    height: 50px;
+    background-color: transparent; /* Sobrescreve fundo base */
+    border: 2px solid var(--border-color); /* Manter borda específica */
+    /* Outros estilos únicos mantidos */
+}
+.lang-button:hover {
+    border-color: var(--text-color); /* Manter hover específico */
+    background-color: transparent; /* Garantir fundo transparente */
+    transform: none; /* Remover scale se aplicado */
+}
+.lang-button.active {
+    border-color: #00ffc3;
+    box-shadow: var(--owned-glow);
+    background-color: transparent;
+    transform: none;
+}
+.lang-button:active {
+     transform: scale(0.95); /* Adicionar leve scale no active */
+}
+
+/* Tab Links (Não são <button>, manter estilo próprio) */
+.tab-link {
+    /* Estilos existentes são mantidos */
+}
+
+/* Botões Divididos do Placar (Manter estilo próprio) */
+.split-score-btn {
+    /* Container não é um botão, manter estilos */
+}
+.btn-side {
+     /* Estilos existentes são mantidos, cursor já definido */
+}
+.btn-side:active {
+     transform: scale(0.95); /* Efeito de clique */
+}
+
+
+/* Ajustes para outros elementos interativos */
+select {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 8px 10px; /* Ajuste padding */
+    font-size: 0.9rem; /* Consistência */
+    cursor: pointer;
+    transition: border-color 0.2s;
+    appearance: none; /* Remove aparência padrão */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23aaaaaa'%3E%3Cpath fill-rule='evenodd' d='M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z' clip-rule='evenodd' /%3E%3C/svg%3E"); /* Seta customizada (SVG cinza) */
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 1.2em;
+    padding-right: 2.5rem; /* Espaço para a seta */
+}
+select:hover {
+    border-color: var(--text-color);
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+    width: 1.3em; /* Tamanho um pouco maior */
+    height: 1.3em;
+    accent-color: #00ffc3; /* Cor do check */
+    vertical-align: middle;
+    margin-left: 5px; /* Espaço à esquerda */
+    position: relative; /* Para possível customização futura */
+}
+.filter-switch label { /* Garante que o label também seja clicável */
+    cursor: pointer;
+    user-select: none;
+}
+
+/* --- [FIM] Estilos Globais para Botões --- */

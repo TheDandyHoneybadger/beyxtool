@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputModalClose = document.getElementById('input-modal-close');
     const scoreP1Display = document.getElementById('score-p1');
     const scoreP2Display = document.getElementById('score-p2');
-    const scoreButtons = document.querySelectorAll('.score-btn');
     const resetScoreButton = document.getElementById('reset-score-button');
     const p1NameInput = document.querySelector('#player1 .player-name');
     const p2NameInput = document.querySelector('#player2 .player-name');
@@ -74,6 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoModalPartName = document.getElementById('info-modal-part-name');
     const infoModalSourceList = document.getElementById('info-modal-source-list');
     const infoModalChartCanvas = document.getElementById('info-modal-chart');
+    // Novos Seletores Placar
+    const toggleLayoutButton = document.getElementById('toggle-layout-button');
+    const scoreContainer = document.getElementById('score-container'); // Adicionado ID ao container no HTML
+    const scoreButtonSides = document.querySelectorAll('.btn-side'); // Seleciona os lados clicáveis
+    const variantModalDoneButton = document.getElementById('variant-modal-done'); // Botão OK do modal de variantes
+
 
     // --- Funções Auxiliares ---
 
@@ -105,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  if (element.placeholder !== undefined && key.includes('placeholder')) { element.placeholder = langPack[key]; }
                  else if (element.title !== undefined && key.includes('title')) { element.title = langPack[key]; }
                  else if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('part-placeholder')) { element.textContent = langPack[key]; }
-                 else if (element.tagName === 'INPUT' && (key === 'player_1_default' || key === 'player_2_default')) { const defaultP1_pt = translations['pt-br']?.player_1_default || "Jogador 1"; const defaultP1_en = translations['en']?.player_1_default || "Player 1"; const defaultP2_pt = translations['pt-br']?.player_2_default || "Jogador 2"; const defaultP2_en = translations['en']?.player_2_default || "Player 2"; if (key === 'player_1_default' && (element.value === defaultP1_pt || element.value === defaultP1_en)) { element.value = langPack[key]; } else if (key === 'player_2_default' && (element.value === defaultP2_pt || element.value === defaultP2_en)) { element.value = langPack[key]; } }
+                 else if (element.tagName === 'INPUT' && (key === 'player_1_default' || key === 'player_2_default')) { const defaultP1_pt = translations['pt-br']?.player_1_default || "Jogador 1"; const defaultP1_en = translations['en']?.player_1_default || "Player 1"; const defaultP2_pt = translations['pt-br']?.player_2_default || "Jogador 2"; const defaultP2_en = translations['en']?.player_2_default || "Player 2"; if (key === 'player_1_default' && (element.value === defaultP1_pt || element.value === defaultP1_en || element.value === "")) { element.value = langPack[key]; } else if (key === 'player_2_default' && (element.value === defaultP2_pt || element.value === defaultP2_en || element.value === "")) { element.value = langPack[key]; } } // Corrigido para preencher se vazio
                  else if (element.tagName !== 'BUTTON' || !element.id.startsWith('lang-')) { element.textContent = langPack[key]; }
             } else { console.warn(`Translation key not found: ${key}`); }
         });
@@ -141,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         guide_products_container.innerHTML = ''; // Limpa o container principal
 
         const brands = [
-            { key: 'hasbro', titleKey: 'guide_spoiler_hasbro', defaultTitle: 'Hasbro Products', openByDefault: true },
+            { key: 'hasbro', titleKey: 'guide_spoiler_hasbro', defaultTitle: 'Hasbro Products', openByDefault: false },
             { key: 'takaraTomy', titleKey: 'guide_spoiler_takara', defaultTitle: 'Takara Tomy Products', openByDefault: false }
         ];
 
@@ -182,8 +187,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 product.parts.forEach(partId => {
                     const part = ALL_PARTS.find(p => p.id === partId);
                     if (!part) {
-                        console.warn(`Peça do Guia ${partId} no produto ${product.productName} não encontrada em ALL_PARTS.`);
-                        return; // Pula a renderização desta peça se não encontrada
+                        // Se não encontrar direto, tenta tratar como peça de pack BXS (ex: '4-80')
+                        if (partId.match(/^\d+-\d+[A-Z]*$/i)) {
+                            // É um ratchet+bit genérico de pack BXS, não renderiza como peça individual
+                             console.warn(`Peça genérica ${partId} de pack BXS ignorada no Guia.`);
+                        } else {
+                            console.warn(`Peça do Guia '${partId}' no produto '${product.productName}' não encontrada em ALL_PARTS.`);
+                        }
+                        return; // Pula a renderização desta peça se não encontrada ou se for genérica
                     }
                     const partItem = document.createElement('div');
                     partItem.className = 'product-part-item';
@@ -391,67 +402,89 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const mainCard = document.querySelector(`#collection-tab .part-card[data-part-id="${part.id}"]`);
 
+        // Clona o set para evitar modificação durante a iteração
+        const currentOwnedClone = new Set(owned);
+        let changedVariants = false; // Flag para saber se algo mudou
+
+        grid.innerHTML = ''; // Limpa antes de adicionar
+
         variantList.forEach(vData => {
             if (!vData?.name) return;
             const card = document.createElement('div');
             card.className = 'variant-card';
             card.dataset.variantName = vData.name;
-            card.innerHTML = `<img src="${vData.image || 'images/placeholder.webp'}" alt="${vData.name}"><p>${vData.name}</p>`; // Adicionado placeholder
-            if (owned.has(vData.name)) card.classList.add('selected');
+            card.innerHTML = `<img src="${vData.image || 'images/placeholder.webp'}" alt="${vData.name}"><p>${vData.name}</p>`;
+            if (currentOwnedClone.has(vData.name)) card.classList.add('selected'); // Usa o clone para estado inicial
 
             card.addEventListener('click', () => {
-                const currentOwned = app_data.collection.blades.get(part.id) || new Set();
-                let wasModified = false;
-                let needsDeckUpdate = false; // Flag para atualizar o deck
-
-                if (currentOwned.has(vData.name)) {
-                    currentOwned.delete(vData.name);
+                 // Alterna a seleção no clone
+                if (currentOwnedClone.has(vData.name)) {
+                    currentOwnedClone.delete(vData.name);
                     card.classList.remove('selected');
-                    wasModified = true;
-                    // Verifica se essa variante estava em uso e precisa limpar o bay
-                    app_data.decks.forEach(deck => deck.bays.forEach(bay => {
-                        if (bay.part1?.baseId === part.id && bay.part1.variant === vData.name) {
-                            clearBay(bay);
-                            needsDeckUpdate = true;
-                        }
-                    }));
                 } else {
-                    currentOwned.add(vData.name);
+                    currentOwnedClone.add(vData.name);
                     card.classList.add('selected');
-                    wasModified = true;
                 }
+                changedVariants = true; // Marca que houve mudança
+            });
+            grid.appendChild(card);
+        });
 
-                if (wasModified) {
-                    if (currentOwned.size > 0) {
-                        app_data.collection.blades.set(part.id, currentOwned);
-                        if (mainCard) mainCard.classList.add('owned');
-                    } else {
-                        app_data.collection.blades.delete(part.id);
-                        if (mainCard) mainCard.classList.remove('owned');
-                        // Se não há mais variantes, remove de todos os decks
-                        app_data.decks.forEach(d => d.bays.forEach(b => {
-                            if (b.part1?.baseId === part.id) {
-                                clearBay(b);
+        // Lógica para salvar ao clicar OK (movida para fora do loop)
+        const handleVariantModalDone = () => {
+            if (changedVariants) {
+                let needsDeckUpdate = false;
+                const originalOwned = app_data.collection.blades.get(part.id) || new Set();
+
+                // Verifica variantes removidas que estavam em uso
+                originalOwned.forEach(originalVariant => {
+                    if (!currentOwnedClone.has(originalVariant)) { // Variante foi removida
+                        app_data.decks.forEach(deck => deck.bays.forEach(bay => {
+                             if (bay.part1?.baseId === part.id && bay.part1.variant === originalVariant) {
+                                clearBay(bay);
                                 needsDeckUpdate = true;
                             }
                         }));
                     }
-                    if (needsDeckUpdate) updateDeckUI(); // Atualiza a UI do deck se necessário
-                    saveAppData();
-                    if (collection_filter?.checked) { renderParts(); }
-                    renderStarterGuide();
+                });
+
+                // Atualiza a coleção
+                if (currentOwnedClone.size > 0) {
+                    app_data.collection.blades.set(part.id, currentOwnedClone);
+                    if (mainCard) mainCard.classList.add('owned');
+                } else {
+                    app_data.collection.blades.delete(part.id);
+                    if (mainCard) mainCard.classList.remove('owned');
+                    // Se não há mais variantes, remove de todos os decks (já feito acima pela verificação de removidas)
+                    app_data.decks.forEach(d => d.bays.forEach(b => {
+                        if (b.part1?.baseId === part.id && !currentOwnedClone.has(b.part1.variant)) { // Checa novamente caso algo tenha dado errado
+                            clearBay(b);
+                            needsDeckUpdate = true;
+                        }
+                    }));
                 }
-                // closeVariantModal(); // Decide se fecha automaticamente ou não
-            });
-            grid.appendChild(card);
-        });
+
+                if (needsDeckUpdate) updateDeckUI();
+                saveAppData();
+                if (collection_filter?.checked) { renderParts(); }
+                renderStarterGuide();
+            }
+            closeVariantModal();
+        };
+
+        // Remove listener antigo para evitar duplicatas, depois adiciona
+         if (variantModalDoneButton) {
+            variantModalDoneButton.removeEventListener('click', handleVariantModalDone); // Garante que não haja listeners duplicados
+            variantModalDoneButton.addEventListener('click', handleVariantModalDone, { once: true }); // Executa apenas uma vez
+        }
+
         variant_modal.style.display = 'block';
     };
 
 
     const closeVariantModal = () => { if (variant_modal) variant_modal.style.display = 'none'; variant_modal_part = null; };
     const clearBay = (bay) => { if (bay) { bay.type = null; bay.part1 = null; bay.part2 = null; bay.part3 = null; bay.part4 = null; bay.part5 = null; } };
-    const closePartModal = () => { if (part_modal) part_modal.style.display = 'none'; };
+    const closePartModal = () => { if (part_modal) part_modal.style.display = 'none'; active_deck_slot = { slotId: null, type: null }; }; // Reseta active_deck_slot
 
     const selectPartForDeck = (part) => {
         const { slotId, type } = active_deck_slot;
@@ -592,9 +625,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Funções do Placar ---
     const updateScoreDisplay = () => { if (scoreP1Display) scoreP1Display.textContent = scoreP1; if (scoreP2Display) scoreP2Display.textContent = scoreP2; };
-    const handleScoreButton = (e) => { const player = e.target.dataset.player; const points = parseInt(e.target.dataset.points, 10); if (player === '1') { scoreP1 += points; } else if (player === '2') { scoreP2 += points; } updateScoreDisplay(); };
+    // Função handleScoreButton removida
+
+    // Nova função para botões divididos
+    const handleSplitScoreButton = (event) => {
+        const sideClicked = event.currentTarget; // O span .btn-side que foi clicado
+        const buttonContainer = sideClicked.closest('.split-score-btn'); // Pega o div pai do botão
+        if (!buttonContainer) return;
+
+        const player = buttonContainer.dataset.player;
+        const points = parseInt(buttonContainer.dataset.points, 10);
+        let pointChange = 0;
+
+        if (sideClicked.classList.contains('btn-increase')) {
+            pointChange = points;
+        } else if (sideClicked.classList.contains('btn-decrease')) {
+            pointChange = -points;
+        }
+
+        if (player === '1') {
+            scoreP1 = Math.max(0, scoreP1 + pointChange); // Garante que não fique negativo
+        } else if (player === '2') {
+            scoreP2 = Math.max(0, scoreP2 + pointChange); // Garante que não fique negativo
+        }
+
+        updateScoreDisplay();
+    };
+
     const resetScore = () => { const langPack = translations[currentLanguage] || translations['en']; const confirmMsg = langPack.confirm_reset_score || "Are you sure you want to reset the scoreboard?"; if (confirm(confirmMsg)) { scoreP1 = 0; scoreP2 = 0; updateScoreDisplay(); } };
     const savePlayerName = (playerNumber, inputElement) => { if (!inputElement) return; const newName = inputElement.value.trim(); const key = `beyXToolP${playerNumber}Name`; const defaultKey = `player_${playerNumber}_default`; const langPack = translations[currentLanguage] || translations['en']; const defaultValue = langPack[defaultKey] || (playerNumber === 1 ? "Player 1" : "Player 2"); if (newName) { localStorage.setItem(key, newName); } else { inputElement.value = defaultValue; localStorage.setItem(key, defaultValue); } };
+
+    // Funções de Layout do Placar
+    const toggleScoreLayout = () => {
+        if (!scoreContainer) return;
+        const isVertical = scoreContainer.classList.contains('vertical-score');
+        if (isVertical) {
+            scoreContainer.classList.remove('vertical-score');
+            scoreContainer.classList.add('horizontal-score');
+            localStorage.setItem('beyXScoreLayout', 'horizontal');
+        } else {
+            scoreContainer.classList.remove('horizontal-score');
+            scoreContainer.classList.add('vertical-score');
+            localStorage.setItem('beyXScoreLayout', 'vertical');
+        }
+    };
+
+    const loadScoreLayout = () => {
+        const savedLayout = localStorage.getItem('beyXScoreLayout');
+        if (scoreContainer) {
+             // Remove ambas as classes para garantir um estado limpo
+             scoreContainer.classList.remove('vertical-score', 'horizontal-score');
+            if (savedLayout === 'horizontal') {
+                scoreContainer.classList.add('horizontal-score');
+            } else {
+                scoreContainer.classList.add('vertical-score'); // Vertical é o padrão
+            }
+        }
+    };
 
     // --- Funções de Gerenciamento de Deck ---
     const addDeck = () => { const newDeckName = `Deck ${app_data.decks.length + 1}`; app_data.decks.push(createNewDeck(newDeckName)); app_data.active_deck_index = app_data.decks.length - 1; updateDeckUI(); saveAppData(); };
@@ -690,8 +777,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const closePartInfoModal = () => { if (partInfoModal) partInfoModal.style.display = 'none'; if (infoModalChartInstance) { infoModalChartInstance.destroy(); infoModalChartInstance = null; } };
 
     // --- INICIALIZAÇÃO E EVENT LISTENERS ---
-    const savedLanguage = localStorage.getItem('beyXToolLanguage'); if (savedLanguage && translations[savedLanguage]) currentLanguage = savedLanguage;
-    setupTabs(); loadAppData(); renderParts(); /* renderStarterGuide é chamado por setLanguage */ setLanguage(currentLanguage); updateScoreDisplay();
+    const savedLanguage = localStorage.getItem('beyXToolLanguage'); if (savedLanguage && translations[savedLanguage]) currentLanguage = savedLanguage; else currentLanguage = 'en'; // Garante que começa com 'en' se não houver salvo
+    setupTabs(); loadAppData(); loadScoreLayout(); renderParts(); /* renderStarterGuide é chamado por setLanguage */ setLanguage(currentLanguage); updateScoreDisplay();
 
     // Listeners
     langPtBrButton?.addEventListener('click', () => setLanguage('pt-br')); langEnButton?.addEventListener('click', () => setLanguage('en'));
@@ -702,15 +789,23 @@ document.addEventListener('DOMContentLoaded', () => {
     deck_slots.forEach(slot => { slot.querySelectorAll('.part-placeholder').forEach(ph => { ph.addEventListener('click', () => { const sId = slot.dataset.slotId; const t = ph.dataset.type; if(sId !== undefined && t) openPartSelector(sId, t); }); }); });
     add_deck_button?.addEventListener('click', addDeck); delete_deck_button?.addEventListener('click', deleteDeck); deck_selector?.addEventListener('change', switchDeck);
     deck_name_input?.addEventListener('blur', renameDeck); deck_name_input?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { renameDeck(); } });
-    part_modal_close?.addEventListener('click', closePartModal); variant_modal_close?.addEventListener('click', closeVariantModal);
+    part_modal_close?.addEventListener('click', closePartModal);
+    variant_modal_close?.addEventListener('click', closeVariantModal); // Fechar pelo X
+    variantModalDoneButton?.addEventListener('click', closeVariantModal); // Fechar pelo botão OK (a lógica de salvar já está no listener dos cards dentro de openVariantSelector)
     inputModalOk?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(inputModalField.value); }); inputModalCancel?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); }); inputModalClose?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); }); inputModalField?.addEventListener('keypress', (e) => { if (e.key === 'Enter' && onInputConfirm) { onInputConfirm(inputModalField.value); } });
-    scoreButtons.forEach(button => button.addEventListener('click', handleScoreButton)); resetScoreButton?.addEventListener('click', resetScore);
+    // Novos Listeners Placar
+    scoreButtonSides.forEach(side => side.addEventListener('click', handleSplitScoreButton));
+    toggleLayoutButton?.addEventListener('click', toggleScoreLayout);
+    resetScoreButton?.addEventListener('click', resetScore); // Listener do Reset mantido
+    // Listeners Nomes Jogadores
     p1NameInput?.addEventListener('blur', () => savePlayerName(1, p1NameInput));
     p2NameInput?.addEventListener('blur', () => savePlayerName(2, p2NameInput));
     p1NameInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { savePlayerName(1, p1NameInput); p1NameInput.blur(); } });
     p2NameInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { savePlayerName(2, p2NameInput); p2NameInput.blur(); } });
+    // Listener Modal Info
     partInfoModalClose?.addEventListener('click', closePartInfoModal);
 
+    // Fechar Modais clicando fora
     window.addEventListener('click', (event) => { if (event.target === part_modal) closePartModal(); if (event.target === variant_modal) closeVariantModal(); if (event.target === inputModal) { if (onInputConfirm) onInputConfirm(null); } if (event.target === partInfoModal) closePartInfoModal(); });
 
 }); // Fim do DOMContentLoaded
