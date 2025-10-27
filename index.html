@@ -7,32 +7,77 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
     <header>
         <img src="images/logo.png" alt="BeyXTool Logo" class="header-logo">
         <nav>
+            <a href="#" class="tab-link" data-tab="welcome" data-translate="tab_welcome">Welcome</a>
             <a href="#" class="tab-link" data-tab="meta" data-translate="tab_meta">META</a>
             <a href="#" class="tab-link" data-tab="deck-builder" data-translate="tab_deck_builder">Deck Builder</a>
             <a href="#" class="tab-link" data-tab="guide" data-translate="tab_guide">Guia</a>
             <a href="#" class="tab-link" data-tab="collection" data-translate="tab_collection">Coleção</a>
             <a href="#" class="tab-link" data-tab="score" data-translate="tab_score">Placar</a>
+            <a href="#" class="tab-link" data-tab="trades" data-translate="tab_trades">Trades</a>
             <a href="#" class="tab-link" data-tab="settings" data-translate="tab_settings">Configurações</a>
         </nav>
     </header>
 
     <main>
+        <div id="welcome-tab" class="tab-content">
+            <div class="tab-header">
+                <h2 data-translate="welcome_header">Bem Vindo(a) ao BeyXTool!</h2>
+            </div>
+            <div class="welcome-container">
+                <section>
+                    <h3 data-translate="welcome_proposal_title">Proposta do Site</h3>
+                    <p data-translate="welcome_proposal_text_1">
+                        O BeyXTool é uma ferramenta completa (e não oficial) criada para auxiliar jogadores de Beyblade X. A proposta é centralizar todas as informações de peças, gerenciamento de decks, coleção e recursos da comunidade em um único local, acessível e fácil de usar.
+                    </p>
+                    <p data-translate="welcome_proposal_text_2">
+                        Seja você um Blader competitivo montando um deck para um torneio, um colecionador querendo organizar suas peças, ou alguém procurando trocar peças, esta ferramenta foi feita para você.
+                    </p>
+                </section>
+
+                <section>
+                    <h3 data-translate="welcome_how_to_title">Como Usar</h3>
+                    <ul>
+                        <li><strong data-translate="tab_meta">META:</strong> <span data-translate="welcome_how_to_meta">Acesse planilhas e vídeos da comunidade (como do Anti Wizard Wizard Club) sobre os combos e peças mais fortes do formato atual.</span></li>
+                        <li><strong data-translate="tab_deck_builder">Deck Builder:</strong> <span data-translate="welcome_how_to_deck">Monte seus decks (padrão ou CX), veja os status combinados e exporte sua lista para torneios.</span></li>
+                        <li><strong data-translate="tab_guide">Guia:</strong> <span data-translate="welcome_how_to_guide">Iniciantes podem ver quais produtos (Hasbro ou Takara Tomy) comprar para obter as melhores peças competitivas.</span></li>
+                        <li><strong data-translate="tab_collection">Coleção:</strong> <span data-translate="welcome_how_to_collection">Clique duas vezes em uma peça para adicioná-la à sua "Coleção". Use o filtro para ver apenas o que você possui. (Isso afeta o Deck Builder).</span></li>
+                        <li><strong data-translate="tab_score">Placar:</strong> <span data-translate="welcome_how_to_score">Um placar simples para marcar pontos durante suas batalhas.</span></li>
+                        <li><strong data-translate="tab_trades">Trades:</strong> <span data-translate="welcome_how_to_trades">Clique duas vezes para marcar peças que você está "Procurando" (azul) ou "Passando" (vermelho). Use o botão "Exportar Imagem" para gerar um print e compartilhar.</span></li>
+                        <li><strong data-translate="tab_settings">Configurações:</strong> <span data-translate="welcome_how_to_settings">Mude o idioma e, o mais importante, EXPORTE seus dados. Salve seu arquivo (.bx) regularmente como backup!</span></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3 data-translate="welcome_contact_title">Contato</h3>
+                    <p data-translate="welcome_contact_text">
+                        Encontrou um bug? Tem sugestões de melhoria? Quer relatar uma informação incorreta? Entre em contato pelo e-mail:
+                    </p>
+                    <p class="contact-email">
+                        <a href="mailto:beyxtool@gmail.com">beyxtool@gmail.com</a>
+                    </p>
+                </section>
+            </div>
+        </div>
         <div id="meta-tab" class="tab-content">
              <div class="tab-header centered-header">
                  <h2>BEYBLADE X Meta Trends</h2>
              </div>
-             <p class="meta-cta">
-                 Want to know what the latest BEYBLADE X meta trends are? Find out the top combos, blades, ratchets, bits, and more, from the spreadsheet linked below, generously provided by Anti Wizard Wizard Club.
+             <p class="meta-cta" data-translate="meta_question">
+                 Querer saber mais sobre o META?
+             </p>
+             <p class="meta-cta" data-translate="meta_cta">
+                 Acesse o link abaixo e esteja um passo mais próximo de se tornar um PRO!
              </p>
              <div class="meta-link-container">
-                 <a href="https://docs.google.com/spreadsheets/d/15wiNF1pTAUzohfu4mTglFeM1rgfL62C5-8nrp5u3CcQ/edit?gid=1993417626#gid=1993417626" target="_blank" rel="noopener noreferrer">
-                     Click here to access the META Analysis Spreadsheet
+                 <a href="https://docs.google.com/spreadsheets/d/15wiNF1pTAUzohfu4mTglFeM1rgfL62C5-8nrp5u3CcQ/edit?gid=1993417626#gid=1993417626" target="_blank" rel="noopener noreferrer" data-translate="meta_link_text">
+                     Clique aqui para acessar a Ferramenta de Análise de META
                  </a>
                  <p class="meta-cta" style="margin-top: 2rem; margin-bottom: 1rem;">
                      Check out their YouTube channel and subscribe to show your support!
@@ -314,6 +359,59 @@
                 </div>
             </div>
             </div>
+        <div id="trades-tab" class="tab-content">
+            <div class="tab-header">
+                <h2 data-translate="trades_header">Lista de Trocas</h2>
+            </div>
+
+            <p class="trades-instructions" data-translate="trades_instructions_dblclick">
+                Clique duas vezes em uma peça para marcar: Branco (Nada) -> Azul (Procurando) -> Vermelho (Passando) -> Branco.
+            </p>
+
+            <div class="trade-display-container" id="trade-display-container">
+                <div id="trades-want-display" class="trade-list-display">
+                    <h4 data-translate="trades_list_header_want">== PROCURANDO ==</h4>
+                    </div>
+                <div id="trades-have-display" class="trade-list-display">
+                    <h4 data-translate="trades_list_header_have">== PASSANDO ==</h4>
+                    </div>
+            </div>
+
+            <div class="trades-controls">
+                <button id="copy-trades-button" data-translate="trades_copy_button_text">Copiar Lista (Texto)</button>
+                <button id="export-trades-button" data-translate="trades_export_button">Exportar Imagem</button>
+            </div>
+
+            <details class="part-type-spoiler">
+                <summary data-translate="blades_section_title">Blades</summary>
+                <div class="parts-grid" id="trades-blades-container"></div>
+            </details>
+
+            <details class="part-type-spoiler">
+                <summary data-translate="ratchets_section_title">Ratchets</summary>
+                <div class="parts-grid" id="trades-ratchets-container"></div>
+            </details>
+
+            <details class="part-type-spoiler">
+                <summary data-translate="bits_section_title">Bits</summary>
+                <div class="parts-grid" id="trades-bits-container"></div>
+            </details>
+
+            <details class="part-type-spoiler">
+                <summary data-translate="lockchips_section_title">Lock Chips</summary>
+                <div class="parts-grid" id="trades-lockchips-container"></div>
+            </details>
+
+            <details class="part-type-spoiler">
+                <summary data-translate="mainblades_section_title">Main Blades</summary>
+                <div class="parts-grid" id="trades-mainblades-container"></div>
+            </details>
+
+            <details class="part-type-spoiler">
+                <summary data-translate="assistblades_section_title">Assist Blades</summary>
+                <div class="parts-grid" id="trades-assistblades-container"></div>
+            </details>
+            </div>
         <div id="settings-tab" class="tab-content">
             <div class="tab-header">
                 <h2 data-translate="settings_header">Importar & Exportar Dados</h2>
@@ -323,7 +421,9 @@
                 <div class="language-settings">
                     <h3 data-translate="language_settings_title">Idioma / Language</h3>
                     <div class="language-selector">
-                        <button id="lang-pt-br" class="lang-button" title="Português (Brasil)">🇧🇷</button> <button id="lang-en" class="lang-button active" title="English (US)">🇺🇸</button> </div>
+                        <button id="lang-pt-br" class="lang-button" title="Português (Brasil)">🇧🇷</button>
+                        <button id="lang-en" class="lang-button active" title="English (US)">🇺🇸</button>
+                    </div>
                 </div>
                 <div class="data-buttons">
                     <button id="export-button" data-translate="export_button">Exportar Dados (.bx)</button>
@@ -375,7 +475,8 @@
             <h3 id="info-modal-part-name">Nome da Peça</h3>
             <div class="modal-scrollable-content">
                  <div id="info-modal-details">
-                     <h4 data-translate="part_source_title">Sources:</h4> <ul id="info-modal-source-list">
+                     <h4 data-translate="part_source_title">Sources:</h4>
+                     <ul id="info-modal-source-list">
                          <li>Loading...</li>
                      </ul>
                      <h4>Stats:</h4>
