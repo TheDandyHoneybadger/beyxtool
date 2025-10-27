@@ -1,0 +1,21 @@
+# Nome do serviço Worker na Cloudflare (Use o mesmo nome que você criou no painel!)
+name = "beyxtool-trade-api"
+
+# Arquivo principal que contém o código do Worker
+main = "src/index.mjs"
+
+# Data de compatibilidade (use uma data recente)
+compatibility_date = "2023-10-30" # Pode ajustar se necessário
+
+# --- Conexão com o Banco de Dados D1 ---
+[[d1_databases]]
+# Nome da variável que você usará no código para acessar o banco (env.DB)
+binding = "DB"
+
+# Nome do Banco de Dados D1 que você criou no painel Cloudflare
+database_name = "beyxtool-trades-db" # Verifique se este nome está EXATAMENTE igual ao que você criou
+
+# ID do Banco de Dados D1 (OBRIGATÓRIO!)
+# Vá até o painel Cloudflare > Workers & Pages > D1 > Clique no seu banco 'beyxtool-trades-db'
+# Copie o 'Database ID' que aparece lá e cole aqui abaixo.
+database_id = "3b7d0e67-f79a-40d2-b679-9f3e7951ecba"
