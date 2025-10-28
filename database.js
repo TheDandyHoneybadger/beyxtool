@@ -174,42 +174,42 @@ const STARTER_GUIDE_PRODUCTS = {
         },
         // --- Hasbro Custom Line ---
         {
-            productName: "Hasbro: Custom Line Courage Dran S 6-60V (G1677)",
+            productName: "Hasbro: Custom Line Courage Dran S6-60V (G1677)",
             image: "images/products/hasbro_G1677.webp",
             parts: ['lockchip-dran', 'mainblade-brave', 'assistblade-slash', '6-60', 'vortex']
         },
         {
-            productName: "Hasbro: Custom Line Reaper Incendio T 4-70K (G1678)",
+            productName: "Hasbro: Custom Line Reaper Incendio T4-70K (G1678)",
             image: "images/products/hasbro_G1678.webp",
             parts: ['lockchip-hells', 'mainblade-reaper', 'assistblade-turn', '4-70', 'kick']
         },
         {
-            productName: "Hasbro: Custom Line Arc Wizard R 4-55LO (G1679)",
+            productName: "Hasbro: Custom Line Arc Wizard R4-55LO (G1679)",
             image: "images/products/hasbro_G1679.webp",
             parts: ['lockchip-wizard', 'mainblade-arc', 'assistblade-round', '4-55', 'loworb']
         },
         {
-            productName: "Hasbro: Custom Line Dark Perseus B 6-80W (G1680)",
+            productName: "Hasbro: Custom Line Dark Perseus B6-80W (G1680)",
             image: "images/products/hasbro_G1680.webp",
             parts: ['lockchip-perseus', 'mainblade-dark', 'assistblade-bumper', '6-80', 'wedge']
         },
         {
-            productName: "Hasbro: Custom Line Brush Fox J 9-70GR (G1681)",
+            productName: "Hasbro: Custom Line Brush Fox J9-70GR (G1681)",
             image: "images/products/hasbro_G1681.webp",
             parts: ['lockchip-fox', 'mainblade-brush', 'assistblade-jaggy', '9-70', 'gearrush']
         },
         {
-            productName: "Hasbro: Custom Line Fort Hornet R 7-60T (G1682)",
+            productName: "Hasbro: Custom Line Fort Hornet R7-60T (G1682)",
             image: "images/products/hasbro_G1682.webp",
             parts: ['lockchip-hornet', 'mainblade-fort', 'assistblade-turn', '7-60', 'taper']
         },
         {
-            productName: "Hasbro: Custom Line Wriggle Kraken S 3-85O (G1683)",
+            productName: "Hasbro: Custom Line Wriggle Kraken S3-85O (G1683)",
             image: "images/products/hasbro_G1683.webp",
             parts: ['lockchip-kraken', 'mainblade-wriggle', 'assistblade-turn', '3-85', 'orb']
         },
         {
-            productName: "Hasbro: Custom Line Antler Stag B 2-60HN (G1684)",
+            productName: "Hasbro: Custom Line Antler Stag B2-60HN (G1684)",
             image: "images/products/hasbro_G1684.webp",
             parts: ['lockchip-stag', 'antler', 'assistblade-bumper', '2-60', 'highneedle']
         },
@@ -483,7 +483,7 @@ const STARTER_GUIDE_PRODUCTS = {
         {
             productName: "Takara Tomy: UX-16 Random Booster ClockMirage 9-65B",
             image: "images/products/takara_UX16.webp",
-            parts: ['clockmirage', '9-65', 'bearing']
+            parts: ['clockmirage', '9-65', 'bearing'] // Peças adicionais do RB não incluídas no guia principal
         },
         {
             productName: "Takara Tomy: CX-01 Starter DranBrave S6-60V",
@@ -508,7 +508,7 @@ const STARTER_GUIDE_PRODUCTS = {
         {
             productName: "Takara Tomy: CX-08 Random Booster CerberusFlame W5-80WB",
             image: "images/products/takara_CX08.webp",
-            parts: ['lockchip-cerberus', 'mainblade-flame', 'assistblade-wide', 'w5-80', 'weightball']
+            parts: ['lockchip-cerberus', 'mainblade-flame', 'assistblade-wide', 'w5-80', 'weightball'] // Peças adicionais do RB não incluídas no guia principal
         },
         {
             productName: "Takara Tomy: CX-09 Starter SolEclipse D5-70TK",
@@ -674,7 +674,6 @@ const STARTER_GUIDE_PRODUCTS = {
     ]
 };
 
-
 // --- BASE DE DADOS DAS VARIANTES (ATUALIZADA) ---
 const ALL_VARIANTS = {
     'aerpegasus': [ { name: "Stock", image: "images/blades/AeroPegasus.webp" } ],
@@ -695,7 +694,7 @@ const ALL_VARIANTS = {
     'drigerslash': [ { name: "Stock", image: "images/blades/DrigerSlash.webp" } ],
     'generalgrievous': [ { name: "Stock", image: "images/blades/GeneralGrievous.webp" } ],
     'ghostcircle': [ { name: "Stock", image: "images/blades/GhostCircle.webp" }, { name: "ver. 2", image: "images/variantes/GhostCircle_4-60H.webp" } ],
-    'gillshark': [ { name: "Stock", image: "images/blades/GillShark.webp" } ], // Renomeado de 'sharkgill' para consistência
+    'sharkgill': [ { name: "Stock", image: "images/blades/SharkGill.webp" } ], // Nome consistente
     'golemrock': [ { name: "Stock", image: "images/blades/GolemRock.webp" } ], // Adicionando entrada, mesmo sem variantes por agora
     'hellschain': [ { name: "Stock", image: "images/blades/HellsChain.webp" }, { name: "ver. 2", image: "images/variantes/HellsChain_9-80O.webp" } ],
     'hellshammer': [ { name: "Stock", image: "images/blades/HellsHammer.webp" } ],
@@ -716,6 +715,7 @@ const ALL_VARIANTS = {
     'phoenixfeather': [ { name: "Stock", image: "images/blades/PhoenixFeather.webp" }, { name: "ver. 2", image: "images/variantes/PhoenixFeather_3-60F.webp" }, { name: "ver. 3", image: "images/variantes/PhoenixFeather_4-60LF.webp" } ],
     'phoenixrudder': [ { name: "Stock", image: "images/blades/PhoenixRudder.webp" }, { name: "ver. 2", image: "images/variantes/PhoenixRudder_9-70G.webp" }, { name: "ver. 3", image: "images/variantes/PhoenixRudder_4-70LF.webp"} ], // Adicionada ver. 3 (CX-05)
     'phoenixwing': [ { name: "Stock", image: "images/blades/PhoenixWing.webp" }, { name: "ver. 2", image: "images/variantes/PhoenixWing_9-60GF.webp" }, { name: "ver. 3", image: "images/variantes/PhoenixWing_9-80DB.webp" } ],
+    'pteraswing': [ { name: "Stock", image: "images/blades/PteraSwing.webp" }],
     'quetzalcoatlus': [ { name: "Stock", image: "images/blades/Quetzalcoatlus.webp" } ],
     'rhinohorn': [ { name: "Stock", image: "images/blades/RhinoHorn.webp" }, { name: "ver. 2", image: "images/variantes/RhinoHorn_5-80Q.webp" } ],
     'rockleone': [ { name: "Stock", image: "images/blades/RockLeone.webp" } ],
@@ -728,8 +728,8 @@ const ALL_VARIANTS = {
     'shinobiknife': [ { name: "Stock", image: "images/blades/ShinobiKnife.webp" } ],
     'shinobishadow': [ { name: "Stock", image: "images/blades/ShinobiShadow.webp" }, { name: "ver. 2", image: "images/variantes/ShinobiShadow_3-70GP.webp" }, { name: "ver. 3", image: "images/variantes/ShinobiShadow_3-80F.webp" }, { name: "ver. 4", image: "images/variantes/ShinobiShadow_9-60LF.webp" } ],
     'silverwolf': [ { name: "Stock", image: "images/blades/SilverWolf.webp" } ],
-    'sphinx-cowl': [ { name: "Stock", image: "images/blades/SphinxCowl.webp" }, { name: "ver. 2", image: "images/variantes/SphinxCowl_4-80HT.webp" }, { name: "ver. 3", image: "images/variantes/SphinxCowl_5-60O.webp" }, { name: "ver. 4", image: "images/variantes/SphinxCowl_9-80GN.webp" } ],
     'spider-man': [ { name: "Stock", image: "images/blades/Spider-Man.webp" } ],
+    'sphinx-cowl': [ { name: "Stock", image: "images/blades/SphinxCowl.webp" }, { name: "ver. 2", image: "images/variantes/SphinxCowl_4-80HT.webp" }, { name: "ver. 3", image: "images/variantes/SphinxCowl_5-60O.webp" }, { name: "ver. 4", image: "images/variantes/SphinxCowl_9-80GN.webp" } ],
     'spinosaurus': [ { name: "Stock", image: "images/blades/Spinosaurus.webp" } ],
     'stormpegasis': [ { name: "Stock", image: "images/blades/StormPegasis.webp" } ],
     't.rex': [ { name: "Stock", image: "images/blades/T.Rex.webp" } ],
@@ -1252,3 +1252,858 @@ const ALL_PARTS = [
          confirm_reset_score: "Are you sure you want to reset the scoreboard?"
     }
 };
+
+
+// --- [NOVO] BASE DE DADOS DAS FONTES DAS PEÇAS (GERADO AUTOMATICAMENTE) ---
+const PART_SOURCES = {
+  "dransword": [
+    "Hasbro: Starter Dran Sword 3-60F (F9580)",
+    "Hasbro: Dual Pack Tail Viper & Sword Dran (G0197)",
+    "Hasbro: Dual Pack Gale Wyvern & Sword Dran (G1543)",
+    "Hasbro: Dual Pack Tackle Goat & Sword Dran (G1688)",
+    "Takara Tomy: BX-01 Starter DranSword 3-60F",
+    "Takara Tomy: BX-22 Entry Package DranSword 3-60F",
+    "Takara Tomy: DranSword 3-60F (CoroCoro Spirit)",
+    "Takara Tomy: BX-00 DranSword 3-60F (Metal Coat: Bronze)",
+    "Takara Tomy: BX-00 DranSword 3-60F (Metal Coat: Silver)",
+    "Takara Tomy: BX-00 DranSword 3-60F (Metal Coat: Gold)",
+    "Takara Tomy: BX-00 DranSword 3-60F (Sushiro Ver.)"
+  ],
+  "3-60": [
+    "Hasbro: Starter Dran Sword 3-60F (F9580)",
+    "Hasbro: Booster Keel Shark 3-60LF (G0194)",
+    "Hasbro: Booster Savage Bear 3-60S (G0286)",
+    "Hasbro: Dual Pack Knife Shinobi & Keel Shark (G0190)",
+    "Hasbro: Dual Pack Bite Croc & Sting Unicorn (G0199)",
+    "Hasbro: Dual Pack Gale Wyvern & Tail Viper (G0282)",
+    "Hasbro: Dual Pack Yell Kong & Helm Knight (G0198)",
+    "Hasbro: Dual Pack Beat Tyranno & Knife Shinobi (G1542)",
+    "Hasbro: Dual Pack Pearl Tiger & Gill Shark (G1686)",
+    "Hasbro: Star Wars Multipack (General Grievous vs Obi-Wan / Moff Gideon vs Mandalorian) (BXS-02)",
+    "Hasbro: Marvel Multipack (Spider-Man vs Venom) (BXS-03)",
+    "Hasbro: Transformers Multipack (Optimus Primal vs Starscream) (BXS-05)",
+    "Hasbro: Jurassic Park Multipack (T. Rex vs Mosasaurus) (G1898)",
+    "Takara Tomy: BX-01 Starter DranSword 3-60F",
+    "Takara Tomy: BX-22 Entry Package DranSword 3-60F",
+    "Takara Tomy: BX-33 Booster WeissTiger 3-60U",
+    "Takara Tomy: DranSword 3-60F (CoroCoro Spirit)",
+    "Takara Tomy: BX-00 DranSword 3-60F (Metal Coat: Bronze)",
+    "Takara Tomy: BX-00 DranSword 3-60F (Metal Coat: Silver)",
+    "Takara Tomy: BX-00 DranSword 3-60F (Metal Coat: Gold)",
+    "Takara Tomy: BX-00 DranSword 3-60F (Sushiro Ver.)",
+    "Takara Tomy: UX-15 SharkScale Deck Set"
+  ],
+  "flat": [
+    "Hasbro: Starter Dran Sword 3-60F (F9580)",
+    "Hasbro: Dual Pack Tail Viper & Sword Dran (G0197)",
+    "Hasbro: Dual Pack Gale Wyvern & Tail Viper (G0282)",
+    "Hasbro: Dual Pack Tackle Goat & Sword Dran (G1688)",
+    "Hasbro: Star Wars Multipack (General Grievous vs Obi-Wan / Moff Gideon vs Mandalorian) (BXS-02)",
+    "Hasbro: Marvel Multipack (Spider-Man vs Venom) (BXS-03)",
+    "Hasbro: Transformers Multipack (Optimus Primal vs Starscream) (BXS-05)",
+    "Hasbro: Jurassic Park Multipack (Spinosaurus vs Quetzalcoatlus) (G1899)",
+    "Takara Tomy: BX-01 Starter DranSword 3-60F",
+    "Takara Tomy: BX-22 Entry Package DranSword 3-60F",
+    "Takara Tomy: DranSword 3-60F (CoroCoro Spirit)",
+    "Takara Tomy: BX-00 CobaltDrake 4-60F (Metal Coat: Blue)",
+    "Takara Tomy: BX-00 DranSword 3-60F (Metal Coat: Bronze)",
+    "Takara Tomy: BX-00 DranSword 3-60F (Metal Coat: Silver)",
+    "Takara Tomy: BX-00 DranSword 3-60F (Metal Coat: Gold)",
+    "Takara Tomy: BX-00 HellsScythe 3-80F (SP X Bey)",
+    "Takara Tomy: BX-00 DranSword 3-60F (Sushiro Ver.)",
+    "Takara Tomy: BX-00 CobaltDrake 4-60F (Clear Ver.)"
+  ],
+  "hellsscythe": [
+    "Hasbro: Starter Hells Scythe 4-60T (F9583)",
+    "Hasbro: Booster Scythe Incendio 3-80B (G0285)",
+    "Takara Tomy: BX-02 Starter HellsScythe 4-60T",
+    "Takara Tomy: HellsScythe 4-60T (CoroCoro Spirit)",
+    "Takara Tomy: BX-00 HellsScythe 4-60T (Metal Coat: Gold)",
+    "Takara Tomy: BX-00 HellsScythe 3-80F (SP X Bey)"
+  ],
+  "4-60": [
+    "Hasbro: Starter Hells Scythe 4-60T (F9583)",
+    "Hasbro: Dual Pack Chain Incendio & Arrow Wizard (G0196)",
+    "Hasbro: Dual Pack Bite Croc & Sting Unicorn (G0199)",
+    "Hasbro: Dual Pack Gale Wyvern & Tail Viper (G0282)",
+    "Hasbro: Star Wars Multipack (Darth Vader vs Luke Skywalker) (BXS-01)",
+    "Hasbro: Star Wars Multipack (General Grievous vs Obi-Wan / Moff Gideon vs Mandalorian) (BXS-02)",
+    "Hasbro: Marvel Multipack (Thanos vs Iron Man) (BXS-04)",
+    "Hasbro: Transformers Multipack (Optimus Prime vs Megatron) (BXS-06)",
+    "Takara Tomy: BX-02 Starter HellsScythe 4-60T",
+    "Takara Tomy: HellsScythe 4-60T (CoroCoro Spirit)",
+    "Takara Tomy: BX-00 CobaltDrake 4-60F (Metal Coat: Blue)",
+    "Takara Tomy: BX-00 HellsScythe 4-60T (Metal Coat: Gold)",
+    "Takara Tomy: BX-00 ShinobiKnife 4-60LF (Metal Coat: Blue)",
+    "Takara Tomy: BX-00 CobaltDrake 4-60F (Clear Ver.)",
+    "Takara Tomy: CX-00 LeonFang T4-60A (Red Ver.)"
+  ],
+  "taper": [
+    "Hasbro: Starter Hells Scythe 4-60T (F9583)",
+    "Hasbro: Booster Steel Samurai 4-80T (G0188)",
+    "Hasbro: Dual Pack Yell Kong & Helm Knight (G0198)",
+    "Hasbro: X-Over Dranzer Spiral 3-80T (F9584)",
+    "Hasbro: Dual Pack Gale Wyvern & Tail Viper (G0282)",
+    "Hasbro: Xtreme Battle Set (F9588)",
+    "Hasbro: 25th Anniversary Set (G1844)",
+    "Hasbro: Custom Line Fort Hornet R7-60T (G1682)",
+    "Takara Tomy: BX-02 Starter HellsScythe 4-60T",
+    "Takara Tomy: HellsScythe 4-60T (CoroCoro Spirit)",
+    "Takara Tomy: BX-00 Booster DranzerSpiral 3-80T",
+    "Takara Tomy: BX-00 HellsScythe 4-60T (Metal Coat: Gold)"
+  ],
+  "knightshield": [
+    "Hasbro: Starter Knight Shield 3-80N (F9581)",
+    "Hasbro: Dual Pack Yell Kong & Helm Knight (G0198)",
+    "Takara Tomy: BX-04 Starter KnightShield 3-80N",
+    "Takara Tomy: BX-06 Booster KnightShield 3-80N"
+  ],
+  "3-80": [
+    "Hasbro: Starter Knight Shield 3-80N (F9581)",
+    "Hasbro: Booster Horn Rhino 3-80S (G0192)",
+    "Hasbro: Booster Talon Ptera 3-80B (G0195)",
+    "Hasbro: Dual Pack Tail Viper & Sword Dran (G0197)",
+    "Hasbro: X-Over Dranzer Spiral 3-80T (F9584)",
+    "Hasbro: Star Wars Multipack (General Grievous vs Obi-Wan / Moff Gideon vs Mandalorian) (BXS-02)",
+    "Hasbro: Marvel Multipack (Spider-Man vs Venom) (BXS-03)",
+    "Hasbro: Transformers Multipack (Optimus Primal vs Starscream) (BXS-05)",
+    "Takara Tomy: BX-04 Starter KnightShield 3-80N",
+    "Takara Tomy: BX-06 Booster KnightShield 3-80N",
+    "Takara Tomy: BX-19 Booster RhinoHorn 3-80S",
+    "Takara Tomy: UX-08 Starter SilverWolf 3-80FB",
+    "Takara Tomy: BX-00 Booster DranzerSpiral 3-80T",
+    "Takara Tomy: BX-00 HellsScythe 3-80F (SP X Bey)"
+  ],
+  "needle": [
+    "Hasbro: Starter Knight Shield 3-80N (F9581)",
+    "Hasbro: Dual Pack Chain Incendio & Arrow Wizard (G0196)",
+    "Hasbro: Dual Pack Tackle Goat & Sword Dran (G1688)",
+    "Hasbro: Drop Attack Battle Set (G0842)",
+    "Hasbro: Star Wars Multipack (General Grievous vs Obi-Wan / Moff Gideon vs Mandalorian) (BXS-02)",
+    "Hasbro: Marvel Multipack (Spider-Man vs Venom) (BXS-03)",
+    "Hasbro: Transformers Multipack (Optimus Primal vs Starscream) (BXS-05)",
+    "Takara Tomy: BX-04 Starter KnightShield 3-80N",
+    "Takara Tomy: BX-06 Booster KnightShield 3-80N"
+  ],
+  "wizardarrow": [
+    "Hasbro: Starter Wizard Arrow 4-80B (F9582)",
+    "Hasbro: Booster Arrow Wizard 4-80GB (G1531)",
+    "Hasbro: Booster Arrow Wizard 4-80O (G1755)",
+    "Hasbro: Dual Pack Chain Incendio & Arrow Wizard (G0196)",
+    "Takara Tomy: BX-03 Starter WizardArrow 4-80B",
+    "Takara Tomy: BX-05 Booster WizardArrow 4-80B"
+  ],
+  "4-80": [
+    "Hasbro: Starter Wizard Arrow 4-80B (F9582)",
+    "Hasbro: Dual Pack Knife Shinobi & Keel Shark (G0190)",
+    "Hasbro: Dual Pack Yell Kong & Helm Knight (G0198)",
+    "Hasbro: Star Wars Multipack (Darth Vader vs Luke Skywalker) (BXS-01)",
+    "Hasbro: Marvel Multipack (Thanos vs Iron Man) (BXS-04)",
+    "Hasbro: Transformers Multipack (Optimus Prime vs Megatron) (BXS-06)",
+    "Hasbro: Jurassic Park Multipack (T. Rex vs Mosasaurus) (G1898)",
+    "Takara Tomy: BX-03 Starter WizardArrow 4-80B",
+    "Takara Tomy: BX-05 Booster WizardArrow 4-80B",
+    "Takara Tomy: BX-13 Booster KnightLance 4-80HN",
+    "Takara Tomy: BX-00 Booster DrigerSlash 4-80P"
+  ],
+  "ball": [
+    "Hasbro: Starter Wizard Arrow 4-80B (F9582)",
+    "Hasbro: Booster Talon Ptera 3-80B (G0195)",
+    "Hasbro: Booster Scythe Incendio 3-80B (G0285)",
+    "Hasbro: Dual Pack Tail Viper & Sword Dran (G0197)",
+    "Hasbro: Star Wars Multipack (Darth Vader vs Luke Skywalker) (BXS-01)",
+    "Hasbro: Marvel Multipack (Thanos vs Iron Man) (BXS-04)",
+    "Hasbro: Transformers Multipack (Optimus Prime vs Megatron) (BXS-06)",
+    "Hasbro: Jurassic Park Multipack (T. Rex vs Mosasaurus) (G1898)",
+    "Takara Tomy: BX-03 Starter WizardArrow 4-80B",
+    "Takara Tomy: BX-05 Booster WizardArrow 4-80B"
+  ],
+  "knightlance": [
+    "Hasbro: Starter Knight Lance 4-80HN (G0184)",
+    "Hasbro: Booster Lance Knight 3-60LF (G1671)",
+    "Takara Tomy: BX-13 Booster KnightLance 4-80HN"
+  ],
+  "highneedle": [
+    "Hasbro: Starter Knight Lance 4-80HN (G0184)",
+    "Hasbro: Dual Pack Knife Shinobi & Keel Shark (G0190)",
+    "Hasbro: Dual Pack Beat Tyranno & Knife Shinobi (G1542)",
+    "Hasbro: Star Wars Multipack (General Grievous vs Obi-Wan / Moff Gideon vs Mandalorian) (BXS-02)",
+    "Hasbro: Custom Line Antler Stag B2-60HN (G1684)",
+    "Takara Tomy: BX-13 Booster KnightLance 4-80HN",
+    "Takara Tomy: CX-11 Deck Set EmperorMight"
+  ],
+  "leonclaw": [
+    "Hasbro: Starter Leon Claw 5-60P (G0193)",
+    "Takara Tomy: BX-15 Starter LeonClaw 5-60P",
+    "Takara Tomy: BX-00 LeonClaw 5-60P (Metal Coat: Gold)"
+  ],
+  "5-60": [
+    "Hasbro: Starter Leon Claw 5-60P (G0193)",
+    "Hasbro: Dual Pack Chain Incendio & Arrow Wizard (G0196)",
+    "Hasbro: Dual Pack Tail Viper & Sword Dran (G0197)",
+    "Hasbro: Dual Pack Pearl Tiger & Gill Shark (G1686)",
+    "Hasbro: Jurassic Park Multipack (Spinosaurus vs Quetzalcoatlus) (G1899)",
+    "Takara Tomy: BX-15 Starter LeonClaw 5-60P",
+    "Takara Tomy: BX-26 Booster UnicornSting 5-60GP",
+    "Takara Tomy: BX-00 LeonClaw 5-60P (Metal Coat: Gold)",
+    "Takara Tomy: BX-00 HellsChain 5-60HT (Metal Coat: Black)",
+    "Takara Tomy: CX-11 Deck Set EmperorMight"
+  ],
+  "point": [
+    "Hasbro: Starter Leon Claw 5-60P (G0193)",
+    "Hasbro: X-Over Driger Slash 4-80P (G1843)",
+    "Hasbro: Dual Pack Bite Croc & Sting Unicorn (G0199)",
+    "Hasbro: 25th Anniversary Set (G1844)",
+    "Hasbro: Star Wars Multipack (Darth Vader vs Luke Skywalker) (BXS-01)",
+    "Hasbro: Star Wars Multipack (General Grievous vs Obi-Wan / Moff Gideon vs Mandalorian) (BXS-02)",
+    "Hasbro: Marvel Multipack (Thanos vs Iron Man) (BXS-04)",
+    "Hasbro: Transformers Multipack (Optimus Prime vs Megatron) (BXS-06)",
+    "Takara Tomy: BX-15 Starter LeonClaw 5-60P",
+    "Takara Tomy: BX-00 LeonClaw 5-60P (Metal Coat: Gold)",
+    "Takara Tomy: BX-00 Booster DrigerSlash 4-80P"
+  ],
+  "dranbuster": [
+    "Hasbro: Starter Dran Buster 1-60A (G1536)",
+    "Hasbro: Starter Dran Buster 5-70DB (G1751)",
+    "Takara Tomy: UX-01 Starter DranBuster 1-60A",
+    "Takara Tomy: UX-00 DranBuster 1-60A (Metal Coat: Red)"
+  ],
+  "1-60": [
+    "Hasbro: Starter Dran Buster 1-60A (G1536)",
+    "Hasbro: Starter Golem Rock 1-60UN (G1676)",
+    "Hasbro: Booster Keel Shark 1-60Q (G1534)",
+    "Hasbro: Dual Pack Tackle Goat & Sword Dran (G1688)",
+    "Takara Tomy: UX-01 Starter DranBuster 1-60A",
+    "Takara Tomy: UX-13 Booster GolemRock 1-60UN",
+    "Takara Tomy: UX-00 DranBuster 1-60A (Metal Coat: Red)"
+  ],
+  "accel": [
+    "Hasbro: Starter Dran Buster 1-60A (G1536)",
+    "Takara Tomy: UX-01 Starter DranBuster 1-60A",
+    "Takara Tomy: UX-00 DranBuster 1-60A (Metal Coat: Red)",
+    "Takara Tomy: UX-00 Booster AeroPegasus 3-70A",
+    "Takara Tomy: CX-00 LeonFang T4-60A (Red Ver.)"
+  ],
+  "wizardrod": [
+    "Hasbro: Starter Wand Wizard 5-70DB (G1537)",
+    "Hasbro: Starter Wand Wizard 1-60R (G1538)",
+    "Takara Tomy: UX-03 Booster WizardRod 5-70DB"
+  ],
+  "5-70": [
+    "Hasbro: Starter Wand Wizard 5-70DB (G1537)",
+    "Hasbro: Starter Dran Buster 5-70DB (G1751)",
+    "Takara Tomy: UX-03 Booster WizardRod 5-70DB",
+    "Takara Tomy: CX-09 Starter SolEclipse D5-70TK"
+  ],
+  "diskball": [
+    "Hasbro: Starter Wand Wizard 5-70DB (G1537)",
+    "Hasbro: Starter Dran Buster 5-70DB (G1751)",
+    "Hasbro: Dual Pack Gale Wyvern & Sword Dran (G1543)",
+    "Takara Tomy: UX-03 Booster WizardRod 5-70DB",
+    "Takara Tomy: BX-00 PhoenixWing 9-80DB (Bladers Select Bey)",
+    "Takara Tomy: CX-10 Starter WolfHunt F0-60DB"
+  ],
+  "rush": [
+    "Hasbro: Starter Wand Wizard 1-60R (G1538)",
+    "Hasbro: Xtreme Battle Set (F9588)"
+  ],
+  "shinobishadow": [
+    "Hasbro: Starter Shinobi Shadow 1-80MN (G1539)"
+  ],
+  "1-80": [
+    "Hasbro: Starter Shinobi Shadow 1-80MN (G1539)"
+  ],
+  "metalneedle": [
+    "Hasbro: Starter Shinobi Shadow 1-80MN (G1539)"
+  ],
+  "crimsongaruda": [
+    "Hasbro: Starter Crimson Garuda 4-70TP (G1673)",
+    "Takara Tomy: BX-38 Booster CrimsonGaruda 4-70TP"
+  ],
+  "4-70": [
+    "Hasbro: Starter Crimson Garuda 4-70TP (G1673)",
+    "Hasbro: Booster Dagger Dran 4-70Q (G1670)",
+    "Hasbro: Custom Line Reaper Incendio T4-70K (G1678)",
+    "Takara Tomy: BX-38 Booster CrimsonGaruda 4-70TP",
+    "Takara Tomy: CX-00 ValkyrieVolt S4-70V (Metal Coat: Gold)"
+  ],
+  "transpoint": [
+    "Hasbro: Starter Crimson Garuda 4-70TP (G1673)",
+    "Takara Tomy: BX-38 Booster CrimsonGaruda 4-70TP"
+  ],
+  "silverwolf": [
+    "Hasbro: Starter Silver Wolf 3-80FB (G1674)",
+    "Takara Tomy: UX-08 Starter SilverWolf 3-80FB"
+  ],
+  "freeball": [
+    "Hasbro: Starter Silver Wolf 3-80FB (G1674)",
+    "Hasbro: Dual Pack Pearl Tiger & Gill Shark (G1686)",
+    "Takara Tomy: UX-08 Starter SilverWolf 3-80FB",
+    "Takara Tomy: CX-11 Deck Set EmperorMight"
+  ],
+  "shelterdrake": [
+    "Hasbro: Starter Shelter Drake 7-80GP (G1675)"
+  ],
+  "7-80": [
+    "Hasbro: Starter Shelter Drake 7-80GP (G1675)"
+  ],
+  "gearpoint": [
+    "Hasbro: Starter Shelter Drake 7-80GP (G1675)",
+    "Hasbro: Booster Sting Unicorn 5-60GP (G0283)",
+    "Takara Tomy: BX-26 Booster UnicornSting 5-60GP",
+    "Takara Tomy: BX-00 DranDagger 2-80GP (Metal Coat: Black Giants)"
+  ],
+  "golemrock": [
+    "Hasbro: Starter Golem Rock 1-60UN (G1676)",
+    "Takara Tomy: UX-13 Booster GolemRock 1-60UN",
+    "Takara Tomy: CX-11 Deck Set EmperorMight"
+  ],
+  "underneedle": [
+    "Hasbro: Starter Golem Rock 1-60UN (G1676)",
+    "Takara Tomy: UX-13 Booster GolemRock 1-60UN"
+  ],
+  "hellshammer": [
+    "Hasbro: Starter Hells Hammer 3-70H (G1752)",
+    "Takara Tomy: UX-02 Starter HellsHammer 3-70H"
+  ],
+  "3-70": [
+    "Hasbro: Starter Hells Hammer 3-70H (G1752)",
+    "Takara Tomy: UX-02 Starter HellsHammer 3-70H",
+    "Takara Tomy: UX-00 Booster AeroPegasus 3-70A"
+  ],
+  "hexa": [
+    "Hasbro: Starter Hells Hammer 3-70H (G1752)",
+    "Hasbro: Booster Soar Phoenix 5-80H (G1756)",
+    "Hasbro: Dual Pack Circle Ghost & Chain Incendio (G1687)",
+    "Takara Tomy: UX-02 Starter HellsHammer 3-70H"
+  ],
+  "samuraisteel": [
+    "Hasbro: Booster Steel Samurai 4-80T (G0188)"
+  ],
+  "rhinohorn": [
+    "Hasbro: Booster Horn Rhino 3-80S (G0192)",
+    "Takara Tomy: BX-19 Booster RhinoHorn 3-80S"
+  ],
+  "spike": [
+    "Hasbro: Booster Horn Rhino 3-80S (G0192)",
+    "Hasbro: Booster Savage Bear 3-60S (G0286)",
+    "Hasbro: Dual Pack Beat Tyranno & Knife Shinobi (G1542)",
+    "Hasbro: Jurassic Park Multipack (T. Rex vs Mosasaurus) (G1898)",
+    "Takara Tomy: BX-19 Booster RhinoHorn 3-80S"
+  ],
+  "sharkedge": [
+    "Hasbro: Booster Keel Shark 3-60LF (G0194)",
+    "Hasbro: Booster Keel Shark 1-60Q (G1534)",
+    "Hasbro: Dual Pack Knife Shinobi & Keel Shark (G0190)",
+    "Takara Tomy: BX-00 SharkEdge 5-60GF (Metal Coat: Blue)"
+  ],
+  "lowflat": [
+    "Hasbro: Booster Keel Shark 3-60LF (G0194)",
+    "Hasbro: Booster Lance Knight 3-60LF (G1671)",
+    "Hasbro: Dual Pack Knife Shinobi & Keel Shark (G0190)",
+    "Hasbro: Dual Pack Bite Croc & Sting Unicorn (G0199)",
+    "Takara Tomy: BX-00 ShinobiKnife 4-60LF (Metal Coat: Blue)"
+  ],
+  "pteraswing": [
+    "Hasbro: Booster Talon Ptera 3-80B (G0195)"
+  ],
+  "unicornsting": [
+    "Hasbro: Booster Sting Unicorn 5-60GP (G0283)",
+    "Hasbro: Dual Pack Bite Croc & Sting Unicorn (G0199)",
+    "Takara Tomy: BX-26 Booster UnicornSting 5-60GP"
+  ],
+  "tyrannoroar": [
+    "Hasbro: Booster Roar Tyranno 9-60GF (G0284)",
+    "Takara Tomy: UX-15 SharkScale Deck Set"
+  ],
+  "9-60": [
+    "Hasbro: Booster Roar Tyranno 9-60GF (G0284)",
+    "Hasbro: Drop Attack Battle Set (G0842)",
+    "Takara Tomy: BX-23 Starter PhoenixWing 9-60GF",
+    "Takara Tomy: UX-11 Starter ImpactDrake 9-60LR",
+    "Takara Tomy: PhoenixWing 9-60GF (Toys R Us Pre-sale)"
+  ],
+  "gearflat": [
+    "Hasbro: Booster Roar Tyranno 9-60GF (G0284)",
+    "Takara Tomy: BX-23 Starter PhoenixWing 9-60GF",
+    "Takara Tomy: PhoenixWing 9-60GF (Toys R Us Pre-sale)",
+    "Takara Tomy: BX-00 SharkEdge 5-60GF (Metal Coat: Blue)",
+    "Takara Tomy: UX-15 SharkScale Deck Set"
+  ],
+  "bearscratch": [
+    "Hasbro: Booster Savage Bear 3-60S (G0286)"
+  ],
+  "sphinx-cowl": [
+    "Hasbro: Booster Cowl Sphinx 9-80GN (G1530)",
+    "Hasbro: Dual Pack Cowl Sphinx & Crest Leon (G1685)"
+  ],
+  "9-80": [
+    "Hasbro: Booster Cowl Sphinx 9-80GN (G1530)",
+    "Hasbro: Dual Pack Circle Ghost & Chain Incendio (G1687)",
+    "Takara Tomy: BX-00 PhoenixWing 9-80DB (Bladers Select Bey)"
+  ],
+  "gearneedle": [
+    "Hasbro: Booster Cowl Sphinx 9-80GN (G1530)",
+    "Hasbro: Dual Pack Cowl Sphinx & Crest Leon (G1685)",
+    "Takara Tomy: UX-06 Booster LeonCrest 7-60GN",
+    "Takara Tomy: BX-00 Booster Rock Leone 6-80GN"
+  ],
+  "gearball": [
+    "Hasbro: Booster Arrow Wizard 4-80GB (G1531)",
+    "Hasbro: Booster Yell Kong 3-60GB (G1754)",
+    "Hasbro: Dual Pack Yell Kong & Helm Knight (G0198)",
+    "Hasbro: Dual Pack Gale Wyvern & Sword Dran (G1543)"
+  ],
+  "blackshell": [
+    "Hasbro: Booster Obsidian Shell 4-60D (G1533)"
+  ],
+  "dot": [
+    "Hasbro: Booster Obsidian Shell 4-60D (G1533)",
+    "Hasbro: 25th Anniversary Set (G1844)",
+    "Hasbro: Jurassic Park Multipack (Spinosaurus vs Quetzalcoatlus) (G1899)",
+    "Takara Tomy: BX-00 Booster DracielShield 7-60D"
+  ],
+  "quake": [
+    "Hasbro: Booster Keel Shark 1-60Q (G1534)",
+    "Hasbro: Booster Dagger Dran 4-70Q (G1670)"
+  ],
+  "whalewave": [
+    "Hasbro: Booster Tide Whale 5-80E (G1669)"
+  ],
+  "5-80": [
+    "Hasbro: Booster Tide Whale 5-80E (G1669)",
+    "Hasbro: Dual Pack Gale Wyvern & Sword Dran (G1543)"
+  ],
+  "elevate": [
+    "Hasbro: Booster Tide Whale 5-80E (G1669)",
+    "Takara Tomy: BX-00 MammothTusk 2-80E (Metal Coat: Black)"
+  ],
+  "drandagger": [
+    "Hasbro: Booster Dagger Dran 4-70Q (G1670)",
+    "Hasbro: Xtreme Battle Set (F9588)"
+  ],
+  "yellkong": [
+    "Hasbro: Booster Yell Kong 3-60GB (G1754)",
+    "Hasbro: Dual Pack Yell Kong & Helm Knight (G0198)"
+  ],
+  "orb": [
+    "Hasbro: Booster Arrow Wizard 4-80O (G1755)",
+    "Hasbro: Dual Pack Circle Ghost & Chain Incendio (G1687)",
+    "Hasbro: Custom Line Wriggle Kraken S3-85O (G1683)"
+  ],
+  "phoenixwing": [
+    "Hasbro: Booster Soar Phoenix 5-80H (G1756)",
+    "Takara Tomy: BX-23 Starter PhoenixWing 9-60GF",
+    "Takara Tomy: PhoenixWing 9-60GF (Toys R Us Pre-sale)",
+    "Takara Tomy: BX-00 PhoenixWing 9-80DB (Bladers Select Bey)"
+  ],
+  "lockchip-dran": [
+    "Hasbro: Custom Line Courage Dran S6-60V (G1677)",
+    "Takara Tomy: CX-01 Starter DranBrave S6-60V"
+  ],
+  "mainblade-brave": [
+    "Hasbro: Custom Line Courage Dran S6-60V (G1677)",
+    "Takara Tomy: CX-01 Starter DranBrave S6-60V",
+    "Takara Tomy: UX-15 SharkScale Deck Set"
+  ],
+  "assistblade-slash": [
+    "Hasbro: Custom Line Courage Dran S6-60V (G1677)",
+    "Takara Tomy: CX-01 Starter DranBrave S6-60V",
+    "Takara Tomy: CX-00 ValkyrieVolt S4-70V (Metal Coat: Gold)"
+  ],
+  "6-60": [
+    "Hasbro: Custom Line Courage Dran S6-60V (G1677)",
+    "Takara Tomy: CX-01 Starter DranBrave S6-60V"
+  ],
+  "vortex": [
+    "Hasbro: Custom Line Courage Dran S6-60V (G1677)",
+    "Takara Tomy: CX-01 Starter DranBrave S6-60V",
+    "Takara Tomy: CX-00 ValkyrieVolt S4-70V (Metal Coat: Gold)"
+  ],
+  "lockchip-hells": [
+    "Hasbro: Custom Line Reaper Incendio T4-70K (G1678)",
+    "Takara Tomy: UX-15 SharkScale Deck Set"
+  ],
+  "mainblade-reaper": [
+    "Hasbro: Custom Line Reaper Incendio T4-70K (G1678)"
+  ],
+  "assistblade-turn": [
+    "Hasbro: Custom Line Reaper Incendio T4-70K (G1678)",
+    "Hasbro: Custom Line Fort Hornet R7-60T (G1682)",
+    "Hasbro: Custom Line Wriggle Kraken S3-85O (G1683)",
+    "Takara Tomy: CX-00 LeonFang T4-60A (Red Ver.)"
+  ],
+  "kick": [
+    "Hasbro: Custom Line Reaper Incendio T4-70K (G1678)"
+  ],
+  "lockchip-wizard": [
+    "Hasbro: Custom Line Arc Wizard R4-55LO (G1679)",
+    "Takara Tomy: CX-02 Starter WizardArc R4-55LO",
+    "Takara Tomy: CX-00 WizardArc R4-55LO (Metal Coat: Black)"
+  ],
+  "mainblade-arc": [
+    "Hasbro: Custom Line Arc Wizard R4-55LO (G1679)",
+    "Takara Tomy: CX-02 Starter WizardArc R4-55LO",
+    "Takara Tomy: CX-00 WizardArc R4-55LO (Metal Coat: Black)"
+  ],
+  "assistblade-round": [
+    "Hasbro: Custom Line Arc Wizard R4-55LO (G1679)",
+    "Takara Tomy: CX-02 Starter WizardArc R4-55LO",
+    "Takara Tomy: CX-00 WizardArc R4-55LO (Metal Coat: Black)"
+  ],
+  "4-55": [
+    "Hasbro: Custom Line Arc Wizard R4-55LO (G1679)",
+    "Hasbro: Jurassic Park Multipack (Spinosaurus vs Quetzalcoatlus) (G1899)",
+    "Takara Tomy: CX-02 Starter WizardArc R4-55LO",
+    "Takara Tomy: CX-00 WizardArc R4-55LO (Metal Coat: Black)"
+  ],
+  "loworb": [
+    "Hasbro: Custom Line Arc Wizard R4-55LO (G1679)",
+    "Takara Tomy: CX-02 Starter WizardArc R4-55LO",
+    "Takara Tomy: CX-00 WizardArc R4-55LO (Metal Coat: Black)"
+  ],
+  "lockchip-perseus": [
+    "Hasbro: Custom Line Dark Perseus B6-80W (G1680)",
+    "Takara Tomy: CX-03 Booster PerseusDark B6-80W"
+  ],
+  "mainblade-dark": [
+    "Hasbro: Custom Line Dark Perseus B6-80W (G1680)",
+    "Takara Tomy: CX-03 Booster PerseusDark B6-80W"
+  ],
+  "assistblade-bumper": [
+    "Hasbro: Custom Line Dark Perseus B6-80W (G1680)",
+    "Hasbro: Custom Line Antler Stag B2-60HN (G1684)",
+    "Takara Tomy: CX-03 Booster PerseusDark B6-80W"
+  ],
+  "6-80": [
+    "Hasbro: Custom Line Dark Perseus B6-80W (G1680)",
+    "Takara Tomy: CX-03 Booster PerseusDark B6-80W",
+    "Takara Tomy: BX-00 Booster Rock Leone 6-80GN"
+  ],
+  "wedge": [
+    "Hasbro: Custom Line Dark Perseus B6-80W (G1680)",
+    "Takara Tomy: CX-03 Booster PerseusDark B6-80W"
+  ],
+  "lockchip-fox": [
+    "Hasbro: Custom Line Brush Fox J9-70GR (G1681)"
+  ],
+  "mainblade-brush": [
+    "Hasbro: Custom Line Brush Fox J9-70GR (G1681)"
+  ],
+  "assistblade-jaggy": [
+    "Hasbro: Custom Line Brush Fox J9-70GR (G1681)",
+    "Takara Tomy: UX-15 SharkScale Deck Set"
+  ],
+  "9-70": [
+    "Hasbro: Custom Line Brush Fox J9-70GR (G1681)"
+  ],
+  "gearrush": [
+    "Hasbro: Custom Line Brush Fox J9-70GR (G1681)"
+  ],
+  "lockchip-hornet": [
+    "Hasbro: Custom Line Fort Hornet R7-60T (G1682)"
+  ],
+  "mainblade-fort": [
+    "Hasbro: Custom Line Fort Hornet R7-60T (G1682)"
+  ],
+  "7-60": [
+    "Hasbro: Custom Line Fort Hornet R7-60T (G1682)",
+    "Hasbro: Dual Pack Cowl Sphinx & Crest Leon (G1685)",
+    "Hasbro: 25th Anniversary Set (G1844)",
+    "Takara Tomy: UX-06 Booster LeonCrest 7-60GN",
+    "Takara Tomy: BX-00 Booster DracielShield 7-60D"
+  ],
+  "lockchip-kraken": [
+    "Hasbro: Custom Line Wriggle Kraken S3-85O (G1683)"
+  ],
+  "mainblade-wriggle": [
+    "Hasbro: Custom Line Wriggle Kraken S3-85O (G1683)"
+  ],
+  "3-85": [
+    "Hasbro: Custom Line Wriggle Kraken S3-85O (G1683)",
+    "Hasbro: Drop Attack Battle Set (G0842)",
+    "Takara Tomy: UX-00 KnightMail 3-85BS (Metal Coat: Navy)"
+  ],
+  "lockchip-stag": [
+    "Hasbro: Custom Line Antler Stag B2-60HN (G1684)"
+  ],
+  "antler": [
+    "Hasbro: Custom Line Antler Stag B2-60HN (G1684)"
+  ],
+  "2-60": [
+    "Hasbro: Custom Line Antler Stag B2-60HN (G1684)",
+    "Takara Tomy: BX-34 Starter CobaltDragoon 2-60C",
+    "Takara Tomy: BX-00 CobaltDragoon 2-60C (Metal Coat: Black)"
+  ],
+  "dranzerspiral": [
+    "Hasbro: X-Over Dranzer Spiral 3-80T (F9584)",
+    "Hasbro: 25th Anniversary Set (G1844)",
+    "Takara Tomy: BX-00 Booster DranzerSpiral 3-80T"
+  ],
+  "drigerslash": [
+    "Hasbro: X-Over Driger Slash 4-80P (G1843)",
+    "Hasbro: 25th Anniversary Set (G1844)",
+    "Takara Tomy: BX-00 Booster DrigerSlash 4-80P"
+  ],
+  "shinobiknife": [
+    "Hasbro: Dual Pack Knife Shinobi & Keel Shark (G0190)",
+    "Hasbro: Dual Pack Beat Tyranno & Knife Shinobi (G1542)",
+    "Takara Tomy: BX-00 ShinobiKnife 4-60LF (Metal Coat: Blue)"
+  ],
+  "hellschain": [
+    "Hasbro: Dual Pack Chain Incendio & Arrow Wizard (G0196)",
+    "Hasbro: Dual Pack Circle Ghost & Chain Incendio (G1687)",
+    "Takara Tomy: BX-00 HellsChain 5-60HT (Metal Coat: Black)"
+  ],
+  "hightaper": [
+    "Hasbro: Dual Pack Chain Incendio & Arrow Wizard (G0196)",
+    "Hasbro: Dual Pack Cowl Sphinx & Crest Leon (G1685)",
+    "Takara Tomy: BX-00 HellsChain 5-60HT (Metal Coat: Black)"
+  ],
+  "vipertail": [
+    "Hasbro: Dual Pack Tail Viper & Sword Dran (G0197)",
+    "Hasbro: Dual Pack Gale Wyvern & Tail Viper (G0282)"
+  ],
+  "yellkong": [
+    "Hasbro: Dual Pack Yell Kong & Helm Knight (G0198)",
+    "Hasbro: Booster Yell Kong 3-60GB (G1754)"
+  ],
+  "croccrunch": [
+    "Hasbro: Dual Pack Bite Croc & Sting Unicorn (G0199)"
+  ],
+  "wyverngale": [
+    "Hasbro: Dual Pack Gale Wyvern & Tail Viper (G0282)",
+    "Hasbro: Dual Pack Gale Wyvern & Sword Dran (G1543)"
+  ],
+  "tyrannobeat": [
+    "Hasbro: Dual Pack Beat Tyranno & Knife Shinobi (G1542)"
+  ],
+  "leoncrest": [
+    "Hasbro: Dual Pack Cowl Sphinx & Crest Leon (G1685)",
+    "Takara Tomy: UX-06 Booster LeonCrest 7-60GN"
+  ],
+  "weisstiger": [
+    "Hasbro: Dual Pack Pearl Tiger & Gill Shark (G1686)",
+    "Takara Tomy: BX-33 Booster WeissTiger 3-60U"
+  ],
+  "unite": [
+    "Hasbro: Dual Pack Pearl Tiger & Gill Shark (G1686)",
+    "Takara Tomy: BX-33 Booster WeissTiger 3-60U"
+  ],
+  "sharkgill": [
+    "Hasbro: Dual Pack Pearl Tiger & Gill Shark (G1686)",
+    "Takara Tomy: CX-11 Deck Set EmperorMight"
+  ],
+  "ghostcircle": [
+    "Hasbro: Dual Pack Circle Ghost & Chain Incendio (G1687)"
+  ],
+  "tacklegoat": [
+    "Hasbro: Dual Pack Tackle Goat & Sword Dran (G1688)"
+  ],
+  "2-70": [
+    "Hasbro: Dual Pack Tackle Goat & Sword Dran (G1688)",
+    "Takara Tomy: UX-09 Starter SamuraiSaber 2-70L"
+  ],
+  "mammothtusk": [
+    "Hasbro: Xtreme Battle Set (F9588)",
+    "Takara Tomy: BX-00 MammothTusk 2-80E (Metal Coat: Black)"
+  ],
+  "hoverwyvern": [
+    "Hasbro: Drop Attack Battle Set (G0842)"
+  ],
+  "3-85": [
+    "Hasbro: Drop Attack Battle Set (G0842)"
+  ],
+  "impactdrake": [
+    "Hasbro: Drop Attack Battle Set (G0842)",
+    "Takara Tomy: UX-11 Starter ImpactDrake 9-60LR"
+  ],
+  "lowrush": [
+    "Hasbro: Drop Attack Battle Set (G0842)",
+    "Takara Tomy: UX-11 Starter ImpactDrake 9-60LR"
+  ],
+  "dracielshield": [
+    "Hasbro: 25th Anniversary Set (G1844)",
+    "Takara Tomy: BX-00 Booster DracielShield 7-60D"
+  ],
+  "dragoonsform": [
+    "Hasbro: 25th Anniversary Set (G1844)"
+  ],
+  "rubberaccel": [
+    "Hasbro: 25th Anniversary Set (G1844)"
+  ],
+  "darthvader": [
+    "Hasbro: Star Wars Multipack (Darth Vader vs Luke Skywalker) (BXS-01)"
+  ],
+  "generalgrievous": [
+    "Hasbro: Star Wars Multipack (General Grievous vs Obi-Wan / Moff Gideon vs Mandalorian) (BXS-02)"
+  ],
+  "moffgideon": [
+    "Hasbro: Star Wars Multipack (General Grievous vs Obi-Wan / Moff Gideon vs Mandalorian) (BXS-02)"
+  ],
+  "spider-man": [
+    "Hasbro: Marvel Multipack (Spider-Man vs Venom) (BXS-03)"
+  ],
+  "venom": [
+    "Hasbro: Marvel Multipack (Spider-Man vs Venom) (BXS-03)"
+  ],
+  "thanos": [
+    "Hasbro: Marvel Multipack (Thanos vs Iron Man) (BXS-04)"
+  ],
+  "optimusprimal": [
+    "Hasbro: Transformers Multipack (Optimus Primal vs Starscream) (BXS-05)"
+  ],
+  "optimusprime": [
+    "Hasbro: Transformers Multipack (Optimus Prime vs Megatron) (BXS-06)"
+  ],
+  "t.rex": [
+    "Hasbro: Jurassic Park Multipack (T. Rex vs Mosasaurus) (G1898)"
+  ],
+  "mosasaurus": [
+    "Hasbro: Jurassic Park Multipack (T. Rex vs Mosasaurus) (G1898)"
+  ],
+  "spinosaurus": [
+    "Hasbro: Jurassic Park Multipack (Spinosaurus vs Quetzalcoatlus) (G1899)"
+  ],
+  "quetzalcoatlus": [
+    "Hasbro: Jurassic Park Multipack (Spinosaurus vs Quetzalcoatlus) (G1899)"
+  ],
+  "cobaltdragoon": [
+    "Takara Tomy: BX-34 Starter CobaltDragoon 2-60C",
+    "Takara Tomy: BX-00 CobaltDragoon 2-60C (Metal Coat: Black)"
+  ],
+  "cyclone": [
+    "Takara Tomy: BX-34 Starter CobaltDragoon 2-60C",
+    "Takara Tomy: BX-00 CobaltDragoon 2-60C (Metal Coat: Black)"
+  ],
+  "tricerapress": [
+    "Takara Tomy: BX-44 Booster TriceraPress M-85BS"
+  ],
+  "m-85": [
+    "Takara Tomy: BX-44 Booster TriceraPress M-85BS",
+    "Takara Tomy: CX-11 Deck Set EmperorMight"
+  ],
+  "boundspike": [
+    "Takara Tomy: BX-44 Booster TriceraPress M-85BS",
+    "Takara Tomy: UX-00 KnightMail 3-85BS (Metal Coat: Navy)"
+  ],
+  "samuraicalibur": [
+    "Takara Tomy: BX-45 Booster SamuraiCalibur 6-70M"
+  ],
+  "6-70": [
+    "Takara Tomy: BX-45 Booster SamuraiCalibur 6-70M"
+  ],
+  "merge": [
+    "Takara Tomy: BX-45 Booster SamuraiCalibur 6-70M"
+  ],
+  "samuraisaber": [
+    "Takara Tomy: UX-09 Starter SamuraiSaber 2-70L"
+  ],
+  "level": [
+    "Takara Tomy: UX-09 Starter SamuraiSaber 2-70L",
+    "Takara Tomy: UX-15 SharkScale Deck Set"
+  ],
+  "scorpiospear": [
+    "Takara Tomy: UX-14 Starter ScorpioSpear 0-70Z"
+  ],
+  "0-70": [
+    "Takara Tomy: UX-14 Starter ScorpioSpear 0-70Z"
+  ],
+  "zap": [
+    "Takara Tomy: UX-14 Starter ScorpioSpear 0-70Z"
+  ],
+  "sharkscale": [
+    "Takara Tomy: UX-15 SharkScale Deck Set"
+  ],
+  "4-50": [
+    "Takara Tomy: UX-15 SharkScale Deck Set"
+  ],
+  "underflat": [
+    "Takara Tomy: UX-15 SharkScale Deck Set"
+  ],
+  "clockmirage": [
+    "Takara Tomy: UX-16 Random Booster ClockMirage 9-65B"
+  ],
+  "9-65": [
+    "Takara Tomy: UX-16 Random Booster ClockMirage 9-65B"
+  ],
+  "bearing": [
+    "Takara Tomy: UX-16 Random Booster ClockMirage 9-65B"
+  ],
+  "lockchip-pegasus": [
+    "Takara Tomy: CX-07 Starter PegasusBlast ATr"
+  ],
+  "mainblade-blast": [
+    "Takara Tomy: CX-07 Starter PegasusBlast ATr"
+  ],
+  "assistblade-assault": [
+    "Takara Tomy: CX-07 Starter PegasusBlast ATr"
+  ],
+  "acceltrans": [
+    "Takara Tomy: CX-07 Starter PegasusBlast ATr"
+  ],
+  "lockchip-cerberus": [
+    "Takara Tomy: CX-08 Random Booster CerberusFlame W5-80WB"
+  ],
+  "mainblade-flame": [
+    "Takara Tomy: CX-08 Random Booster CerberusFlame W5-80WB"
+  ],
+  "assistblade-wide": [
+    "Takara Tomy: CX-08 Random Booster CerberusFlame W5-80WB"
+  ],
+  "w5-80": [
+    "Takara Tomy: CX-08 Random Booster CerberusFlame W5-80WB"
+  ],
+  "weightball": [
+    "Takara Tomy: CX-08 Random Booster CerberusFlame W5-80WB"
+  ],
+  "lockchip-sol": [
+    "Takara Tomy: CX-09 Starter SolEclipse D5-70TK"
+  ],
+  "mainblade-eclipse": [
+    "Takara Tomy: CX-09 Starter SolEclipse D5-70TK"
+  ],
+  "assistblade-dual": [
+    "Takara Tomy: CX-09 Starter SolEclipse D5-70TK"
+  ],
+  "transkick": [
+    "Takara Tomy: CX-09 Starter SolEclipse D5-70TK"
+  ],
+  "lockchip-wolf": [
+    "Takara Tomy: CX-10 Starter WolfHunt F0-60DB"
+  ],
+  "mainblade-hunt": [
+    "Takara Tomy: CX-10 Starter WolfHunt F0-60DB"
+  ],
+  "assistblade-free": [
+    "Takara Tomy: CX-10 Starter WolfHunt F0-60DB"
+  ],
+  "0-60": [
+    "Takara Tomy: CX-10 Starter WolfHunt F0-60DB"
+  ],
+  "lockchip-emperor": [
+    "Takara Tomy: CX-11 Deck Set EmperorMight"
+  ],
+  "mainblade-might": [
+    "Takara Tomy: CX-11 Deck Set EmperorMight"
+  ],
+  "assistblade-hop": [
+    "Takara Tomy: CX-11 Deck Set EmperorMight"
+  ],
+  "hop": [
+    "Takara Tomy: CX-11 Deck Set EmperorMight"
+  ],
+  "cobaltdrake": [
+    "Takara Tomy: BX-00 CobaltDrake 4-60F (Metal Coat: Blue)",
+    "Takara Tomy: BX-00 CobaltDrake 4-60F (Clear Ver.)"
+  ],
+  "aerpegasus": [
+    "Takara Tomy: UX-00 Booster AeroPegasus 3-70A"
+  ],
+  "knightmail": [
+    "Takara Tomy: UX-00 KnightMail 3-85BS (Metal Coat: Navy)"
+  ],
+  "rockleone": [
+    "Takara Tomy: BX-00 Booster Rock Leone 6-80GN"
+  ]
+}
