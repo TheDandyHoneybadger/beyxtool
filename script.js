@@ -18,16 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
         trades: {
             want: { blades: new Set(), ratchets: new Set(), bits: new Set(), lockchips: new Set(), mainblades: new Set(), assistblades: new Set() },
             have: { blades: new Set(), ratchets: new Set(), bits: new Set(), lockchips: new Set(), mainblades: new Set(), assistblades: new Set() },
-            combos: [] // [NOVO] Array para combos de venda
+            combos: [] // Array para combos de venda
         }
     };
-    
-    // [MODIFICADO] active_deck_slot -> active_part_selection
+
     let active_part_selection = { context: null, slotId: null, type: null }; // context: 'deck' ou 'combo'
-    
-    // [NOVO] Estado para o builder de combo de troca
+
     let trade_combo_builder = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null };
-    
+
     let variant_modal_part = null;
     let onInputConfirm = null;
 
@@ -83,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const export_trades_button = document.getElementById('export-trades-button');
     const tradesWantDisplay = document.getElementById('trades-want-display');
     const tradesHaveDisplay = document.getElementById('trades-have-display');
-    // [NOVO] Seletores do Combo Builder e Lista de Combos
     const tradesCombosDisplay = document.getElementById('trades-combos-display');
     const tradesCombosList = document.getElementById('trades-combos-list');
     const comboBuilderSpoiler = document.getElementById('combo-builder-spoiler');
@@ -157,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
                      element.textContent = langPack[key];
                  }
                  else if (element.tagName !== 'BUTTON' || !element.id.startsWith('lang-')) {
-                     // Adicionando verificação para 'empty-list-message' que é um <p>
                      if (element.classList.contains('empty-list-message') || element.tagName === 'P' || element.tagName === 'H2' || element.tagName === 'H3' || element.tagName === 'H4' || element.tagName === 'LABEL' || element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'OPTION' || element.tagName === 'SUMMARY' || element.tagName === 'LI' || (element.tagName === 'SPAN' && !element.classList.contains('btn-side'))) {
                          element.textContent = langPack[key];
                      }
@@ -166,9 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         updateDeckUI();
         renderStarterGuide();
-        renderTradesTab(); // Re-renderiza a aba de trades para traduzir spoilers e listas
-        renderTradeComboBuilder(); // [NOVO] Traduz o builder de combos
-        renderTradeComboList(); // [NOVO] Traduz a lista de combos (ex: msg de lista vazia)
+        renderTradesTab();
+        renderTradeComboBuilder();
+        renderTradeComboList();
     };
 
 
@@ -196,21 +192,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Funções Trades Data
     const getSerializableTrades = () => {
-        const serializable = { want: {}, have: {}, combos: [] }; // Adiciona combos
+        const serializable = { want: {}, have: {}, combos: [] };
         for (const listType of ['want', 'have']) {
             for (const partType in app_data.trades[listType]) {
                 serializable[listType][partType] = [...app_data.trades[listType][partType]];
             }
         }
-        // Combos são serializáveis diretamente (contêm objetos de peças)
-        serializable.combos = app_data.trades.combos; 
+        serializable.combos = app_data.trades.combos;
         return serializable;
     };
     const loadTradesFromParsed = (parsedTrades) => {
         const trades = {
             want: { blades: new Set(), ratchets: new Set(), bits: new Set(), lockchips: new Set(), mainblades: new Set(), assistblades: new Set() },
             have: { blades: new Set(), ratchets: new Set(), bits: new Set(), lockchips: new Set(), mainblades: new Set(), assistblades: new Set() },
-            combos: [] // Adiciona combos
+            combos: []
         };
         try {
             if (parsedTrades) {
@@ -223,7 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 }
-                // Carrega combos
                 if (parsedTrades.combos && Array.isArray(parsedTrades.combos)) {
                     trades.combos = parsedTrades.combos;
                 }
@@ -241,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 collection: getSerializableCollection(),
                 decks: app_data.decks,
                 active_deck_index: app_data.active_deck_index,
-                trades: getSerializableTrades() // Salva trades (incluindo combos)
+                trades: getSerializableTrades()
             }));
         } catch (e) {
             console.error("Erro ao salvar dados:", e);
@@ -253,7 +247,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadAppData = () => {
         const saved_data_str = localStorage.getItem('beyblade_x_data');
         let parsed = {};
-        // [MODIFICADO] Default trades agora inclui combos
         const defaultTrades = {
              want: { blades: new Set(), ratchets: new Set(), bits: new Set(), lockchips: new Set(), mainblades: new Set(), assistblades: new Set() },
              have: { blades: new Set(), ratchets: new Set(), bits: new Set(), lockchips: new Set(), mainblades: new Set(), assistblades: new Set() },
@@ -286,7 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
              app_data.trades = defaultTrades;
         }
 
-         // [MODIFICADO] Carrega Trades (incluindo combos)
          app_data.trades = loadTradesFromParsed(parsed.trades || defaultTrades);
 
         if (app_data.decks.length === 0) app_data.decks.push(createNewDeck("Deck 01"));
@@ -468,7 +460,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Renderiza a Aba de Trocas (Peças Individuais)
     const renderTradesTab = () => {
         const containers = {
             blades: trades_blades_container,
@@ -484,7 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         sortedParts.forEach(part => {
             const container = containers[part.type + 's'];
-            if (!container) return; 
+            if (!container) return;
 
             const trade_card = document.createElement('div');
             trade_card.className = 'part-card';
@@ -513,13 +504,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 iconLoaderImg.onerror = () => { console.warn(`Imagem de tipo ${imgPath} não encontrada.`); };
             }
 
-            trade_card.removeEventListener('dblclick', handleTradeCardClick); 
-            trade_card.addEventListener('dblclick', handleTradeCardClick); 
-            trade_card.addEventListener('contextmenu', (e) => e.preventDefault()); 
+            trade_card.removeEventListener('dblclick', handleTradeCardClick);
+            trade_card.addEventListener('dblclick', handleTradeCardClick);
+            trade_card.addEventListener('contextmenu', (e) => e.preventDefault());
 
             container.appendChild(trade_card);
         });
-        
+
         const langPack = translations[currentLanguage] || translations['en'];
         document.querySelectorAll('#trades-tab .part-type-spoiler summary[data-translate]').forEach(summary => {
             const key = summary.dataset.translate;
@@ -527,14 +518,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 summary.textContent = langPack[key];
             }
         });
-        renderTradeDisplayLists(); 
-        renderTradeComboList(); // [NOVO] Renderiza a lista de combos também
+        renderTradeDisplayLists();
+        renderTradeComboList();
     };
 
-    // Renderiza as listas Want/Have na aba Trades com cards
     const renderTradeDisplayLists = () => {
         const langPack = translations[currentLanguage] || translations['en'];
-        
+
         let wantGrid = tradesWantDisplay.querySelector('.trade-list-grid');
         if (!wantGrid) {
             wantGrid = document.createElement('div');
@@ -548,8 +538,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tradesHaveDisplay.appendChild(haveGrid);
         }
 
-        wantGrid.innerHTML = ''; 
-        haveGrid.innerHTML = ''; 
+        wantGrid.innerHTML = '';
+        haveGrid.innerHTML = '';
 
         const partTypes = ['blades', 'ratchets', 'bits', 'lockchips', 'mainblades', 'assistblades'];
         let wantIsEmpty = true;
@@ -557,7 +547,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const createTradeListCard = (part, statusClass) => {
             const card = document.createElement('div');
-            card.className = `trade-list-card ${statusClass}`; 
+            card.className = `trade-list-card ${statusClass}`;
             card.dataset.partId = part.id;
             card.innerHTML = `
                 <img src="${part.image || 'images/placeholder.webp'}" alt="${part.name}">
@@ -613,97 +603,94 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tradesWantDisplay.querySelector('h4').textContent = langPack.trades_list_header_want || "== PROCURANDO ==";
         tradesHaveDisplay.querySelector('h4').textContent = langPack.trades_list_header_have || "== PASSANDO ==";
-        // [NOVO] Traduz o título do display de combos
         if (tradesCombosDisplay) {
              tradesCombosDisplay.querySelector('h4').textContent = langPack.trades_list_header_combos || "== COMBOS PARA VENDA ==";
         }
     };
 
-    // [NOVA FUNÇÃO] Renderiza o slot de construção de combo
     const renderTradeComboBuilder = () => {
         if (!comboBuilderSlot) return;
 
         const langPack = translations[currentLanguage] || translations['en'];
         const selectText = langPack.deck_placeholder_selecione || 'Select';
-        const bay = trade_combo_builder; // Usa o estado global do builder
+        const bay = trade_combo_builder;
 
-        const selectors = { 
-            p1ph: comboBuilderSlot.querySelector('.part-placeholder[data-type="primeira"]'), 
-            p1n: comboBuilderSlot.querySelector('.part-name-display[data-name-type="primeira"]'), 
-            p1icon: comboBuilderSlot.querySelector('.part-type-icon-placeholder[data-icon-type="primeira"]'), 
-            mbph: comboBuilderSlot.querySelector('.part-placeholder[data-type="mainblade"]'), 
-            mbn: comboBuilderSlot.querySelector('.part-name-display[data-name-type="mainblade"]'), 
-            mbicon: comboBuilderSlot.querySelector('.part-type-icon-placeholder[data-icon-type="mainblade"]'), 
-            abph: comboBuilderSlot.querySelector('.part-placeholder[data-type="assistblade"]'), 
-            abn: comboBuilderSlot.querySelector('.part-name-display[data-name-type="assistblade"]'), 
-            abicon: comboBuilderSlot.querySelector('.part-type-icon-placeholder[data-icon-type="assistblade"]'), 
-            rph: comboBuilderSlot.querySelector('.part-placeholder[data-type="ratchet"]'), 
-            rn: comboBuilderSlot.querySelector('.part-name-display[data-name-type="ratchet"]'), 
-            ricon: comboBuilderSlot.querySelector('.part-type-icon-placeholder[data-icon-type="ratchet"]'), 
-            bph: comboBuilderSlot.querySelector('.part-placeholder[data-type="bit"]'), 
-            bn: comboBuilderSlot.querySelector('.part-name-display[data-name-type="bit"]'), 
-            bicon: comboBuilderSlot.querySelector('.part-type-icon-placeholder[data-icon-type="bit"]') 
+        const selectors = {
+            p1ph: comboBuilderSlot.querySelector('.part-placeholder[data-type="primeira"]'),
+            p1n: comboBuilderSlot.querySelector('.part-name-display[data-name-type="primeira"]'),
+            p1icon: comboBuilderSlot.querySelector('.part-type-icon-placeholder[data-icon-type="primeira"]'),
+            mbph: comboBuilderSlot.querySelector('.part-placeholder[data-type="mainblade"]'),
+            mbn: comboBuilderSlot.querySelector('.part-name-display[data-name-type="mainblade"]'),
+            mbicon: comboBuilderSlot.querySelector('.part-type-icon-placeholder[data-icon-type="mainblade"]'),
+            abph: comboBuilderSlot.querySelector('.part-placeholder[data-type="assistblade"]'),
+            abn: comboBuilderSlot.querySelector('.part-name-display[data-name-type="assistblade"]'),
+            abicon: comboBuilderSlot.querySelector('.part-type-icon-placeholder[data-icon-type="assistblade"]'),
+            rph: comboBuilderSlot.querySelector('.part-placeholder[data-type="ratchet"]'),
+            rn: comboBuilderSlot.querySelector('.part-name-display[data-name-type="ratchet"]'),
+            ricon: comboBuilderSlot.querySelector('.part-type-icon-placeholder[data-icon-type="ratchet"]'),
+            bph: comboBuilderSlot.querySelector('.part-placeholder[data-type="bit"]'),
+            bn: comboBuilderSlot.querySelector('.part-name-display[data-name-type="bit"]'),
+            bicon: comboBuilderSlot.querySelector('.part-type-icon-placeholder[data-icon-type="bit"]')
         };
 
-        if (Object.values(selectors).some(el => !el)) { 
-            console.error("Elementos faltando no slot do Combo Builder."); 
-            return; 
+        if (Object.values(selectors).some(el => !el)) {
+            console.error("Elementos faltando no slot do Combo Builder.");
+            return;
         }
 
         comboBuilderSlot.dataset.bayType = bay.type || 'empty';
 
-        const reset = (ph, n, icon, placeholderKey) => { 
-            ph.innerHTML = `<span data-translate="${placeholderKey}">${langPack[placeholderKey]||placeholderKey.replace('deck_placeholder_', '').replace('_section_title', '')}</span>`; 
-            n.textContent = selectText; 
-            icon.innerHTML = ''; 
+        const reset = (ph, n, icon, placeholderKey) => {
+            ph.innerHTML = `<span data-translate="${placeholderKey}">${langPack[placeholderKey]||placeholderKey.replace('deck_placeholder_', '').replace('_section_title', '')}</span>`;
+            n.textContent = selectText;
+            icon.innerHTML = '';
         };
-        const set = (ph, n, icon, part, partSlotName) => { 
-            if (!part) return; 
-            const name = part.displayName || part.name; 
-            let imgHTML = part.image || 'images/placeholder.webp'; 
-            if (part.type==='blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) { 
-                const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant); 
-                if (vData?.image) imgHTML=vData.image; 
-                else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock'); 
-                if (sVar?.image) imgHTML=sVar.image; } 
-            } 
-            ph.innerHTML = `<img src="${imgHTML}" alt="${name}">`; 
-            n.textContent = name; 
-            icon.innerHTML = ''; 
-            if ((partSlotName === 'primeira' && part.type === 'blade') || partSlotName === 'bit') { 
-                if (part.bey_type) { 
-                    const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); 
-                    const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`; 
-                    icon.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; 
+        const set = (ph, n, icon, part, partSlotName) => {
+            if (!part) return;
+            const name = part.displayName || part.name;
+            let imgHTML = part.image || 'images/placeholder.webp';
+            if (part.type==='blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) {
+                const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant);
+                if (vData?.image) imgHTML=vData.image;
+                else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock');
+                if (sVar?.image) imgHTML=sVar.image; }
+            }
+            ph.innerHTML = `<img src="${imgHTML}" alt="${name}">`;
+            n.textContent = name;
+            icon.innerHTML = '';
+            if ((partSlotName === 'primeira' && part.type === 'blade') || partSlotName === 'bit') {
+                if (part.bey_type) {
+                    const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1);
+                    const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`;
+                    icon.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`;
                 }
             }
         };
 
-        reset(selectors.p1ph, selectors.p1n, selectors.p1icon, 'deck_placeholder_primeira'); 
-        reset(selectors.mbph, selectors.mbn, selectors.mbicon, 'deck_placeholder_mainblade'); 
-        reset(selectors.abph, selectors.abn, selectors.abicon, 'deck_placeholder_assistblade'); 
-        reset(selectors.rph, selectors.rn, selectors.ricon, 'deck_placeholder_ratchet'); 
+        reset(selectors.p1ph, selectors.p1n, selectors.p1icon, 'deck_placeholder_primeira');
+        reset(selectors.mbph, selectors.mbn, selectors.mbicon, 'deck_placeholder_mainblade');
+        reset(selectors.abph, selectors.abn, selectors.abicon, 'deck_placeholder_assistblade');
+        reset(selectors.rph, selectors.rn, selectors.ricon, 'deck_placeholder_ratchet');
         reset(selectors.bph, selectors.bn, selectors.bicon, 'deck_placeholder_bit');
 
-        if (bay.type === 'standard') { 
-            set(selectors.p1ph, selectors.p1n, selectors.p1icon, bay.part1, 'primeira'); 
-            set(selectors.rph, selectors.rn, selectors.ricon, bay.part4, 'ratchet'); 
-            set(selectors.bph, selectors.bn, selectors.bicon, bay.part5, 'bit'); 
+        if (bay.type === 'standard') {
+            set(selectors.p1ph, selectors.p1n, selectors.p1icon, bay.part1, 'primeira');
+            set(selectors.rph, selectors.rn, selectors.ricon, bay.part4, 'ratchet');
+            set(selectors.bph, selectors.bn, selectors.bicon, bay.part5, 'bit');
         }
-        else if (bay.type === 'chip') { 
-            set(selectors.p1ph, selectors.p1n, selectors.p1icon, bay.part1, 'primeira'); 
-            set(selectors.mbph, selectors.mbn, selectors.mbicon, bay.part2, 'mainblade'); 
-            set(selectors.abph, selectors.abn, selectors.abicon, bay.part3, 'assistblade'); 
-            set(selectors.rph, selectors.rn, selectors.ricon, bay.part4, 'ratchet'); 
-            set(selectors.bph, selectors.bn, selectors.bicon, bay.part5, 'bit'); 
+        else if (bay.type === 'chip') {
+            set(selectors.p1ph, selectors.p1n, selectors.p1icon, bay.part1, 'primeira');
+            set(selectors.mbph, selectors.mbn, selectors.mbicon, bay.part2, 'mainblade');
+            set(selectors.abph, selectors.abn, selectors.abicon, bay.part3, 'assistblade');
+            set(selectors.rph, selectors.rn, selectors.ricon, bay.part4, 'ratchet');
+            set(selectors.bph, selectors.bn, selectors.bicon, bay.part5, 'bit');
         }
     };
 
-    // [NOVA FUNÇÃO] Renderiza a lista de combos para venda
     const renderTradeComboList = () => {
         if (!tradesCombosList) return;
-        
-        tradesCombosList.innerHTML = ''; // Limpa a lista
+
+        tradesCombosList.innerHTML = '';
         const langPack = translations[currentLanguage] || translations['en'];
 
         if (app_data.trades.combos.length === 0) {
@@ -729,14 +716,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant);
                         if (vData?.image) partImage = vData.image;
                     }
-                    
+
                     const img = document.createElement('img');
                     img.src = partImage;
                     img.alt = part.name;
                     img.title = part.displayName || part.name;
                     comboParts.appendChild(img);
-                    
-                    // Constrói o nome (ex: KnightMail 1-60R)
+
                     if (part.type === 'blade' || part.type === 'lockchip' || part.type === 'mainblade') {
                          comboName += `${part.displayName || part.name} `;
                     } else if (part.type === 'assistblade') {
@@ -747,15 +733,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            combo.name = comboName.trim().replace(/ \([\s\S]*?\)/g, ''); // Salva nome gerado (removendo variantes)
-            
+            combo.name = comboName.trim().replace(/ \([\s\S]*?\)/g, '');
+
             const comboNameP = document.createElement('p');
             comboNameP.className = 'trade-combo-name';
             comboNameP.textContent = combo.name;
 
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'combo-delete-btn danger-button';
-            deleteBtn.innerHTML = '&times;'; // 'x'
+            deleteBtn.innerHTML = '&times;';
             deleteBtn.dataset.comboIndex = index;
             deleteBtn.title = "Remover Combo";
             deleteBtn.addEventListener('click', (e) => {
@@ -795,7 +781,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updateDeckUI = () => {
         const currentDeck = app_data.decks[app_data.active_deck_index]; if (!currentDeck) return;
-        const langPack = translations[currentLanguage] || translations['en']; // Fallback
+        const langPack = translations[currentLanguage] || translations['en'];
         const selectText = langPack.deck_placeholder_selecione || 'Select';
         deck_slots.forEach((slot, bayIndex) => {
             let bay = currentDeck.bays[bayIndex]; if (!bay || typeof bay !== 'object') { currentDeck.bays[bayIndex] = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }; bay = currentDeck.bays[bayIndex]; } else { if (!bay.hasOwnProperty('part4')) bay.part4 = null; if (!bay.hasOwnProperty('part5')) bay.part5 = null; }
@@ -826,6 +812,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     collectionSet.delete(part.id);
                     if (partCard) partCard.classList.remove('owned');
                     app_data.decks.forEach(deck => deck.bays.forEach(bay => { if (bay.part1 && (bay.part1.baseId || bay.part1.id) === part.id) { clearBay(bay); needsDeckUpdate = true; } }));
+                    if (trade_combo_builder.part1?.id === part.id || trade_combo_builder.part1?.baseId === part.id) {
+                        clearTradeComboBuilder();
+                        renderTradeComboBuilder();
+                    }
                 } else {
                     const variantToAdd = (part.variantsId && variantList?.length === 1) ? variantList[0].name : 'owned';
                     collectionSet.set(part.id, new Set([variantToAdd]));
@@ -840,18 +830,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (collection_set.has(part.id)) {
                 collection_set.delete(part.id); if (partCard) partCard.classList.remove('owned');
                  app_data.decks.forEach(deck => deck.bays.forEach(bay => { let changed = false; if (part.type === 'ratchet' && bay.part4?.id === part.id) { bay.part4 = null; changed = true; } else if (part.type === 'bit' && bay.part5?.id === part.id) { bay.part5 = null; changed = true; } else if (part.type === 'lockchip' && bay.part1?.id === part.id) { clearBay(bay); changed = true; } else if (part.type === 'mainblade' && bay.part2?.id === part.id) { bay.part2 = null; changed = true; } else if (part.type === 'assistblade' && bay.part3?.id === part.id) { bay.part3 = null; changed = true; } if(changed) needsDeckUpdate = true; }));
-                 // [NOVO] Limpa o combo builder se a peça for removida da coleção
                  let comboBuilderChanged = false;
                  if (part.type === 'ratchet' && trade_combo_builder.part4?.id === part.id) { trade_combo_builder.part4 = null; comboBuilderChanged = true; }
                  else if (part.type === 'bit' && trade_combo_builder.part5?.id === part.id) { trade_combo_builder.part5 = null; comboBuilderChanged = true; }
-                 else if (part.type === 'lockchip' && trade_combo_builder.part1?.id === part.id) { clearTradeComboBuilder(); comboBuilderChanged = true; } // Limpa tudo se o chip/blade for removido
-                 else if (part.type === 'blade' && trade_combo_builder.part1?.id === part.id) { clearTradeComboBuilder(); comboBuilderChanged = true; }
+                 else if (part.type === 'lockchip' && trade_combo_builder.part1?.id === part.id) { clearTradeComboBuilder(); comboBuilderChanged = true; }
                  else if (part.type === 'mainblade' && trade_combo_builder.part2?.id === part.id) { trade_combo_builder.part2 = null; comboBuilderChanged = true; }
                  else if (part.type === 'assistblade' && trade_combo_builder.part3?.id === part.id) { trade_combo_builder.part3 = null; comboBuilderChanged = true; }
                  if(comboBuilderChanged) renderTradeComboBuilder();
 
             } else { collection_set.add(part.id); if (partCard) partCard.classList.add('owned'); }
-            if (needsDeckUpdate) updateDeckUI(); 
+            if (needsDeckUpdate) updateDeckUI();
             saveAppData(); if (collection_filter?.checked) { renderParts(); } renderStarterGuide();
         }
     };
@@ -861,7 +849,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const langPack = translations[currentLanguage] || translations['en'];
         const titlePrefix = langPack.variant_modal_title_prefix || "Select Variants for";
         variant_modal_title.textContent = `${titlePrefix} ${part.name}`;
-        variant_modal_checkboxes.innerHTML = '<div id="variant-modal-grid"></div>'; 
+        variant_modal_checkboxes.innerHTML = '<div id="variant-modal-grid"></div>';
         const grid = document.getElementById('variant-modal-grid');
         if (!grid) {
             console.error("Elemento 'variant-modal-grid' não encontrado.");
@@ -869,7 +857,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const originalOwned = app_data.collection.blades.get(part.id) || new Set();
-        const tempSelectedVariants = new Set(originalOwned); 
+        const tempSelectedVariants = new Set(originalOwned);
 
         const variantList = ALL_VARIANTS[part.variantsId];
         if (!variantList) {
@@ -878,7 +866,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        grid.innerHTML = ''; 
+        grid.innerHTML = '';
 
         variantList.forEach(vData => {
             if (!vData?.name) return;
@@ -890,18 +878,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.classList.add('selected');
             }
             card.addEventListener('click', () => {
-                if (tempSelectedVariants.has(vData.name)) {
-                    tempSelectedVariants.delete(vData.name);
+                const variantName = vData.name;
+                console.log(`Clicou na variante: ${variantName}`); // Log 1
+                if (tempSelectedVariants.has(variantName)) {
+                    tempSelectedVariants.delete(variantName);
                     card.classList.remove('selected');
+                    console.log(`Removido ${variantName}. tempSelectedVariants:`, new Set(tempSelectedVariants)); // Log 2
                 } else {
-                    tempSelectedVariants.add(vData.name);
+                    tempSelectedVariants.add(variantName);
                     card.classList.add('selected');
+                    console.log(`Adicionado ${variantName}. tempSelectedVariants:`, new Set(tempSelectedVariants)); // Log 3
                 }
             });
             grid.appendChild(card);
         });
 
         const handleVariantModalDone = () => {
+            console.log("handleVariantModalDone executando..."); // Log 4
             let changed = false;
             if (originalOwned.size !== tempSelectedVariants.size) {
                 changed = true;
@@ -922,26 +915,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            console.log("Original:", originalOwned, "Temp:", tempSelectedVariants, "Changed:", changed); // Log 5
+
             if (changed) {
+                console.log("Mudanças detectadas, iniciando salvamento..."); // Log 6
                 let needsDeckUpdate = false;
                 const mainCard = document.querySelector(`#collection-tab .part-card[data-part-id="${part.id}"]`);
-    
+
                 originalOwned.forEach(originalVariant => {
-                    if (!tempSelectedVariants.has(originalVariant)) { 
+                    if (!tempSelectedVariants.has(originalVariant)) {
                         app_data.decks.forEach(deck => deck.bays.forEach(bay => {
                              if (bay.part1?.baseId === part.id && bay.part1.variant === originalVariant) {
-                                clearBay(bay); 
+                                clearBay(bay);
                                 needsDeckUpdate = true;
                             }
                         }));
-                        // [NOVO] Limpa o combo builder se a variante for removida
                         if (trade_combo_builder.part1?.baseId === part.id && trade_combo_builder.part1.variant === originalVariant) {
-                            clearTradeComboBuilder(); 
+                            clearTradeComboBuilder();
                             renderTradeComboBuilder();
                         }
                     }
                 });
-    
+
+                console.log("Estado da coleção ANTES de salvar:", app_data.collection.blades.get(part.id)); // Log 7
+
                 if (tempSelectedVariants.size > 0) {
                     app_data.collection.blades.set(part.id, new Set(tempSelectedVariants));
                     if (mainCard) mainCard.classList.add('owned');
@@ -954,24 +951,28 @@ document.addEventListener('DOMContentLoaded', () => {
                             needsDeckUpdate = true;
                         }
                     }));
-                    // [NOVO] Limpa o combo builder se a blade for removida
                     if (trade_combo_builder.part1?.baseId === part.id) {
                         clearTradeComboBuilder();
                         renderTradeComboBuilder();
                     }
                 }
-    
+
+                console.log("Estado da coleção DEPOIS de atualizar, ANTES de saveAppData():", app_data.collection.blades.get(part.id)); // Log 8
+                saveAppData();
+                console.log("saveAppData() chamado."); // Log 9
+
                 if (needsDeckUpdate) {
                     updateDeckUI();
                 }
-                saveAppData(); 
                 if (collection_filter?.checked) {
-                    renderParts(); 
+                    renderParts();
                 }
                 renderStarterGuide();
+            } else {
+                console.log("Nenhuma mudança detectada entre os sets original e temporário."); // Log 10
             }
 
-            closeVariantModal(); 
+            closeVariantModal();
         };
 
         if (variantModalDoneButton) {
@@ -979,7 +980,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 variantModalDoneButton.removeEventListener('click', variantModalDoneButton._listener);
             }
             variantModalDoneButton._listener = handleVariantModalDone;
-            variantModalDoneButton.addEventListener('click', handleVariantModalDone, { once: true });
+            // --- INÍCIO DA MODIFICAÇÃO ---
+            variantModalDoneButton.addEventListener('click', handleVariantModalDone); // Removido { once: true }
+            // --- FIM DA MODIFICAÇÃO ---
         }
 
         variant_modal.style.display = 'block';
@@ -989,22 +992,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (variant_modal) {
             variant_modal.style.display = 'none';
         }
-        variant_modal_part = null; 
+        variant_modal_part = null;
 
         if (variantModalDoneButton && variantModalDoneButton._listener) {
              variantModalDoneButton.removeEventListener('click', variantModalDoneButton._listener);
-             variantModalDoneButton._listener = null; 
+             variantModalDoneButton._listener = null;
         }
     };
 
     const clearBay = (bay) => { if (bay) { bay.type = null; bay.part1 = null; bay.part2 = null; bay.part3 = null; bay.part4 = null; bay.part5 = null; } };
     const closePartModal = () => { if (part_modal) part_modal.style.display = 'none'; active_part_selection = { context: null, slotId: null, type: null }; };
 
-    // [MODIFICADO] selectPartForDeck -> selectPart
     const selectPart = (part) => {
-        const { context, slotId, type } = active_part_selection; // Usa o seletor de contexto
+        const { context, slotId, type } = active_part_selection;
         if (context === null || type === null) { console.error("active_part_selection inválido"); return; }
-        
+
         const langPack = translations[currentLanguage] || translations['en'];
         const targetPartMap = { 'primeira': 'part1', 'mainblade': 'part2', 'assistblade': 'part3', 'ratchet': 'part4', 'bit': 'part5' };
         const targetPartKey = targetPartMap[type];
@@ -1014,10 +1016,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const basePartData = ALL_PARTS.find(p => p.id === basePartId);
         if (!basePartData) { console.error(`Peça base ${basePartId} não encontrada em ALL_PARTS.`); closePartModal(); return; }
 
-        // Cria o objeto da peça com dados da variante (se houver)
         const partForSelection = { ...basePartData, ...(part.baseId && { baseId: part.baseId, variant: part.variant, displayName: part.displayName, image: part.image || basePartData.image }) };
-        
-        // Determina onde salvar a peça (Deck ou Combo Builder)
+
         let targetBay;
         if (context === 'deck') {
             if (slotId === null) { console.error("SlotId nulo para contexto 'deck'"); return; }
@@ -1025,17 +1025,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!currentDeck || !currentDeck.bays[slotId]) { console.error(`Deck ou Bay inválido: index ${app_data.active_deck_index}, slot ${slotId}`); return; }
             targetBay = currentDeck.bays[slotId];
         } else if (context === 'combo') {
-            targetBay = trade_combo_builder; // Usa o estado do combo builder
+            targetBay = trade_combo_builder;
         } else {
             console.error("Contexto de seleção desconhecido:", context);
             return;
         }
 
-        // Lógica de seleção (idêntica para ambos, mas aplicada ao targetBay correto)
         if (targetPartKey === 'part1') {
             const newType = (partForSelection.type === 'blade') ? 'standard' : (partForSelection.type === 'lockchip') ? 'chip' : null;
             if (!newType) { console.error("Tipo inválido para primeira peça:", partForSelection.type); closePartModal(); return; }
-            if (targetBay.type !== newType && targetBay.type !== null) { clearBay(targetBay); } // Limpa o bay se o tipo mudar
+            if (targetBay.type !== newType && targetBay.type !== null) { clearBay(targetBay); }
             targetBay.type = newType;
             targetBay.part1 = partForSelection;
             if (newType === 'standard') { targetBay.part2 = null; targetBay.part3 = null; }
@@ -1065,35 +1064,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Atualiza a UI correspondente
         if (context === 'deck') {
             updateDeckUI();
-            saveAppData(); // Salva dados apenas se for o deck
+            saveAppData();
         } else if (context === 'combo') {
-            renderTradeComboBuilder(); // Apenas atualiza a UI do builder
-            // Não salva app_data aqui
+            renderTradeComboBuilder();
         }
 
         closePartModal();
     };
 
 
-    // [MODIFICADO] openPartSelector agora usa 'context'
     const openPartSelector = (context, slotId, type) => {
-        active_part_selection = { context, slotId, type }; // slotId pode ser null para 'combo'
+        active_part_selection = { context, slotId, type };
         const langPack = translations[currentLanguage] || translations['en'];
         const titlePrefix = langPack.part_selector_modal_title_prefix || "Select:";
         const partTypeName = langPack[`deck_placeholder_${type}`] || type.charAt(0).toUpperCase() + type.slice(1);
         modal_title.textContent = `${titlePrefix} ${partTypeName}`;
 
         const usedPartIds = new Set();
-        
-        // Define quais peças já estão em uso, dependendo do contexto
+
         if (context === 'deck') {
             const currentDeck = app_data.decks[app_data.active_deck_index];
             if (!currentDeck) return;
             currentDeck.bays.forEach((bay, index) => {
-                if (index.toString() === slotId) return; // Ignora o slot atual
+                if (index.toString() === slotId) return;
                 if (bay.part1) usedPartIds.add(bay.part1.baseId || bay.part1.id);
                 if (bay.part2) usedPartIds.add(bay.part2.id);
                 if (bay.part3) usedPartIds.add(bay.part3.id);
@@ -1111,9 +1106,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         let availableParts = [];
-        const partTypeKey = (type === 'primeira') ? null : type; // 'primeira' é especial
-        
-        // Define a fonte das peças (Toda a coleção ou Apenas as que possui)
+        const partTypeKey = (type === 'primeira') ? null : type;
+
         const sourceParts = (context === 'deck' || context === 'combo') ? getOwnedParts(partTypeKey || 'blade') : [];
         if (type === 'primeira') {
              availableParts = [...getOwnedParts('blade'), ...getOwnedParts('lockchip')];
@@ -1130,7 +1124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (partsToShow.length === 0) {
             const nonePrefix = langPack.part_individual_none_prefix || 'No';
-            const noneSuffix = langPack.part_individual_none_suffix || 'parts available (check collection or parts already in use in the deck).';
+            const noneSuffix = langPack.part_individual_none_suffix || 'parts available (check collection or parts already in use).';
             partsGrid.innerHTML = `<p>${nonePrefix} ${partTypeName} ${noneSuffix}</p>`;
         } else {
             partsToShow.forEach(part => {
@@ -1141,7 +1135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const displayImage = (part.type === 'blade' && part.variant && part.image) ? part.image : (part.image || 'images/placeholder.webp');
 
                 part_card.innerHTML = `<img src="${displayImage}" alt="${displayName}"><p>${displayName}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`;
-                part_card.addEventListener('click', () => selectPart(part)); // [MODIFICADO] Chama selectPart
+                part_card.addEventListener('click', () => selectPart(part));
                 partsGrid.appendChild(part_card);
             });
         }
@@ -1202,7 +1196,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (savedLayout === 'horizontal') {
                 scoreContainer.classList.add('horizontal-score');
             } else {
-                scoreContainer.classList.add('vertical-score'); 
+                scoreContainer.classList.add('vertical-score');
             }
         }
     };
@@ -1242,15 +1236,15 @@ document.addEventListener('DOMContentLoaded', () => {
             haveSet.add(partId);
             card.classList.remove('wanting');
             card.classList.add('trading');
-        } else { 
+        } else {
             wantSet.delete(partId);
             haveSet.delete(partId);
             card.classList.remove('wanting');
             card.classList.remove('trading');
         }
 
-        saveAppData(); 
-        renderTradeDisplayLists(); 
+        saveAppData();
+        renderTradeDisplayLists();
     };
 
     const copyTradeList = () => {
@@ -1258,13 +1252,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let output = "";
 
         const sections = [
-            { title: langPack.trades_list_header_want || "== WANT ==", list: app_data.trades.want }, 
+            { title: langPack.trades_list_header_want || "== WANT ==", list: app_data.trades.want },
             { title: langPack.trades_list_header_have || "== SELLING/TRADING ==", list: app_data.trades.have }
         ];
 
         const partTypes = ['blades', 'ratchets', 'bits', 'lockchips', 'mainblades', 'assistblades'];
-        
-        // [NOVO] Adiciona Combos à cópia de texto
+
         if (app_data.trades.combos.length > 0) {
             output += (langPack.trades_list_header_combos || "== COMBOS FOR SALE ==") + "\n\n";
             app_data.trades.combos.forEach(combo => {
@@ -1316,23 +1309,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const exportTradesAsImage = () => {
         const langPack = translations[currentLanguage] || translations['en'];
-    
+
         if (typeof html2canvas === 'undefined') {
             console.error("html2canvas is not loaded. Make sure the library is included in index.html.");
             alert(langPack.trades_export_error || "Error generating image.");
             return;
         }
-    
+
         const originalContainer = document.getElementById('trade-display-container');
         if (!originalContainer) {
             console.error("Container 'trade-display-container' não encontrado.");
             return;
         }
-    
+
         const captureContainer = originalContainer.cloneNode(true);
         captureContainer.className = 'trade-display-container trade-capture-clone';
-        captureContainer.id = 'trade-capture-clone-temp'; 
-    
+        captureContainer.id = 'trade-capture-clone-temp';
+
         const header = document.createElement('div');
         header.className = 'trade-capture-header';
         header.innerHTML = `
@@ -1340,36 +1333,35 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="trade-capture-url">https://beyxtool.pages.dev/</p>
         `;
         captureContainer.prepend(header);
-    
+
         captureContainer.querySelectorAll('.trade-list-grid').forEach(grid => {
             grid.style.maxHeight = 'none';
             grid.style.overflowY = 'visible';
         });
-        
-        // [NOVO] Garante que a lista de combos (que não é grid) também seja visível
+
         const comboList = captureContainer.querySelector('#trades-combos-list');
         if (comboList) {
             comboList.style.maxHeight = 'none';
             comboList.style.overflowY = 'visible';
         }
-    
+
         document.body.appendChild(captureContainer);
-    
+
         const logoImg = captureContainer.querySelector('.trade-capture-logo');
 
         const captureFunction = () => {
             html2canvas(captureContainer, {
-                useCORS: true, 
+                useCORS: true,
                 backgroundColor: getComputedStyle(document.body).getPropertyValue('--secondary-bg').trim() || '#181818',
-                scale: 2 
+                scale: 2
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.href = canvas.toDataURL('image/png');
                 link.download = 'BeyXTool_Trades_List.png';
-                document.body.appendChild(link); 
+                document.body.appendChild(link);
                 link.click();
-                document.body.removeChild(link); 
-        
+                document.body.removeChild(link);
+
             }).catch(err => {
                 console.error('Erro no html2canvas:', err);
                 alert(langPack.trades_export_error || "Error generating image.");
@@ -1388,21 +1380,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 logoImg.onerror = () => {
                     console.error("Erro ao carregar logo para o canvas.");
                     alert("Erro ao carregar o logo; a imagem pode sair incompleta.");
-                    captureFunction(); 
+                    captureFunction();
                 };
             } else {
                 captureFunction();
             }
-        }, 100); 
+        }, 100);
     };
 
-    // [NOVO] Limpa o builder de combo
     const clearTradeComboBuilder = () => {
         trade_combo_builder = { type: null, part1: null, part2: null, part3: null, part4: null, part5: null };
         renderTradeComboBuilder();
     };
 
-    // [NOVO] Adiciona o combo à lista
     const addTradeComboToList = () => {
         const bay = trade_combo_builder;
         const langPack = translations[currentLanguage] || translations['en'];
@@ -1415,10 +1405,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (isComplete) {
-            // Cria uma cópia profunda para salvar
             const comboToSave = JSON.parse(JSON.stringify(bay));
-            
-            // Gera o nome (será recalculado na renderização, mas bom ter um inicial)
+
             let comboName = "";
             const parts = [comboToSave.part1, comboToSave.part2, comboToSave.part3, comboToSave.part4, comboToSave.part5];
              parts.forEach(part => {
@@ -1440,8 +1428,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(langPack.alert_combo_incomplete || "O combo deve estar completo.");
         }
     };
-    
-    // [NOVO] Deleta um combo da lista
+
     const deleteTradeCombo = (index) => {
         if (index >= 0 && index < app_data.trades.combos.length) {
             app_data.trades.combos.splice(index, 1);
@@ -1507,7 +1494,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Funções para o Modal de Info ---
     const drawPartStatsChart = (canvasId, part) => {
-        const langPack = translations[currentLanguage] || translations['en']; // Fallback
+        const langPack = translations[currentLanguage] || translations['en'];
         const canvas = document.getElementById(canvasId); if (!canvas || !part) return;
         if (canvasId === 'info-modal-chart' && infoModalChartInstance) { infoModalChartInstance.destroy(); infoModalChartInstance = null; }
         const ctx = canvas.getContext('2d'); if (!ctx) return;
@@ -1516,7 +1503,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (part.type === 'blade') { chartData = [parseStat(part.attack), parseStat(part.defense), parseStat(part.stamina)]; chartLabels = [ `${langPack.chart_label_attack || 'Attack'}: ${chartData[0]}`, `${langPack.chart_label_defense || 'Defense'}: ${chartData[1]}`, `${langPack.chart_label_stamina || 'Stamina'}: ${chartData[2]}` ]; }
         else if (part.type === 'ratchet') { chartData = [parseStat(part.attack), parseStat(part.defense), parseStat(part.stamina), parseStat(part.height)]; chartLabels = [ `${langPack.chart_label_attack || 'Attack'}: ${chartData[0]}`, `${langPack.chart_label_defense || 'Defense'}: ${chartData[1]}`, `${langPack.chart_label_stamina || 'Stamina'}: ${chartData[2]}`, `${langPack.chart_label_height || 'Height'}: ${chartData[3]}` ]; }
         else if (part.type === 'bit') { chartData = [parseStat(part.attack), parseStat(part.defense), parseStat(part.stamina), parseStat(part.dash), parseStat(part.burst_resistance)]; chartLabels = [ `${langPack.chart_label_attack || 'Attack'}: ${chartData[0]}`, `${langPack.chart_label_defense || 'Defense'}: ${chartData[1]}`, `${langPack.chart_label_stamina || 'Stamina'}: ${chartData[2]}`, `${langPack.chart_label_dash || 'Dash'}: ${chartData[3]}`, `${langPack.chart_label_burst || 'Burst'}: ${chartData[4]}` ]; }
-        else { canvas.style.display = 'none'; return; } // Peças sem stats definidos para gráfico
+        else { canvas.style.display = 'none'; return; }
         canvas.style.display = 'block';
         const data = { labels: chartLabels, datasets: [{ label: part.name, data: chartData, fill: true, backgroundColor: 'rgba(0, 255, 195, 0.2)', borderColor: 'rgb(0, 255, 195)', pointBackgroundColor: 'rgb(0, 255, 195)', pointBorderColor: '#fff', pointHoverBackgroundColor: '#fff', pointHoverBorderColor: 'rgb(0, 255, 195)' }] };
         const options = { responsive: true, maintainAspectRatio: true, scales: { r: { angleLines: { color: 'rgba(255, 255, 255, 0.3)' }, grid: { color: 'rgba(255, 255, 255, 0.3)' }, pointLabels: { display: true, color: '#FFFFFF', font: { size: 9 } }, ticks: { display: false, stepSize: 25, maxTicksLimit: 5 }, min: 0, suggestedMax: 100 }}, plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(context) { let label = ''; const fullLabel = context.chart.data.labels[context.dataIndex]; const statNameMatch = fullLabel.match(/^[^:]+/); if (statNameMatch) { label = statNameMatch[0] + ': '; } if (context.parsed.r !== null) { label += context.parsed.r; } return label; } }}}};
@@ -1541,10 +1528,10 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAppData();
     loadScoreLayout();
     renderParts();
-    renderTradesTab(); // renderTradeDisplayLists e renderTradeComboList são chamados dentro desta
-    setLanguage(currentLanguage); // Chama translateUI, que chama renderStarterGuide, updateDeckUI, renderTradesTab, renderTradeComboBuilder, renderTradeComboList
+    renderTradesTab();
+    setLanguage(currentLanguage);
     updateScoreDisplay();
-    renderTradeComboBuilder(); // [NOVO] Renderiza o builder de combo na inicialização
+    renderTradeComboBuilder();
 
     // Listeners Idioma
     langPtBrButton?.addEventListener('click', () => setLanguage('pt-br'));
@@ -1559,7 +1546,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Listeners Deck Builder
     clear_deck_button?.addEventListener('click', clearDeck);
     export_deck_button?.addEventListener('click', exportDeckList);
-    deck_slots.forEach(slot => { slot.querySelectorAll('.part-placeholder').forEach(ph => { ph.addEventListener('click', () => { const sId = slot.dataset.slotId; const t = ph.dataset.type; if(sId !== undefined && t) openPartSelector('deck', sId, t); }); }); }); // [MODIFICADO] Contexto 'deck'
+    deck_slots.forEach(slot => { slot.querySelectorAll('.part-placeholder').forEach(ph => { ph.addEventListener('click', () => { const sId = slot.dataset.slotId; const t = ph.dataset.type; if(sId !== undefined && t) openPartSelector('deck', sId, t); }); }); });
     add_deck_button?.addEventListener('click', addDeck);
     delete_deck_button?.addEventListener('click', deleteDeck);
     deck_selector?.addEventListener('change', switchDeck);
@@ -1569,9 +1556,13 @@ document.addEventListener('DOMContentLoaded', () => {
     part_modal_close?.addEventListener('click', closePartModal);
     variant_modal_close?.addEventListener('click', closeVariantModal);
     variantModalDoneButton?.addEventListener('click', () => {
-        if (variant_modal.style.display === 'block') {
-             closeVariantModal();
-        }
+        // A lógica de clique no botão OK é anexada dinamicamente em openVariantSelector
+        // Este listener atua como um fallback, MAS NÃO DEVE SER NECESSÁRIO com a correção
+        // Se ainda não funcionar, pode indicar outro problema.
+        // console.log("Fallback listener do OK clicado"); // Log extra se necessário
+        // if (variant_modal.style.display === 'block' && variantModalDoneButton._listener) {
+        //      variantModalDoneButton._listener(); // Tenta chamar manualmente
+        // }
     });
     inputModalOk?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(inputModalField.value); });
     inputModalCancel?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); });
@@ -1585,11 +1576,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Listener Trades
     copy_trades_button?.addEventListener('click', copyTradeList);
     export_trades_button?.addEventListener('click', exportTradesAsImage);
-    // [NOVO] Listeners do Combo Builder
+    // Listeners do Combo Builder
     comboBuilderPlaceholders.forEach(ph => {
         ph.addEventListener('click', () => {
             const t = ph.dataset.type;
-            if (t) openPartSelector('combo', null, t); // [MODIFICADO] Contexto 'combo', slotId é null
+            if (t) openPartSelector('combo', null, t);
         });
     });
     clearComboBuilderButton?.addEventListener('click', clearTradeComboBuilder);
