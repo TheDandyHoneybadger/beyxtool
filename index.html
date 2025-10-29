@@ -49,7 +49,7 @@
                         <li><strong data-translate="tab_guide">Guia:</strong> <span data-translate="welcome_how_to_guide">Iniciantes podem ver quais produtos (Hasbro ou Takara Tomy) comprar para obter as melhores peças competitivas.</span></li>
                         <li><strong data-translate="tab_collection">Coleção:</strong> <span data-translate="welcome_how_to_collection">Clique duas vezes em uma peça para adicioná-la à sua "Coleção". Use o filtro para ver apenas o que você possui. (Isso afeta o Deck Builder).</span></li>
                         <li><strong data-translate="tab_score">Placar:</strong> <span data-translate="welcome_how_to_score">Um placar simples para marcar pontos durante suas batalhas.</span></li>
-                        <li><strong data-translate="tab_trades">Trades:</strong> <span data-translate="welcome_how_to_trades">Clique duas vezes para marcar peças que você está "Procurando" (azul) ou "Passando" (vermelho). Use o botão "Exportar Imagem" para gerar um print e compartilhar.</span></li>
+                        <li><strong data-translate="tab_trades">Trades:</strong> <span data-translate="welcome_how_to_trades">Clique duas vezes para marcar peças que você está "Procurando" (azul) ou "Passando" (vermelho). Use o "Exportar Imagem" para gerar um print e compartilhar.</span></li>
                         <li><strong data-translate="tab_settings">Configurações:</strong> <span data-translate="welcome_how_to_settings">Mude o idioma e, o mais importante, EXPORTE seus dados. Salve seu arquivo (.bx) regularmente como backup!</span></li>
                     </ul>
                 </section>
@@ -208,7 +208,7 @@
                             <p class="part-name-display" data-name-type="primeira" data-translate="deck_placeholder_selecione">Selecione</p>
                         </div>
                         <div class="part-container chip-specific-placeholder">
-                            <div class="part-visuals">
+                             <div class="part-visuals">
                                 <span class="part-type-icon-placeholder" data-icon-type="mainblade"></span>
                                 <div class="part-placeholder" data-type="mainblade"><span data-translate="deck_placeholder_mainblade">Main Blade</span></div>
                             </div>
@@ -371,17 +371,74 @@
             <div class="trade-display-container" id="trade-display-container">
                 <div id="trades-want-display" class="trade-list-display">
                     <h4 data-translate="trades_list_header_want">== PROCURANDO ==</h4>
-                    </div>
+                    <div class="trade-list-grid"></div>
+                </div>
                 <div id="trades-have-display" class="trade-list-display">
                     <h4 data-translate="trades_list_header_have">== PASSANDO ==</h4>
+                    <div class="trade-list-grid"></div>
+                </div>
+                <div id="trades-combos-display" class="trade-list-display">
+                    <h4 data-translate="trades_list_header_combos">== COMBOS PARA VENDA ==</h4>
+                    <div id="trades-combos-list" class="trade-combo-list-container">
+                        <p class="empty-list-message" data-translate="trades_combo_list_empty">Lista de combos vazia.</p>
                     </div>
-            </div>
+                </div>
+                </div>
 
             <div class="trades-controls">
                 <button id="copy-trades-button" data-translate="trades_copy_button_text">Copiar Lista (Texto)</button>
                 <button id="export-trades-button" data-translate="trades_export_button">Exportar Imagem</button>
             </div>
 
+            <details class="part-type-spoiler" id="combo-builder-spoiler">
+                <summary data-translate="trades_combo_builder_title">Criar Combo para Venda</summary>
+                <div class="combo-builder-content">
+                    <p class="trades-instructions" data-translate="trades_combo_builder_instructions">Clique nos slots abaixo para montar um combo. Apenas peças da sua 'Coleção' aparecerão.</p>
+                    
+                    <div class="deck-slot" id="combo-builder-slot" data-bay-type="empty">
+                        <div class="part-container">
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="primeira"></span>
+                                <div class="part-placeholder" data-type="primeira"><span data-translate="deck_placeholder_primeira">Primeira Peça</span></div>
+                            </div>
+                            <p class="part-name-display" data-name-type="primeira" data-translate="deck_placeholder_selecione">Selecione</p>
+                        </div>
+                        <div class="part-container chip-specific-placeholder">
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="mainblade"></span>
+                                <div class="part-placeholder" data-type="mainblade"><span data-translate="deck_placeholder_mainblade">Main Blade</span></div>
+                             </div>
+                            <p class="part-name-display" data-name-type="mainblade" data-translate="deck_placeholder_selecione">Selecione</p>
+                        </div>
+                        <div class="part-container chip-specific-placeholder">
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="assistblade"></span>
+                                <div class="part-placeholder" data-type="assistblade"><span data-translate="deck_placeholder_assistblade">Assist Blade</span></div>
+                            </div>
+                            <p class="part-name-display" data-name-type="assistblade" data-translate="deck_placeholder_selecione">Selecione</p>
+                        </div>
+                        <div class="part-container standard-or-chip-placeholder">
+                            <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="ratchet"></span>
+                                <div class="part-placeholder" data-type="ratchet"><span data-translate="deck_placeholder_ratchet">Ratchet</span></div>
+                            </div>
+                            <p class="part-name-display" data-name-type="ratchet" data-translate="deck_placeholder_selecione">Selecione</p>
+                        </div>
+                        <div class="part-container standard-or-chip-placeholder">
+                             <div class="part-visuals">
+                                <span class="part-type-icon-placeholder" data-icon-type="bit"></span>
+                                <div class="part-placeholder" data-type="bit"><span data-translate="deck_placeholder_bit">Bit</span></div>
+                            </div>
+                            <p class="part-name-display" data-name-type="bit" data-translate="deck_placeholder_selecione">Selecione</p>
+                        </div>
+                        </div>
+                    
+                    <div class="combo-builder-actions">
+                        <button id="clear-combo-builder-button" data-translate="trades_combo_builder_clear" class="danger-button">Limpar</button>
+                        <button id="add-combo-to-list-button" data-translate="trades_combo_builder_add" class="primary-action-button">Adicionar Combo à Lista</button>
+                    </div>
+                </div>
+            </details>
             <details class="part-type-spoiler">
                 <summary data-translate="blades_section_title">Blades</summary>
                 <div class="parts-grid" id="trades-blades-container"></div>
@@ -411,7 +468,7 @@
                 <summary data-translate="assistblades_section_title">Assist Blades</summary>
                 <div class="parts-grid" id="trades-assistblades-container"></div>
             </details>
-            </div>
+        </div>
         <div id="settings-tab" class="tab-content">
             <div class="tab-header">
                 <h2 data-translate="settings_header">Importar & Exportar Dados</h2>

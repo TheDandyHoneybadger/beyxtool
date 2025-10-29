@@ -980,6 +980,7 @@ const ALL_PARTS = [
 ];
 
  // --- [ATUALIZADO] Traduções (Com Welcome, Trades, Placar, etc.) ---
+ // --- [ATUALIZADO] Traduções (Com Welcome, Trades, Placar, Combo Builder, etc.) ---
  const translations = {
     'pt-br': {
         // Abas
@@ -1084,12 +1085,20 @@ const ALL_PARTS = [
          trades_list_section_lockchips: "-- Lock Chips --",
          trades_list_section_mainblades: "-- Main Blades --",
          trades_list_section_assistblades: "-- Assist Blades --",
-         trades_list_empty: "Sua lista de trocas está vazia.",
+         trades_list_empty: "Lista vazia.",
+         // [NOVO] Traduções Combo Builder
+         trades_list_header_combos: "== COMBOS PARA VENDA ==",
+         trades_combo_list_empty: "Lista de combos vazia.",
+         trades_combo_builder_title: "Criar Combo para Venda",
+         trades_combo_builder_instructions: "Clique nos slots abaixo para montar um combo. Apenas peças da sua 'Coleção' aparecerão.",
+         trades_combo_builder_clear: "Limpar",
+         trades_combo_builder_add: "Adicionar Combo à Lista",
+         alert_combo_incomplete: "O combo deve estar completo para ser adicionado à lista.",
          // Modal Seletor de Peças
          part_selector_modal_title_prefix: "Selecione:",
          part_individual_header: "Peças Individuais (que você possui)",
          part_individual_none_prefix: "Nenhuma peça",
-         part_individual_none_suffix: "disponível (verifique sua coleção ou peças já em uso no deck).",
+         part_individual_none_suffix: "disponível (verifique sua coleção ou peças já em uso).", // Modificado
          // Modal Variantes
          variant_modal_title_prefix: "Selecionar Variantes de",
           // Alertas e Prompts
@@ -1110,7 +1119,7 @@ const ALL_PARTS = [
          alert_invalid_file_format: "Formato de arquivo inválido ou dados corrompidos.",
          alert_file_read_error: "Erro ao ler o arquivo selecionado.",
          alert_save_error: "Não foi possível salvar os dados. O armazenamento pode estar cheio ou indisponível.",
-         alert_incompatible_part: "Não é possível adicionar uma peça do tipo '{partType}'a um Beyblade do tipo '{bayType}'. Selecione a primeira peça primeiro ou limpe o slot.",
+         alert_incompatible_part: "Não é possível adicionar uma peça do tipo '{partType}' a um Beyblade/Slot do tipo '{bayType}'. Verifique o tipo de Beyblade ou limpe o slot.", // Modificado
          part_source_title: "Encontrado em:",
          modal_button_cancel: "Cancelar",
          modal_button_ok: "OK",
@@ -1126,7 +1135,7 @@ const ALL_PARTS = [
         tab_score: "Score",
         tab_guide: "Guide",
         tab_trades: "Trades",
-         // Aba Welcome (TRADUÇÕES EM INGLÊS CORRIGIDAS)
+         // Aba Welcome
         welcome_header: "Welcome to BeyXTool!",
         welcome_proposal_title: "Site Purpose",
         welcome_proposal_text_1: "BeyXTool is a complete (and unofficial) tool created to assist Beyblade X players. The goal is to centralize all part information, deck management, collection tracking, and community resources in one accessible and easy-to-use location.",
@@ -1219,12 +1228,20 @@ const ALL_PARTS = [
          trades_list_section_lockchips: "-- Lock Chips --",
          trades_list_section_mainblades: "-- Main Blades --",
          trades_list_section_assistblades: "-- Assist Blades --",
-         trades_list_empty: "Your trade list is empty.",
+         trades_list_empty: "List is empty.",
+         // [NOVO] Combo Builder Translations
+         trades_list_header_combos: "== COMBOS FOR SALE ==",
+         trades_combo_list_empty: "Combo list is empty.",
+         trades_combo_builder_title: "Create Combo for Sale",
+         trades_combo_builder_instructions: "Click the slots below to build a combo. Only parts from your 'Collection' will appear.",
+         trades_combo_builder_clear: "Clear",
+         trades_combo_builder_add: "Add Combo to List",
+         alert_combo_incomplete: "The combo must be complete to be added to the list.",
           // Part Selector Modal
          part_selector_modal_title_prefix: "Select:",
          part_individual_header: "Individual Parts (Owned)",
          part_individual_none_prefix: "No",
-         part_individual_none_suffix: "parts available (check collection or parts already in use in the deck).",
+         part_individual_none_suffix: "parts available (check collection or parts already in use).", // Modified
          // Variant Modal
          variant_modal_title_prefix: "Select Variants for",
          // Alerts and Prompts
@@ -1245,7 +1262,7 @@ const ALL_PARTS = [
          alert_invalid_file_format: "Invalid file format or corrupted data.",
          alert_file_read_error: "Error reading the selected file.",
          alert_save_error: "Could not save data. Storage might be full or unavailable.",
-         alert_incompatible_part: "Cannot add part of type '{partType}'to a Beyblade of type '{bayType}'. Select the first part first or clear the slot.",
+         alert_incompatible_part: "Cannot add part of type '{partType}' to a Beyblade/Slot of type '{bayType}'. Check the Beyblade type or clear the slot.", // Modified
          part_source_title: "Found in:",
          modal_button_cancel: "Cancel",
          modal_button_ok: "OK",
