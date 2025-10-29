@@ -879,22 +879,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             card.addEventListener('click', () => {
                 const variantName = vData.name;
-                console.log(`Clicou na variante: ${variantName}`); // Log 1
+                // console.log(`Clicou na variante: ${variantName}`);
                 if (tempSelectedVariants.has(variantName)) {
                     tempSelectedVariants.delete(variantName);
                     card.classList.remove('selected');
-                    console.log(`Removido ${variantName}. tempSelectedVariants:`, new Set(tempSelectedVariants)); // Log 2
+                    // console.log(`Removido ${variantName}. tempSelectedVariants:`, new Set(tempSelectedVariants));
                 } else {
                     tempSelectedVariants.add(variantName);
                     card.classList.add('selected');
-                    console.log(`Adicionado ${variantName}. tempSelectedVariants:`, new Set(tempSelectedVariants)); // Log 3
+                    // console.log(`Adicionado ${variantName}. tempSelectedVariants:`, new Set(tempSelectedVariants));
                 }
             });
             grid.appendChild(card);
         });
 
         const handleVariantModalDone = () => {
-            console.log("handleVariantModalDone executando..."); // Log 4
+            // console.log("handleVariantModalDone executando...");
             let changed = false;
             if (originalOwned.size !== tempSelectedVariants.size) {
                 changed = true;
@@ -915,10 +915,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            console.log("Original:", originalOwned, "Temp:", tempSelectedVariants, "Changed:", changed); // Log 5
+            // console.log("Original:", originalOwned, "Temp:", tempSelectedVariants, "Changed:", changed);
 
             if (changed) {
-                console.log("Mudanças detectadas, iniciando salvamento..."); // Log 6
+                // console.log("Mudanças detectadas, iniciando salvamento...");
                 let needsDeckUpdate = false;
                 const mainCard = document.querySelector(`#collection-tab .part-card[data-part-id="${part.id}"]`);
 
@@ -937,7 +937,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                console.log("Estado da coleção ANTES de salvar:", app_data.collection.blades.get(part.id)); // Log 7
+                // console.log("Estado da coleção ANTES de salvar:", app_data.collection.blades.get(part.id));
 
                 if (tempSelectedVariants.size > 0) {
                     app_data.collection.blades.set(part.id, new Set(tempSelectedVariants));
@@ -957,9 +957,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                console.log("Estado da coleção DEPOIS de atualizar, ANTES de saveAppData():", app_data.collection.blades.get(part.id)); // Log 8
+                // console.log("Estado da coleção DEPOIS de atualizar, ANTES de saveAppData():", app_data.collection.blades.get(part.id));
                 saveAppData();
-                console.log("saveAppData() chamado."); // Log 9
+                // console.log("saveAppData() chamado.");
 
                 if (needsDeckUpdate) {
                     updateDeckUI();
@@ -969,7 +969,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 renderStarterGuide();
             } else {
-                console.log("Nenhuma mudança detectada entre os sets original e temporário."); // Log 10
+                // console.log("Nenhuma mudança detectada entre os sets original e temporário.");
             }
 
             closeVariantModal();
@@ -980,9 +980,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 variantModalDoneButton.removeEventListener('click', variantModalDoneButton._listener);
             }
             variantModalDoneButton._listener = handleVariantModalDone;
-            // --- INÍCIO DA MODIFICAÇÃO ---
             variantModalDoneButton.addEventListener('click', handleVariantModalDone); // Removido { once: true }
-            // --- FIM DA MODIFICAÇÃO ---
         }
 
         variant_modal.style.display = 'block';
@@ -1556,13 +1554,7 @@ document.addEventListener('DOMContentLoaded', () => {
     part_modal_close?.addEventListener('click', closePartModal);
     variant_modal_close?.addEventListener('click', closeVariantModal);
     variantModalDoneButton?.addEventListener('click', () => {
-        // A lógica de clique no botão OK é anexada dinamicamente em openVariantSelector
-        // Este listener atua como um fallback, MAS NÃO DEVE SER NECESSÁRIO com a correção
-        // Se ainda não funcionar, pode indicar outro problema.
-        // console.log("Fallback listener do OK clicado"); // Log extra se necessário
-        // if (variant_modal.style.display === 'block' && variantModalDoneButton._listener) {
-        //      variantModalDoneButton._listener(); // Tenta chamar manualmente
-        // }
+        // Fallback listener, but ideally the dynamically attached one handles it.
     });
     inputModalOk?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(inputModalField.value); });
     inputModalCancel?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); });
