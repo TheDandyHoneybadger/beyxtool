@@ -878,9 +878,9 @@ const ALL_PARTS = [
 
     // Bits
     { id: 'accel', name: 'Accel', type: 'bit', bey_type: 'attack', image: 'images/bits/Accel.webp', tier: 'B', attack: 40, defense: 10, stamina: 10, dash: 10, burst_resistance: 80 },
-    { id: 'acceltrans', name: 'AccelTrans', type: 'bit', bey_type: 'attack', image: 'images/bits/AccelTrans.webp', tier: 'B', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado
+
     { id: 'ball', name: 'Ball', type: 'bit', bey_type: 'stamina', image: 'images/bits/Ball.webp', tier: 'S', attack: 15, defense: 25, stamina: 50, dash: 10, burst_resistance: 30 },
-    { id: 'bearing', name: 'Bearing', type: 'bit', bey_type: 'stamina', image: 'images/bits/Bearing.webp', tier: 'A', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado (Especulativo)
+
     { id: 'boundspike', name: 'BoundSpike', type: 'bit', bey_type: 'defense', image: 'images/bits/BoundSpike.webp', tier: 'B', attack: 10, defense: 50, stamina: 30, dash: 10, burst_resistance: 30 },
     { id: 'cyclone', name: 'Cyclone', type: 'bit', bey_type: 'attack', image: 'images/bits/Cyclone.webp', tier: 'B', attack: 40, defense: 5, stamina: 10, dash: 45, burst_resistance: 80 },
     { id: 'diskball', name: 'DiskBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/DiskBall.webp', tier: 'C', attack: 15, defense: 20, stamina: 55, dash: 10, burst_resistance: 30 },
@@ -897,7 +897,7 @@ const ALL_PARTS = [
     { id: 'hexa', name: 'Hexa', type: 'bit', bey_type: 'balance', image: 'images/bits/Hexa.webp', tier: 'S', attack: 30, defense: 35, stamina: 20, dash: 15, burst_resistance: 80 },
     { id: 'highneedle', name: 'HighNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/HighNeedle.webp', tier: 'B', attack: 15, defense: 55, stamina: 20, dash: 10, burst_resistance: 30 },
     { id: 'hightaper', name: 'HighTaper', type: 'bit', bey_type: 'balance', image: 'images/bits/HighTaper.webp', tier: 'B', attack: 30, defense: 25, stamina: 20, dash: 25, burst_resistance: 80 },
-    { id: 'hop', name: 'HOp', type: 'bit', bey_type: 'balance', image: 'images/bits/HOp.webp', tier: 'C', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier placeholder
+
     { id: 'kick', name: 'Kick', type: 'bit', bey_type: 'balance', image: 'images/bits/Kick.webp', tier: 'S', attack: 30, defense: 30, stamina: 20, dash: 20, burst_resistance: 80 },
     { id: 'level', name: 'Level', type: 'bit', bey_type: 'balance', image: 'images/bits/Level.webp', tier: 'S', attack: 35, defense: 35, stamina: 15, dash: 15, burst_resistance: 80 },
     { id: 'lowflat', name: 'LowFlat', type: 'bit', bey_type: 'attack', image: 'images/bits/LowFlat.webp', tier: 'A', attack: 45, defense: 5, stamina: 10, dash: 40, burst_resistance: 80 },
@@ -920,8 +920,12 @@ const ALL_PARTS = [
     { id: 'unite', name: 'Unite', type: 'bit', bey_type: 'balance', image: 'images/bits/Unite.webp', tier: 'A', attack: 25, defense: 25, stamina: 30, dash: 25, burst_resistance: 80 },
     { id: 'vortex', name: 'Vortex', type: 'bit', bey_type: 'attack', image: 'images/bits/Vortex.webp', tier: 'C', attack: 40, defense: 10, stamina: 10, dash: 40, burst_resistance: 80 },
     { id: 'wedge', name: 'Wedge', type: 'bit', bey_type: 'defense', image: 'images/bits/Wedge.webp', tier: 'A', attack: 5, defense: 60, stamina: 25, dash: 10, burst_resistance: 30 },
-    { id: 'weightball', name: 'WeightBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/WeightBall.webp', tier: 'B', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado
+
     { id: 'zap', name: 'Zap', type: 'bit', bey_type: 'balance', image: 'images/bits/Zap.webp', tier: 'B', attack: 30, defense: 30, stamina: 20, dash: 20, burst_resistance: 80 },
+
+    { id: 'operate', name: 'Operate', type: 'bit', bey_type: 'stamina', image: 'images/bits/Operate.webp', tier: 'B', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado
+    { id: 'turbo', name: 'Turbo', type: 'bit', bey_type: 'stamina', image: 'images/bits/Turbo.webp', tier: 'B', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado
+
 
     // --- Peças de Chip (CX) ---
     { id: 'lockchip-cerberus', name: 'Cerberus', type: 'lockchip', image: 'images/lockchips/Cerberus.webp', tier: 'C' },
@@ -965,13 +969,13 @@ const ALL_PARTS = [
     { id: "assistblade-charge", name: "Charge", type: "assistblade", image: "images/assistblades/Charge.webp", tier: "B" },
     { id: 'assistblade-dual', name: 'Dual', type: 'assistblade', image: 'images/assistblades/Dual.webp', tier: 'C' },
     { id: 'assistblade-free', name: 'Free', type: 'assistblade', image: 'images/assistblades/Free.webp', tier: 'C' },
-    { id: 'assistblade-hop', name: 'Hop', type: 'assistblade', image: 'images/assistblades/Hop.webp', tier: 'C' },
+    { id: 'assistblade-heavy', name: 'Heavy', type: 'assistblade', image: 'images/assistblades/Heavy.webp', tier: 'C' },
     { id: "assistblade-jaggy", name: "Jaggy", type: "assistblade", image: "images/assistblades/Jaggy.webp", tier: "C" },
     { id: 'assistblade-massive', name: 'Massive', type: 'assistblade', image: 'images/assistblades/Massive.webp', tier: 'C' },
     { id: "assistblade-round", name: "Round", type: "assistblade", image: "images/assistblades/Round.webp", tier: "A" },
     { id: "assistblade-slash", name: "Slash", type: "assistblade", image: "images/assistblades/Slash.webp", tier: "S" },
     { id: "assistblade-turn", name: "Turn", type: "assistblade", image: "images/assistblades/Turn.webp", tier: "S" },
-    { id: 'assistblade-wide', name: 'Wide', type: 'assistblade', image: 'images/assistblades/Wide.webp', tier: 'B' }
+    { id: 'assistblade-wheel', name: 'Wheel', type: 'assistblade', image: 'images/assistblades/Wheel.webp', tier: 'B' }
 ];
 
  // --- [ATUALIZADO] Traduções (Com Welcome, Trades, Placar, etc.) ---
