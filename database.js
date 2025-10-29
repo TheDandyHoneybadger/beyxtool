@@ -926,6 +926,9 @@ const ALL_PARTS = [
     { id: 'operate', name: 'Operate', type: 'bit', bey_type: 'stamina', image: 'images/bits/Operate.webp', tier: 'B', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado
     { id: 'turbo', name: 'Turbo', type: 'bit', bey_type: 'stamina', image: 'images/bits/Turbo.webp', tier: 'B', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado
 
+    { id: 'wallball', name: 'Wall Ball', type: 'bit', bey_type: 'stamina', image: 'images/bits/WallBall.webp', tier: 'B', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado
+
+
 
     // --- Peças de Chip (CX) ---
     { id: 'lockchip-cerberus', name: 'Cerberus', type: 'lockchip', image: 'images/lockchips/Cerberus.webp', tier: 'C' },
