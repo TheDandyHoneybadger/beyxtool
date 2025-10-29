@@ -875,11 +875,6 @@ const ALL_PARTS = [
     { id: '9-70', name: '9-70', type: 'ratchet', image: 'images/ratchets/9-70.webp', tier: 'A', attack: 13, defense: 10, stamina: 7, height: 70 },
     { id: '9-80', name: '9-80', type: 'ratchet', image: 'images/ratchets/9-80.webp', tier: 'A', attack: 13, defense: 10, stamina: 7, height: 80 },
     { id: 'm-85', name: 'M-85', type: 'ratchet', image: 'images/ratchets/M-85.webp', tier: 'C', attack: 14, defense: 14, stamina: 2, height: 85 },
-    { id: 'm3-85', name: 'M3-85', type: 'ratchet', image: 'images/ratchets/M3-85.webp', tier: 'C', attack: 0, defense: 0, stamina: 0, height: 85 }, // Tier placeholder
-    { id: 'w1-60', name: 'W1-60', type: 'ratchet', image: 'images/ratchets/W1-60.webp', tier: 'C', attack: 0, defense: 0, stamina: 0, height: 60 }, // Tier placeholder
-    { id: 'w5-80', name: 'W5-80', type: 'ratchet', image: 'images/ratchets/W5-80.webp', tier: 'C', attack: 0, defense: 0, stamina: 0, height: 80 }, // Tier placeholder
-	// Ratchets (Continuação)
-    { id: 'w5-80', name: 'W5-80', type: 'ratchet', image: 'images/ratchets/W5-80.webp', tier: 'C', attack: 0, defense: 0, stamina: 0, height: 80 }, // Tier placeholder
 
     // Bits
     { id: 'accel', name: 'Accel', type: 'bit', bey_type: 'attack', image: 'images/bits/Accel.webp', tier: 'B', attack: 40, defense: 10, stamina: 10, dash: 10, burst_resistance: 80 },
