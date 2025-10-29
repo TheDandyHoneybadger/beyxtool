@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let infoModalChartInstance = null;
 
     let app_data = {
-        collection: { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() },
+        // [MODIFICADO] Todas as categorias agora são Map para suportar variantes
+        collection: { blades: new Map(), ratchets: new Map(), bits: new Map(), mainblades: new Map(), assistblades: new Map(), lockchips: new Map() },
         decks: [],
         active_deck_index: 0,
         trades: {
@@ -187,8 +188,47 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const createNewDeck = (name) => ({ name: name, bays: [ { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }, { type: null, part1: null, part2: null, part3: null, part4: null, part5: null }, { type: null, part1: null, part2: null, part3: null, part4: null, part5: null } ] });
-    const getSerializableCollection = () => ({ blades: Object.fromEntries(Array.from(app_data.collection.blades.entries(), ([id, set]) => [id, [...set]])), ratchets: [...app_data.collection.ratchets], bits: [...app_data.collection.bits], mainblades: [...app_data.collection.mainblades], assistblades: [...app_data.collection.assistblades], lockchips: [...app_data.collection.lockchips], });
-    const loadCollectionFromParsed = (parsedCollection) => { const collection = { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() }; try { if (parsedCollection) { if (parsedCollection.blades) collection.blades = new Map(Object.entries(parsedCollection.blades).map(([id, variants]) => [id, new Set(variants)])); if (parsedCollection.ratchets) collection.ratchets = new Set(parsedCollection.ratchets); if (parsedCollection.bits) collection.bits = new Set(parsedCollection.bits); if (parsedCollection.mainblades) collection.mainblades = new Set(parsedCollection.mainblades); if (parsedCollection.assistblades) collection.assistblades = new Set(parsedCollection.assistblades); if (parsedCollection.lockchips) collection.lockchips = new Set(parsedCollection.lockchips); } } catch(e) { console.error("Erro ao processar coleção salva:", e); } return collection; };
+    
+    // [MODIFICADO] Serializa TODAS as coleções como Mapas
+    const getSerializableCollection = () => {
+        const serializable = {};
+        for (const partTypeKey in app_data.collection) {
+            const partMap = app_data.collection[partTypeKey];
+            if (partMap) { // Adiciona verificação
+                serializable[partTypeKey] = Object.fromEntries(Array.from(partMap.entries(), ([id, set]) => [id, [...set]]));
+            }
+        }
+        return serializable;
+    };
+
+    // [MODIFICADO] Carrega TODAS as coleções como Mapas e lida com dados antigos (Sets)
+    const loadCollectionFromParsed = (parsedCollection) => {
+        const collection = { blades: new Map(), ratchets: new Map(), bits: new Map(), mainblades: new Map(), assistblades: new Map(), lockchips: new Map() };
+        try {
+            if (parsedCollection) {
+                // Loop por todas as chaves de tipo de peça
+                for (const partTypeKey of ['blades', 'ratchets', 'bits', 'mainblades', 'assistblades', 'lockchips']) {
+                    const savedData = parsedCollection[partTypeKey];
+                    if (savedData) {
+                        if (Array.isArray(savedData)) {
+                            // Formato antigo (Set salvo como Array). Converte para Map.
+                            // Assume 'owned' como a variante padrão para dados migrados.
+                            const partMap = new Map();
+                            savedData.forEach(partId => {
+                                partMap.set(partId, new Set(['owned']));
+                            });
+                            collection[partTypeKey] = partMap;
+                        } else if (typeof savedData === 'object' && !Array.isArray(savedData)) {
+                            // Novo formato (Map salvo como Objeto).
+                            collection[partTypeKey] = new Map(Object.entries(savedData).map(([id, variants]) => [id, new Set(variants)]));
+                        }
+                    }
+                }
+            }
+        } catch(e) { console.error("Erro ao processar coleção salva:", e); }
+        return collection;
+    };
+
 
     // Funções Trades Data
     const getSerializableTrades = () => {
@@ -252,11 +292,14 @@ document.addEventListener('DOMContentLoaded', () => {
              have: { blades: new Set(), ratchets: new Set(), bits: new Set(), lockchips: new Set(), mainblades: new Set(), assistblades: new Set() },
              combos: []
          };
+         // [MODIFICADO] Coleção padrão agora usa Map para todos
+         const defaultCollection = { blades: new Map(), ratchets: new Map(), bits: new Map(), mainblades: new Map(), assistblades: new Map(), lockchips: new Map() };
 
         if (saved_data_str) {
             try {
                 parsed = JSON.parse(saved_data_str);
-                app_data.collection = loadCollectionFromParsed(parsed.collection || {});
+                // [MODIFICADO] Usa loadCollectionFromParsed que agora lida com todos os tipos
+                app_data.collection = loadCollectionFromParsed(parsed.collection || defaultCollection);
                 app_data.decks = Array.isArray(parsed.decks) ? parsed.decks : [];
                 app_data.active_deck_index = (typeof parsed.active_deck_index === 'number') ? parsed.active_deck_index : 0;
                  app_data.decks.forEach(deck => {
@@ -268,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (e) {
                 console.error("Erro ao carregar dados salvos:", e);
                 app_data = {
-                    collection: { blades: new Map(), ratchets: new Set(), bits: new Set(), mainblades: new Set(), assistblades: new Set(), lockchips: new Set() },
+                    collection: defaultCollection, // [MODIFICADO]
                     decks: [],
                     active_deck_index: 0,
                     trades: defaultTrades
@@ -277,9 +320,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
              app_data.trades = defaultTrades;
+             app_data.collection = defaultCollection; // [MODIFICADO] Garante que a coleção seja Map
         }
 
          app_data.trades = loadTradesFromParsed(parsed.trades || defaultTrades);
+         // [MODIFICADO] Garante que a coleção esteja no formato correto se app_data foi recriado
+         if (!app_data.collection || !(app_data.collection.blades instanceof Map)) {
+             app_data.collection = loadCollectionFromParsed(parsed.collection || defaultCollection);
+         }
+
 
         if (app_data.decks.length === 0) app_data.decks.push(createNewDeck("Deck 01"));
         if (app_data.active_deck_index >= app_data.decks.length || app_data.active_deck_index < 0) app_data.active_deck_index = 0;
@@ -378,10 +427,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     const collectionSetKey = part.type + 's';
                     const collectionSet = app_data.collection[collectionSetKey];
 
-                    if (part.type === 'blade') {
-                        isOwned = collectionSet?.has(part.id) && collectionSet.get(part.id).size > 0;
-                    } else if (['lockchip', 'mainblade', 'assistblade', 'ratchet', 'bit'].includes(part.type)) {
-                        isOwned = collectionSet?.has(part.id);
+                    // [MODIFICADO] Verificação de 'owned' generalizada para todos os Mapas
+                    if (collectionSet) {
+                        isOwned = collectionSet.has(part.id) && collectionSet.get(part.id).size > 0;
                     }
 
                     if (isOwned) {
@@ -425,7 +473,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const sortValue = collection_sort ? collection_sort.value : 'name_asc';
         const filterOn = collection_filter ? collection_filter.checked : false;
         let partsToRender = [...ALL_PARTS];
-        if (filterOn) { partsToRender = partsToRender.filter(part => { const cs = app_data.collection[part.type + 's']; return part.type === 'blade' ? (cs?.has(part.id) && cs.get(part.id).size > 0) : cs?.has(part.id); }); }
+        
+        // [MODIFICADO] Verificação de 'owned' generalizada
+        if (filterOn) {
+            partsToRender = partsToRender.filter(part => {
+                const cs = app_data.collection[part.type + 's'];
+                return cs?.has(part.id) && cs.get(part.id).size > 0;
+            });
+        }
+
         const tierOrder = { 'S': 1, 'A': 2, 'B': 3, 'C': 4, 'D': 5 };
         switch (sortValue) { case 'name_asc': partsToRender.sort((a, b) => a.name.localeCompare(b.name)); break; case 'name_desc': partsToRender.sort((a, b) => b.name.localeCompare(a.name)); break; case 'tier_desc': partsToRender.sort((a, b) => (tierOrder[a.tier] || 6) - (tierOrder[b.tier] || 6) || a.name.localeCompare(b.name)); break; case 'tier_asc': partsToRender.sort((a, b) => (tierOrder[b.tier] || 0) - (tierOrder[a.tier] || 0) || a.name.localeCompare(b.name)); break; case 'type': const typeOrderBey = { 'attack': 1, 'defense': 2, 'stamina': 3, 'balance': 4 }; partsToRender.sort((a, b) => (a.bey_type ? typeOrderBey[a.bey_type.toLowerCase()] : 5) - (b.bey_type ? typeOrderBey[b.bey_type.toLowerCase()] : 5) || a.name.localeCompare(b.name)); break; default: partsToRender.sort((a, b) => a.name.localeCompare(b.name)); }
 
@@ -433,7 +489,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const container = containers[part.type + 's']; if (!container) return;
             const collectionSet = app_data.collection[part.type + 's'];
             const part_card = document.createElement('div'); part_card.className = 'part-card'; part_card.dataset.partId = part.id;
-            let isOwned = (part.type === 'blade') ? (collectionSet?.has(part.id) && collectionSet.get(part.id).size > 0) : collectionSet?.has(part.id);
+            
+            // [MODIFICADO] Verificação de 'owned' generalizada
+            let isOwned = collectionSet?.has(part.id) && collectionSet.get(part.id).size > 0;
+            
             if (isOwned) part_card.classList.add('owned');
 
             const infoIcon = `<span class="part-info-icon" data-part-id="${part.id}">?</span>`;
@@ -649,12 +708,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!part) return;
             const name = part.displayName || part.name;
             let imgHTML = part.image || 'images/placeholder.webp';
-            if (part.type==='blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) {
+            
+            // [MODIFICADO] Lógica de variante generalizada (não mais apenas para 'blade')
+            if (part.variant && part.baseId && ALL_VARIANTS[part.baseId]) {
                 const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant);
                 if (vData?.image) imgHTML=vData.image;
                 else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock');
                 if (sVar?.image) imgHTML=sVar.image; }
             }
+            
             ph.innerHTML = `<img src="${imgHTML}" alt="${name}">`;
             n.textContent = name;
             icon.innerHTML = '';
@@ -712,7 +774,9 @@ document.addEventListener('DOMContentLoaded', () => {
             parts.forEach(part => {
                 if (part) {
                     let partImage = part.image || 'images/placeholder.webp';
-                    if (part.type === 'blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) {
+                    
+                    // [MODIFICADO] Lógica de variante generalizada
+                    if (part.variant && part.baseId && ALL_VARIANTS[part.baseId]) {
                         const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant);
                         if (vData?.image) partImage = vData.image;
                     }
@@ -789,7 +853,33 @@ document.addEventListener('DOMContentLoaded', () => {
             if (Object.values(selectors).some(el => !el)) { console.error(`Elementos faltando no slot ${bayIndex}. Verifique o HTML.`); return; }
             slot.dataset.bayType = bay.type || 'empty';
             const reset = (ph, n, icon, placeholderKey) => { ph.innerHTML = `<span data-translate="${placeholderKey}">${langPack[placeholderKey]||placeholderKey.replace('deck_placeholder_', '').replace('_section_title', '')}</span>`; n.textContent = selectText; icon.innerHTML = ''; };
-            const set = (ph, n, icon, part, partSlotName) => { if (!part) return; const name = part.displayName || part.name; let imgHTML = part.image || 'images/placeholder.webp'; if (part.type==='blade' && part.variant && part.baseId && ALL_VARIANTS[part.baseId]) { const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant); if (vData?.image) imgHTML=vData.image; else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock'); if (sVar?.image) imgHTML=sVar.image; } } ph.innerHTML = `<img src="${imgHTML}" alt="${name}">`; n.textContent = name; icon.innerHTML = ''; if ((partSlotName === 'primeira' && part.type === 'blade') || partSlotName === 'bit') { if (part.bey_type) { const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`; icon.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; }}};
+            
+            // [MODIFICADO] Lógica 'set' generalizada para variantes
+            const set = (ph, n, icon, part, partSlotName) => { 
+                if (!part) return; 
+                const name = part.displayName || part.name; 
+                let imgHTML = part.image || 'images/placeholder.webp'; 
+                
+                // [MODIFICADO] Generalizado para qualquer tipo de peça com variante
+                if (part.variant && part.baseId && ALL_VARIANTS[part.baseId]) { 
+                    const vData = ALL_VARIANTS[part.baseId].find(v => v.name === part.variant); 
+                    if (vData?.image) imgHTML=vData.image; 
+                    else { const sVar = ALL_VARIANTS[part.baseId].find(v => v.name === 'Stock'); 
+                    if (sVar?.image) imgHTML=sVar.image; } 
+                } 
+                
+                ph.innerHTML = `<img src="${imgHTML}" alt="${name}">`; 
+                n.textContent = name; 
+                icon.innerHTML = ''; 
+                if ((partSlotName === 'primeira' && part.type === 'blade') || partSlotName === 'bit') { 
+                    if (part.bey_type) { 
+                        const typeName = part.bey_type.charAt(0).toUpperCase() + part.bey_type.slice(1); 
+                        const imgPath = `images/types/${part.bey_type.toLowerCase()}.webp`; 
+                        icon.innerHTML = `<img src="${imgPath}" alt="${typeName}" title="${typeName} Type">`; 
+                    }
+                }
+            };
+
             reset(selectors.p1ph, selectors.p1n, selectors.p1icon, 'deck_placeholder_primeira'); reset(selectors.mbph, selectors.mbn, selectors.mbicon, 'deck_placeholder_mainblade'); reset(selectors.abph, selectors.abn, selectors.abicon, 'deck_placeholder_assistblade'); reset(selectors.rph, selectors.rn, selectors.ricon, 'deck_placeholder_ratchet'); reset(selectors.bph, selectors.bn, selectors.bicon, 'deck_placeholder_bit');
             if (bay.type === 'standard') { set(selectors.p1ph, selectors.p1n, selectors.p1icon, bay.part1, 'primeira'); set(selectors.rph, selectors.rn, selectors.ricon, bay.part4, 'ratchet'); set(selectors.bph, selectors.bn, selectors.bicon, bay.part5, 'bit'); }
             else if (bay.type === 'chip') { set(selectors.p1ph, selectors.p1n, selectors.p1icon, bay.part1, 'primeira'); set(selectors.mbph, selectors.mbn, selectors.mbicon, bay.part2, 'mainblade'); set(selectors.abph, selectors.abn, selectors.abicon, bay.part3, 'assistblade'); set(selectors.rph, selectors.rn, selectors.ricon, bay.part4, 'ratchet'); set(selectors.bph, selectors.bn, selectors.bicon, bay.part5, 'bit'); }
@@ -800,52 +890,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Funções de Manipulação da Coleção/Deck ---
 
+    // [MODIFICADO] Lógica generalizada para todas as peças
     const togglePartOwnership = (part) => {
         const partCard = document.querySelector(`#collection-tab .part-card[data-part-id="${part.id}"]`);
-        if (part.type === 'blade') {
-            const variantList = part.variantsId ? ALL_VARIANTS[part.variantsId] : null;
-            if (part.variantsId && variantList && variantList.length > 1) { openVariantSelector(part); }
-            else {
-                const collectionSet = app_data.collection.blades; if (!collectionSet) return;
-                let needsDeckUpdate = false;
-                if (collectionSet.has(part.id)) {
-                    collectionSet.delete(part.id);
-                    if (partCard) partCard.classList.remove('owned');
-                    app_data.decks.forEach(deck => deck.bays.forEach(bay => { if (bay.part1 && (bay.part1.baseId || bay.part1.id) === part.id) { clearBay(bay); needsDeckUpdate = true; } }));
-                    if (trade_combo_builder.part1?.id === part.id || trade_combo_builder.part1?.baseId === part.id) {
-                        clearTradeComboBuilder();
-                        renderTradeComboBuilder();
-                    }
-                } else {
-                    const variantToAdd = (part.variantsId && variantList?.length === 1) ? variantList[0].name : 'owned';
-                    collectionSet.set(part.id, new Set([variantToAdd]));
-                    if (partCard) partCard.classList.add('owned');
-                }
-                if (needsDeckUpdate) updateDeckUI();
-                saveAppData(); if (collection_filter?.checked) { renderParts(); } renderStarterGuide();
-            }
-        } else {
-            const collectionSetKey = part.type + 's'; const collection_set = app_data.collection[collectionSetKey]; if (!collection_set) return;
-            let needsDeckUpdate = false;
-            if (collection_set.has(part.id)) {
-                collection_set.delete(part.id); if (partCard) partCard.classList.remove('owned');
-                 app_data.decks.forEach(deck => deck.bays.forEach(bay => { let changed = false; if (part.type === 'ratchet' && bay.part4?.id === part.id) { bay.part4 = null; changed = true; } else if (part.type === 'bit' && bay.part5?.id === part.id) { bay.part5 = null; changed = true; } else if (part.type === 'lockchip' && bay.part1?.id === part.id) { clearBay(bay); changed = true; } else if (part.type === 'mainblade' && bay.part2?.id === part.id) { bay.part2 = null; changed = true; } else if (part.type === 'assistblade' && bay.part3?.id === part.id) { bay.part3 = null; changed = true; } if(changed) needsDeckUpdate = true; }));
-                 let comboBuilderChanged = false;
-                 if (part.type === 'ratchet' && trade_combo_builder.part4?.id === part.id) { trade_combo_builder.part4 = null; comboBuilderChanged = true; }
-                 else if (part.type === 'bit' && trade_combo_builder.part5?.id === part.id) { trade_combo_builder.part5 = null; comboBuilderChanged = true; }
-                 else if (part.type === 'lockchip' && trade_combo_builder.part1?.id === part.id) { clearTradeComboBuilder(); comboBuilderChanged = true; }
-                 else if (part.type === 'mainblade' && trade_combo_builder.part2?.id === part.id) { trade_combo_builder.part2 = null; comboBuilderChanged = true; }
-                 else if (part.type === 'assistblade' && trade_combo_builder.part3?.id === part.id) { trade_combo_builder.part3 = null; comboBuilderChanged = true; }
-                 if(comboBuilderChanged) renderTradeComboBuilder();
+        const collectionSetKey = part.type + 's';
+        const collectionSet = app_data.collection[collectionSetKey];
+        if (!collectionSet) {
+            console.error(`Collection set ${collectionSetKey} não encontrado.`);
+            return;
+        }
 
-            } else { collection_set.add(part.id); if (partCard) partCard.classList.add('owned'); }
+        const variantList = part.variantsId ? ALL_VARIANTS[part.variantsId] : null;
+
+        if (part.variantsId && variantList && variantList.length > 1) {
+            // Sempre abre o seletor de variantes se houver mais de 1, para qualquer tipo
+            openVariantSelector(part);
+        } else {
+            // Lógica para peças com 0 ou 1 variante (adicionar/remover 'owned')
+            let needsDeckUpdate = false;
+            const variantToAdd = (part.variantsId && variantList?.length === 1) ? variantList[0].name : 'owned';
+
+            if (collectionSet.has(part.id)) {
+                // Peça existe, remover
+                collectionSet.delete(part.id);
+                if (partCard) partCard.classList.remove('owned');
+
+                // Limpa de decks e combo builder
+                app_data.decks.forEach(deck => deck.bays.forEach(bay => {
+                    let changed = false;
+                    if (bay.part1 && (bay.part1.baseId || bay.part1.id) === part.id) { clearBay(bay); changed = true; }
+                    else if (bay.part2 && (bay.part2.baseId || bay.part2.id) === part.id) { bay.part2 = null; changed = true; }
+                    else if (bay.part3 && (bay.part3.baseId || bay.part3.id) === part.id) { bay.part3 = null; changed = true; }
+                    else if (bay.part4 && (bay.part4.baseId || bay.part4.id) === part.id) { bay.part4 = null; changed = true; }
+                    else if (bay.part5 && (bay.part5.baseId || bay.part5.id) === part.id) { bay.part5 = null; changed = true; }
+                    if(changed) needsDeckUpdate = true;
+                }));
+
+                let comboBuilderChanged = false;
+                if (trade_combo_builder.part1 && (trade_combo_builder.part1.baseId || trade_combo_builder.part1.id) === part.id) { clearTradeComboBuilder(); comboBuilderChanged = true; }
+                else if (trade_combo_builder.part2 && (trade_combo_builder.part2.baseId || trade_combo_builder.part2.id) === part.id) { trade_combo_builder.part2 = null; comboBuilderChanged = true; }
+                else if (trade_combo_builder.part3 && (trade_combo_builder.part3.baseId || trade_combo_builder.part3.id) === part.id) { trade_combo_builder.part3 = null; comboBuilderChanged = true; }
+                else if (trade_combo_builder.part4 && (trade_combo_builder.part4.baseId || trade_combo_builder.part4.id) === part.id) { trade_combo_builder.part4 = null; comboBuilderChanged = true; }
+                else if (trade_combo_builder.part5 && (trade_combo_builder.part5.baseId || trade_combo_builder.part5.id) === part.id) { trade_combo_builder.part5 = null; comboBuilderChanged = true; }
+                if(comboBuilderChanged) renderTradeComboBuilder();
+
+            } else {
+                // Peça não existe, adicionar
+                collectionSet.set(part.id, new Set([variantToAdd]));
+                if (partCard) partCard.classList.add('owned');
+            }
+
             if (needsDeckUpdate) updateDeckUI();
-            saveAppData(); if (collection_filter?.checked) { renderParts(); } renderStarterGuide();
+            saveAppData();
+            if (collection_filter?.checked) { renderParts(); }
+            renderStarterGuide();
         }
     };
 
+
+    // [MODIFICADO] Generalizado para usar a collectionSet correta
     const openVariantSelector = (part) => {
-        variant_modal_part = part;
+        variant_modal_part = part; // Salva a peça inteira
+        
+        const collectionSetKey = part.type + 's';
+        const collectionSet = app_data.collection[collectionSetKey];
+        if (!collectionSet) {
+             console.error(`Collection set ${collectionSetKey} não encontrado.`);
+             return;
+        }
+
         const langPack = translations[currentLanguage] || translations['en'];
         const titlePrefix = langPack.variant_modal_title_prefix || "Select Variants for";
         variant_modal_title.textContent = `${titlePrefix} ${part.name}`;
@@ -856,7 +969,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const originalOwned = app_data.collection.blades.get(part.id) || new Set();
+        // [MODIFICADO] Busca no 'collectionSet' correto (ex: app_data.collection.ratchets)
+        const originalOwned = collectionSet.get(part.id) || new Set();
         const tempSelectedVariants = new Set(originalOwned);
 
         const variantList = ALL_VARIANTS[part.variantsId];
@@ -879,97 +993,113 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             card.addEventListener('click', () => {
                 const variantName = vData.name;
-                // console.log(`Clicou na variante: ${variantName}`);
                 if (tempSelectedVariants.has(variantName)) {
                     tempSelectedVariants.delete(variantName);
                     card.classList.remove('selected');
-                    // console.log(`Removido ${variantName}. tempSelectedVariants:`, new Set(tempSelectedVariants));
                 } else {
                     tempSelectedVariants.add(variantName);
                     card.classList.add('selected');
-                    // console.log(`Adicionado ${variantName}. tempSelectedVariants:`, new Set(tempSelectedVariants));
                 }
             });
             grid.appendChild(card);
         });
 
         const handleVariantModalDone = () => {
-            // console.log("handleVariantModalDone executando...");
+            if (!variant_modal_part) {
+                console.error("variant_modal_part é nulo ao finalizar.");
+                closeVariantModal();
+                return;
+            }
+
+            // [MODIFICADO] Pega a chave e o set dinamicamente da peça salva
+            const partTypeKey = variant_modal_part.type + 's';
+            const currentCollectionSet = app_data.collection[partTypeKey];
+            if (!currentCollectionSet) {
+                 console.error(`Collection set ${partTypeKey} não encontrado no handler.`);
+                 closeVariantModal();
+                 return;
+            }
+            // Recarrega originalOwned com base na peça salva
+            const currentOriginalOwned = currentCollectionSet.get(variant_modal_part.id) || new Set();
+
             let changed = false;
-            if (originalOwned.size !== tempSelectedVariants.size) {
+            if (currentOriginalOwned.size !== tempSelectedVariants.size) {
                 changed = true;
             } else {
-                for (const item of originalOwned) {
-                    if (!tempSelectedVariants.has(item)) {
-                        changed = true;
-                        break;
-                    }
+                for (const item of currentOriginalOwned) {
+                    if (!tempSelectedVariants.has(item)) { changed = true; break; }
                 }
                 if (!changed) {
                      for (const item of tempSelectedVariants) {
-                        if (!originalOwned.has(item)) {
-                            changed = true;
-                            break;
-                        }
+                        if (!currentOriginalOwned.has(item)) { changed = true; break; }
                     }
                 }
             }
 
-            // console.log("Original:", originalOwned, "Temp:", tempSelectedVariants, "Changed:", changed);
-
             if (changed) {
-                // console.log("Mudanças detectadas, iniciando salvamento...");
                 let needsDeckUpdate = false;
-                const mainCard = document.querySelector(`#collection-tab .part-card[data-part-id="${part.id}"]`);
+                const mainCard = document.querySelector(`#collection-tab .part-card[data-part-id="${variant_modal_part.id}"]`);
 
-                originalOwned.forEach(originalVariant => {
+                // Verifica se variantes removidas estavam em decks/combo
+                currentOriginalOwned.forEach(originalVariant => {
                     if (!tempSelectedVariants.has(originalVariant)) {
                         app_data.decks.forEach(deck => deck.bays.forEach(bay => {
-                             if (bay.part1?.baseId === part.id && bay.part1.variant === originalVariant) {
-                                clearBay(bay);
-                                needsDeckUpdate = true;
+                             // Generaliza a verificação de peças (p1 a p5)
+                            for (let i = 1; i <= 5; i++) {
+                                const partKey = `part${i}`;
+                                if (bay[partKey]?.baseId === variant_modal_part.id && bay[partKey].variant === originalVariant) {
+                                    if (i === 1) clearBay(bay); // Se for a peça 1, limpa o bay
+                                    else bay[partKey] = null; // Se for outra, só remove ela
+                                    needsDeckUpdate = true;
+                                }
                             }
                         }));
-                        if (trade_combo_builder.part1?.baseId === part.id && trade_combo_builder.part1.variant === originalVariant) {
-                            clearTradeComboBuilder();
-                            renderTradeComboBuilder();
+                        // Generaliza a verificação do combo builder
+                        for (let i = 1; i <= 5; i++) {
+                             const partKey = `part${i}`;
+                             if (trade_combo_builder[partKey]?.baseId === variant_modal_part.id && trade_combo_builder[partKey].variant === originalVariant) {
+                                if (i === 1) clearTradeComboBuilder();
+                                else trade_combo_builder[partKey] = null;
+                                renderTradeComboBuilder();
+                             }
                         }
                     }
                 });
 
-                // console.log("Estado da coleção ANTES de salvar:", app_data.collection.blades.get(part.id));
-
                 if (tempSelectedVariants.size > 0) {
-                    app_data.collection.blades.set(part.id, new Set(tempSelectedVariants));
+                    // [MODIFICADO] Salva no 'currentCollectionSet' correto
+                    currentCollectionSet.set(variant_modal_part.id, new Set(tempSelectedVariants));
                     if (mainCard) mainCard.classList.add('owned');
                 } else {
-                    app_data.collection.blades.delete(part.id);
+                    // [MODIFICADO] Deleta do 'currentCollectionSet' correto
+                    currentCollectionSet.delete(variant_modal_part.id);
                     if (mainCard) mainCard.classList.remove('owned');
+                     
+                     // Limpa decks/combo se a peça foi totalmente removida
                      app_data.decks.forEach(d => d.bays.forEach(b => {
-                        if (b.part1?.baseId === part.id) {
-                            clearBay(b);
-                            needsDeckUpdate = true;
+                        for (let i = 1; i <= 5; i++) {
+                            const partKey = `part${i}`;
+                            if (b[partKey]?.baseId === variant_modal_part.id) {
+                                if (i === 1) clearBay(b);
+                                else b[partKey] = null;
+                                needsDeckUpdate = true;
+                            }
                         }
                     }));
-                    if (trade_combo_builder.part1?.baseId === part.id) {
-                        clearTradeComboBuilder();
-                        renderTradeComboBuilder();
+                    for (let i = 1; i <= 5; i++) {
+                         const partKey = `part${i}`;
+                         if (trade_combo_builder[partKey]?.baseId === variant_modal_part.id) {
+                            if (i === 1) clearTradeComboBuilder();
+                            else trade_combo_builder[partKey] = null;
+                            renderTradeComboBuilder();
+                         }
                     }
                 }
 
-                // console.log("Estado da coleção DEPOIS de atualizar, ANTES de saveAppData():", app_data.collection.blades.get(part.id));
                 saveAppData();
-                // console.log("saveAppData() chamado.");
-
-                if (needsDeckUpdate) {
-                    updateDeckUI();
-                }
-                if (collection_filter?.checked) {
-                    renderParts();
-                }
+                if (needsDeckUpdate) updateDeckUI();
+                if (collection_filter?.checked) renderParts();
                 renderStarterGuide();
-            } else {
-                // console.log("Nenhuma mudança detectada entre os sets original e temporário.");
             }
 
             closeVariantModal();
@@ -980,7 +1110,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 variantModalDoneButton.removeEventListener('click', variantModalDoneButton._listener);
             }
             variantModalDoneButton._listener = handleVariantModalDone;
-            variantModalDoneButton.addEventListener('click', handleVariantModalDone); // Removido { once: true }
+            variantModalDoneButton.addEventListener('click', handleVariantModalDone);
         }
 
         variant_modal.style.display = 'block';
@@ -1088,25 +1218,25 @@ document.addEventListener('DOMContentLoaded', () => {
             currentDeck.bays.forEach((bay, index) => {
                 if (index.toString() === slotId) return;
                 if (bay.part1) usedPartIds.add(bay.part1.baseId || bay.part1.id);
-                if (bay.part2) usedPartIds.add(bay.part2.id);
-                if (bay.part3) usedPartIds.add(bay.part3.id);
-                if (bay.part4) usedPartIds.add(bay.part4.id);
-                if (bay.part5) usedPartIds.add(bay.part5.id);
+                if (bay.part2) usedPartIds.add(bay.part2.baseId || bay.part2.id); // [MODIFICADO] Checa baseId
+                if (bay.part3) usedPartIds.add(bay.part3.baseId || bay.part3.id); // [MODIFICADO] Checa baseId
+                if (bay.part4) usedPartIds.add(bay.part4.baseId || bay.part4.id); // [MODIFICADO] Checa baseId
+                if (bay.part5) usedPartIds.add(bay.part5.baseId || bay.part5.id); // [MODIFICADO] Checa baseId
             });
         } else if (context === 'combo') {
             const bay = trade_combo_builder;
             const currentKey = { 'primeira': 'part1', 'mainblade': 'part2', 'assistblade': 'part3', 'ratchet': 'part4', 'bit': 'part5' }[type];
             if (bay.part1 && currentKey !== 'part1') usedPartIds.add(bay.part1.baseId || bay.part1.id);
-            if (bay.part2 && currentKey !== 'part2') usedPartIds.add(bay.part2.id);
-            if (bay.part3 && currentKey !== 'part3') usedPartIds.add(bay.part3.id);
-            if (bay.part4 && currentKey !== 'part4') usedPartIds.add(bay.part4.id);
-            if (bay.part5 && currentKey !== 'part5') usedPartIds.add(bay.part5.id);
+            if (bay.part2 && currentKey !== 'part2') usedPartIds.add(bay.part2.baseId || bay.part2.id); // [MODIFICADO] Checa baseId
+            if (bay.part3 && currentKey !== 'part3') usedPartIds.add(bay.part3.baseId || bay.part3.id); // [MODIFICADO] Checa baseId
+            if (bay.part4 && currentKey !== 'part4') usedPartIds.add(bay.part4.baseId || bay.part4.id); // [MODIFICADO] Checa baseId
+            if (bay.part5 && currentKey !== 'part5') usedPartIds.add(bay.part5.baseId || bay.part5.id); // [MODIFICADO] Checa baseId
         }
 
         let availableParts = [];
         const partTypeKey = (type === 'primeira') ? null : type;
 
-        const sourceParts = (context === 'deck' || context === 'combo') ? getOwnedParts(partTypeKey || 'blade') : [];
+        // [MODIFICADO] getOwnedParts agora lida com todas as variantes
         if (type === 'primeira') {
              availableParts = [...getOwnedParts('blade'), ...getOwnedParts('lockchip')];
         } else {
@@ -1130,7 +1260,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const part_card = document.createElement('div');
                 part_card.className = 'part-card owned';
                 const displayName = part.displayName || part.name;
-                const displayImage = (part.type === 'blade' && part.variant && part.image) ? part.image : (part.image || 'images/placeholder.webp');
+                // [MODIFICADO] A imagem da variante já é tratada por getOwnedParts
+                const displayImage = part.image || 'images/placeholder.webp';
 
                 part_card.innerHTML = `<img src="${displayImage}" alt="${displayName}"><p>${displayName}</p>${part.tier ? `<div class="part-tier tier-${part.tier.toLowerCase()}">${part.tier}</div>` : ''}`;
                 part_card.addEventListener('click', () => selectPart(part));
@@ -1141,8 +1272,49 @@ document.addEventListener('DOMContentLoaded', () => {
         part_modal.style.display = 'block';
     };
 
+    // [MODIFICADO] Função generalizada para ler variantes de qualquer tipo de peça (todos são Map)
+    const getOwnedParts = (partType) => {
+        const ownedParts = [];
+        const collectionSetKey = partType + 's';
+        const collectionSet = app_data.collection[collectionSetKey];
+        if (!collectionSet || !(collectionSet instanceof Map)) { // Verifica se é um Map
+             console.warn(`Collection set ${collectionSetKey} não é um Map.`);
+             return ownedParts; 
+        }
 
-    const getOwnedParts = (partType) => { const ownedParts = []; const collectionSetKey = partType + 's'; const collectionSet = app_data.collection[collectionSetKey]; if (!collectionSet) return ownedParts; if (partType === 'blade') { collectionSet.forEach((variantsSet, partId) => { const basePart = ALL_PARTS.find(p => p.id === partId); if (!basePart) { console.warn(`Peça Blade ${partId} na coleção mas não em ALL_PARTS.`); return; } if (basePart.variantsId && ALL_VARIANTS[basePart.variantsId]) { variantsSet.forEach(variantName => { const variantData = ALL_VARIANTS[basePart.variantsId].find(v => v.name === variantName); const displayName = (variantName === "Stock" || variantName === "owned") ? basePart.name : `${basePart.name} (${variantName})`; ownedParts.push({ ...basePart, id: `${basePart.id}-${variantName.replace(/\s+/g, '-')}`, baseId: basePart.id, baseName: basePart.name, name: `${basePart.name} (${variantName})`, displayName: displayName, variant: variantName, image: variantData?.image || basePart.image }); }); } else if (variantsSet.has('owned')) { ownedParts.push({ ...basePart, baseId: basePart.id, baseName: basePart.name, displayName: basePart.name, variant: 'owned' }); } }); } else { collectionSet.forEach(partId => { const part = ALL_PARTS.find(p => p.id === partId); if (part) { ownedParts.push({...part, displayName: part.name}); } else { console.warn(`Peça ${partType} ${partId} na coleção mas não em ALL_PARTS.`); } }); } ownedParts.sort((a, b) => (a.displayName || a.name).localeCompare(b.displayName || b.name)); return ownedParts; };
+        // Lógica generalizada que antes era só para 'blade'
+        collectionSet.forEach((variantsSet, partId) => {
+            const basePart = ALL_PARTS.find(p => p.id === partId);
+            if (!basePart) {
+                console.warn(`Peça ${partType} ${partId} na coleção mas não em ALL_PARTS.`);
+                return;
+            }
+
+            if (basePart.variantsId && ALL_VARIANTS[basePart.variantsId]) {
+                variantsSet.forEach(variantName => {
+                    const variantData = ALL_VARIANTS[basePart.variantsId].find(v => v.name === variantName);
+                    const displayName = (variantName === "Stock" || variantName === "owned") ? basePart.name : `${basePart.name} (${variantName})`;
+                    ownedParts.push({
+                        ...basePart,
+                        id: `${basePart.id}-${variantName.replace(/\s+/g, '-')}`, // ID único da instância
+                        baseId: basePart.id,
+                        baseName: basePart.name,
+                        name: `${basePart.name} (${variantName})`,
+                        displayName: displayName,
+                        variant: variantName,
+                        image: variantData?.image || basePart.image
+                    });
+                });
+            } else if (variantsSet.has('owned')) {
+                // Peça sem variantes ou com variante única 'owned'
+                ownedParts.push({ ...basePart, baseId: basePart.id, baseName: basePart.name, displayName: basePart.name, variant: 'owned' });
+            }
+        });
+
+        ownedParts.sort((a, b) => (a.displayName || a.name).localeCompare(b.displayName || b.name));
+        return ownedParts;
+    };
+
 
     // --- Funções do Placar ---
     const updateScoreDisplay = () => { if (scoreP1Display) scoreP1Display.textContent = scoreP1; if (scoreP2Display) scoreP2Display.textContent = scoreP2; };
@@ -1464,6 +1636,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         completeBays.forEach((bay, index) => {
             if (index > 0) deckString += "\n";
+            // [MODIFICADO] Usa displayName para capturar nomes de variantes corretamente
             const part1Name = bay.part1.displayName || bay.part1.name;
             const part4Name = bay.part4?.displayName || bay.part4?.name || '';
             const part5Name = bay.part5?.displayName || bay.part5?.name || '';
@@ -1554,7 +1727,7 @@ document.addEventListener('DOMContentLoaded', () => {
     part_modal_close?.addEventListener('click', closePartModal);
     variant_modal_close?.addEventListener('click', closeVariantModal);
     variantModalDoneButton?.addEventListener('click', () => {
-        // Fallback listener, but ideally the dynamically attached one handles it.
+        // O listener real é anexado dinamicamente em openVariantSelector
     });
     inputModalOk?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(inputModalField.value); });
     inputModalCancel?.addEventListener('click', () => { if (onInputConfirm) onInputConfirm(null); });

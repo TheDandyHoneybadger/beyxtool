@@ -676,98 +676,786 @@ const STARTER_GUIDE_PRODUCTS = {
 
 // --- BASE DE DADOS DAS VARIANTES (ATUALIZADA) ---
 const ALL_VARIANTS = {
-    'aerpegasus': [ { name: "Stock", image: "images/blades/AeroPegasus.webp" } ],
-    'bearscratch': [ { name: "Stock", image: "images/blades/BearScratch.webp" } ],
-    'blackshell': [ { name: "Stock", image: "images/blades/BlackShell.webp" }, { name: "ver. 2", image: "images/variantes/BlackShell_9-80B.jpeg" }, { name: "ver. 3", image: "images/variantes/BlackShell_7-70WB.webp" } ], // Adicionada ver. 3 (CX-08)
-    'clockmirage': [ { name: "Stock", image: "images/blades/ClockMirage.webp" }, { name: "Recolor 1", image: "images/variantes/ClockMirage_recolor1.webp"}, { name: "Recolor 2", image: "images/variantes/ClockMirage_recolor2.webp"} ], // [ADICIONADO] Placeholder para recolors UX-16
-    'cobaltdragoon': [ { name: "Stock", image: "images/blades/CobaltDragoon.webp" }, { name: "ver. 2", image: "images/variantes/CobaltDragoon_4-55WB.webp" } ], // Adicionada ver. 2 (CX-08)
-    'cobaltdrake': [ { name: "Stock", image: "images/blades/CobaltDrake.webp" }, { name: "ver. 2", image: "images/variantes/CobaltDrake_9-60R.webp" } ],
-    'crimsongaruda': [ { name: "Stock", image: "images/blades/CrimsonGaruda.webp" } ],
-    'croccrunch': [ { name: "Stock", image: "images/blades/CrocCrunch.webp" } ],
-    'darthvader': [ { name: "Stock", image: "images/blades/DarthVader.webp" } ],
-    'dracielshield': [ { name: "Stock", image: "images/blades/DracielShield.webp" } ],
-    'dragoonsform': [ { name: "Stock", image: "images/blades/DragoonStorm.webp" } ],
-    'dranbuster': [ { name: "Stock", image: "images/blades/DranBuster.webp" }, { name: "ver. 2", image: "images/variantes/DranBuster_3-70N.webp" }, { name: "ver. 3", image: "images/variantes/DranBuster_5-80MN.webp" } ], // Adicionada ver. 3 (CX-08)
-    'drandagger': [ { name: "Stock", image: "images/blades/DranDagger.webp" }, { name: "ver. 2", image: "images/variantes/DranDagger_4-60R.webp" }, { name: "ver. 3", image: "images/variantes/DranDagger_4-70P.webp" }, { name: "ver. 4", image: "images/variantes/DranDagger_9-60LF.webp" }, { name: "ver. 5", image: "images/variantes/DranDagger_2-80GP.webp"} ], // Adicionada ver. 5
-    'dransword': [ { name: "Stock", image: "images/blades/DranSword.webp" }, { name: "ver. 2", image: "images/variantes/DranSword_3-80B.webp" }, { name: "ver. 3", image: "images/variantes/DranSword_4-80DB.webp" }, { name: "ver. 4", image: "images/variantes/2.webp" }, { name: "ver. 5", image: "images/variantes/3.webp" }, { name: "ver. 6", image: "images/variantes/latest.webp" } ],
-    'dranzerspiral': [ { name: "Stock", image: "images/blades/DranzerSpiral.webp" } ],
-    'drigerslash': [ { name: "Stock", image: "images/blades/DrigerSlash.webp" } ],
-    'generalgrievous': [ { name: "Stock", image: "images/blades/GeneralGrievous.webp" } ],
-    'ghostcircle': [ { name: "Stock", image: "images/blades/GhostCircle.webp" }, { name: "ver. 2", image: "images/variantes/GhostCircle_4-60H.webp" } ],
-    'sharkgill': [ { name: "Stock", image: "images/blades/SharkGill.webp" } ], // Nome consistente
-    'golemrock': [ { name: "Stock", image: "images/blades/GolemRock.webp" } ], // Adicionando entrada, mesmo sem variantes por agora
-    'hellschain': [ { name: "Stock", image: "images/blades/HellsChain.webp" }, { name: "ver. 2", image: "images/variantes/HellsChain_9-80O.webp" } ],
-    'hellshammer': [ { name: "Stock", image: "images/blades/HellsHammer.webp" } ],
-    'hellsscythe': [ { name: "Stock", image: "images/blades/HellsScythe.webp" }, { name: "ver. 2", image: "images/variantes/HellsScythe_3-80F.webp" }, { name: "ver. 3", image: "images/variantes/HellsScythe_4-60T.webp" }, { name: "ver. 4", image: "images/variantes/HellsScythe_4-80LF.webp" } ],
-    'hoverwyvern': [ { name: "Stock", image: "images/blades/HoverWyvern.webp" } ],
-    'impactdrake': [ { name: "Stock", image: "images/blades/ImpactDrake.webp" }, { name: "ver. 2", image: "images/variantes/ImpactDrake_9-60LR.webp" } ],
-    'knightlance': [ { name: "Stock", image: "images/blades/KnightLance.webp" }, { name: "ver. 2", image: "images/variantes/KnightLance_4-60GB.webp" }, { name: "ver. 3", image: "images/variantes/KnightLance_4-80HN.webp" } ],
-    'knightmail': [ { name: "Stock", image: "images/blades/KnightMail.webp" } ],
-    'knightshield': [ { name: "Stock", image: "images/blades/KnightShield.webp" }, { name: "ver. 2", image: "images/variantes/KnightShield_4-60LF.webp" }, { name: "ver. 3", image: "images/variantes/KnightShield_4-80T.webp" }, { name: "ver. 4", image: "images/variantes/KnightShield_5-80T.webp" } ],
-    'leonclaw': [ { name: "Stock", image: "images/blades/LeonClaw.webp" }, { name: "ver. 2", image: "images/variantes/LeonClaw_3-80HN.webp" }, { name: "ver. 3", image: "images/variantes/LeonClaw_5-60P.webp" } ],
-    'leoncrest': [ { name: "Stock", image: "images/blades/LeonCrest.webp" }, { name: "ver. 2", image: "images/variantes/LeonCrest_9-80K.webp" } ],
-    'lightningl-drago': [ { name: "Stock", image: "images/blades/LightningL-Drago.webp" }, { name: "ver. 2", image: "images/variantes/Lightning_L-Drago_1-60F.webp" } ],
-    'mammothtusk': [ { name: "Stock", image: "images/blades/MammothTusk.webp" } ],
-    'moffgideon': [ { name: "Stock", image: "images/blades/MoffGideon.webp" } ],
-    'mosasaurus': [ { name: "Stock", image: "images/blades/Mosasaurus.webp" } ],
-    'optimusprimal': [ { name: "Stock", image: "images/blades/OptimusPrimal.webp" } ],
-    'optimusprime': [ { name: "Stock", image: "images/blades/OptimusPrime.webp" } ],
-    'phoenixfeather': [ { name: "Stock", image: "images/blades/PhoenixFeather.webp" }, { name: "ver. 2", image: "images/variantes/PhoenixFeather_3-60F.webp" }, { name: "ver. 3", image: "images/variantes/PhoenixFeather_4-60LF.webp" } ],
-    'phoenixrudder': [ { name: "Stock", image: "images/blades/PhoenixRudder.webp" }, { name: "ver. 2", image: "images/variantes/PhoenixRudder_9-70G.webp" }, { name: "ver. 3", image: "images/variantes/PhoenixRudder_4-70LF.webp"} ], // Adicionada ver. 3 (CX-05)
-    'phoenixwing': [ { name: "Stock", image: "images/blades/PhoenixWing.webp" }, { name: "ver. 2", image: "images/variantes/PhoenixWing_9-60GF.webp" }, { name: "ver. 3", image: "images/variantes/PhoenixWing_9-80DB.webp" } ],
-    'pteraswing': [ { name: "Stock", image: "images/blades/PteraSwing.webp" }],
-    'quetzalcoatlus': [ { name: "Stock", image: "images/blades/Quetzalcoatlus.webp" } ],
-    'rhinohorn': [ { name: "Stock", image: "images/blades/RhinoHorn.webp" }, { name: "ver. 2", image: "images/variantes/RhinoHorn_5-80Q.webp" } ],
-    'rockleone': [ { name: "Stock", image: "images/blades/RockLeone.webp" } ],
-    'samuraicalibur': [ { name: "Stock", image: "images/blades/SamuraiCalibur.webp" } ],
-    'samuraisaber': [ { name: "Stock", image: "images/blades/SamuraiSaber.webp" } ],
-    'scorpiospear': [ { name: "Stock", image: "images/blades/ScorpioSpear.webp" } ],
-    'sharkedge': [ { name: "Stock", image: "images/blades/SharkEdge.webp" }, { name: "ver. 2", image: "images/variantes/SharkEdge_3-60LF.webp" }, { name: "ver. 3", image: "images/variantes/SharkEdge_3-80F.webp" }, { name: "ver. 4", image: "images/variantes/SharkEdge_4-80N.webp" }, { name: "ver. 5", image: "images/variantes/SharkEdge_5-60GF.webp" } ],
-    'sharkscale': [ { name: "Stock", image: "images/blades/SharkScale.webp" } ], // Adicionando entrada
-    'shelterdrake': [ { name: "Stock", image: "images/blades/ShelterDrake.webp" }, { name: "ver. 2", image: "images/variantes/ShelterDrake_5-70O.webp" }, { name: "ver. 3", image: "images/variantes/ShelterDrake_7-80GP.webp" } ],
-    'shinobiknife': [ { name: "Stock", image: "images/blades/ShinobiKnife.webp" } ],
-    'shinobishadow': [ { name: "Stock", image: "images/blades/ShinobiShadow.webp" }, { name: "ver. 2", image: "images/variantes/ShinobiShadow_3-70GP.webp" }, { name: "ver. 3", image: "images/variantes/ShinobiShadow_3-80F.webp" }, { name: "ver. 4", image: "images/variantes/ShinobiShadow_9-60LF.webp" } ],
-    'silverwolf': [ { name: "Stock", image: "images/blades/SilverWolf.webp" } ],
-    'spider-man': [ { name: "Stock", image: "images/blades/Spider-Man.webp" } ],
-    'sphinx-cowl': [ { name: "Stock", image: "images/blades/SphinxCowl.webp" }, { name: "ver. 2", image: "images/variantes/SphinxCowl_4-80HT.webp" }, { name: "ver. 3", image: "images/variantes/SphinxCowl_5-60O.webp" }, { name: "ver. 4", image: "images/variantes/SphinxCowl_9-80GN.webp" } ],
-    'spinosaurus': [ { name: "Stock", image: "images/blades/Spinosaurus.webp" } ],
-    'stormpegasis': [ { name: "Stock", image: "images/blades/StormPegasis.webp" } ],
-    't.rex': [ { name: "Stock", image: "images/blades/T.Rex.webp" } ],
-    'tacklegoat': [ { name: "Stock", image: "images/blades/TackleGoat.webp" } ],
-    'thanos': [ { name: "Stock", image: "images/blades/Thanos.webp" } ],
-    'tricerapress': [ { name: "Stock", image: "images/blades/TriceraPress.webp" } ],
-    'tyrannobeat': [ { name: "Stock", image: "images/blades/TyrannoBeat.webp" }, { name: "ver. 2", image: "images/variantes/TyrannoBeat_4-70Q.webp" } ],
-    'tyrannoroar': [ { name: "Stock", image: "images/blades/TyrannoRoar.webp" } ], // Adicionando entrada
-    'unicornsting': [ { name: "Stock", image: "images/blades/UnicornSting.webp" }, { name: "ver. 2", image: "images/variantes/UnicornSting_5-60GP.webp" } ],
-    'venom': [ { name: "Stock", image: "images/blades/Venom.webp" } ],
-    'victoryvalkyrie': [ { name: "Stock", image: "images/blades/VictoryValkyrie.webp" } ],
-    'vipertail': [ { name: "Stock", image: "images/blades/ViperTail.webp" }, { name: "ver. 2", image: "images/variantes/ViperTail_4-60F.webp" }, { name: "ver. 3", image: "images/variantes/ViperTail_5-60F.webp" }, { name: "ver. 4", image: "images/variantes/ViperTail_5-70D.webp" }, { name: "ver. 5", image: "images/variantes/ViperTail_5-80O.webp" } ],
-    'weisstiger': [ { name: "Stock", image: "images/blades/WeissTiger.webp" } ],
-    'whalewave': [ { name: "Stock", image: "images/blades/WhaleWave.webp" }, { name: "ver. 2", image: "images/variantes/WhaleWave_4-70HN.webp" }, { name: "ver. 3", image: "images/variantes/WhaleWave_5-80E.webp" }, { name: "ver. 4", image: "images/variantes/WhaleWave_7-60K.webp" }, { name: "ver. 5", image: "images/variantes/WhaleWave_7-60KC.webp"} ], // Adicionada ver. 5 (CX-05)
-    'wizardarrow': [ { name: "Stock", image: "images/blades/WizardArrow.webp" }, { name: "ver. 2", image: "images/variantes/WizardArrow_4-60N.webp" }, { name: "ver. 4", image: "images/variantes/WizardArrow_4-80GB.webp" }, { name: "ver. 3", image: "images/variantes/WizardArrow_4-80N.webp" }, { name: "ver. 5", image: "images/variantes/4.webp" } ],
-    'wizardrod': [ { name: "Stock", image: "images/blades/WizardRod.webp" }, { name: "ver. 2", image: "images/variantes/WizardRod_5-70DB.webp" } ],
-    'wyverngale': [ { name: "Stock", image: "images/blades/WyvernGale.webp" }, { name: "ver. 2", image: "images/variantes/WyvernGale_2-60S.webp" }, { name: "ver. 3", image: "images/variantes/WyvernGale_3-60T.webp" }, { name: "ver. 4", image: "images/variantes/WyvernGale_5-80GB.webp" } ],
-    'xenoxcalibur': [ { name: "Stock", image: "images/blades/XenoXcalibur.webp" } ],
-    'yellkong': [ { name: "Stock", image: "images/blades/YellKong.webp" } ]
+    "0-60": [
+        { name: "Stock", image: "images/ratchets/0-60.webp" }
+    ],
+    "0-70": [
+        { name: "Stock", image: "images/ratchets/0-70.webp" }
+    ],
+    "0-80": [
+        { name: "Stock", image: "images/ratchets/0-80.webp" }
+    ],
+    "1-60": [
+        { name: "Stock", image: "images/ratchets/1-60.webp" }
+    ],
+    "1-70": [
+        { name: "Stock", image: "images/ratchets/1-70.webp" }
+    ],
+    "1-80": [
+        { name: "Stock", image: "images/ratchets/1-80.webp" },
+        { name: "ver. 2", image: "images/variantes/1-80_2.webp" }
+    ],
+    "2-60": [
+        { name: "Stock", image: "images/ratchets/2-60.webp" },
+        { name: "ver. 2", image: "images/variantes/2-60_2.webp" }
+    ],
+    "2-70": [
+        { name: "Stock", image: "images/ratchets/2-70.webp" }
+    ],
+    "2-80": [
+        { name: "Stock", image: "images/ratchets/2-80.webp" }
+    ],
+    "3-60": [
+        { name: "Stock", image: "images/ratchets/3-60.webp" },
+        { name: "ver. 2", image: "images/variantes/3-60_2.webp" },
+        { name: "ver. 3", image: "images/variantes/3-60_3.webp" },
+        { name: "ver. 4", image: "images/variantes/3-60_4.webp" }
+    ],
+    "3-70": [
+        { name: "Stock", image: "images/ratchets/3-70.webp" }
+    ],
+    "3-80": [
+        { name: "Stock", image: "images/ratchets/3-80.webp" },
+        { name: "ver. 2", image: "images/variantes/3-80_2.webp" },
+        { name: "ver. 3", image: "images/variantes/3-80_3.webp" },
+        { name: "ver. 4", image: "images/variantes/3-80_4.webp" },
+        { name: "ver. 5", image: "images/variantes/3-80_5.webp" }
+    ],
+    "3-85": [
+        { name: "Stock", image: "images/ratchets/3-85.webp" },
+        { name: "ver. 2", image: "images/variantes/3-85_2.webp" }
+    ],
+    "4-50": [
+        { name: "Stock", image: "images/ratchets/4-50.webp" }
+    ],
+    "4-55": [
+        { name: "Stock", image: "images/ratchets/4-55.webp" }
+    ],
+    "4-60": [
+        { name: "Stock", image: "images/ratchets/4-60.webp" },
+        { name: "ver. 2", image: "images/variantes/4-60_2.webp" },
+        { name: "ver. 3", image: "images/variantes/4-60_3.webp" },
+        { name: "ver. 4", image: "images/variantes/4-60_4.webp" },
+        { name: "ver. 5", image: "images/variantes/4-60_5.webp" }
+    ],
+    "4-70": [
+        { name: "Stock", image: "images/ratchets/4-70.webp" },
+        { name: "ver. 2", image: "images/variantes/4-70_2.webp" }
+    ],
+    "4-80": [
+        { name: "Stock", image: "images/ratchets/4-80.webp" },
+        { name: "ver. 2", image: "images/variantes/4-80_2.webp" },
+        { name: "ver. 3", image: "images/variantes/4-80_3.webp" },
+        { name: "ver. 4", image: "images/variantes/4-80_4.webp" },
+        { name: "ver. 5", image: "images/variantes/4-80_5.webp" }
+    ],
+    "5-60": [
+        { name: "Stock", image: "images/ratchets/5-60.webp" },
+        { name: "ver. 2", image: "images/variantes/5-60_2.webp" }
+    ],
+    "5-70": [
+        { name: "Stock", image: "images/ratchets/5-70.webp" },
+        { name: "ver. 2", image: "images/variantes/5-70_2.webp" }
+    ],
+    "5-80": [
+        { name: "Stock", image: "images/ratchets/5-80.webp" },
+        { name: "ver. 2", image: "images/variantes/5-80_2.webp" }
+    ],
+    "6-60": [
+        { name: "Stock", image: "images/ratchets/6-60.webp" }
+    ],
+    "6-70": [
+        { name: "Stock", image: "images/ratchets/6-70.webp" }
+    ],
+    "6-80": [
+        { name: "Stock", image: "images/ratchets/6-80.webp" }
+    ],
+    "7-60": [
+        { name: "Stock", image: "images/ratchets/7-60.webp" }
+    ],
+    "7-70": [
+        { name: "Stock", image: "images/ratchets/7-70.webp" }
+    ],
+    "7-80": [
+        { name: "Stock", image: "images/ratchets/7-80.webp" }
+    ],
+    "9-60": [
+        { name: "Stock", image: "images/ratchets/9-60.webp" }
+    ],
+    "9-65": [
+        { name: "Stock", image: "images/ratchets/9-65.webp" }
+    ],
+    "9-70": [
+        { name: "Stock", image: "images/ratchets/9-70.webp" }
+    ],
+    "9-80": [
+        { name: "Stock", image: "images/ratchets/9-80.webp" }
+    ],
+    "accel": [
+        { name: "Stock", image: "images/bits/Accel.webp" },
+        { name: "ver. 2", image: "images/variantes/Accel_2.webp" }
+    ],
+    "aerpegasus": [
+        { name: "Stock", image: "images/blades/AeroPegasus.webp" }
+    ],
+    "antler": [
+        { name: "Stock", image: "images/mainblades/antler.webp" }
+    ],
+    "arc": [
+        { name: "Stock", image: "images/blades/Arc.webp" }
+    ],
+    "assistblade-assault": [
+        { name: "Stock", image: "images/assistblades/Assault.webp" }
+    ],
+    "assistblade-bumper": [
+        { name: "Stock", image: "images/assistblades/Bumper.webp" }
+    ],
+    "assistblade-charge": [
+        { name: "Stock", image: "images/assistblades/Charge.webp" }
+    ],
+    "assistblade-dual": [
+        { name: "Stock", image: "images/assistblades/Dual.webp" }
+    ],
+    "assistblade-free": [
+        { name: "Stock", image: "images/assistblades/Free.webp" }
+    ],
+    "assistblade-heavy": [
+        { name: "Stock", image: "images/assistblades/Heavy.webp" }
+    ],
+    "assistblade-jaggy": [
+        { name: "Stock", image: "images/assistblades/Jaggy.webp" }
+    ],
+    "assistblade-massive": [
+        { name: "Stock", image: "images/assistblades/Massive.webp" }
+    ],
+    "assistblade-round": [
+        { name: "Stock", image: "images/assistblades/Round.webp" }
+    ],
+    "assistblade-slash": [
+        { name: "Stock", image: "images/assistblades/Slash.webp" }
+    ],
+    "assistblade-turn": [
+        { name: "Stock", image: "images/assistblades/Turn.webp" }
+    ],
+    "assistblade-wheel": [
+        { name: "Stock", image: "images/assistblades/Wheel.webp" }
+    ],
+    "ball": [
+        { name: "Stock", image: "images/bits/Ball.webp" },
+        { name: "ver. 2", image: "images/variantes/Ball_2.webp" },
+        { name: "ver. 3", image: "images/variantes/Ball_3.webp" }
+    ],
+    "bearscratch": [
+        { name: "Stock", image: "images/blades/BearScratch.webp" }
+    ],
+    "blackshell": [
+        { name: "Stock", image: "images/blades/BlackShell.webp" },
+        { name: "ver. 2", image: "images/variantes/BlackShell_9-80B.jpeg" },
+        { name: "ver. 3", image: "images/variantes/BlackShell_7-70WB.webp" }
+    ],
+    "blast": [
+        { name: "Stock", image: "images/blades/Blast.webp" }
+    ],
+    "bolt": [
+        { name: "Stock", image: "images/blades/Bolt.webp" }
+    ],
+    "boundspike": [
+        { name: "Stock", image: "images/bits/BoundSpike.webp" }
+    ],
+    "brave": [
+        { name: "Stock", image: "images/blades/Brave.webp" }
+    ],
+    "brush": [
+        { name: "Stock", image: "images/blades/Brush.webp" }
+    ],
+    "clockmirage": [
+        { name: "Stock", image: "images/blades/ClockMirage.webp" },
+        { name: "Recolor 1", image: "images/variantes/ClockMirage_recolor1.webp" },
+        { name: "Recolor 2", image: "images/variantes/ClockMirage_recolor2.webp" }
+    ],
+    "cobaltdragoon": [
+        { name: "Stock", image: "images/blades/CobaltDragoon.webp" },
+        { name: "ver. 2", image: "images/variantes/CobaltDragoon_4-55WB.webp" }
+    ],
+    "cobaltdrake": [
+        { name: "Stock", image: "images/blades/CobaltDrake.webp" },
+        { name: "ver. 2", image: "images/variantes/CobaltDrake_9-60R.webp" }
+    ],
+    "crimsongaruda": [
+        { name: "Stock", image: "images/blades/CrimsonGaruda.webp" }
+    ],
+    "croccrunch": [
+        { name: "Stock", image: "images/blades/CrocCrunch.webp" }
+    ],
+    "cyclone": [
+        { name: "Stock", image: "images/bits/Cyclone.webp" }
+    ],
+    "dark": [
+        { name: "Stock", image: "images/blades/Dark.webp" }
+    ],
+    "darthvader": [
+        { name: "Stock", image: "images/blades/DarthVader.webp" }
+    ],
+    "diskball": [
+        { name: "Stock", image: "images/bits/DiskBall.webp" }
+    ],
+    "dot": [
+        { name: "Stock", image: "images/bits/Dot.webp" }
+    ],
+    "dracielshield": [
+        { name: "Stock", image: "images/blades/DracielShield.webp" }
+    ],
+    "dragoonsform": [
+        { name: "Stock", image: "images/blades/DragoonStorm.webp" }
+    ],
+    "dranbuster": [
+        { name: "Stock", image: "images/blades/DranBuster.webp" },
+        { name: "ver. 2", image: "images/variantes/DranBuster_2.webp" },
+        { name: "ver. 3", image: "images/variantes/DranBuster_3.webp" },
+        { name: "ver. 4", image: "images/variantes/DranBuster_4.webp" },
+        { name: "ver. 5", image: "images/variantes/DranBuster_5.webp" },
+        { name: "ver. 6", image: "images/variantes/DranBuster_6.webp" },
+        { name: "ver. 7", image: "images/variantes/DranBuster_7.webp" },
+        { name: "ver. 8", image: "images/variantes/DranBuster_8.webp" },
+        { name: "ver. 9", image: "images/variantes/DranBuster_9.webp" },
+        { name: "ver. 10", image: "images/variantes/DranBuster_10.webp" }
+    ],
+    "drandagger": [
+        { name: "Stock", image: "images/blades/DranDagger.webp" },
+        { name: "ver. 2", image: "images/variantes/DranDagger_2.webp" },
+        { name: "ver. 3", image: "images/variantes/DranDagger_3.webp" },
+        { name: "ver. 4", image: "images/variantes/DranDagger_4.webp" },
+        { name: "ver. 5", image: "images/variantes/DranDagger_2-80GP.webp" }
+    ],
+    "dransword": [
+        { name: "Stock", image: "images/blades/DranSword.webp" },
+        { name: "ver. 2", image: "images/variantes/DranSword_2.webp" },
+        { name: "ver. 3", image: "images/variantes/DranSword_3.webp" },
+        { name: "ver. 4", image: "images/variantes/DranSword_4.webp" },
+        { name: "ver. 5", image: "images/variantes/DranSword_5.webp" },
+        { name: "ver. 6", image: "images/variantes/DranSword_6.webp" },
+        { name: "ver. 7", image: "images/variantes/DranSword_7.webp" },
+        { name: "ver. 8", image: "images/variantes/DranSword_8.webp" },
+        { name: "ver. 9", image: "images/variantes/DranSword_9.webp" },
+        { name: "ver. 10", image: "images/variantes/DranSword_10.webp" },
+        { name: "ver. 11", image: "images/variantes/DranSword_11.webp" },
+        { name: "ver. 12", image: "images/variantes/DranSword_12.webp" }
+    ],
+    "dranzerspiral": [
+        { name: "Stock", image: "images/blades/DranzerSpiral.webp" }
+    ],
+    "drigerslash": [
+        { name: "Stock", image: "images/blades/DrigerSlash.webp" }
+    ],
+    "eclipse": [
+        { name: "Stock", image: "images/blades/Eclipse.webp" },
+        { name: "ver. 2", image: "images/variantes/Eclipse_2.webp" }
+    ],
+    "elevate": [
+        { name: "Stock", image: "images/bits/Elevate.webp" },
+        { name: "ver. 2", image: "images/variantes/Elevate_2.webp" }
+    ],
+    "flame": [
+        { name: "Stock", image: "images/blades/Flame.webp" }
+    ],
+    "flat": [
+        { name: "Stock", image: "images/bits/Flat.webp" },
+        { name: "ver. 2", image: "images/variantes/Flat_2.webp" },
+        { name: "ver. 3", image: "images/variantes/Flat_3.webp" },
+        { name: "ver. 4", image: "images/variantes/Flat_4.webp" }
+    ],
+    "freeball": [
+        { name: "Stock", image: "images/bits/FreeBall.webp" }
+    ],
+    "gearball": [
+        { name: "Stock", image: "images/bits/GearBall.webp" }
+    ],
+    "gearflat": [
+        { name: "Stock", image: "images/bits/GearFlat.webp" }
+    ],
+    "gearneedle": [
+        { name: "Stock", image: "images/bits/GearNeedle.webp" }
+    ],
+    "gearpoint": [
+        { name: "Stock", image: "images/bits/GearPoint.webp" }
+    ],
+    "gearrush": [
+        { name: "Stock", image: "images/bits/GearRush.webp" }
+    ],
+    "generalgrievous": [
+        { name: "Stock", image: "images/blades/GeneralGrievous.webp" }
+    ],
+    "ghostcircle": [
+        { name: "Stock", image: "images/blades/GhostCircle.webp" },
+        { name: "ver. 2", image: "images/variantes/GhostCircle_2.webp" }
+    ],
+    "glide": [
+        { name: "Stock", image: "images/bits/Glide.webp" }
+    ],
+    "golemrock": [
+        { name: "Stock", image: "images/blades/GolemRock.webp" }
+    ],
+    "hellschain": [
+        { name: "Stock", image: "images/blades/HellsChain.webp" },
+        { name: "ver. 2", image: "images/variantes/HellsChain_9-80O.webp" }
+    ],
+    "hellshammer": [
+        { name: "Stock", image: "images/blades/HellsHammer.webp" }
+    ],
+    "hellsscythe": [
+        { name: "Stock", image: "images/blades/HellsScythe.webp" },
+        { name: "ver. 2", image: "images/variantes/HellsScythe_2.webp" },
+        { name: "ver. 3", image: "images/variantes/HellsScythe_3.webp" },
+        { name: "ver. 4", image: "images/variantes/HellsScythe_4.webp" },
+        { name: "ver. 5", image: "images/variantes/HellsScythe_5.webp" }
+    ],
+    "hexa": [
+        { name: "Stock", image: "images/bits/Hexa.webp" }
+    ],
+    "highneedle": [
+        { name: "Stock", image: "images/bits/HighNeedle.webp" }
+    ],
+    "hightaper": [
+        { name: "Stock", image: "images/bits/HighTaper.webp" }
+    ],
+    "hornet": [
+        { name: "Stock", image: "images/blades/Hornet.webp" }
+    ],
+    "hoverwyvern": [
+        { name: "Stock", image: "images/blades/HoverWyvern.webp" }
+    ],
+    "hunt": [
+        { name: "Stock", image: "images/blades/Hunt.webp" }
+    ],
+    "impactdrake": [
+        { name: "Stock", image: "images/blades/ImpactDrake.webp" },
+        { name: "ver. 2", image: "images/variantes/ImpactDrake_9-60LR.webp" }
+    ],
+    "kick": [
+        { name: "Stock", image: "images/bits/Kick.webp" }
+    ],
+    "knightlance": [
+        { name: "Stock", image: "images/blades/KnightLance.webp" },
+        { name: "ver. 2", image: "images/variantes/KnightLance_2.webp" },
+        { name: "ver. 3", image: "images/variantes/KnightLance_4-80HN.webp" }
+    ],
+    "knightmail": [
+        { name: "Stock", image: "images/blades/KnightMail.webp" },
+        { name: "ver. 2", image: "images/variantes/KnightMail_2.webp" }
+    ],
+    "knightshield": [
+        { name: "Stock", image: "images/blades/KnightShield.webp" },
+        { name: "ver. 2", image: "images/variantes/KnightShield_2.webp" },
+        { name: "ver. 3", image: "images/variantes/KnightShield_3.webp" },
+        { name: "ver. 4", image: "images/variantes/KnightShield_4.webp" },
+        { name: "ver. 5", image: "images/variantes/KnightShield_5.webp" },
+        { name: "ver. 6", image: "images/variantes/KnightShield_6.webp" }
+    ],
+    "kraken": [
+        { name: "Stock", image: "images/blades/Kraken.webp" }
+    ],
+    "leonclaw": [
+        { name: "Stock", image: "images/blades/LeonClaw.webp" },
+        { name: "ver. 2", image: "images/variantes/LeonClaw_3-80HN.webp" },
+        { name: "ver. 3", image: "images/variantes/LeonClaw_5-60P.webp" }
+    ],
+    "leoncrest": [
+        { name: "Stock", image: "images/blades/LeonCrest.webp" },
+        { name: "ver. 2", image: "images/variantes/LeonCrest_9-80K.webp" }
+    ],
+    "level": [
+        { name: "Stock", image: "images/bits/Level.webp" }
+    ],
+    "lightningl-drago": [
+        { name: "Stock", image: "images/blades/LightningL-Drago.webp" },
+        { name: "ver. 2", image: "images/variantes/Lightning_L-Drago_1-60F.webp" }
+    ],
+    "lockchip-cerberus": [
+        { name: "Stock", image: "images/lockchips/Cerberus.webp" }
+    ],
+    "lockchip-dran": [
+        { name: "Stock", image: "images/lockchips/Dran.webp" },
+        { name: "ver. 2", image: "images/variantes/Dran_2.webp" },
+        { name: "ver. 3", image: "images/variantes/Dran_3.webp" },
+        { name: "ver. 4", image: "images/variantes/Dran_4.webp" },
+        { name: "ver. 5", image: "images/variantes/Dran_5.webp" },
+        { name: "ver. 6", image: "images/variantes/Dran_6.webp" }
+    ],
+    "lockchip-emperor": [
+        { name: "Stock", image: "images/lockchips/Emperor.webp" }
+    ],
+    "lockchip-fox": [
+        { name: "Stock", image: "images/lockchips/Fox.webp" }
+    ],
+    "lockchip-hells": [
+        { name: "Stock", image: "images/lockchips/Hells.webp" }
+    ],
+    "lockchip-hornet": [
+        { name: "Stock", image: "images/lockchips/Hornet.webp" }
+    ],
+    "lockchip-kraken": [
+        { name: "Stock", image: "images/lockchips/Kraken.webp" }
+    ],
+    "lockchip-leon": [
+        { name: "Stock", image: "images/lockchips/Leon.webp" }
+    ],
+    "lockchip-pegasus": [
+        { name: "Stock", image: "images/lockchips/Pegasus.webp" }
+    ],
+    "lockchip-perseus": [
+        { name: "Stock", image: "images/lockchips/Perseus.webp" }
+    ],
+    "lockchip-rhino": [
+        { name: "Stock", image: "images/lockchips/Rhino.webp" }
+    ],
+    "lockchip-sol": [
+        { name: "Stock", image: "images/lockchips/Sol.webp" }
+    ],
+    "lockchip-stag": [
+        { name: "Stock", image: "images/lockchips/Stag.webp" }
+    ],
+    "lockchip-valkyrie": [
+        { name: "Stock", image: "images/lockchips/Valkyrie.webp" }
+    ],
+    "lockchip-whale": [
+        { name: "Stock", image: "images/lockchips/Whale.webp" }
+    ],
+    "lockchip-wizard": [
+        { name: "Stock", image: "images/lockchips/Wizard.webp" }
+    ],
+    "lockchip-wolf": [
+        { name: "Stock", image: "images/lockchips/Wolf.webp" }
+    ],
+    "lowflat": [
+        { name: "Stock", image: "images/bits/LowFlat.webp" }
+    ],
+    "loworb": [
+        { name: "Stock", image: "images/bits/LowOrb.webp" }
+    ],
+    "lowrush": [
+        { name: "Stock", image: "images/bits/LowRush.webp" }
+    ],
+    "m-85": [
+        { name: "Stock", image: "images/ratchets/M-85.webp" }
+    ],
+    "mainblade-arc": [
+        { name: "Stock", image: "images/mainblades/Arc.webp" }
+    ],
+    "mainblade-blast": [
+        { name: "Stock", image: "images/mainblades/Blast.webp" }
+    ],
+    "mainblade-brave": [
+        { name: "Stock", image: "images/mainblades/Brave.webp" }
+    ],
+    "mainblade-brush": [
+        { name: "Stock", image: "images/mainblades/Brush.webp" }
+    ],
+    "mainblade-dark": [
+        { name: "Stock", image: "images/mainblades/Dark.webp" }
+    ],
+    "mainblade-eclipse": [
+        { name: "Stock", image: "images/mainblades/Eclipse.webp" }
+    ],
+    "mainblade-fang": [
+        { name: "Stock", image: "images/mainblades/Fang.webp" }
+    ],
+    "mainblade-flame": [
+        { name: "Stock", image: "images/mainblades/Flame.webp" }
+    ],
+    "mainblade-fort": [
+        { name: "Stock", image: "images/mainblades/Fort.webp" }
+    ],
+    "mainblade-hunt": [
+        { name: "Stock", image: "images/mainblades/Hunt.webp" }
+    ],
+    "mainblade-might": [
+        { name: "Stock", image: "images/mainblades/Might.webp" }
+    ],
+    "mainblade-reaper": [
+        { name: "Stock", image: "images/mainblades/Reaper.webp" }
+    ],
+    "mainblade-volt": [
+        { name: "Stock", image: "images/mainblades/Volt.webp" }
+    ],
+    "mainblade-wriggle": [
+        { name: "Stock", image: "images/mainblades/Wriggle.webp" }
+    ],
+    "mammothtusk": [
+        { name: "Stock", image: "images/blades/MammothTusk.webp" }
+    ],
+    "merge": [
+        { name: "Stock", image: "images/bits/Merge.webp" }
+    ],
+    "metalneedle": [
+        { name: "Stock", image: "images/bits/MetalNeedle.webp" }
+    ],
+    "might": [
+        { name: "Stock", image: "images/blades/Might.webp" }
+    ],
+    "moffgideon": [
+        { name: "Stock", image: "images/blades/MoffGideon.webp" }
+    ],
+    "mosasaurus": [
+        { name: "Stock", image: "images/blades/Mosasaurus.webp" }
+    ],
+    "needle": [
+        { name: "Stock", image: "images/bits/Needle.webp" },
+        { name: "ver. 2", image: "images/variantes/Needle_2.webp" },
+        { name: "ver. 3", image: "images/variantes/Needle_3.webp" },
+        { name: "ver. 4", image: "images/variantes/Needle_4.webp" }
+    ],
+    "operate": [
+        { name: "Stock", image: "images/bits/Operate.webp" }
+    ],
+    "optimusprimal": [
+        { name: "Stock", image: "images/blades/OptimusPrimal.webp" }
+    ],
+    "optimusprime": [
+        { name: "Stock", image: "images/blades/OptimusPrime.webp" }
+    ],
+    "orb": [
+        { name: "Stock", image: "images/bits/Orb.webp" }
+    ],
+    "phoenixfeather": [
+        { name: "Stock", image: "images/blades/PhoenixFeather.webp" },
+        { name: "ver. 2", image: "images/variantes/PhoenixFeather_3-60F.webp" },
+        { name: "ver. 3", image: "images/variantes/PhoenixFeather_4-60LF.webp" }
+    ],
+    "phoenixrudder": [
+        { name: "Stock", image: "images/blades/PhoenixRudder.webp" },
+        { name: "ver. 2", image: "images/variantes/PhoenixRudder_9-70G.webp" },
+        { name: "ver. 3", image: "images/variantes/PhoenixRudder_4-70LF.webp" }
+    ],
+    "phoenixwing": [
+        { name: "Stock", image: "images/blades/PhoenixWing.webp" },
+        { name: "ver. 2", image: "images/variantes/PhoenixWing_9-60GF.webp" },
+        { name: "ver. 3", image: "images/variantes/PhoenixWing_9-80DB.webp" }
+    ],
+    "point": [
+        { name: "Stock", image: "images/bits/Point.webp" }
+    ],
+    "pteraswing": [
+        { name: "Stock", image: "images/blades/PteraSwing.webp" },
+        { name: "ver. 2", image: "images/variantes/PteraSwing_2.webp" }
+    ],
+    "quake": [
+        { name: "Stock", image: "images/bits/Quake.webp" }
+    ],
+    "quetzalcoatlus": [
+        { name: "Stock", image: "images/blades/Quetzalcoatlus.webp" }
+    ],
+    "reaper": [
+        { name: "Stock", image: "images/blades/Reaper.webp" }
+    ],
+    "rhinohorn": [
+        { name: "Stock", image: "images/blades/RhinoHorn.webp" },
+        { name: "ver. 2", image: "images/variantes/RhinoHorn_5-80Q.webp" }
+    ],
+    "rockleone": [
+        { name: "Stock", image: "images/blades/RockLeone.webp" }
+    ],
+    "rubberaccel": [
+        { name: "Stock", image: "images/bits/RubberAccel.webp" }
+    ],
+    "rush": [
+        { name: "Stock", image: "images/bits/Rush.webp" },
+        { name: "ver. 2", image: "images/variantes/Rush_2.webp" }
+    ],
+    "samuraicalibur": [
+        { name: "Stock", image: "images/blades/SamuraiCalibur.webp" }
+    ],
+    "samuraisaber": [
+        { name: "Stock", image: "images/blades/SamuraiSaber.webp" }
+    ],
+    "samuraisteel": [
+        { name: "Stock", image: "images/blades/SamuraiSteel.webp" }
+    ],
+    "scorpiospear": [
+        { name: "Stock", image: "images/blades/ScorpioSpear.webp" }
+    ],
+    "sharkedge": [
+        { name: "Stock", image: "images/blades/SharkEdge.webp" },
+        { name: "ver. 2", image: "images/variantes/SharkEdge_2.webp" },
+        { name: "ver. 3", image: "images/variantes/SharkEdge_3.webp" },
+        { name: "ver. 4", image: "images/variantes/SharkEdge_4.webp" },
+        { name: "ver. 5", image: "images/variantes/SharkEdge_5.webp" }
+    ],
+    "sharkgill": [
+        { name: "Stock", image: "images/blades/SharkGill.webp" }
+    ],
+    "sharkscale": [
+        { name: "Stock", image: "images/blades/SharkScale.webp" }
+    ],
+    "shelterdrake": [
+        { name: "Stock", image: "images/blades/ShelterDrake.webp" },
+        { name: "ver. 2", image: "images/variantes/ShelterDrake_2.webp" },
+        { name: "ver. 3", image: "images/variantes/ShelterDrake_3.webp" }
+    ],
+    "shinobiknife": [
+        { name: "Stock", image: "images/blades/ShinobiKnife.webp" },
+        { name: "ver. 2", image: "images/variantes/ShinobiKnife_2.webp" }
+    ],
+    "shinobishadow": [
+        { name: "Stock", image: "images/blades/ShinobiShadow.webp" },
+        { name: "ver. 2", image: "images/variantes/ShinobiShadow_3-70GP.webp" },
+        { name: "ver. 3", image: "images/variantes/ShinobiShadow_3-80F.webp" },
+        { name: "ver. 4", image: "images/variantes/ShinobiShadow_9-60LF.webp" }
+    ],
+    "silverwolf": [
+        { name: "Stock", image: "images/blades/SilverWolf.webp" }
+    ],
+    "sphinx-cowl": [
+        { name: "Stock", image: "images/blades/SphinxCowl.webp" },
+        { name: "ver. 2", image: "images/variantes/SphinxCowl_2.webp" },
+        { name: "ver. 3", image: "images/variantes/SphinxCowl_5-60O.webp" },
+        { name: "ver. 4", image: "images/variantes/SphinxCowl_9-80GN.webp" }
+    ],
+    "spider-man": [
+        { name: "Stock", image: "images/blades/Spider-Man.webp" }
+    ],
+    "spike": [
+        { name: "Stock", image: "images/bits/Spike.webp" },
+        { name: "ver. 2", image: "images/variantes/Spike_2.webp" }
+    ],
+    "spinosaurus": [
+        { name: "Stock", image: "images/blades/Spinosaurus.webp" },
+        { name: "ver. 2", image: "images/variantes/Spinosaurus_2.webp" },
+        { name: "ver. 3", image: "images/variantes/Spinosaurus_3.webp" }
+    ],
+    "stormpegasis": [
+        { name: "Stock", image: "images/blades/StormPegasis.webp" }
+    ],
+    "t.rex": [
+        { name: "Stock", image: "images/blades/T.Rex.webp" }
+    ],
+    "tacklegoat": [
+        { name: "Stock", image: "images/blades/TackleGoat.webp" }
+    ],
+    "taper": [
+        { name: "Stock", image: "images/bits/Taper.webp" },
+        { name: "ver. 2", image: "images/variantes/Taper_2.webp" },
+        { name: "ver. 3", image: "images/variantes/Taper_3.webp" },
+        { name: "ver. 4", image: "images/variantes/Taper_4.webp" }
+    ],
+    "thanos": [
+        { name: "Stock", image: "images/blades/Thanos.webp" }
+    ],
+    "transkick": [
+        { name: "Stock", image: "images/bits/TransKick.webp" }
+    ],
+    "transpoint": [
+        { name: "Stock", image: "images/bits/TransPoint.webp" }
+    ],
+    "tricerapress": [
+        { name: "Stock", image: "images/blades/TriceraPress.webp" }
+    ],
+    "turbo": [
+        { name: "Stock", image: "images/bits/Turbo.webp" }
+    ],
+    "tyrannobeat": [
+        { name: "Stock", image: "images/blades/TyrannoBeat.webp" },
+        { name: "ver. 2", image: "images/variantes/TyrannoBeat_2.webp" }
+    ],
+    "tyrannoroar": [
+        { name: "Stock", image: "images/blades/TyrannoRoar.webp" },
+        { name: "ver. 2", image: "images/variantes/TyrannoRoar_2.webp" },
+        { name: "ver. 3", image: "images/variantes/TyrannoRoar_3.webp" }
+    ],
+    "underflat": [
+        { name: "Stock", image: "images/bits/UnderFlat.webp" }
+    ],
+    "underneedle": [
+        { name: "Stock", image: "images/bits/UnderNeedle.webp" }
+    ],
+    "unicornsting": [
+        { name: "Stock", image: "images/blades/UnicornSting.webp" },
+        { name: "ver. 2", image: "images/variantes/UnicornSting_5-60GP.webp" }
+    ],
+    "unite": [
+        { name: "Stock", image: "images/bits/Unite.webp" }
+    ],
+    "venom": [
+        { name: "Stock", image: "images/blades/Venom.webp" }
+    ],
+    "victoryvalkyrie": [
+        { name: "Stock", image: "images/blades/VictoryValkyrie.webp" }
+    ],
+    "vipertail": [
+        { name: "Stock", image: "images/blades/ViperTail.webp" },
+        { name: "ver. 2", image: "images/variantes/ViperTail_4-60F.webp" },
+        { name: "ver. 3", image: "images/variantes/ViperTail_5-60F.webp" },
+        { name: "ver. 4", image: "images/variantes/ViperTail_5-70D.webp" },
+        { name: "ver. 5", image: "images/variantes/ViperTail_5-80O.webp" }
+    ],
+    "vortex": [
+        { name: "Stock", image: "images/bits/Vortex.webp" },
+        { name: "ver. 2", image: "images/variantes/Vortex_2.webp" }
+    ],
+    "wallball": [
+        { name: "Stock", image: "images/bits/WallBall.webp" }
+    ],
+    "wedge": [
+        { name: "Stock", image: "images/bits/Wedge.webp" }
+    ],
+    "weisstiger": [
+        { name: "Stock", image: "images/blades/WeissTiger.webp" }
+    ],
+    "whalewave": [
+        { name: "Stock", image: "images/blades/WhaleWave.webp" },
+        { name: "ver. 2", image: "images/variantes/WhaleWave_4-70HN.webp" },
+        { name: "ver. 3", image: "images/variantes/WhaleWave_5-80E.webp" },
+        { name: "ver. 4", image: "images/variantes/WhaleWave_7-60K.webp" },
+        { name: "ver. 5", image: "images/variantes/WhaleWave_7-60KC.webp" }
+    ],
+    "wizardarrow": [
+        { name: "Stock", image: "images/blades/WizardArrow.webp" },
+        { name: "ver. 2", image: "images/variantes/WizardArrow_2.webp" },
+        { name: "ver. 3", image: "images/variantes/WizardArrow_3.webp" },
+        { name: "ver. 4", image: "images/variantes/WizardArrow_4.webp" },
+        { name: "ver. 5", image: "images/variantes/WizardArrow_5.webp" },
+        { name: "ver. 6", image: "images/variantes/WizardArrow_6.webp" }
+    ],
+    "wizardrod": [
+        { name: "Stock", image: "images/blades/WizardRod.webp" },
+        { name: "ver. 2", image: "images/variantes/WizardRod_2.webp" },
+        { name: "ver. 3", image: "images/variantes/WizardRod_3.webp" },
+        { name: "ver. 4", image: "images/variantes/WizardRod_4.webp" }
+    ],
+    "wyverngale": [
+        { name: "Stock", image: "images/blades/WyvernGale.webp" },
+        { name: "ver. 2", image: "images/variantes/WyvernGale_2.webp" },
+        { name: "ver. 3", image: "images/variantes/WyvernGale_3.webp" },
+        { name: "ver. 4", image: "images/variantes/WyvernGale_4.webp" }
+    ],
+    "xenoxcalibur": [
+        { name: "Stock", image: "images/blades/XenoXcalibur.webp" }
+    ],
+    "yellkong": [
+        { name: "Stock", image: "images/blades/YellKong.webp" }
+    ],
+    "zap": [
+        { name: "Stock", image: "images/bits/Zap.webp" }
+    ]
 };
 
 // --- [MODIFICADO] BASE DE DADOS DAS PEÇAS (com Tiers atualizados) ---
+// --- [MODIFICADO] BASE DE DADOS DAS PEÇAS (com Tiers e variantsId atualizados) ---
 const ALL_PARTS = [
     // Blades
     { id: 'aerpegasus', name: 'Aero Pegasus', type: 'blade', bey_type: 'stamina', image: 'images/blades/AeroPegasus.webp', tier: 'S', variantsId: 'aerpegasus', attack: 70, defense: 10, stamina: 20 },
-    { id: 'arc', name: 'Arc', type: 'blade', bey_type: 'stamina', image: 'images/blades/Arc.webp', tier: 'C' },
+    { id: 'arc', name: 'Arc', type: 'blade', bey_type: 'stamina', image: 'images/blades/Arc.webp', tier: 'C', variantsId: 'arc' }, // Adicionado variantsId
     { id: 'bearscratch', name: 'BearScratch', type: 'blade', bey_type: 'attack', image: 'images/blades/BearScratch.webp', tier: 'C', variantsId: 'bearscratch', attack: 50, defense: 20, stamina: 30 },
     { id: 'blackshell', name: 'BlackShell', type: 'blade', bey_type: 'defense', image: 'images/blades/BlackShell.webp', tier: 'C', variantsId: 'blackshell', attack: 10, defense: 65, stamina: 25 },
-    { id: 'blast', name: 'Blast', type: 'blade', bey_type: 'attack', image: 'images/blades/Blast.webp', tier: 'A' },
-    { id: 'bolt', name: 'Bolt', type: 'blade', bey_type: 'balance', image: 'images/blades/Bolt.webp', tier: 'C' },
-    { id: 'brave', name: 'Brave', type: 'blade', bey_type: 'attack', image: 'images/blades/Brave.webp', tier: 'A' }, // Tier atualizado
-    { id: 'brush', name: 'Brush', type: 'blade', bey_type: 'stamina', image: 'images/blades/Brush.webp', tier: 'C' },
-    { id: 'clockmirage', name: 'ClockMirage', type: 'blade', bey_type: 'stamina', image: 'images/blades/ClockMirage.webp', tier: 'C', variantsId: 'clockmirage', attack: 0, defense: 0, stamina: 0 }, // Tier placeholder
+    { id: 'blast', name: 'Blast', type: 'blade', bey_type: 'attack', image: 'images/blades/Blast.webp', tier: 'A', variantsId: 'blast' }, // Adicionado variantsId
+    { id: 'bolt', name: 'Bolt', type: 'blade', bey_type: 'balance', image: 'images/blades/Bolt.webp', tier: 'C', variantsId: 'bolt' }, // Adicionado variantsId
+    { id: 'brave', name: 'Brave', type: 'blade', bey_type: 'attack', image: 'images/blades/Brave.webp', tier: 'A', variantsId: 'brave' }, // Adicionado variantsId
+    { id: 'brush', name: 'Brush', type: 'blade', bey_type: 'stamina', image: 'images/blades/Brush.webp', tier: 'C', variantsId: 'brush' }, // Adicionado variantsId
+    { id: 'clockmirage', name: 'ClockMirage', type: 'blade', bey_type: 'stamina', image: 'images/blades/ClockMirage.webp', tier: 'C', variantsId: 'clockmirage', attack: 0, defense: 0, stamina: 0 },
     { id: 'cobaltdragoon', name: 'Cobalt Dragoon', type: 'blade', bey_type: 'attack', image: 'images/blades/CobaltDragoon.webp', tier: 'S', variantsId: 'cobaltdragoon', attack: 60, defense: 15, stamina: 25 },
     { id: 'cobaltdrake', name: 'CobaltDrake', type: 'blade', bey_type: 'defense', image: 'images/blades/CobaltDrake.webp', tier: 'C', variantsId: 'cobaltdrake', attack: 70, defense: 35, stamina: 25 },
     { id: 'crimsongaruda', name: 'Crimson Garuda', type: 'blade', bey_type: 'stamina', image: 'images/blades/CrimsonGaruda.webp', tier: 'C', variantsId: 'crimsongaruda', attack: 20, defense: 10, stamina: 70 },
     { id: 'croccrunch', name: 'CrocCrunch', type: 'blade', bey_type: 'attack', image: 'images/blades/CrocCrunch.webp', tier: 'C', variantsId: 'croccrunch', attack: 55, defense: 20, stamina: 25 },
-    { id: 'dark', name: 'Dark', type: 'blade', bey_type: 'defense', image: 'images/blades/Dark.webp', tier: 'A' }, // Tier atualizado
+    { id: 'dark', name: 'Dark', type: 'blade', bey_type: 'defense', image: 'images/blades/Dark.webp', tier: 'A', variantsId: 'dark' }, // Adicionado variantsId
     { id: 'darthvader', name: 'DarthVader', type: 'blade', bey_type: 'balance', image: 'images/blades/DarthVader.webp', tier: 'C', variantsId: 'darthvader' },
     { id: 'dracielshield', name: 'DracielShield', type: 'blade', bey_type: 'defense', image: 'images/blades/DracielShield.webp', tier: 'D', variantsId: 'dracielshield', attack: 10, defense: 70, stamina: 20 },
     { id: 'dragoonsform', name: 'Dragoon Storm', type: 'blade', bey_type: 'attack', image: 'images/blades/DragoonStorm.webp', tier: 'D', variantsId: 'dragoonsform', attack: 65, defense: 10, stamina: 25 },
@@ -776,28 +1464,28 @@ const ALL_PARTS = [
     { id: 'dransword', name: 'DranSword', type: 'blade', bey_type: 'attack', image: 'images/blades/DranSword.webp', tier: 'B', variantsId: 'dransword', attack: 55, defense: 25, stamina: 20 },
     { id: 'dranzerspiral', name: 'Dranzer Spiral', type: 'blade', bey_type: 'balance', image: 'images/blades/DranzerSpiral.webp', tier: 'C', variantsId: 'dranzerspiral', attack: 35, defense: 30, stamina: 35 },
     { id: 'drigerslash', name: 'DrigerSlash', type: 'blade', bey_type: 'balance', image: 'images/blades/DrigerSlash.webp', tier: 'D', variantsId: 'drigerslash', attack: 40, defense: 35, stamina: 25 },
-    { id: 'eclipse', name: 'Eclipse', type: 'blade', bey_type: 'defense', image: 'images/blades/Eclipse.webp', tier: 'C' }, // Tier placeholder
-    { id: 'flame', name: 'Flame', type: 'blade', bey_type: 'balance', image: 'images/blades/Flame.webp', tier: 'C' }, // Tier placeholder
+    { id: 'eclipse', name: 'Eclipse', type: 'blade', bey_type: 'defense', image: 'images/blades/Eclipse.webp', tier: 'C', variantsId: 'eclipse' }, // Adicionado variantsId
+    { id: 'flame', name: 'Flame', type: 'blade', bey_type: 'balance', image: 'images/blades/Flame.webp', tier: 'C', variantsId: 'flame' }, // Adicionado variantsId
     { id: 'generalgrievous', name: 'General Grievous', type: 'blade', bey_type: 'defense', image: 'images/blades/GeneralGrievous.webp', tier: 'D', variantsId: 'generalgrievous' },
     { id: 'ghostcircle', name: 'GhostCircle', type: 'blade', bey_type: 'stamina', image: 'images/blades/GhostCircle.webp', tier: 'C', variantsId: 'ghostcircle', attack: 10, defense: 35, stamina: 55 },
-    { id: 'sharkgill', name: 'SharkGill', type: 'blade', bey_type: 'stamina', image: 'images/blades/SharkGill.webp', tier: 'C', variantsId: 'sharkgill', attack: 0, defense: 0, stamina: 0 }, // ID corrigido
+    { id: 'sharkgill', name: 'SharkGill', type: 'blade', bey_type: 'stamina', image: 'images/blades/SharkGill.webp', tier: 'C', variantsId: 'sharkgill', attack: 0, defense: 0, stamina: 0 },
     { id: 'golemrock', name: 'GolemRock', type: 'blade', bey_type: 'defense', image: 'images/blades/GolemRock.webp', tier: 'D', variantsId: 'golemrock', attack: 15, defense: 70, stamina: 15 },
     { id: 'hellschain', name: 'HellsChain', type: 'blade', bey_type: 'defense', image: 'images/blades/HellsChain.webp', tier: 'B', variantsId: 'hellschain', attack: 35, defense: 40, stamina: 25 },
     { id: 'hellshammer', name: 'Hells Hammer', type: 'blade', bey_type: 'attack', image: 'images/blades/HellsHammer.webp', tier: 'C', variantsId: 'hellshammer', attack: 50, defense: 25, stamina: 25 },
     { id: 'hellsscythe', name: 'HellsScythe', type: 'blade', bey_type: 'balance', image: 'images/blades/HellsScythe.webp', tier: 'B', variantsId: 'hellsscythe', attack: 30, defense: 30, stamina: 35 },
-    { id: 'hornet', name: 'Hornet', type: 'blade', bey_type: 'attack', image: 'images/blades/Hornet.webp', tier: 'D' },
+    { id: 'hornet', name: 'Hornet', type: 'blade', bey_type: 'attack', image: 'images/blades/Hornet.webp', tier: 'D', variantsId: 'hornet' }, // Adicionado variantsId
     { id: 'hoverwyvern', name: 'Hover Wyvern', type: 'blade', bey_type: 'stamina', image: 'images/blades/HoverWyvern.webp', tier: 'A', variantsId: 'hoverwyvern', attack: 15, defense: 25, stamina: 60 },
-    { id: 'hunt', name: 'Hunt', type: 'blade', bey_type: 'stamina', image: 'images/blades/Hunt.webp', tier: 'C' }, // Tier placeholder
+    { id: 'hunt', name: 'Hunt', type: 'blade', bey_type: 'stamina', image: 'images/blades/Hunt.webp', tier: 'C', variantsId: 'hunt' }, // Adicionado variantsId
     { id: 'impactdrake', name: 'ImpactDrake', type: 'blade', bey_type: 'attack', image: 'images/blades/ImpactDrake.webp', tier: 'B', variantsId: 'impactdrake', attack: 60, defense: 25, stamina: 15 },
-    { id: 'knightlance', name: 'KnightLance', type: 'blade', bey_type: 'defense', image: 'images/blades/KnightLance.webp', tier: 'C', variantsId: 'knightlance', attack: 25, defense: 60, stamina: 15 }, // Bey type corrigido
+    { id: 'knightlance', name: 'KnightLance', type: 'blade', bey_type: 'defense', image: 'images/blades/KnightLance.webp', tier: 'C', variantsId: 'knightlance', attack: 25, defense: 60, stamina: 15 },
     { id: 'knightmail', name: 'KnightMail', type: 'blade', bey_type: 'defense', image: 'images/blades/KnightMail.webp', tier: 'A', variantsId: 'knightmail', attack: 10, defense: 75, stamina: 15 },
     { id: 'knightshield', name: 'KnightShield', type: 'blade', bey_type: 'defense', image: 'images/blades/KnightShield.webp', tier: 'B', variantsId: 'knightshield', attack: 20, defense: 55, stamina: 25 },
-    { id: 'kraken', name: 'Kraken', type: 'blade', bey_type: 'stamina', image: 'images/blades/Kraken.webp', tier: 'D' },
+    { id: 'kraken', name: 'Kraken', type: 'blade', bey_type: 'stamina', image: 'images/blades/Kraken.webp', tier: 'D', variantsId: 'kraken' }, // Adicionado variantsId
     { id: 'leonclaw', name: 'LeonClaw', type: 'blade', bey_type: 'defense', image: 'images/blades/LeonClaw.webp', tier: 'C', variantsId: 'leonclaw', attack: 40, defense: 24, stamina: 20 },
     { id: 'leoncrest', name: 'LeonCrest', type: 'blade', bey_type: 'defense', image: 'images/blades/LeonCrest.webp', tier: 'C', variantsId: 'leoncrest', attack: 15, defense: 70, stamina: 15 },
     { id: 'lightningl-drago', name: 'Lightning L-Drago', type: 'blade', bey_type: 'attack', image: 'images/blades/LightningL-Drago.webp', tier: 'C', variantsId: 'lightningl-drago', attack: 55, defense: 25, stamina: 20 },
     { id: 'mammothtusk', name: 'Mammoth Tusk', type: 'blade', bey_type: 'balance', image: 'images/blades/MammothTusk.webp', tier: 'D', variantsId: 'mammothtusk', attack: 40, defense: 40, stamina: 20 },
-    { id: 'might', name: 'Might', type: 'blade', bey_type: 'balance', image: 'images/blades/Might.webp', tier: 'C' }, // Tier placeholder
+    { id: 'might', name: 'Might', type: 'blade', bey_type: 'balance', image: 'images/blades/Might.webp', tier: 'C', variantsId: 'might' }, // Adicionado variantsId
     { id: 'moffgideon', name: 'MoffGideon', type: 'blade', bey_type: 'defense', image: 'images/blades/MoffGideon.webp', tier: 'D', variantsId: 'moffgideon' },
     { id: 'mosasaurus', name: 'Mosasaurus', type: 'blade', bey_type: 'attack', image: 'images/blades/Mosasaurus.webp', tier: 'D', variantsId: 'mosasaurus' },
     { id: 'optimusprimal', name: 'Optimus Primal', type: 'blade', bey_type: 'attack', image: 'images/blades/OptimusPrimal.webp', tier: 'C', variantsId: 'optimusprimal' },
@@ -805,20 +1493,20 @@ const ALL_PARTS = [
     { id: 'phoenixfeather', name: 'Phoenix Feather', type: 'blade', bey_type: 'stamina', image: 'images/blades/PhoenixFeather.webp', tier: 'D', variantsId: 'phoenixfeather', attack: 50, defense: 20, stamina: 30 },
     { id: 'phoenixrudder', name: 'Phoenix Rudder', type: 'blade', bey_type: 'defense', image: 'images/blades/PhoenixRudder.webp', tier: 'C', variantsId: 'phoenixrudder', attack: 10, defense: 35, stamina: 55 },
     { id: 'phoenixwing', name: 'Phoenix Wing', type: 'blade', bey_type: 'stamina', image: 'images/blades/PhoenixWing.webp', tier: 'S', variantsId: 'phoenixwing', attack: 65, defense: 30, stamina: 20 },
-    { id: 'pteraswing', name: 'PteraSwing', type: 'blade', bey_type: 'defense', image: 'images/blades/PteraSwing.webp', tier: 'D', attack: 15, defense: 60, stamina: 25 },
+    { id: 'pteraswing', name: 'PteraSwing', type: 'blade', bey_type: 'defense', image: 'images/blades/PteraSwing.webp', tier: 'D', variantsId: 'pteraswing', attack: 15, defense: 60, stamina: 25 }, // Adicionado variantsId
     { id: 'quetzalcoatlus', name: 'Quetzal coatlus', type: 'blade', bey_type: 'defense', image: 'images/blades/Quetzalcoatlus.webp', tier: 'D', variantsId: 'quetzalcoatlus' },
-    { id: 'reaper', name: 'Reaper', type: 'blade', bey_type: 'attack', image: 'images/blades/Reaper.webp', tier: 'S' }, // Tier atualizado
+    { id: 'reaper', name: 'Reaper', type: 'blade', bey_type: 'attack', image: 'images/blades/Reaper.webp', tier: 'S', variantsId: 'reaper' }, // Adicionado variantsId
     { id: 'rhinohorn', name: 'RhinoHorn', type: 'blade', bey_type: 'defense', image: 'images/blades/RhinoHorn.webp', tier: 'D', variantsId: 'rhinohorn', attack: 20, defense: 50, stamina: 30 },
     { id: 'rockleone', name: 'RockLeone', type: 'blade', bey_type: 'defense', image: 'images/blades/RockLeone.webp', tier: 'D', variantsId: 'rockleone' },
     { id: 'samuraicalibur', name: 'Samurai Calibur', type: 'blade', bey_type: 'balance', image: 'images/blades/SamuraiCalibur.webp', tier: 'C', variantsId: 'samuraicalibur' },
     { id: 'samuraisaber', name: 'Samurai Saber', type: 'blade', bey_type: 'attack', image: 'images/blades/SamuraiSaber.webp', tier: 'B', variantsId: 'samuraisaber', attack: 70, defense: 15, stamina: 15 },
-    { id: 'samuraisteel', name: 'Samurai Steel', type: 'blade', bey_type: 'balance', image: 'images/blades/SamuraiSteel.webp', tier: 'D' },
+    { id: 'samuraisteel', name: 'Samurai Steel', type: 'blade', bey_type: 'balance', image: 'images/blades/SamuraiSteel.webp', tier: 'D', variantsId: 'samuraisteel' }, // Adicionado variantsId
     { id: 'scorpiospear', name: 'Scorpio Spear', type: 'blade', bey_type: 'attack', image: 'images/blades/ScorpioSpear.webp', tier: 'B', variantsId: 'scorpiospear', attack: 65, defense: 20, stamina: 15 },
     { id: 'sharkedge', name: 'SharkEdge', type: 'blade', bey_type: 'attack', image: 'images/blades/SharkEdge.webp', tier: 'B', variantsId: 'sharkedge', attack: 60, defense: 25, stamina: 15 },
     { id: 'sharkscale', name: 'SharkScale', type: 'blade', bey_type: 'attack', image: 'images/blades/SharkScale.webp', tier: 'S', variantsId: 'sharkscale', attack: 75, defense: 15, stamina: 10 },
     { id: 'shelterdrake', name: 'ShelterDrake', type: 'blade', bey_type: 'defense', image: 'images/blades/ShelterDrake.webp', tier: 'C', variantsId: 'shelterdrake', attack: 20, defense: 60, stamina: 20 },
     { id: 'shinobiknife', name: 'ShinobiKnife', type: 'blade', bey_type: 'defense', image: 'images/blades/ShinobiKnife.webp', tier: 'D', variantsId: 'shinobiknife' },
-    { id: 'shinobishadow', name: 'Shinobi Shadow', type: 'blade', bey_type: 'defense', image: 'images/blades/ShinobiShadow.webp', tier: 'D', variantsId: 'shinobishadow', attack: 10, defense: 70, stamina: 20 }, // Bey type corrigido
+    { id: 'shinobishadow', name: 'Shinobi Shadow', type: 'blade', bey_type: 'defense', image: 'images/blades/ShinobiShadow.webp', tier: 'D', variantsId: 'shinobishadow', attack: 10, defense: 70, stamina: 20 },
     { id: 'silverwolf', name: 'SilverWolf', type: 'blade', bey_type: 'balance', image: 'images/blades/SilverWolf.webp', tier: 'S', variantsId: 'silverwolf', attack: 15, defense: 30, stamina: 65 },
     { id: 'spider-man', name: 'Spider-Man', type: 'blade', bey_type: 'attack', image: 'images/blades/Spider-Man.webp', tier: 'D', variantsId: 'spider-man' },
     { id: 'sphinx-cowl', name: 'SphinxCowl', type: 'blade', bey_type: 'defense', image: 'images/blades/SphinxCowl.webp', tier: 'D', variantsId: 'sphinx-cowl', attack: 35, defense: 55, stamina: 10 },
@@ -833,9 +1521,9 @@ const ALL_PARTS = [
     { id: 'unicornsting', name: 'Unicorn Sting', type: 'blade', bey_type: 'balance', image: 'images/blades/UnicornSting.webp', tier: 'B', variantsId: 'unicornsting', attack: 35, defense: 35, stamina: 30 },
     { id: 'venom', name: 'Venom', type: 'blade', bey_type: 'defense', image: 'images/blades/Venom.webp', tier: 'C', variantsId: 'venom' },
     { id: 'victoryvalkyrie', name: 'Victory Valkyrie', type: 'blade', bey_type: 'attack', image: 'images/blades/VictoryValkyrie.webp', tier: 'D', variantsId: 'victoryvalkyrie' },
-    { id: 'vipertail', name: 'ViperTail', type: 'blade', bey_type: 'stamina', image: 'images/blades/ViperTail.webp', tier: 'C', variantsId: 'vipertail', attack: 30, defense: 20, stamina: 50 }, // Bey type corrigido
-    { id: 'weisstiger', name: 'WeissTiger', type: 'blade', bey_type: 'balance', image: 'images/blades/WeissTiger.webp', tier: 'C', variantsId: 'weisstiger', attack: 45, defense: 30, stamina: 25 }, // Bey type corrigido
-    { id: 'whalewave', name: 'WhaleWave', type: 'blade', bey_type: 'balance', image: 'images/blades/WhaleWave.webp', tier: 'B', variantsId: 'whalewave', attack: 45, defense: 35, stamina: 20 }, // Bey type corrigido
+    { id: 'vipertail', name: 'ViperTail', type: 'blade', bey_type: 'stamina', image: 'images/blades/ViperTail.webp', tier: 'C', variantsId: 'vipertail', attack: 30, defense: 20, stamina: 50 },
+    { id: 'weisstiger', name: 'WeissTiger', type: 'blade', bey_type: 'balance', image: 'images/blades/WeissTiger.webp', tier: 'C', variantsId: 'weisstiger', attack: 45, defense: 30, stamina: 25 },
+    { id: 'whalewave', name: 'WhaleWave', type: 'blade', bey_type: 'balance', image: 'images/blades/WhaleWave.webp', tier: 'B', variantsId: 'whalewave', attack: 45, defense: 35, stamina: 20 },
     { id: 'wizardarrow', name: 'WizardArrow', type: 'blade', bey_type: 'stamina', image: 'images/blades/WizardArrow.webp', tier: 'C', variantsId: 'wizardarrow', attack: 15, defense: 30, stamina: 55 },
     { id: 'wizardrod', name: 'WizardRod', type: 'blade', bey_type: 'stamina', image: 'images/blades/WizardRod.webp', tier: 'S', variantsId: 'wizardrod', attack: 15, defense: 25, stamina: 60 },
     { id: 'wyverngale', name: 'WyvernGale', type: 'blade', bey_type: 'stamina', image: 'images/blades/WyvernGale.webp', tier: 'D', variantsId: 'wyverngale', attack: 10, defense: 40, stamina: 50 },
@@ -843,142 +1531,134 @@ const ALL_PARTS = [
     { id: 'yellkong', name: 'YellKong', type: 'blade', bey_type: 'defense', image: 'images/blades/YellKong.webp', tier: 'D', variantsId: 'yellkong', attack: 30, defense: 50, stamina: 20 },
 
     // Ratchets
-    { id: '0-60', name: '0-60', type: 'ratchet', image: 'images/ratchets/0-60.webp', tier: 'B', attack: 0, defense: 0, stamina: 0, height: 60 },
-    { id: '0-70', name: '0-70', type: 'ratchet', image: 'images/ratchets/0-70.webp', tier: 'B', attack: 14, defense: 10, stamina: 6, height: 70 },
-    { id: '0-80', name: '0-80', type: 'ratchet', image: 'images/ratchets/0-80.webp', tier: 'B', attack: 14, defense: 9, stamina: 7, height: 80 },
-    { id: '1-60', name: '1-60', type: 'ratchet', image: 'images/ratchets/1-60.webp', tier: 'S', attack: 17, defense: 9, stamina: 4, height: 60 },
-    { id: '1-70', name: '1-70', type: 'ratchet', image: 'images/ratchets/1-70.webp', tier: 'A', attack: 17, defense: 8, stamina: 5, height: 70 },
-    { id: '1-80', name: '1-80', type: 'ratchet', image: 'images/ratchets/1-80.webp', tier: 'A', attack: 17, defense: 4, stamina: 9, height: 80 },
-    { id: '2-60', name: '2-60', type: 'ratchet', image: 'images/ratchets/2-60.webp', tier: 'B', attack: 16, defense: 8, stamina: 6, height: 60 },
-    { id: '2-70', name: '2-70', type: 'ratchet', image: 'images/ratchets/2-70.webp', tier: 'C', attack: 16, defense: 7, stamina: 7, height: 70 },
-    { id: '2-80', name: '2-80', type: 'ratchet', image: 'images/ratchets/2-80.webp', tier: 'D', attack: 10, defense: 11, stamina: 9, height: 80 },
-    { id: '3-60', name: '3-60', type: 'ratchet', image: 'images/ratchets/3-60.webp', tier: 'S', attack: 15, defense: 9, stamina: 6, height: 60 },
-    { id: '3-70', name: '3-70', type: 'ratchet', image: 'images/ratchets/3-70.webp', tier: 'A', attack: 15, defense: 8, stamina: 7, height: 70 },
-    { id: '3-80', name: '3-80', type: 'ratchet', image: 'images/ratchets/3-80.webp', tier: 'A', attack: 15, defense: 7, stamina: 8, height: 80 },
-    { id: '3-85', name: '3-85', type: 'ratchet', image: 'images/ratchets/3-85.webp', tier: 'C', attack: 15, defense: 6, stamina: 9, height: 85 },
-    { id: '4-50', name: '4-50', type: 'ratchet', image: 'images/ratchets/4-50.webp', tier: 'A', attack: 11, defense: 13, stamina: 1, height: 50 },
-    { id: '4-55', name: '4-55', type: 'ratchet', image: 'images/ratchets/4-55.webp', tier: 'A', attack: 11, defense: 13, stamina: 2, height: 55 },
-    { id: '4-60', name: '4-60', type: 'ratchet', image: 'images/ratchets/4-60.webp', tier: 'A', attack: 11, defense: 13, stamina: 6, height: 60 },
-    { id: '4-70', name: '4-70', type: 'ratchet', image: 'images/ratchets/4-70.webp', tier: 'C', attack: 11, defense: 12, stamina: 7, height: 70 },
-    { id: '4-80', name: '4-80', type: 'ratchet', image: 'images/ratchets/4-80.webp', tier: 'B', attack: 11, defense: 11, stamina: 8, height: 80 },
-    { id: '5-60', name: '5-60', type: 'ratchet', image: 'images/ratchets/5-60.webp', tier: 'S', attack: 12, defense: 9, stamina: 9, height: 60 },
-    { id: '5-70', name: '5-70', type: 'ratchet', image: 'images/ratchets/5-70.webp', tier: 'A', attack: 12, defense: 8, stamina: 10, height: 70 },
-    { id: '5-80', name: '5-80', type: 'ratchet', image: 'images/ratchets/5-80.webp', tier: 'A', attack: 12, defense: 8, stamina: 10, height: 80 },
-    { id: '6-60', name: '6-60', type: 'ratchet', image: 'images/ratchets/6-60.webp', tier: 'A', attack: 10, defense: 12, stamina: 8, height: 60 },
-    { id: '6-70', name: '6-70', type: 'ratchet', image: 'images/ratchets/6-70.webp', tier: 'D', attack: 10, defense: 11, stamina: 9, height: 70 },
-    { id: '6-80', name: '6-80', type: 'ratchet', image: 'images/ratchets/6-80.webp', tier: 'C', attack: 10, defense: 10, stamina: 10, height: 80 },
-    { id: '7-60', name: '7-60', type: 'ratchet', image: 'images/ratchets/7-60.webp', tier: 'S', attack: 8, defense: 14, stamina: 8, height: 60 },
-    { id: '7-70', name: '7-70', type: 'ratchet', image: 'images/ratchets/7-70.webp', tier: 'A', attack: 8, defense: 13, stamina: 9, height: 70 },
-    { id: '7-80', name: '7-80', type: 'ratchet', image: 'images/ratchets/7-80.webp', tier: 'C', attack: 8, defense: 12, stamina: 10, height: 80 },
-    { id: '9-60', name: '9-60', type: 'ratchet', image: 'images/ratchets/9-60.webp', tier: 'S', attack: 13, defense: 10, stamina: 7, height: 60 },
-    { id: '9-65', name: '9-65', type: 'ratchet', image: 'images/ratchets/9-65.webp', tier: 'C', attack: 0, defense: 0, stamina: 0, height: 65 }, // Tier placeholder
-    { id: '9-70', name: '9-70', type: 'ratchet', image: 'images/ratchets/9-70.webp', tier: 'A', attack: 13, defense: 10, stamina: 7, height: 70 },
-    { id: '9-80', name: '9-80', type: 'ratchet', image: 'images/ratchets/9-80.webp', tier: 'A', attack: 13, defense: 10, stamina: 7, height: 80 },
-    { id: 'm-85', name: 'M-85', type: 'ratchet', image: 'images/ratchets/M-85.webp', tier: 'C', attack: 14, defense: 14, stamina: 2, height: 85 },
+    { id: '0-60', name: '0-60', type: 'ratchet', image: 'images/ratchets/0-60.webp', tier: 'B', variantsId: '0-60', attack: 0, defense: 0, stamina: 0, height: 60 },
+    { id: '0-70', name: '0-70', type: 'ratchet', image: 'images/ratchets/0-70.webp', tier: 'B', variantsId: '0-70', attack: 14, defense: 10, stamina: 6, height: 70 },
+    { id: '0-80', name: '0-80', type: 'ratchet', image: 'images/ratchets/0-80.webp', tier: 'B', variantsId: '0-80', attack: 14, defense: 9, stamina: 7, height: 80 },
+    { id: '1-60', name: '1-60', type: 'ratchet', image: 'images/ratchets/1-60.webp', tier: 'S', variantsId: '1-60', attack: 17, defense: 9, stamina: 4, height: 60 },
+    { id: '1-70', name: '1-70', type: 'ratchet', image: 'images/ratchets/1-70.webp', tier: 'A', variantsId: '1-70', attack: 17, defense: 8, stamina: 5, height: 70 },
+    { id: '1-80', name: '1-80', type: 'ratchet', image: 'images/ratchets/1-80.webp', tier: 'A', variantsId: '1-80', attack: 17, defense: 4, stamina: 9, height: 80 },
+    { id: '2-60', name: '2-60', type: 'ratchet', image: 'images/ratchets/2-60.webp', tier: 'B', variantsId: '2-60', attack: 16, defense: 8, stamina: 6, height: 60 },
+    { id: '2-70', name: '2-70', type: 'ratchet', image: 'images/ratchets/2-70.webp', tier: 'C', variantsId: '2-70', attack: 16, defense: 7, stamina: 7, height: 70 },
+    { id: '2-80', name: '2-80', type: 'ratchet', image: 'images/ratchets/2-80.webp', tier: 'D', variantsId: '2-80', attack: 10, defense: 11, stamina: 9, height: 80 },
+    { id: '3-60', name: '3-60', type: 'ratchet', image: 'images/ratchets/3-60.webp', tier: 'S', variantsId: '3-60', attack: 15, defense: 9, stamina: 6, height: 60 },
+    { id: '3-70', name: '3-70', type: 'ratchet', image: 'images/ratchets/3-70.webp', tier: 'A', variantsId: '3-70', attack: 15, defense: 8, stamina: 7, height: 70 },
+    { id: '3-80', name: '3-80', type: 'ratchet', image: 'images/ratchets/3-80.webp', tier: 'A', variantsId: '3-80', attack: 15, defense: 7, stamina: 8, height: 80 },
+    { id: '3-85', name: '3-85', type: 'ratchet', image: 'images/ratchets/3-85.webp', tier: 'C', variantsId: '3-85', attack: 15, defense: 6, stamina: 9, height: 85 },
+    { id: '4-50', name: '4-50', type: 'ratchet', image: 'images/ratchets/4-50.webp', tier: 'A', variantsId: '4-50', attack: 11, defense: 13, stamina: 1, height: 50 },
+    { id: '4-55', name: '4-55', type: 'ratchet', image: 'images/ratchets/4-55.webp', tier: 'A', variantsId: '4-55', attack: 11, defense: 13, stamina: 2, height: 55 },
+    { id: '4-60', name: '4-60', type: 'ratchet', image: 'images/ratchets/4-60.webp', tier: 'A', variantsId: '4-60', attack: 11, defense: 13, stamina: 6, height: 60 },
+    { id: '4-70', name: '4-70', type: 'ratchet', image: 'images/ratchets/4-70.webp', tier: 'C', variantsId: '4-70', attack: 11, defense: 12, stamina: 7, height: 70 },
+    { id: '4-80', name: '4-80', type: 'ratchet', image: 'images/ratchets/4-80.webp', tier: 'B', variantsId: '4-80', attack: 11, defense: 11, stamina: 8, height: 80 },
+    { id: '5-60', name: '5-60', type: 'ratchet', image: 'images/ratchets/5-60.webp', tier: 'S', variantsId: '5-60', attack: 12, defense: 9, stamina: 9, height: 60 },
+    { id: '5-70', name: '5-70', type: 'ratchet', image: 'images/ratchets/5-70.webp', tier: 'A', variantsId: '5-70', attack: 12, defense: 8, stamina: 10, height: 70 },
+    { id: '5-80', name: '5-80', type: 'ratchet', image: 'images/ratchets/5-80.webp', tier: 'A', variantsId: '5-80', attack: 12, defense: 8, stamina: 10, height: 80 },
+    { id: '6-60', name: '6-60', type: 'ratchet', image: 'images/ratchets/6-60.webp', tier: 'A', variantsId: '6-60', attack: 10, defense: 12, stamina: 8, height: 60 },
+    { id: '6-70', name: '6-70', type: 'ratchet', image: 'images/ratchets/6-70.webp', tier: 'D', variantsId: '6-70', attack: 10, defense: 11, stamina: 9, height: 70 },
+    { id: '6-80', name: '6-80', type: 'ratchet', image: 'images/ratchets/6-80.webp', tier: 'C', variantsId: '6-80', attack: 10, defense: 10, stamina: 10, height: 80 },
+    { id: '7-60', name: '7-60', type: 'ratchet', image: 'images/ratchets/7-60.webp', tier: 'S', variantsId: '7-60', attack: 8, defense: 14, stamina: 8, height: 60 },
+    { id: '7-70', name: '7-70', type: 'ratchet', image: 'images/ratchets/7-70.webp', tier: 'A', variantsId: '7-70', attack: 8, defense: 13, stamina: 9, height: 70 },
+    { id: '7-80', name: '7-80', type: 'ratchet', image: 'images/ratchets/7-80.webp', tier: 'C', variantsId: '7-80', attack: 8, defense: 12, stamina: 10, height: 80 },
+    { id: '9-60', name: '9-60', type: 'ratchet', image: 'images/ratchets/9-60.webp', tier: 'S', variantsId: '9-60', attack: 13, defense: 10, stamina: 7, height: 60 },
+    { id: '9-65', name: '9-65', type: 'ratchet', image: 'images/ratchets/9-65.webp', tier: 'C', variantsId: '9-65', attack: 0, defense: 0, stamina: 0, height: 65 },
+    { id: '9-70', name: '9-70', type: 'ratchet', image: 'images/ratchets/9-70.webp', tier: 'A', variantsId: '9-70', attack: 13, defense: 10, stamina: 7, height: 70 },
+    { id: '9-80', name: '9-80', type: 'ratchet', image: 'images/ratchets/9-80.webp', tier: 'A', variantsId: '9-80', attack: 13, defense: 10, stamina: 7, height: 80 },
+    { id: 'm-85', name: 'M-85', type: 'ratchet', image: 'images/ratchets/M-85.webp', tier: 'C', variantsId: 'm-85', attack: 14, defense: 14, stamina: 2, height: 85 },
 
     // Bits
-    { id: 'accel', name: 'Accel', type: 'bit', bey_type: 'attack', image: 'images/bits/Accel.webp', tier: 'B', attack: 40, defense: 10, stamina: 10, dash: 10, burst_resistance: 80 },
-
-    { id: 'ball', name: 'Ball', type: 'bit', bey_type: 'stamina', image: 'images/bits/Ball.webp', tier: 'S', attack: 15, defense: 25, stamina: 50, dash: 10, burst_resistance: 30 },
-
-    { id: 'boundspike', name: 'BoundSpike', type: 'bit', bey_type: 'defense', image: 'images/bits/BoundSpike.webp', tier: 'B', attack: 10, defense: 50, stamina: 30, dash: 10, burst_resistance: 30 },
-    { id: 'cyclone', name: 'Cyclone', type: 'bit', bey_type: 'attack', image: 'images/bits/Cyclone.webp', tier: 'B', attack: 40, defense: 5, stamina: 10, dash: 45, burst_resistance: 80 },
-    { id: 'diskball', name: 'DiskBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/DiskBall.webp', tier: 'C', attack: 15, defense: 20, stamina: 55, dash: 10, burst_resistance: 30 },
-    { id: 'dot', name: 'Dot', type: 'bit', bey_type: 'defense', image: 'images/bits/Dot.webp', tier: 'B', attack: 10, defense: 55, stamina: 25, dash: 10, burst_resistance: 30 },
-    { id: 'elevate', name: 'Elevate', type: 'bit', bey_type: 'balance', image: 'images/bits/Elevate.webp', tier: 'S', attack: 30, defense: 15, stamina: 20, dash: 35, burst_resistance: 30 }, // Bey type corrigido
-    { id: 'flat', name: 'Flat', type: 'bit', bey_type: 'attack', image: 'images/bits/Flat.webp', tier: 'A', attack: 40, defense: 15, stamina: 10, dash: 35, burst_resistance: 80 },
-    { id: 'freeball', name: 'FreeBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/FreeBall.webp', tier: 'A', attack: 10, defense: 25, stamina: 60, dash: 5, burst_resistance: 30 },
-    { id: 'gearball', name: 'GearBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/GearBall.webp', tier: 'B', attack: 20, defense: 20, stamina: 45, dash: 15, burst_resistance: 30 },
-    { id: 'gearflat', name: 'GearFlat', type: 'bit', bey_type: 'attack', image: 'images/bits/GearFlat.webp', tier: 'B', attack: 50, defense: 5, stamina: 5, dash: 40, burst_resistance: 80 },
-    { id: 'gearneedle', name: 'GearNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/GearNeedle.webp', tier: 'C', attack: 20, defense: 30, stamina: 10, dash: 30, burst_resistance: 30 },
-    { id: 'gearpoint', name: 'GearPoint', type: 'bit', bey_type: 'balance', image: 'images/bits/GearPoint.webp', tier: 'B', attack: 30, defense: 25, stamina: 15, dash: 30, burst_resistance: 80 }, // Bey type corrigido
-    { id: 'gearrush', name: 'GearRush', type: 'bit', bey_type: 'attack', image: 'images/bits/GearRush.webp', tier: 'B', attack: 45, defense: 5, stamina: 10, dash: 40, burst_resistance: 80 },
-    { id: 'glide', name: 'Glide', type: 'bit', bey_type: 'stamina', image: 'images/bits/Glide.webp', tier: 'C', attack: 20, defense: 10, stamina: 55, dash: 15, burst_resistance: 30 },
-    { id: 'hexa', name: 'Hexa', type: 'bit', bey_type: 'balance', image: 'images/bits/Hexa.webp', tier: 'S', attack: 30, defense: 35, stamina: 20, dash: 15, burst_resistance: 80 },
-    { id: 'highneedle', name: 'HighNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/HighNeedle.webp', tier: 'B', attack: 15, defense: 55, stamina: 20, dash: 10, burst_resistance: 30 },
-    { id: 'hightaper', name: 'HighTaper', type: 'bit', bey_type: 'balance', image: 'images/bits/HighTaper.webp', tier: 'B', attack: 30, defense: 25, stamina: 20, dash: 25, burst_resistance: 80 },
-
-    { id: 'kick', name: 'Kick', type: 'bit', bey_type: 'balance', image: 'images/bits/Kick.webp', tier: 'S', attack: 30, defense: 30, stamina: 20, dash: 20, burst_resistance: 80 },
-    { id: 'level', name: 'Level', type: 'bit', bey_type: 'balance', image: 'images/bits/Level.webp', tier: 'S', attack: 35, defense: 35, stamina: 15, dash: 15, burst_resistance: 80 },
-    { id: 'lowflat', name: 'LowFlat', type: 'bit', bey_type: 'attack', image: 'images/bits/LowFlat.webp', tier: 'A', attack: 45, defense: 5, stamina: 10, dash: 40, burst_resistance: 80 },
-    { id: 'loworb', name: 'LowOrb', type: 'bit', bey_type: 'stamina', image: 'images/bits/LowOrb.webp', tier: 'A', attack: 10, defense: 35, stamina: 45, dash: 10, burst_resistance: 30 },
-    { id: 'lowrush', name: 'LowRush', type: 'bit', bey_type: 'attack', image: 'images/bits/LowRush.webp', tier: 'S', attack: 45, defense: 5, stamina: 15, dash: 35, burst_resistance: 80 },
-    { id: 'merge', name: 'Merge', type: 'bit', bey_type: 'balance', image: 'images/bits/Merge.webp', tier: 'D', attack: 25, defense: 25, stamina: 25, dash: 25, burst_resistance: 80 },
-    { id: 'metalneedle', name: 'MetalNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/MetalNeedle.webp', tier: 'D', attack: 8, defense: 57, stamina: 30, dash: 5, burst_resistance: 30 },
-    { id: 'needle', name: 'Needle', type: 'bit', bey_type: 'defense', image: 'images/bits/Needle.webp', tier: 'B', attack: 10, defense: 50, stamina: 30, dash: 10, burst_resistance: 30 },
-    { id: 'orb', name: 'Orb', type: 'bit', bey_type: 'stamina', image: 'images/bits/Orb.webp', tier: 'A', attack: 10, defense: 30, stamina: 50, dash: 10, burst_resistance: 30 },
-    { id: 'point', name: 'Point', type: 'bit', bey_type: 'balance', image: 'images/bits/Point.webp', tier: 'A', attack: 25, defense: 25, stamina: 25, dash: 25, burst_resistance: 80 }, // Bey type corrigido
-    { id: 'quake', name: 'Quake', type: 'bit', bey_type: 'attack', image: 'images/bits/Quake.webp', tier: 'C', attack: 55, defense: 15, stamina: 5, dash: 25, burst_resistance: 80 },
-    { id: 'rubberaccel', name: 'RubberAccel', type: 'bit', bey_type: 'attack', image: 'images/bits/RubberAccel.webp', tier: 'A', attack: 50, defense: 5, stamina: 5, dash: 40, burst_resistance: 80 },
-    { id: 'rush', name: 'Rush', type: 'bit', bey_type: 'attack', image: 'images/bits/Rush.webp', tier: 'S', attack: 40, defense: 10, stamina: 20, dash: 30, burst_resistance: 80 },
-    { id: 'spike', name: 'Spike', type: 'bit', bey_type: 'defense', image: 'images/bits/Spike.webp', tier: 'C', attack: 10, defense: 45, stamina: 35, dash: 10, burst_resistance: 30 },
-    { id: 'taper', name: 'Taper', type: 'bit', bey_type: 'balance', image: 'images/bits/Taper.webp', tier: 'A', attack: 35, defense: 20, stamina: 20, dash: 25, burst_resistance: 80 },
-    { id: 'transkick', name: 'TransKick', type: 'bit', bey_type: 'balance', image: 'images/bits/TransKick.webp', tier: 'C', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado
-    { id: 'transpoint', name: 'TransPoint', type: 'bit', bey_type: 'balance', image: 'images/bits/TransPoint.webp', tier: 'C', attack: 30, defense: 20, stamina: 20, dash: 30, burst_resistance: 80 },
-    { id: 'underflat', name: 'UnderFlat', type: 'bit', bey_type: 'attack', image: 'images/bits/UnderFlat.webp', tier: 'A', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado
-    { id: 'underneedle', name: 'UnderNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/UnderNeedle.webp', tier: 'A', attack: 10, defense: 55, stamina: 25, dash: 10, burst_resistance: 30 },
-    { id: 'unite', name: 'Unite', type: 'bit', bey_type: 'balance', image: 'images/bits/Unite.webp', tier: 'A', attack: 25, defense: 25, stamina: 30, dash: 25, burst_resistance: 80 },
-    { id: 'vortex', name: 'Vortex', type: 'bit', bey_type: 'attack', image: 'images/bits/Vortex.webp', tier: 'C', attack: 40, defense: 10, stamina: 10, dash: 40, burst_resistance: 80 },
-    { id: 'wedge', name: 'Wedge', type: 'bit', bey_type: 'defense', image: 'images/bits/Wedge.webp', tier: 'A', attack: 5, defense: 60, stamina: 25, dash: 10, burst_resistance: 30 },
-
-    { id: 'zap', name: 'Zap', type: 'bit', bey_type: 'balance', image: 'images/bits/Zap.webp', tier: 'B', attack: 30, defense: 30, stamina: 20, dash: 20, burst_resistance: 80 },
-
-    { id: 'operate', name: 'Operate', type: 'bit', bey_type: 'stamina', image: 'images/bits/Operate.webp', tier: 'B', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado
-    { id: 'turbo', name: 'Turbo', type: 'bit', bey_type: 'stamina', image: 'images/bits/Turbo.webp', tier: 'B', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado
-
-    { id: 'wallball', name: 'Wall Ball', type: 'bit', bey_type: 'stamina', image: 'images/bits/WallBall.webp', tier: 'B', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 }, // Tier atualizado
-
-
+    { id: 'accel', name: 'Accel', type: 'bit', bey_type: 'attack', image: 'images/bits/Accel.webp', tier: 'B', variantsId: 'accel', attack: 40, defense: 10, stamina: 10, dash: 10, burst_resistance: 80 },
+    { id: 'ball', name: 'Ball', type: 'bit', bey_type: 'stamina', image: 'images/bits/Ball.webp', tier: 'S', variantsId: 'ball', attack: 15, defense: 25, stamina: 50, dash: 10, burst_resistance: 30 },
+    { id: 'boundspike', name: 'BoundSpike', type: 'bit', bey_type: 'defense', image: 'images/bits/BoundSpike.webp', tier: 'B', variantsId: 'boundspike', attack: 10, defense: 50, stamina: 30, dash: 10, burst_resistance: 30 },
+    { id: 'cyclone', name: 'Cyclone', type: 'bit', bey_type: 'attack', image: 'images/bits/Cyclone.webp', tier: 'B', variantsId: 'cyclone', attack: 40, defense: 5, stamina: 10, dash: 45, burst_resistance: 80 },
+    { id: 'diskball', name: 'DiskBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/DiskBall.webp', tier: 'C', variantsId: 'diskball', attack: 15, defense: 20, stamina: 55, dash: 10, burst_resistance: 30 },
+    { id: 'dot', name: 'Dot', type: 'bit', bey_type: 'defense', image: 'images/bits/Dot.webp', tier: 'B', variantsId: 'dot', attack: 10, defense: 55, stamina: 25, dash: 10, burst_resistance: 30 },
+    { id: 'elevate', name: 'Elevate', type: 'bit', bey_type: 'balance', image: 'images/bits/Elevate.webp', tier: 'S', variantsId: 'elevate', attack: 30, defense: 15, stamina: 20, dash: 35, burst_resistance: 30 },
+    { id: 'flat', name: 'Flat', type: 'bit', bey_type: 'attack', image: 'images/bits/Flat.webp', tier: 'A', variantsId: 'flat', attack: 40, defense: 15, stamina: 10, dash: 35, burst_resistance: 80 },
+    { id: 'freeball', name: 'FreeBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/FreeBall.webp', tier: 'A', variantsId: 'freeball', attack: 10, defense: 25, stamina: 60, dash: 5, burst_resistance: 30 },
+    { id: 'gearball', name: 'GearBall', type: 'bit', bey_type: 'stamina', image: 'images/bits/GearBall.webp', tier: 'B', variantsId: 'gearball', attack: 20, defense: 20, stamina: 45, dash: 15, burst_resistance: 30 },
+    { id: 'gearflat', name: 'GearFlat', type: 'bit', bey_type: 'attack', image: 'images/bits/GearFlat.webp', tier: 'B', variantsId: 'gearflat', attack: 50, defense: 5, stamina: 5, dash: 40, burst_resistance: 80 },
+    { id: 'gearneedle', name: 'GearNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/GearNeedle.webp', tier: 'C', variantsId: 'gearneedle', attack: 20, defense: 30, stamina: 10, dash: 30, burst_resistance: 30 },
+    { id: 'gearpoint', name: 'GearPoint', type: 'bit', bey_type: 'balance', image: 'images/bits/GearPoint.webp', tier: 'B', variantsId: 'gearpoint', attack: 30, defense: 25, stamina: 15, dash: 30, burst_resistance: 80 },
+    { id: 'gearrush', name: 'GearRush', type: 'bit', bey_type: 'attack', image: 'images/bits/GearRush.webp', tier: 'B', variantsId: 'gearrush', attack: 45, defense: 5, stamina: 10, dash: 40, burst_resistance: 80 },
+    { id: 'glide', name: 'Glide', type: 'bit', bey_type: 'stamina', image: 'images/bits/Glide.webp', tier: 'C', variantsId: 'glide', attack: 20, defense: 10, stamina: 55, dash: 15, burst_resistance: 30 },
+    { id: 'hexa', name: 'Hexa', type: 'bit', bey_type: 'balance', image: 'images/bits/Hexa.webp', tier: 'S', variantsId: 'hexa', attack: 30, defense: 35, stamina: 20, dash: 15, burst_resistance: 80 },
+    { id: 'highneedle', name: 'HighNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/HighNeedle.webp', tier: 'B', variantsId: 'highneedle', attack: 15, defense: 55, stamina: 20, dash: 10, burst_resistance: 30 },
+    { id: 'hightaper', name: 'HighTaper', type: 'bit', bey_type: 'balance', image: 'images/bits/HighTaper.webp', tier: 'B', variantsId: 'hightaper', attack: 30, defense: 25, stamina: 20, dash: 25, burst_resistance: 80 },
+    { id: 'kick', name: 'Kick', type: 'bit', bey_type: 'balance', image: 'images/bits/Kick.webp', tier: 'S', variantsId: 'kick', attack: 30, defense: 30, stamina: 20, dash: 20, burst_resistance: 80 },
+    { id: 'level', name: 'Level', type: 'bit', bey_type: 'balance', image: 'images/bits/Level.webp', tier: 'S', variantsId: 'level', attack: 35, defense: 35, stamina: 15, dash: 15, burst_resistance: 80 },
+    { id: 'lowflat', name: 'LowFlat', type: 'bit', bey_type: 'attack', image: 'images/bits/LowFlat.webp', tier: 'A', variantsId: 'lowflat', attack: 45, defense: 5, stamina: 10, dash: 40, burst_resistance: 80 },
+    { id: 'loworb', name: 'LowOrb', type: 'bit', bey_type: 'stamina', image: 'images/bits/LowOrb.webp', tier: 'A', variantsId: 'loworb', attack: 10, defense: 35, stamina: 45, dash: 10, burst_resistance: 30 },
+    { id: 'lowrush', name: 'LowRush', type: 'bit', bey_type: 'attack', image: 'images/bits/LowRush.webp', tier: 'S', variantsId: 'lowrush', attack: 45, defense: 5, stamina: 15, dash: 35, burst_resistance: 80 },
+    { id: 'merge', name: 'Merge', type: 'bit', bey_type: 'balance', image: 'images/bits/Merge.webp', tier: 'D', variantsId: 'merge', attack: 25, defense: 25, stamina: 25, dash: 25, burst_resistance: 80 },
+    { id: 'metalneedle', name: 'MetalNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/MetalNeedle.webp', tier: 'D', variantsId: 'metalneedle', attack: 8, defense: 57, stamina: 30, dash: 5, burst_resistance: 30 },
+    { id: 'needle', name: 'Needle', type: 'bit', bey_type: 'defense', image: 'images/bits/Needle.webp', tier: 'B', variantsId: 'needle', attack: 10, defense: 50, stamina: 30, dash: 10, burst_resistance: 30 },
+    { id: 'orb', name: 'Orb', type: 'bit', bey_type: 'stamina', image: 'images/bits/Orb.webp', tier: 'A', variantsId: 'orb', attack: 10, defense: 30, stamina: 50, dash: 10, burst_resistance: 30 },
+    { id: 'point', name: 'Point', type: 'bit', bey_type: 'balance', image: 'images/bits/Point.webp', tier: 'A', variantsId: 'point', attack: 25, defense: 25, stamina: 25, dash: 25, burst_resistance: 80 },
+    { id: 'quake', name: 'Quake', type: 'bit', bey_type: 'attack', image: 'images/bits/Quake.webp', tier: 'C', variantsId: 'quake', attack: 55, defense: 15, stamina: 5, dash: 25, burst_resistance: 80 },
+    { id: 'rubberaccel', name: 'RubberAccel', type: 'bit', bey_type: 'attack', image: 'images/bits/RubberAccel.webp', tier: 'A', variantsId: 'rubberaccel', attack: 50, defense: 5, stamina: 5, dash: 40, burst_resistance: 80 },
+    { id: 'rush', name: 'Rush', type: 'bit', bey_type: 'attack', image: 'images/bits/Rush.webp', tier: 'S', variantsId: 'rush', attack: 40, defense: 10, stamina: 20, dash: 30, burst_resistance: 80 },
+    { id: 'spike', name: 'Spike', type: 'bit', bey_type: 'defense', image: 'images/bits/Spike.webp', tier: 'C', variantsId: 'spike', attack: 10, defense: 45, stamina: 35, dash: 10, burst_resistance: 30 },
+    { id: 'taper', name: 'Taper', type: 'bit', bey_type: 'balance', image: 'images/bits/Taper.webp', tier: 'A', variantsId: 'taper', attack: 35, defense: 20, stamina: 20, dash: 25, burst_resistance: 80 },
+    { id: 'transkick', name: 'TransKick', type: 'bit', bey_type: 'balance', image: 'images/bits/TransKick.webp', tier: 'C', variantsId: 'transkick', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 },
+    { id: 'transpoint', name: 'TransPoint', type: 'bit', bey_type: 'balance', image: 'images/bits/TransPoint.webp', tier: 'C', variantsId: 'transpoint', attack: 30, defense: 20, stamina: 20, dash: 30, burst_resistance: 80 },
+    { id: 'underflat', name: 'UnderFlat', type: 'bit', bey_type: 'attack', image: 'images/bits/UnderFlat.webp', tier: 'A', variantsId: 'underflat', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 },
+    { id: 'underneedle', name: 'UnderNeedle', type: 'bit', bey_type: 'defense', image: 'images/bits/UnderNeedle.webp', tier: 'A', variantsId: 'underneedle', attack: 10, defense: 55, stamina: 25, dash: 10, burst_resistance: 30 },
+    { id: 'unite', name: 'Unite', type: 'bit', bey_type: 'balance', image: 'images/bits/Unite.webp', tier: 'A', variantsId: 'unite', attack: 25, defense: 25, stamina: 30, dash: 25, burst_resistance: 80 },
+    { id: 'vortex', name: 'Vortex', type: 'bit', bey_type: 'attack', image: 'images/bits/Vortex.webp', tier: 'C', variantsId: 'vortex', attack: 40, defense: 10, stamina: 10, dash: 40, burst_resistance: 80 },
+    { id: 'wedge', name: 'Wedge', type: 'bit', bey_type: 'defense', image: 'images/bits/Wedge.webp', tier: 'A', variantsId: 'wedge', attack: 5, defense: 60, stamina: 25, dash: 10, burst_resistance: 30 },
+    { id: 'zap', name: 'Zap', type: 'bit', bey_type: 'balance', image: 'images/bits/Zap.webp', tier: 'B', variantsId: 'zap', attack: 30, defense: 30, stamina: 20, dash: 20, burst_resistance: 80 },
+    { id: 'operate', name: 'Operate', type: 'bit', bey_type: 'stamina', image: 'images/bits/Operate.webp', tier: 'B', variantsId: 'operate', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 },
+    { id: 'turbo', name: 'Turbo', type: 'bit', bey_type: 'stamina', image: 'images/bits/Turbo.webp', tier: 'B', variantsId: 'turbo', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 },
+    { id: 'wallball', name: 'Wall Ball', type: 'bit', bey_type: 'stamina', image: 'images/bits/WallBall.webp', tier: 'B', variantsId: 'wallball', attack: 0, defense: 0, stamina: 0, dash: 0, burst_resistance: 0 },
 
     // --- Peças de Chip (CX) ---
-    { id: 'lockchip-cerberus', name: 'Cerberus', type: 'lockchip', image: 'images/lockchips/Cerberus.webp', tier: 'C' },
-    { id: 'lockchip-dran', name: 'Dran', type: 'lockchip', image: 'images/lockchips/Dran.webp', tier: 'S' },
-    { id: 'lockchip-emperor', name: 'Emperor', type: 'lockchip', image: 'images/lockchips/Emperor.webp', tier: 'C' },
-    { id: "lockchip-fox", name: "Fox", type: "lockchip", image: "images/lockchips/Fox.webp", tier: "B" },
-    { id: "lockchip-hells", name: "Hells", type: "lockchip", image: "images/lockchips/Hells.webp", tier: "S" },
-    { id: "lockchip-hornet", name: "Hornet", type: "lockchip", image: "images/lockchips/Hornet.webp", tier: "C" },
-    { id: "lockchip-kraken", name: "Kraken", type: "lockchip", image: "images/lockchips/Kraken.webp", tier: "B" },
-    { id: "lockchip-leon", name: "Leon", type: "lockchip", image: "images/lockchips/Leon.webp", tier: "S" },
-    { id: 'lockchip-pegasus', name: 'Pegasus', type: 'lockchip', image: 'images/lockchips/Pegasus.webp', tier: 'C' },
-    { id: "lockchip-perseus", name: "Perseus", type: "lockchip", image: "images/lockchips/Perseus.webp", tier: "A" },
-    { id: "lockchip-rhino", name: "Rhino", type: "lockchip", image: "images/lockchips/Rhino.webp", tier: "B" },
-    { id: "lockchip-sol", name: "Sol", type: "lockchip", image: "images/lockchips/Sol.webp", tier: "C" },
-    { id: "lockchip-stag", name: "Stag", type: "lockchip", image: "images/lockchips/Stag.webp", tier: "B" },
-    { id: "lockchip-valkyrie", name: "Valkyrie", type: "lockchip", image: "images/lockchips/Valkyrie.webp", tier: "A" },
-    { id: 'lockchip-whale', name: 'Whale', type: 'lockchip', image: 'images/lockchips/Whale.webp', tier: 'C' },
-    { id: "lockchip-wizard", name: "Wizard", type: "lockchip", image: "images/lockchips/Wizard.webp", tier: "S" },
-    { id: 'lockchip-wolf', name: 'Wolf', type: 'lockchip', image: 'images/lockchips/Wolf.webp', tier: 'C' },
+    { id: 'lockchip-cerberus', name: 'Cerberus', type: 'lockchip', image: 'images/lockchips/Cerberus.webp', tier: 'C', variantsId: 'lockchip-cerberus' },
+    { id: 'lockchip-dran', name: 'Dran', type: 'lockchip', image: 'images/lockchips/Dran.webp', tier: 'S', variantsId: 'lockchip-dran' },
+    { id: 'lockchip-emperor', name: 'Emperor', type: 'lockchip', image: 'images/lockchips/Emperor.webp', tier: 'C', variantsId: 'lockchip-emperor' },
+    { id: "lockchip-fox", name: "Fox", type: "lockchip", image: "images/lockchips/Fox.webp", tier: "B", variantsId: 'lockchip-fox' },
+    { id: "lockchip-hells", name: "Hells", type: "lockchip", image: "images/lockchips/Hells.webp", tier: "S", variantsId: 'lockchip-hells' },
+    { id: "lockchip-hornet", name: "Hornet", type: "lockchip", image: "images/lockchips/Hornet.webp", tier: "C", variantsId: 'lockchip-hornet' },
+    { id: "lockchip-kraken", name: "Kraken", type: "lockchip", image: "images/lockchips/Kraken.webp", tier: "B", variantsId: 'lockchip-kraken' },
+    { id: "lockchip-leon", name: "Leon", type: "lockchip", image: "images/lockchips/Leon.webp", tier: "S", variantsId: 'lockchip-leon' },
+    { id: 'lockchip-pegasus', name: 'Pegasus', type: 'lockchip', image: 'images/lockchips/Pegasus.webp', tier: 'C', variantsId: 'lockchip-pegasus' },
+    { id: "lockchip-perseus", name: "Perseus", type: "lockchip", image: "images/lockchips/Perseus.webp", tier: "A", variantsId: 'lockchip-perseus' },
+    { id: "lockchip-rhino", name: "Rhino", type: "lockchip", image: "images/lockchips/Rhino.webp", tier: "B", variantsId: 'lockchip-rhino' },
+    { id: "lockchip-sol", name: "Sol", type: "lockchip", image: "images/lockchips/Sol.webp", tier: "C", variantsId: 'lockchip-sol' },
+    { id: "lockchip-stag", name: "Stag", type: "lockchip", image: "images/lockchips/Stag.webp", tier: "B", variantsId: 'lockchip-stag' },
+    { id: "lockchip-valkyrie", name: "Valkyrie", type: "lockchip", image: "images/lockchips/Valkyrie.webp", tier: "A", variantsId: 'lockchip-valkyrie' },
+    { id: 'lockchip-whale', name: 'Whale', type: 'lockchip', image: 'images/lockchips/Whale.webp', tier: 'C', variantsId: 'lockchip-whale' },
+    { id: "lockchip-wizard", name: "Wizard", type: "lockchip", image: "images/lockchips/Wizard.webp", tier: "S", variantsId: 'lockchip-wizard' },
+    { id: 'lockchip-wolf', name: 'Wolf', type: 'lockchip', image: 'images/lockchips/Wolf.webp', tier: 'C', variantsId: 'lockchip-wolf' },
 
     // --- Main Blades (CX) ---
-    { id: "antler", name: "Antler", type: "mainblade", image: "images/mainblades/antler.webp", tier: "B" },
-    { id: "mainblade-arc", name: "Arc", type: "mainblade", image: "images/mainblades/Arc.webp", tier: "S" },
-    { id: 'mainblade-blast', name: 'Blast', type: 'mainblade', image: 'images/mainblades/Blast.webp', tier: 'A' },
-    { id: "mainblade-brave", name: "Brave", type: "mainblade", image: "images/mainblades/Brave.webp", tier: "A" },
-    { id: "mainblade-brush", name: "Brush", type: "mainblade", image: "images/mainblades/Brush.webp", tier: "C" },
-    { id: "mainblade-dark", name: "Dark", type: "mainblade", image: "images/mainblades/Dark.webp", tier: "A" },
-    { id: 'mainblade-eclipse', name: 'Eclipse', type: 'mainblade', image: 'images/mainblades/Eclipse.webp', tier: 'C' },
-    { id: "mainblade-fang", name: "Fang", type: "mainblade", image: "images/mainblades/Fang.webp", tier: "S" },
-    { id: 'mainblade-flame', name: 'Flame', type: 'mainblade', image: 'images/mainblades/Flame.webp', tier: 'C' },
-    { id: "mainblade-fort", name: "Fort", type: "mainblade", image: "images/mainblades/Fort.webp", tier: "B" },
-    { id: 'mainblade-hunt', name: 'Hunt', type: 'mainblade', image: 'images/mainblades/Hunt.webp', tier: 'C' },
-    { id: 'mainblade-might', name: 'Might', type: 'mainblade', image: 'images/mainblades/Might.webp', tier: 'C' },
-    { id: "mainblade-reaper", name: "Reaper", type: "mainblade", image: "images/mainblades/Reaper.webp", tier: "S" },
-    { id: "mainblade-volt", name: "Volt", type: "mainblade", image: "images/mainblades/Volt.webp", tier: "A" },
-    { id: "mainblade-wriggle", name: "Wriggle", type: "mainblade", image: "images/mainblades/Wriggle.webp", tier: "C" },
+    { id: "antler", name: "Antler", type: "mainblade", image: "images/mainblades/antler.webp", tier: "B", variantsId: 'antler' },
+    { id: "mainblade-arc", name: "Arc", type: "mainblade", image: "images/mainblades/Arc.webp", tier: "S", variantsId: 'mainblade-arc' },
+    { id: 'mainblade-blast', name: 'Blast', type: 'mainblade', image: 'images/mainblades/Blast.webp', tier: 'A', variantsId: 'mainblade-blast' },
+    { id: "mainblade-brave", name: "Brave", type: "mainblade", image: "images/mainblades/Brave.webp", tier: "A", variantsId: 'mainblade-brave' },
+    { id: "mainblade-brush", name: "Brush", type: "mainblade", image: "images/mainblades/Brush.webp", tier: "C", variantsId: 'mainblade-brush' },
+    { id: "mainblade-dark", name: "Dark", type: "mainblade", image: "images/mainblades/Dark.webp", tier: "A", variantsId: 'mainblade-dark' },
+    { id: 'mainblade-eclipse', name: 'Eclipse', type: 'mainblade', image: 'images/mainblades/Eclipse.webp', tier: 'C', variantsId: 'mainblade-eclipse' },
+    { id: "mainblade-fang", name: "Fang", type: "mainblade", image: "images/mainblades/Fang.webp", tier: "S", variantsId: 'mainblade-fang' },
+    { id: 'mainblade-flame', name: 'Flame', type: 'mainblade', image: 'images/mainblades/Flame.webp', tier: 'C', variantsId: 'mainblade-flame' },
+    { id: "mainblade-fort", name: "Fort", type: "mainblade", image: "images/mainblades/Fort.webp", tier: "B", variantsId: 'mainblade-fort' },
+    { id: 'mainblade-hunt', name: 'Hunt', type: 'mainblade', image: 'images/mainblades/Hunt.webp', tier: 'C', variantsId: 'mainblade-hunt' },
+    { id: 'mainblade-might', name: 'Might', type: 'mainblade', image: 'images/mainblades/Might.webp', tier: 'C', variantsId: 'mainblade-might' },
+    { id: "mainblade-reaper", name: "Reaper", type: "mainblade", image: "images/mainblades/Reaper.webp", tier: "S", variantsId: 'mainblade-reaper' },
+    { id: "mainblade-volt", name: "Volt", type: "mainblade", image: "images/mainblades/Volt.webp", tier: "A", variantsId: 'mainblade-volt' },
+    { id: "mainblade-wriggle", name: "Wriggle", type: "mainblade", image: "images/mainblades/Wriggle.webp", tier: "C", variantsId: 'mainblade-wriggle' },
 
     // --- Assist Blades (CX) ---
-    { id: 'assistblade-assault', name: 'Assault', type: 'assistblade', image: 'images/assistblades/Assault.webp', tier: 'B' },
-    { id: "assistblade-bumper", name: "Bumper", type: "assistblade", image: "images/assistblades/Bumper.webp", tier: "S" },
-    { id: "assistblade-charge", name: "Charge", type: "assistblade", image: "images/assistblades/Charge.webp", tier: "B" },
-    { id: 'assistblade-dual', name: 'Dual', type: 'assistblade', image: 'images/assistblades/Dual.webp', tier: 'C' },
-    { id: 'assistblade-free', name: 'Free', type: 'assistblade', image: 'images/assistblades/Free.webp', tier: 'C' },
-    { id: 'assistblade-heavy', name: 'Heavy', type: 'assistblade', image: 'images/assistblades/Heavy.webp', tier: 'C' },
-    { id: "assistblade-jaggy", name: "Jaggy", type: "assistblade", image: "images/assistblades/Jaggy.webp", tier: "C" },
-    { id: 'assistblade-massive', name: 'Massive', type: 'assistblade', image: 'images/assistblades/Massive.webp', tier: 'C' },
-    { id: "assistblade-round", name: "Round", type: "assistblade", image: "images/assistblades/Round.webp", tier: "A" },
-    { id: "assistblade-slash", name: "Slash", type: "assistblade", image: "images/assistblades/Slash.webp", tier: "S" },
-    { id: "assistblade-turn", name: "Turn", type: "assistblade", image: "images/assistblades/Turn.webp", tier: "S" },
-    { id: 'assistblade-wheel', name: 'Wheel', type: 'assistblade', image: 'images/assistblades/Wheel.webp', tier: 'B' }
+    { id: 'assistblade-assault', name: 'Assault', type: 'assistblade', image: 'images/assistblades/Assault.webp', tier: 'B', variantsId: 'assistblade-assault' },
+    { id: "assistblade-bumper", name: "Bumper", type: "assistblade", image: "images/assistblades/Bumper.webp", tier: "S", variantsId: 'assistblade-bumper' },
+    { id: "assistblade-charge", name: "Charge", type: "assistblade", image: "images/assistblades/Charge.webp", tier: "B", variantsId: 'assistblade-charge' },
+    { id: 'assistblade-dual', name: 'Dual', type: 'assistblade', image: 'images/assistblades/Dual.webp', tier: 'C', variantsId: 'assistblade-dual' },
+    { id: 'assistblade-free', name: 'Free', type: 'assistblade', image: 'images/assistblades/Free.webp', tier: 'C', variantsId: 'assistblade-free' },
+    { id: 'assistblade-heavy', name: 'Heavy', type: 'assistblade', image: 'images/assistblades/Heavy.webp', tier: 'C', variantsId: 'assistblade-heavy' },
+    { id: "assistblade-jaggy", name: "Jaggy", type: "assistblade", image: "images/assistblades/Jaggy.webp", tier: "C", variantsId: 'assistblade-jaggy' },
+    { id: 'assistblade-massive', name: 'Massive', type: 'assistblade', image: 'images/assistblades/Massive.webp', tier: 'C', variantsId: 'assistblade-massive' },
+    { id: "assistblade-round", name: "Round", type: "assistblade", image: "images/assistblades/Round.webp", tier: "A", variantsId: 'assistblade-round' },
+    { id: "assistblade-slash", name: "Slash", type: "assistblade", image: "images/assistblades/Slash.webp", tier: "S", variantsId: 'assistblade-slash' },
+    { id: "assistblade-turn", name: "Turn", type: "assistblade", image: "images/assistblades/Turn.webp", tier: "S", variantsId: 'assistblade-turn' },
+    { id: 'assistblade-wheel', name: 'Wheel', type: 'assistblade', image: 'images/assistblades/Wheel.webp', tier: 'B', variantsId: 'assistblade-wheel' }
 ];
 
  // --- [ATUALIZADO] Traduções (Com Welcome, Trades, Placar, etc.) ---
